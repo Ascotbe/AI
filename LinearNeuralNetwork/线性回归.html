@@ -35,7 +35,6 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c7aa0c89" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -145,7 +144,7 @@
     
   
 
-<a class="navbar-brand logo" href="../intro.html">
+<a class="navbar-brand logo" href="../index.html">
   
   
   
@@ -177,13 +176,13 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../intro.html">
+                <a class="reference internal" href="../index.html">
                     Welcome to AI Notes
                 </a>
             </li>
         </ul>
         <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../PrerequisiteKnowledge/index.html">前置知识</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../PrerequisiteKnowledge/index.html">前置知识</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
 
@@ -196,20 +195,20 @@
 
 
 
-</ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../FunctionDetails/index.html">函数详解</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../FunctionDetails/index.html">函数详解</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">Torch Argmax</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">Torch Matmul</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.normal.html">Torch Normal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">Torch Zeros</a></li>
-</ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">线性神经网络</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">线性神经网络</a><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">线性回归</a></li>
 
 
@@ -231,7 +230,7 @@
 
 
 
-</ul>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 
@@ -471,13 +470,13 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 2.0000, -3.4000])
-tensor([[-0.1338,  0.0954],
-        [ 0.3544, -1.2517],
-        [ 1.5188, -1.0116],
+tensor([[ 1.4603, -0.9545],
+        [ 1.1586, -0.2309],
+        [-0.7943,  2.3813],
         ...,
-        [-1.1819, -0.2417],
-        [ 0.4200, -0.9559],
-        [ 1.0612, -1.0920]])
+        [ 0.9886, -1.0284],
+        [-2.1023, -2.2960],
+        [ 0.6858,  1.8919]])
 </pre></div>
 </div>
 </div>
@@ -491,15 +490,15 @@ tensor([[-0.1338,  0.0954],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>features: tensor([-0.1338,  0.0954]) 
-label: tensor([3.6071])
-tensor([[-0.1338,  0.0954],
-        [ 0.3544, -1.2517],
-        [ 1.5188, -1.0116],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>features: tensor([ 1.4603, -0.9545]) 
+label: tensor([10.3689])
+tensor([[ 1.4603, -0.9545],
+        [ 1.1586, -0.2309],
+        [-0.7943,  2.3813],
         ...,
-        [-1.1819, -0.2417],
-        [ 0.4200, -0.9559],
-        [ 1.0612, -1.0920]])
+        [ 0.9886, -1.0284],
+        [-2.1023, -2.2960],
+        [ 0.6858,  1.8919]])
 </pre></div>
 </div>
 </div>
@@ -513,7 +512,7 @@ tensor([[-0.1338,  0.0954],
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e68982398592534543b6cf1c65fb9c0db2900efc071b95a167eac2642355e847.svg" src="../_images/e68982398592534543b6cf1c65fb9c0db2900efc071b95a167eac2642355e847.svg" /></div>
+<img alt="../_images/af32fe6ffd971ff13ecbc4a6341bfa179da8a701fd879515912de968e0d2cbdc.svg" src="../_images/af32fe6ffd971ff13ecbc4a6341bfa179da8a701fd879515912de968e0d2cbdc.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id3">
@@ -554,29 +553,26 @@ tensor([[-0.1338,  0.0954],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.3779,  0.4345],
-        [-0.1490, -1.5119],
-        [-0.0455,  0.6703],
-        [-0.4226,  0.2510],
-        [ 1.4743,  2.4691],
-        [-0.3294, -1.9083],
-        [ 0.4200, -0.5602],
-        [-0.3304, -1.3190],
-        [-1.4587, -0.2289],
-        [-0.1265, -1.3748]]) 
- 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 5.4636],
-        [ 9.0351],
-        [ 1.8367],
-        [ 2.5141],
-        [-1.2543],
-        [10.0437],
-        [ 6.9266],
-        [ 7.9995],
-        [ 2.0602],
-        [ 8.6246]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-6.2269e-02, -4.6130e-01],
+        [ 9.7476e-01,  5.4951e-01],
+        [-1.0573e+00,  9.8834e-01],
+        [ 8.1192e-01,  2.0061e-01],
+        [-1.4655e+00, -1.8829e-01],
+        [ 6.3567e-01,  7.3839e-02],
+        [ 1.4185e-01,  4.1624e-01],
+        [-7.2794e-01,  6.3601e-05],
+        [-3.3909e-01,  3.4381e-01],
+        [ 3.2190e-01,  4.1582e-01]]) 
+ tensor([[ 5.6481],
+        [ 4.2737],
+        [-1.2675],
+        [ 5.1406],
+        [ 1.9008],
+        [ 5.2111],
+        [ 3.0593],
+        [ 2.7504],
+        [ 2.3443],
+        [ 3.4299]])
 </pre></div>
 </div>
 </div>
@@ -688,9 +684,9 @@ tensor([[-0.1338,  0.0954],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 1, loss 0.036113
-epoch 2, loss 0.000127
-epoch 3, loss 0.000050
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 1, loss 0.038449
+epoch 2, loss 0.000142
+epoch 3, loss 0.000052
 </pre></div>
 </div>
 </div>
@@ -704,8 +700,8 @@ epoch 3, loss 0.000050
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>w的估计误差: tensor([ 0.0001, -0.0008], grad_fn=&lt;SubBackward0&gt;)
-b的估计误差: tensor([0.0004], grad_fn=&lt;RsubBackward1&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>w的估计误差: tensor([-0.0002, -0.0005], grad_fn=&lt;SubBackward0&gt;)
+b的估计误差: tensor([1.2398e-05], grad_fn=&lt;RsubBackward1&gt;)
 </pre></div>
 </div>
 </div>

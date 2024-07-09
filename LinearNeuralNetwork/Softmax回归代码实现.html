@@ -35,7 +35,6 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c7aa0c89" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -144,7 +143,7 @@
     
   
 
-<a class="navbar-brand logo" href="../intro.html">
+<a class="navbar-brand logo" href="../index.html">
   
   
   
@@ -176,13 +175,13 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../intro.html">
+                <a class="reference internal" href="../index.html">
                     Welcome to AI Notes
                 </a>
             </li>
         </ul>
         <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../PrerequisiteKnowledge/index.html">前置知识</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../PrerequisiteKnowledge/index.html">前置知识</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
 
@@ -195,20 +194,20 @@
 
 
 
-</ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../FunctionDetails/index.html">函数详解</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../FunctionDetails/index.html">函数详解</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">Torch Argmax</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">Torch Matmul</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.normal.html">Torch Normal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">Torch Zeros</a></li>
-</ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">线性神经网络</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">线性神经网络</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
 
 
@@ -230,7 +229,7 @@
 
 
 
-</ul>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 
@@ -551,7 +550,7 @@ FashionMNIST数据集中包含已经预先划分好的训练集和测试集，�
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([256, 1, 28, 28]) torch.Size([256])
 </pre></div>
 </div>
-<img alt="../_images/c8ce181cac48a41634c1e4abbcd9efb265fe85e20101a2b2f140c8a8cb98aadb.png" src="../_images/c8ce181cac48a41634c1e4abbcd9efb265fe85e20101a2b2f140c8a8cb98aadb.png" />
+<img alt="../_images/73a32f414e58c58bb8cfde89744b90be99602ab523202611e966b2cf2fe79b60.png" src="../_images/73a32f414e58c58bb8cfde89744b90be99602ab523202611e966b2cf2fe79b60.png" />
 </div>
 </div>
 </section>
@@ -577,13 +576,13 @@ FashionMNIST数据集中包含已经预先划分好的训练集和测试集，�
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0009,  0.0023,  0.0095,  ...,  0.0033, -0.0107, -0.0068],
-        [ 0.0021, -0.0036,  0.0055,  ..., -0.0263, -0.0015, -0.0027],
-        [-0.0061,  0.0082,  0.0189,  ..., -0.0051,  0.0143,  0.0105],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0039, -0.0091, -0.0034,  ...,  0.0179,  0.0023,  0.0049],
+        [-0.0054,  0.0022,  0.0089,  ...,  0.0019, -0.0036, -0.0096],
+        [ 0.0091,  0.0134, -0.0060,  ..., -0.0055, -0.0137, -0.0084],
         ...,
-        [ 0.0025,  0.0004,  0.0020,  ..., -0.0129, -0.0040,  0.0147],
-        [-0.0015, -0.0126,  0.0149,  ..., -0.0067,  0.0161, -0.0041],
-        [-0.0070, -0.0195,  0.0025,  ..., -0.0142,  0.0071,  0.0136]],
+        [ 0.0097,  0.0036,  0.0130,  ..., -0.0112,  0.0047,  0.0034],
+        [-0.0082,  0.0082, -0.0053,  ...,  0.0080,  0.0110, -0.0024],
+        [-0.0046,  0.0230, -0.0162,  ..., -0.0062,  0.0054,  0.0135]],
        requires_grad=True)
 tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], requires_grad=True)
 </pre></div>
@@ -689,17 +688,17 @@ tensor([ 6., 15.])
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ccccc等于:tensor([[  2.7183,   7.3891,  20.0855],
-        [ 54.5981, 148.4132, 403.4288]])
-X等于:tensor([[ 0.9089, -0.8150, -0.9835, -1.0171, -0.9511],
-        [-0.7810, -0.5347,  0.7007, -0.4220, -1.3655]])
-X_exp等于:tensor([[2.4815, 0.4426, 0.3740, 0.3616, 0.3863],
-        [0.4580, 0.5859, 2.0153, 0.6557, 0.2553]])
-partition等于:tensor([[4.0461],
-        [3.9700]])
+        [ 54.5982, 148.4132, 403.4288]])
+X等于:tensor([[-0.0460,  0.6283, -0.9450, -0.6500, -0.0614],
+        [-0.7704,  0.8902, -1.0715,  1.7535, -0.0329]])
+X_exp等于:tensor([[0.9550, 1.8744, 0.3887, 0.5220, 0.9404],
+        [0.4628, 2.4356, 0.3425, 5.7745, 0.9676]])
+partition等于:tensor([[4.6805],
+        [9.9831]])
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[0.6133, 0.1094, 0.0924, 0.0894, 0.0955],
-         [0.1154, 0.1476, 0.5076, 0.1652, 0.0643]]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[0.2040, 0.4005, 0.0830, 0.1115, 0.2009],
+         [0.0464, 0.2440, 0.0343, 0.5784, 0.0969]]),
  tensor([1.0000, 1.0000]))
 </pre></div>
 </div>
@@ -880,29 +879,29 @@ y_hat:tensor([[0.1000, 0.3000, 0.6000],
 y:tensor([0, 2])
 y_hat.shape:torch.Size([2, 3])
 y.shape:torch.Size([2])
-y_hat.type:&lt;built-in method type of Tensor object at 0x0000023974A3AB70&gt;
+y_hat.type:&lt;built-in method type of Tensor object at 0x7fc6d2593970&gt;
 y_hat.dtype：torch.float32
-y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fc690c43420&gt;
 y.dtype:torch.int64
 对每一行求argmax-每一行中元素最大的那个下标存到y_hat里面:
 y_hat:tensor([2, 2])
 y:tensor([0, 2])
 y_hat.shape:torch.Size([2])
 y.shape:torch.Size([2])
-y_hat.type:&lt;built-in method type of Tensor object at 0x0000023974A38E30&gt;
+y_hat.type:&lt;built-in method type of Tensor object at 0x7fc690c44cc0&gt;
 y_hat.dtype：torch.int64
-y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fc690c43420&gt;
 y.dtype:torch.int64
 y_hat和y的数据类型可能不一样，把y_hat转成y的数据类型，变成一个bool的tensor。
-y_hat.type:&lt;built-in method type of Tensor object at 0x0000023974A38E30&gt;
+y_hat.type:&lt;built-in method type of Tensor object at 0x7fc690c44cc0&gt;
 y_hat.dtype：torch.int64
-y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fc690c43420&gt;
 y.dtype:torch.int64
 cmp:tensor([False,  True])
 cmp转换成y的数据类型，然后求和
-y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fc690c43420&gt;
 y.dtype:torch.int64
-cmp.type:&lt;built-in method type of Tensor object at 0x0000023974A38DD0&gt;
+cmp.type:&lt;built-in method type of Tensor object at 0x7fc6914dc540&gt;
 cmp.dtype:torch.bool
 True被解释为1，False被解释为0，所以后面相加为1
 cmp:1
@@ -980,7 +979,7 @@ float(cmp.type(y.dtype).sum()):1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0992
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.052
 </pre></div>
 </div>
 </div>
@@ -1102,7 +1101,7 @@ float(cmp.type(y.dtype).sum()):1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bbc9a5a01870943d7d3b0e9195da27de833c114219ba20da511ce2d223f796ee.svg" src="../_images/bbc9a5a01870943d7d3b0e9195da27de833c114219ba20da511ce2d223f796ee.svg" /></div>
+<img alt="../_images/9e49d2eef2ceefca5da3c029c6017b1e894c622e9b8863daf2fc7e2fbb968b03.svg" src="../_images/9e49d2eef2ceefca5da3c029c6017b1e894c622e9b8863daf2fc7e2fbb968b03.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id8">
@@ -1125,7 +1124,7 @@ float(cmp.type(y.dtype).sum()):1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6ea77b8f7e2cd58e01abcb55272df1882bf905329d950bdeff5ebd1a2e2c67c5.svg" src="../_images/6ea77b8f7e2cd58e01abcb55272df1882bf905329d950bdeff5ebd1a2e2c67c5.svg" /></div>
+<img alt="../_images/c583fbf7fd462656ce3027062733ff66165a2af4aba4a2de267e22b073d49cc0.svg" src="../_images/c583fbf7fd462656ce3027062733ff66165a2af4aba4a2de267e22b073d49cc0.svg" /></div>
 </div>
 </section>
 
