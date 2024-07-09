@@ -1,0 +1,1254 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Softmax回归代码实现 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c7aa0c89" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'LinearNeuralNetwork/Softmax回归代码实现';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="交叉熵损失函数原理详解" href="%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://raw.githubusercontent.com/Ascotbe/Image/master/Blog/103.jpg" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="https://raw.githubusercontent.com/Ascotbe/Image/master/Blog/103.jpg" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to AI Notes
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../PrerequisiteKnowledge/index.html">前置知识</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+</ul>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../FunctionDetails/index.html">函数详解</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">Torch Argmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">Torch Matmul</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.normal.html">Torch Normal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">Torch Zeros</a></li>
+</ul>
+</details></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">线性神经网络</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/LinearNeuralNetwork/Softmax回归代码实现.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Softmax回归代码实现</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Softmax回归代码实现</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">导入数据集</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">定义类神经网路模型</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">定义softmax操作</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">定义模型</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">定义损失函数</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#torch">用torch实现</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">分类精度</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">训练</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">预测</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="softmax">
+<h1>Softmax回归代码实现<a class="headerlink" href="#softmax" title="Link to this heading">#</a></h1>
+<p>本篇将详细的使用代码来实现</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>导入数据集<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>我们这里的任务是对10个类别的“时装”图像进行分类，使用FashionMNIST数据集（<a class="github reference external" href="https://github.com/zalandoresearch/fashion-mnist/tree/master/data/fashion">zalandoresearch/fashion-mnist</a> ）。上图给出了FashionMNIST中数据的若干样例图，其中每个小图对应一个样本。<br />
+FashionMNIST数据集中包含已经预先划分好的训练集和测试集，其中训练集共60,000张图像，测试集共10,000张图像。每张图像均为单通道黑白图像，大小为32*32pixel，分属10个类别。<br />
+我们设置数据迭代器的批量大小为256</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="c1">#batch_size = 256 #每次返回256张图片</span>
+<span class="c1">#train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>上面注释的为使用D2L封装好的代码，但是我看的一头雾水完全不知道原理是什么，所以下面的为拆开沐神封装好的代码，具体理解下。（PS：数据包不能下载到指定位置强迫症真的很难受）</p>
+</div></blockquote>
+<p><strong>首先导入必要的包</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span><span class="p">,</span><span class="n">datasets</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>配置训练环境和超参数</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 配置GPU，这里有两种方式</span>
+<span class="c1">## 方案一：使用os.environ</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
+<span class="c1"># 方案二：使用“device”，后续对要使用GPU的变量用.to(device)即可</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:1&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>数据读入和加载</strong><br />
+这里同时展示两种方式:</p>
+<ul class="simple">
+<li><p>下载并使用PyTorch提供的内置数据集</p></li>
+<li><p>从网站下载以csv格式存储的数据，读入并转成预期的格式<br />
+第一种数据读入方式只适用于常见的数据集，如MNIST，CIFAR10等，PyTorch官方提供了数据下载。这种方式往往适用于快速测试方法（比如测试下某个idea在MNIST数据集上是否有效）<br />
+第二种数据读入方式需要自己构建Dataset，这对于PyTorch应用于自己的工作中十分重要</p></li>
+</ul>
+<p>同时，还需要对数据进行必要的变换，比如说需要将图片统一为一致的大小，以便后续能够输入网络训练；需要将数据格式转为Tensor类，等等。</p>
+<p>这些变换可以很方便地借助torchvision包来完成，这是PyTorch官方用于图像处理的工具库，上面提到的使用内置数据集的方式也要用到。PyTorch的一大方便之处就在于它是一整套“生态”，有着官方和第三方各个领域的支持。这些内容我们会在后续课程中详细介绍。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 首先设置数据变换</span>
+<span class="c1"># transforms.Compose是一个用于组合多个数据变换的类</span>
+<span class="c1"># Compose()类会将transforms列表里面的transform操作进行遍历，然后将数据依次传递给每个transform操作，最后返回处理后的数据</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">data_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="c1">#transforms.ToPILImage(),   # 将torch.Tensor或numpy.ndarray类型图像转为PIL.Image类型图像。这段里面可以移除transforms.ToPILImage()，因为 FashionMNIST 数据集已经是 PIL.Image 类型</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">image_size</span><span class="p">),</span><span class="c1">#按给定尺寸对图像进行缩放</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span> <span class="c1">#将PIL.Image或numpy.ndarray类型图像转为torch.Tensor类型图像</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>使用torchvision自带数据集，下载可能需要一段时间</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># train表示是否是训练集，download表示是否需要下载，transform表示是否需要进行数据变换</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../raw/data/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../raw/data/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>在构建训练和测试数据集完成后，需要定义DataLoader类，以便在训练和测试时加载数据</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">num_workers</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1">#mac 不知道为什么变为4也报错   # 对于Windows用户，这里应设置为0，否则会出现多线程错误</span>
+<span class="c1"># DataLoader是一个用于生成batch数据的迭代器，可以设置batch_size、shuffle、num_workers等参数</span>
+<span class="c1">#batch_size是指每个批次中包含的样本数量。shuffle=True表示在每个epoch开始时，将训练数据集打乱顺序，以增加模型的泛化能力。num_workers是指用于数据加载的线程数量，可以加快数据加载的速度。drop_last=True表示如果训练数据集的样本数量不能被batch_size整除，最后一个不完整的批次将被丢弃。</span>
+<span class="n">train_iter</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_iter</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>读入后，我们可以做一些数据可视化操作，主要是验证我们读入的数据是否正确</p>
+<p>这段代码使用 <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> 库中的 <code class="docutils literal notranslate"><span class="pre">imshow</span></code> 函数来显示图像。以下是每个部分的详细说明：</p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">plt.imshow</span></code></strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">imshow</span></code> 是 <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> 模块中的一个函数，用于显示图像。</p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">image_batch[0][0]</span></code></strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">image_batch</span></code> 是从数据加载器中提取的一批图像张量（tensor），形状通常是 <code class="docutils literal notranslate"><span class="pre">(batch_size,</span> <span class="pre">channels,</span> <span class="pre">height,</span> <span class="pre">width)</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">image_batch[0]</span></code> 选择了这批图像中的第一张图像。它的形状通常是 <code class="docutils literal notranslate"><span class="pre">(channels,</span> <span class="pre">height,</span> <span class="pre">width)</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">image_batch[0][0]</span></code> 选择了这张图像的第一个通道（对于灰度图像来说，只有一个通道）。所以结果是一个二维张量，形状是 <code class="docutils literal notranslate"><span class="pre">(height,</span> <span class="pre">width)</span></code>。</p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">cmap=&quot;gray&quot;</span></code></strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cmap</span></code> 参数指定了图像的颜色映射（colormap）。<code class="docutils literal notranslate"><span class="pre">&quot;gray&quot;</span></code> 表示使用灰度颜色映射，这通常用于显示灰度图像（即单通道图像）。</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取一个数据批次</span>
+<span class="n">image_batch</span><span class="p">,</span> <span class="n">label_batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">train_iter</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">image_batch</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">label_batch</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 显示批次中的第一张图像</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_batch</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([256, 1, 28, 28]) torch.Size([256])
+</pre></div>
+</div>
+<img alt="../_images/c8ce181cac48a41634c1e4abbcd9efb265fe85e20101a2b2f140c8a8cb98aadb.png" src="../_images/c8ce181cac48a41634c1e4abbcd9efb265fe85e20101a2b2f140c8a8cb98aadb.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>定义类神经网路模型<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>Fashion-MNIST的影像是28(width)×28(height)=784(pixels)。原始数据集中的每个样本都是<span class="math notranslate nohighlight">\(28×28\)</span>的图像，输出图像类别有 10 个。本节将展平每个图像，把它们看作长度为 784 的向量。网络只有一层，输入的是 784 维，输出 10 维，也就是说：</p>
+<ul class="simple">
+<li><p>样本矩阵<span class="math notranslate nohighlight">\(X\)</span>：<span class="math notranslate nohighlight">\(6000×784\)</span>的矩阵</p></li>
+<li><p>参数矩阵<span class="math notranslate nohighlight">\(W\)</span>：<span class="math notranslate nohighlight">\(784×10\)</span>的矩阵</p></li>
+<li><p>偏置<span class="math notranslate nohighlight">\(b\)</span>：<span class="math notranslate nohighlight">\(1×10\)</span>的矩阵</p></li>
+<li><p>输出<span class="math notranslate nohighlight">\(Y\)</span>：<span class="math notranslate nohighlight">\(6000×10\)</span>的矩阵</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">784</span>
+<span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">W</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">,</span> <span class="n">num_outputs</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_outputs</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0009,  0.0023,  0.0095,  ...,  0.0033, -0.0107, -0.0068],
+        [ 0.0021, -0.0036,  0.0055,  ..., -0.0263, -0.0015, -0.0027],
+        [-0.0061,  0.0082,  0.0189,  ..., -0.0051,  0.0143,  0.0105],
+        ...,
+        [ 0.0025,  0.0004,  0.0020,  ..., -0.0129, -0.0040,  0.0147],
+        [-0.0015, -0.0126,  0.0149,  ..., -0.0067,  0.0161, -0.0041],
+        [-0.0070, -0.0195,  0.0025,  ..., -0.0142,  0.0071,  0.0136]],
+       requires_grad=True)
+tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], requires_grad=True)
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>softmax回归为何要使用正态分布初始化的权重W，并把偏置初始化为0</strong></p>
+</div></blockquote>
+<p>在softmax回归中，我们需要对输入特征进行加权求和，并将结果通过softmax函数转换为概率分布。权重W和偏置b是模型的参数，它们的初始化对模型的性能和收敛速度都有影响。</p>
+<p>权重W的初始化通常采用正态分布（也称为高斯分布），原因如下：</p>
+<ol class="arabic simple">
+<li><p>对称性破坏：如果权重初始化为相同的值（如0），则每个特征的梯度更新也会相同，这可能导致模型对称性。通过使用正态分布初始化，可以打破对称性，使得每个权重的初始值不同。</p></li>
+<li><p>避免梯度消失或爆炸：在深层神经网络中，如果权重初始化过大，可能导致梯度爆炸；如果权重初始化过小，可能导致梯度消失。正态分布初始化可以在一定程度上控制权重的初始范围，帮助避免梯度问题。</p></li>
+<li><p>适应数据分布：正态分布是自然界中许多现象的分布模式，它可以更好地适应数据的分布特征。通过使用正态分布初始化权重，可以使模型更好地适应输入数据的分布。</p></li>
+</ol>
+<p>而偏置b的初始化为0是因为偏置项的作用是调整模型的输出，使其与真实标签更接近。在softmax回归中，偏置项的初始化为0可以看作是对模型输出的一个初始偏置，因为softmax函数的特性会使得输出概率总和为1。因此，将偏置初始化为0是一个合理的选择。</p>
+<p>需要注意的是，权重和偏置的初始化方法并不是唯一的，根据具体的问题和模型结构，可能会有其他的初始化策略。这里提到的正态分布和0初始化是一种常见的选择。</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>定义softmax操作<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>给定一个矩阵X，我们可以对所有元素求和（默认情况下）。 也可以只求同一个轴上的元素，即同一列（轴0）或同一行（轴1）。 如果X是一个形状为(2, 3)的张量，我们对列进行求和， 则结果将是一个具有形状(3,)的向量。 当调用sum运算符时，我们可以指定保持在原始张量的轴数，而不折叠求和的维度。 这将产生一个具有形状(1, 3)的二维张量。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]])</span>
+
+<span class="c1">#torch.sum(input, list: dim, bool: keepdim=False, dtype=None) → Tensor　</span>
+<span class="c1">#input:输入一个tensor</span>
+<span class="c1">#dim:要求和的维度，可以是一个列表</span>
+<span class="c1">#keepdim:是否保持求和维度个维度，如果需要保持应当keepdim=True </span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--------------------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--------------------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--------------------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1., 2., 3.],
+        [4., 5., 6.]]) 
+ torch.Size([2, 3]) 
+--------------------
+tensor([[5., 7., 9.]]) 
+ torch.Size([1, 3]) 
+--------------------
+tensor([[ 6.],
+        [15.]]) 
+ torch.Size([2, 1]) 
+--------------------
+tensor([ 6., 15.]) 
+ torch.Size([2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>回想一下，<strong>实现softmax</strong>由三个步骤组成：</p>
+<ol class="arabic simple">
+<li><p>对每个项求幂（使用<code class="docutils literal notranslate"><span class="pre">exp</span></code>）；</p></li>
+<li><p>对每一行求和（小批量中每个样本是一行），得到每个样本的规范化常数；</p></li>
+<li><p>将每一行除以其规范化常数，确保结果的和为1。</p></li>
+</ol>
+<p>在查看代码之前，我们回顾一下这个表达式：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{softmax}(\mathbf{X})_{ij} = \frac{\exp(\mathbf{X}_{ij})}{\sum_k \exp(\mathbf{X}_{ik})}.
+\]</div>
+<p>分母或规范化常数，有时也称为<em>配分函数</em>（其对数称为对数-配分函数）。
+该名称来自<a class="reference external" href="https://en.wikipedia.org/wiki/Partition_function_(statistical_mechanics)">统计物理学</a>中一个模拟粒子群分布的方程。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">X_exp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="c1">#print(X_exp)</span>
+    <span class="n">partition</span> <span class="o">=</span> <span class="n">X_exp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1">#如果有keepdim那么就是列的维度</span>
+    <span class="c1">#print(partition)</span>
+    <span class="n">softmax_dota</span><span class="o">=</span><span class="n">X_exp</span> <span class="o">/</span> <span class="n">partition</span>
+    <span class="k">return</span> <span class="n">softmax_dota</span> <span class="c1"># 这里应用了广播机制</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>正如上述代码，对于任何随机输入，我们将每个元素变成一个非负数。 此外，依据概率原理，每行总和为1。</p>
+<p>整个函数是对输出<span class="math notranslate nohighlight">\(Y\)</span>做概率转换，输出<span class="math notranslate nohighlight">\(Y\)</span>是6000×10的矩阵，要沿着横轴方向求和，所以是 <code class="docutils literal notranslate"><span class="pre">axis=1</span></code></p>
+<p>官方文档：<a class="reference external" href="https://pytorch.org/docs/1.2.0/torch.html#torch.exp">https://pytorch.org/docs/1.2.0/torch.html#torch.exp</a></p>
+<p>torch.exp的用法样例可以参考下面内容，常数<span class="math notranslate nohighlight">\(e\)</span>等于2.704</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">softmax_test</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X等于:</span><span class="si">{</span><span class="n">X</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">X_exp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;X_exp等于:</span><span class="si">{</span><span class="n">X_exp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">partition</span> <span class="o">=</span> <span class="n">X_exp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1">#如果有keepdim那么就是列的维度</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;partition等于:</span><span class="si">{</span><span class="n">partition</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X_exp</span> <span class="o">/</span> <span class="n">partition</span>  <span class="c1"># 这里应用了广播机制</span>
+<span class="n">ccccc</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ccccc等于:</span><span class="si">{</span><span class="n">ccccc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">X_prob</span> <span class="o">=</span> <span class="n">softmax_test</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_prob</span><span class="p">,</span> <span class="n">X_prob</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ccccc等于:tensor([[  2.7183,   7.3891,  20.0855],
+        [ 54.5981, 148.4132, 403.4288]])
+X等于:tensor([[ 0.9089, -0.8150, -0.9835, -1.0171, -0.9511],
+        [-0.7810, -0.5347,  0.7007, -0.4220, -1.3655]])
+X_exp等于:tensor([[2.4815, 0.4426, 0.3740, 0.3616, 0.3863],
+        [0.4580, 0.5859, 2.0153, 0.6557, 0.2553]])
+partition等于:tensor([[4.0461],
+        [3.9700]])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[0.6133, 0.1094, 0.0924, 0.0894, 0.0955],
+         [0.1154, 0.1476, 0.5076, 0.1652, 0.0643]]),
+ tensor([1.0000, 1.0000]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>注意，虽然这在数学上看起来是正确的，但我们在代码实现中有点草率。 矩阵中的非常大或非常小的元素可能造成数值上溢或下溢，但我们没有采取措施来防止这点。</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id4">
+<h1>定义模型<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<p>定义softmax操作后，我们可以实现softmax回归模型。 下面的代码定义了输入如何通过网络映射到输出。 注意，将数据传递到模型之前，我们使用reshape函数将每张原始图像展平为向量。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">net</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="c1">#return softmax(torch.`(X.reshape((-1, W.shape[0])), W) + b)</span>
+    <span class="c1">#正态分布初始化的权重W，偏置初始化为0</span>
+    <span class="n">tmp_</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>  <span class="c1">#将每张原始图像展平为向量。第一维是batch_size，第二维是特征数。Tensor:torch.Size([256,1,28,28])变成Tensor:torch.Size([256, 784])</span>
+    <span class="c1">#W的维度是784*10，tmp_的维度是256*784（每张原始图像展平为向量），然后进行矩阵乘法，所以matmul_的维度是256*10</span>
+    <span class="c1">#因为是二维相乘所以（n×m）×（m×p）=（n×p）。要是以为的话就是点积等于torch.dot。</span>
+    <span class="c1">#如果跟高维度参考这个文章https://www.cnblogs.com/HOMEofLowell/p/15963140.html</span>
+    <span class="c1">#然后矩阵的乘法参考这个https://www.ascotbe.com/2023/12/05/LinearAlgebra_0x03/#%E7%9F%A9%E9%98%B5%E7%9A%84%E4%B9%98%E6%B3%95</span>
+    <span class="n">matmul_</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">tmp_</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>  
+
+    <span class="n">sof</span><span class="o">=</span><span class="n">softmax</span><span class="p">(</span> <span class="n">matmul_</span><span class="o">+</span> <span class="n">b</span><span class="p">)</span> 
+    <span class="c1">#print(sof[0]) #这里打印第一张图片的预测结果，所有类别的概率，概率最大的类别即为预测类别，这里是10个类别，相加为1</span>
+    <span class="k">return</span> <span class="n">sof</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>定义损失函数<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<p>接下来，我们实现交叉熵损失函数。 这可能是深度学习中最常见的损失函数，因为目前分类问题的数量远远超过回归问题的数量。</p>
+<p>交叉熵损失函数：<a class="reference external" href="https://blog.csdn.net/b1055077005/article/details/100152102">https://blog.csdn.net/b1055077005/article/details/100152102</a></p>
+<p>底是10的对数叫：常用对数 <span class="math notranslate nohighlight">\(\log_{10}(x)\)</span>，有时写为<span class="math notranslate nohighlight">\(\log(x)\)</span></p>
+<section id="torch">
+<h2>用torch实现<a class="headerlink" href="#torch" title="Link to this heading">#</a></h2>
+<p>回顾一下，交叉熵采用真实标签的预测概率的负对数似然。 这里我们不使用Python的for循环迭代预测（这往往是低效的）， 而是通过一个运算符选择所有元素。 下面，我们创建一个数据样本y_hat，其中包含2个样本在3个类别的预测概率， 以及它们对应的标签y。 有了y，我们知道在第一个样本中，第一类是正确的预测； 而在第二个样本中，第三类是正确的预测。 然后使用y作为y_hat中概率的索引， 我们选择第一个样本中第一个类的概率和第二个样本中第三个类的概率。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)</span>
+<span class="c1">#y_hat是一个2*3的数组。y_hat[[0,1],y]中的[0,1]指的是第一行和第二行的索引，后面的y等价于[0,2]。那么可以这么理解y_hat[0,0]和y_hat[1,2]。</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;对于第0样本y_hat，拿出y[0]（值为0）对应的那个元素，对于第1个样本y_hat，拿出y[1]（值为2）对应那个元素----------</span><span class="si">{</span><span class="n">y_hat</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">y</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;等同于:y_hat[[0, 1], [0,2]]----------</span><span class="si">{</span><span class="n">y_hat</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat[[0, 1], [2,1]]---------</span><span class="si">{</span><span class="n">y_hat</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 2])
+tensor([[0.1000, 0.3000, 0.6000],
+        [0.3000, 0.2000, 0.5000]])
+对于第0样本y_hat，拿出y[0]（值为0）对应的那个元素，对于第1个样本y_hat，拿出y[1]（值为2）对应那个元素----------tensor([0.1000, 0.5000])
+等同于:y_hat[[0, 1], [0,2]]----------tensor([0.1000, 0.5000])
+y_hat[[0, 1], [2,1]]---------tensor([0.6000, 0.2000])
+</pre></div>
+</div>
+</div>
+</div>
+<p>现在我们只需一行代码就可以实现交叉熵损失函数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y_hat</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)),</span> <span class="n">y</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">tmp_cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;len(y_hat):</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;range(len(y_hat)):</span><span class="si">{</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">tmp_</span><span class="o">=</span><span class="n">y_hat</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)),</span> <span class="n">y</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tmp_:</span><span class="si">{</span><span class="n">tmp_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;-torch.log(torch.tensor(0.1)):</span><span class="si">{</span><span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;-torch.log(torch.tensor(0.5)):</span><span class="si">{</span><span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tmp_</span><span class="p">)</span>
+
+<span class="n">tmp_cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>len(y_hat):2
+range(len(y_hat)):range(0, 2)
+tmp_:tensor([0.1000, 0.5000])
+-torch.log(torch.tensor(0.1)):2.3025851249694824
+-torch.log(torch.tensor(0.5)):0.6931471824645996
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([2.3026, 0.6931])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>分类精度<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<p>给定预测概率分布y_hat，当我们必须输出硬预测（hard prediction）时， 我们通常选择预测概率最高的类。 许多应用都要求我们做出选择。如Gmail必须将电子邮件分类为“Primary（主要邮件）”、 “Social（社交邮件）”“Updates（更新邮件）”或“Forums（论坛邮件）”。 Gmail做分类时可能在内部估计概率，但最终它必须在类中选择一个。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;计算预测正确的数量&quot;&quot;&quot;</span>
+    <span class="c1">#传入的是一个y_hat的矩阵，每一行是一个样本的预测结果，每一列是一个类别的预测概率</span>
+    <span class="c1">#y是一个标签列表，每个元素是一个样本的标签</span>
+    <span class="c1">#如果y_hat.shape的列数大于1，说明y_hat是一个矩阵，然后y_hat.argmax(axis=1)返回每一行的最大值的索引，即预测的类别。</span>
+    <span class="c1">#然后和y进行比较，如果相等，返回1，否则返回0，然后求和，即为预测正确的数量</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">cmp</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmp</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+
+<span class="c1">#将预测类别和真实y元素进行比较，因为做的是分类问题。</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">y：tensor([0, 2])</span>
+<span class="sd">y_hat：tensor([[0.1000, 0.3000, 0.6000],</span>
+<span class="sd">        [0.3000, 0.2000, 0.5000]])</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">accuracy_test</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>                           <span class="c1">#给定预测值y_hat和真实值y,计算分类正确的类别数.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;计算预测正确的数量&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span><span class="c1">#如果y_hat是一个二维矩阵的话，它的shape&gt;1,它的列数也&gt;1.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;什么都没做的时候：&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat:</span><span class="si">{</span><span class="n">y_hat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y:</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.shape:</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.shape:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.type:</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.dtype：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.type:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.dtype:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">y_hat</span><span class="o">=</span><span class="n">y_hat</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#对每一行求argmax-每一行中元素最大的那个下标存到y_hat里面。</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;对每一行求argmax-每一行中元素最大的那个下标存到y_hat里面:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat:</span><span class="si">{</span><span class="n">y_hat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y:</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.shape:</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.shape:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.type:</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.dtype：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.type:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.dtype:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">cmp</span><span class="o">=</span><span class="n">y_hat</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">==</span><span class="n">y</span>  <span class="c1">#y_hat和y的数据类型可能不一样，把y_hat转成y的数据类型，然后对比相同下标的数据是否相同，变成一个bool的tensor。</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_hat和y的数据类型可能不一样，把y_hat转成y的数据类型，变成一个bool的tensor。&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.type:</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_hat.dtype：</span><span class="si">{</span><span class="n">y_hat</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.type:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.dtype:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cmp:</span><span class="si">{</span><span class="n">cmp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cmp转换成y的数据类型，然后求和&quot;</span><span class="p">)</span>
+    <span class="n">cmp</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.type:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y.dtype:</span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cmp.type:</span><span class="si">{</span><span class="n">cmp</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cmp.dtype:</span><span class="si">{</span><span class="n">cmp</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="o">=</span><span class="n">cmp</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True被解释为1，False被解释为0，所以后面相加为1&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cmp:</span><span class="si">{</span><span class="n">_t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;转换位浮点型&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;float(cmp.type(y.dtype).sum()):</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">cmp</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">cmp</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>         <span class="c1">#转成跟y一样的形状，求和。</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>我们将继续使用之前定义的变量y_hat和y分别作为预测的概率分布和标签。 可以看到，第一个样本的预测类别是2（该行的最大元素为0.6，索引为2），这与实际标签0不一致。 第二个样本的预测类别是2（该行的最大元素为0.5，索引为2），这与实际标签2一致。 因此，这两个样本的分类精度率为0.5。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#accuracy(y_hat, y) / len(y)</span>
+
+<span class="n">accuracy_test</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>什么都没做的时候：
+y_hat:tensor([[0.1000, 0.3000, 0.6000],
+        [0.3000, 0.2000, 0.5000]])
+y:tensor([0, 2])
+y_hat.shape:torch.Size([2, 3])
+y.shape:torch.Size([2])
+y_hat.type:&lt;built-in method type of Tensor object at 0x0000023974A3AB70&gt;
+y_hat.dtype：torch.float32
+y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.dtype:torch.int64
+对每一行求argmax-每一行中元素最大的那个下标存到y_hat里面:
+y_hat:tensor([2, 2])
+y:tensor([0, 2])
+y_hat.shape:torch.Size([2])
+y.shape:torch.Size([2])
+y_hat.type:&lt;built-in method type of Tensor object at 0x0000023974A38E30&gt;
+y_hat.dtype：torch.int64
+y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.dtype:torch.int64
+y_hat和y的数据类型可能不一样，把y_hat转成y的数据类型，变成一个bool的tensor。
+y_hat.type:&lt;built-in method type of Tensor object at 0x0000023974A38E30&gt;
+y_hat.dtype：torch.int64
+y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.dtype:torch.int64
+cmp:tensor([False,  True])
+cmp转换成y的数据类型，然后求和
+y.type:&lt;built-in method type of Tensor object at 0x0000023974A3BE30&gt;
+y.dtype:torch.int64
+cmp.type:&lt;built-in method type of Tensor object at 0x0000023974A38DD0&gt;
+cmp.dtype:torch.bool
+True被解释为1，False被解释为0，所以后面相加为1
+cmp:1
+转换位浮点型
+float(cmp.type(y.dtype).sum()):1.0
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>同样，对于任意数据迭代器data_iter可访问的数据集， 我们可以评估在任意模型net的精度。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#评估准确性</span>
+<span class="k">def</span> <span class="nf">evaluate_accuracy</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">data_iter</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;计算在指定数据集上模型的精度&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1">#检查一个对象是否属于指定的类型或类</span>
+        <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># 将模型设置为评估模式，softmax(torch.matmul(X.reshape((-1, W.shape[0])), W) + b)是一个张量，eval()方法将计算该张量的值并返回结果。</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="n">Accumulator</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 正确预测数、预测总数</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">:</span>   <span class="c1"># 不断叠加计算精度</span>
+            <span class="c1"># y.numel()返回y中元素的个数</span>
+            <span class="c1"># y为当前取一次数据的标签列表，一次取256个标签，y.numel()为列表的个数</span>
+            <span class="c1"># X为图片数据，结构为Tensor:torch.Size([256, 1, 28, 28])</span>
+            <span class="c1">#print(y[4]) #其中一条数据的标签</span>
+            <span class="c1">#print(X[4]) #其中一条数据</span>
+            <span class="n">metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>这里定义一个实用程序类Accumulator，用于对多个变量进行累加。 在上面的evaluate_accuracy函数中， 我们在Accumulator实例中创建了2个变量， 分别用于存储正确预测的数量和预测的总数量。 当我们遍历数据集时，两者都将随着时间的推移而累加。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#累加器</span>
+<span class="k">class</span> <span class="nc">Accumulator</span><span class="p">:</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;在n个变量上累加&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+
+    <span class="c1"># def add(self, *args):</span>
+    <span class="c1">#     self.data = [a + float(b) for a, b in zip(self.data, args)]</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span> <span class="c1">#就是对每次成功预测的个数和总数进行分别累加</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;__getitem__的用法</span>
+<span class="sd">    class MyList:</span>
+<span class="sd">        def __init__(self):</span>
+<span class="sd">            self.data = [1, 2, 3, 4, 5]</span>
+
+<span class="sd">        def __getitem__(self, index):</span>
+<span class="sd">            return self.data[index]</span>
+<span class="sd">    my_list = MyList()</span>
+<span class="sd">    print(my_list[2])  # 输出：3&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>由于我们使用随机权重初始化net模型， 因此该模型的精度应接近于随机猜测。 例如在有10个类别情况下的精度为0.1。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate_accuracy</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0992
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>训练<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_epoch_ch3</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">updater</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;训练模型一个迭代周期（定义见第3章）&quot;&quot;&quot;</span>
+    <span class="c1"># 将模型设置为训练模式</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+        <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="c1"># 训练损失总和、训练准确度总和、样本数</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="n">Accumulator</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">train_iter</span><span class="p">:</span>
+        <span class="c1"># 计算梯度并更新参数</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">updater</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">):</span>
+            <span class="c1"># 使用PyTorch内置的优化器和损失函数</span>
+            <span class="n">updater</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">updater</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 使用定制的优化器和损失函数</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">updater</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+    <span class="c1"># 返回训练损失和训练精度</span>
+    <span class="k">return</span> <span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>在展示训练函数的实现之前，我们定义一个在动画中绘制数据的实用程序类Animator， 它能够简化本书其余部分的代码。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Animator</span><span class="p">:</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;在动画中绘制数据&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+                 <span class="n">fmts</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;m--&#39;</span><span class="p">,</span> <span class="s1">&#39;g-.&#39;</span><span class="p">,</span> <span class="s1">&#39;r:&#39;</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)):</span>
+        <span class="c1"># 增量地绘制多条线</span>
+        <span class="k">if</span> <span class="n">legend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">legend</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">d2l</span><span class="o">.</span><span class="n">use_svg_display</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nrows</span> <span class="o">*</span> <span class="n">ncols</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="p">]</span>
+        <span class="c1"># 使用lambda函数捕获参数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_axes</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">d2l</span><span class="o">.</span><span class="n">set_axes</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">,</span> <span class="n">xscale</span><span class="p">,</span> <span class="n">yscale</span><span class="p">,</span> <span class="n">legend</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmts</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fmts</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># 向图表中添加多个数据点</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s2">&quot;__len__&quot;</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;__len__&quot;</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmts</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_axes</span><span class="p">()</span>
+        <span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">)</span>
+        <span class="n">display</span><span class="o">.</span><span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>接下来我们实现一个训练函数， 它会在train_iter访问到的训练数据集上训练一个模型net。 该训练函数将会运行多个迭代周期（由num_epochs指定）。 在每个迭代周期结束时，利用test_iter访问到的测试数据集对模型进行评估。 我们将利用Animator类来可视化训练进度。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_ch3</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">updater</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;训练模型（定义见第3章）&quot;&quot;&quot;</span>
+    <span class="n">animator</span> <span class="o">=</span> <span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span>
+                        <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train loss&#39;</span><span class="p">,</span> <span class="s1">&#39;train acc&#39;</span><span class="p">,</span> <span class="s1">&#39;test acc&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+        <span class="n">train_metrics</span> <span class="o">=</span> <span class="n">train_epoch_ch3</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">updater</span><span class="p">)</span>
+        <span class="n">test_acc</span> <span class="o">=</span> <span class="n">evaluate_accuracy</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">)</span>
+        <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">train_metrics</span> <span class="o">+</span> <span class="p">(</span><span class="n">test_acc</span><span class="p">,))</span>
+    <span class="n">train_loss</span><span class="p">,</span> <span class="n">train_acc</span> <span class="o">=</span> <span class="n">train_metrics</span>
+    <span class="k">assert</span> <span class="n">train_loss</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">train_loss</span>
+    <span class="k">assert</span> <span class="n">train_acc</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">train_acc</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">train_acc</span>
+    <span class="k">assert</span> <span class="n">test_acc</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">test_acc</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">test_acc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>作为一个从零开始的实现，我们使用 3.2节中定义的 小批量随机梯度下降来优化模型的损失函数，设置学习率为0.1。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="k">def</span> <span class="nf">updater</span><span class="p">(</span><span class="n">batch_size</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">d2l</span><span class="o">.</span><span class="n">sgd</span><span class="p">([</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>现在，我们训练模型10个迭代周期。 请注意，迭代周期（num_epochs）和学习率（lr）都是可调节的超参数。 通过更改它们的值，我们可以提高模型的分类精度。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">train_ch3</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">cross_entropy</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">updater</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bbc9a5a01870943d7d3b0e9195da27de833c114219ba20da511ce2d223f796ee.svg" src="../_images/bbc9a5a01870943d7d3b0e9195da27de833c114219ba20da511ce2d223f796ee.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id8">
+<h1>预测<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<p>现在训练已经完成，我们的模型已经准备好对图像进行分类预测。 给定一系列图像，我们将比较它们的实际标签（文本输出的第一行）和模型预测（文本输出的第二行）。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_ch3</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;预测标签（定义见第3章）&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">test_iter</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">trues</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">get_fashion_mnist_labels</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">get_fashion_mnist_labels</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="n">true</span> <span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">pred</span> <span class="k">for</span> <span class="n">true</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">trues</span><span class="p">,</span> <span class="n">preds</span><span class="p">)]</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">show_images</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">titles</span><span class="o">=</span><span class="n">titles</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">])</span>
+
+<span class="n">predict_ch3</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6ea77b8f7e2cd58e01abcb55272df1882bf905329d950bdeff5ebd1a2e2c67c5.svg" src="../_images/6ea77b8f7e2cd58e01abcb55272df1882bf905329d950bdeff5ebd1a2e2c67c5.svg" /></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./LinearNeuralNetwork"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">交叉熵损失函数原理详解</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Softmax回归代码实现</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">导入数据集</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">定义类神经网路模型</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">定义softmax操作</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">定义模型</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">定义损失函数</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#torch">用torch实现</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">分类精度</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">训练</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">预测</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
