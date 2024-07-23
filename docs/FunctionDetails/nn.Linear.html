@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nn.Linear的基本定义 &#8212; AI学习笔记</title>
+    <title>nn.Linear &#8212; AI学习笔记</title>
   
   
   
@@ -205,8 +205,7 @@
 <li class="toctree-l2"><a class="reference internal" href="torch.matmul.html">Torch Matmul</a></li>
 <li class="toctree-l2"><a class="reference internal" href="torch.normal.html">Torch Normal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="torch.zeros.html">Torch Zeros</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">nn.Linear的基本定义</a></li>
-
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">nn.Linear</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nn.ReLU.html">nn.ReLU</a></li>
 </ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
@@ -395,7 +394,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>nn.Linear的基本定义</h1>
+    <h1>nn.Linear</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -405,10 +404,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">nn.Linear的基本定义</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实战</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实战</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -419,8 +416,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nn-linear">
-<h1>nn.Linear的基本定义<a class="headerlink" href="#nn-linear" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="nn-linear">
+<h1>nn.Linear<a class="headerlink" href="#nn-linear" title="Link to this heading">#</a></h1>
 <p>PyTorch的 nn.Linear() 是用于设置网络中的全连接层的，需要注意在二维图像处理的任务中，全连接层的输入与输出一般都设置为二维张量，形状通常为<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">size]</span></code>，不同于卷积层要求输入输出是四维张量。其用法与形参说明如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="c1"># 输入的神经元个数，也可以说是前一层网络神经元的个数</span>
@@ -453,7 +450,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.0478], grad_fn=&lt;AddBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-1.1331], grad_fn=&lt;AddBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -469,9 +466,9 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[ 0.4971, -0.4070]], requires_grad=True)
+tensor([[-0.3285, -0.5169]], requires_grad=True)
 Parameter containing:
-tensor([0.2691], requires_grad=True)
+tensor([0.2292], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -530,9 +527,8 @@ tensor([0.2691], requires_grad=True)
 </div>
 </div>
 </div>
-</section>
 <section id="id1">
-<h1>实战<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h2>实战<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>假设我们的一次输入三个样本A,B,C（即batch_size为3），每个样本的特征数量为5：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">]</span>
 <span class="n">B</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.6</span><span class="p">]</span>
@@ -597,18 +593,18 @@ W_{40} &amp; W_{41} &amp; \cdots &amp; W_{48} &amp; W_{49}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 6.8464e-03,  7.4956e-02,  2.6578e-04, -7.4493e-02,  7.3577e-02,
-         -4.6650e-01,  8.9421e-02,  7.4160e-02,  2.3221e-01,  3.6866e-01],
-        [ 4.7623e-02,  3.0791e-01, -2.9063e-01,  3.7177e-02, -2.0016e-01,
-         -4.2853e-01, -1.8425e-01,  2.7158e-01,  1.8407e-01,  2.1897e-01],
-        [ 8.8399e-02,  5.4086e-01, -5.8153e-01,  1.4885e-01, -4.7389e-01,
-         -3.9056e-01, -4.5793e-01,  4.6899e-01,  1.3593e-01,  6.9287e-02]],
-       grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.4160, -0.3060, -0.4477, -0.1926,  0.7353, -0.1322, -0.1598,  0.2048,
+          0.3105, -0.7814],
+        [-0.5623, -0.3645, -0.4395, -0.2518,  1.0629, -0.3065, -0.2675,  0.0859,
+          0.2605, -1.1586],
+        [-0.7086, -0.4230, -0.4313, -0.3111,  1.3905, -0.4808, -0.3753, -0.0329,
+          0.2104, -1.5357]], grad_fn=&lt;AddmmBackward0&gt;)
 torch.Size([3, 10])
 </pre></div>
 </div>
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -675,10 +671,8 @@ torch.Size([3, 10])
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">nn.Linear的基本定义</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实战</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实战</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

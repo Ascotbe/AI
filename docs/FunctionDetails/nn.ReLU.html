@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="线性神经网络" href="../LinearNeuralNetwork/index.html" />
-    <link rel="prev" title="nn.Linear的基本定义" href="nn.Linear.html" />
+    <link rel="prev" title="nn.Linear" href="nn.Linear.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -205,8 +205,7 @@
 <li class="toctree-l2"><a class="reference internal" href="torch.matmul.html">Torch Matmul</a></li>
 <li class="toctree-l2"><a class="reference internal" href="torch.normal.html">Torch Normal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="torch.zeros.html">Torch Zeros</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nn.Linear.html">nn.Linear的基本定义</a></li>
-
+<li class="toctree-l2"><a class="reference internal" href="nn.Linear.html">nn.Linear</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">nn.ReLU</a></li>
 </ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
@@ -407,7 +406,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="nn-relu">
+  <section class="tex2jax_ignore mathjax_ignore" id="nn-relu">
 <h1>nn.ReLU<a class="headerlink" href="#nn-relu" title="Link to this heading">#</a></h1>
 <p>逐元素应用ReLU函数对数据进行激活</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -432,10 +431,10 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([ 0.5630, -2.9146, -1.1480,  2.1471, -0.6462, -1.0726, -0.8426, -0.4488,
-         0.4758, -0.6288])
+tensor([ 1.1935,  1.6231,  0.0381,  0.4678, -1.1336,  0.4353,  0.6065,  0.6262,
+        -0.8449, -0.4644])
 经过relu之后
-tensor([0.5630, 0.0000, 0.0000, 2.1471, 0.0000, 0.0000, 0.0000, 0.0000, 0.4758,
+tensor([1.1935, 1.6231, 0.0381, 0.4678, 0.0000, 0.4353, 0.6065, 0.6262, 0.0000,
         0.0000])
 </pre></div>
 </div>
@@ -457,13 +456,13 @@ tensor([0.5630, 0.0000, 0.0000, 2.1471, 0.0000, 0.0000, 0.0000, 0.0000, 0.4758,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([-1.1228,  0.5658,  1.1301, -0.8140, -0.4744,  0.5604, -0.6829,  0.5193,
-         0.3171, -0.9299])
+tensor([-0.4281,  0.2542, -0.1558,  0.6282,  0.9955,  0.7659, -0.3594,  0.4422,
+        -0.0701, -0.4259])
 经过relu之后c的值
-tensor([0.0000, 0.5658, 1.1301, 0.0000, 0.0000, 0.5604, 0.0000, 0.5193, 0.3171,
+tensor([0.0000, 0.2542, 0.0000, 0.6282, 0.9955, 0.7659, 0.0000, 0.4422, 0.0000,
         0.0000])
 经过relu之后d的值
-tensor([0.0000, 0.5658, 1.1301, 0.0000, 0.0000, 0.5604, 0.0000, 0.5193, 0.3171,
+tensor([0.0000, 0.2542, 0.0000, 0.6282, 0.9955, 0.7659, 0.0000, 0.4422, 0.0000,
         0.0000])
 </pre></div>
 </div>
@@ -507,7 +506,7 @@ tensor([0.0000, 0.5658, 1.1301, 0.0000, 0.0000, 0.5604, 0.0000, 0.5193, 0.3171,
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">nn.Linear的基本定义</p>
+        <p class="prev-next-title">nn.Linear</p>
       </div>
     </a>
     <a class="right-next"

@@ -205,8 +205,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">Torch Matmul</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.normal.html">Torch Normal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">Torch Zeros</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/nn.Linear.html">nn.Linear的基本定义</a></li>
-
+<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/nn.Linear.html">nn.Linear</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/nn.ReLU.html">nn.ReLU</a></li>
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
@@ -561,7 +560,7 @@ FashionMNIST数据集中包含已经预先划分好的训练集和测试集，�
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([256, 1, 28, 28]) torch.Size([256])
 </pre></div>
 </div>
-<img alt="../_images/bcaa14eae086f685b271241ed1c3eb9e004b55169c361a9b4964ca57fdb88b93.png" src="../_images/bcaa14eae086f685b271241ed1c3eb9e004b55169c361a9b4964ca57fdb88b93.png" />
+<img alt="../_images/59ee33c7f92b1bd07807399962a51451aed17a2f2720a0adccae83a4d239b568.png" src="../_images/59ee33c7f92b1bd07807399962a51451aed17a2f2720a0adccae83a4d239b568.png" />
 </div>
 </div>
 </section>
@@ -587,13 +586,13 @@ FashionMNIST数据集中包含已经预先划分好的训练集和测试集，�
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0109,  0.0022, -0.0128,  ...,  0.0078,  0.0215, -0.0080],
-        [ 0.0064,  0.0087,  0.0141,  ..., -0.0008,  0.0087, -0.0020],
-        [ 0.0112,  0.0070, -0.0107,  ...,  0.0011,  0.0086, -0.0065],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0016,  0.0066, -0.0032,  ...,  0.0050, -0.0019, -0.0091],
+        [ 0.0076, -0.0171,  0.0044,  ...,  0.0093, -0.0072,  0.0162],
+        [ 0.0202, -0.0055, -0.0014,  ..., -0.0011,  0.0097,  0.0150],
         ...,
-        [-0.0151, -0.0022, -0.0048,  ..., -0.0098, -0.0079,  0.0037],
-        [-0.0177,  0.0195, -0.0125,  ..., -0.0027,  0.0096,  0.0040],
-        [-0.0115,  0.0113, -0.0094,  ...,  0.0046,  0.0074, -0.0047]],
+        [-0.0064,  0.0073, -0.0144,  ..., -0.0005, -0.0141, -0.0135],
+        [-0.0008,  0.0013,  0.0038,  ...,  0.0012, -0.0052, -0.0106],
+        [-0.0021,  0.0033, -0.0093,  ...,  0.0080, -0.0168,  0.0055]],
        requires_grad=True)
 tensor([0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], requires_grad=True)
 </pre></div>
@@ -700,17 +699,17 @@ tensor([ 6., 15.])
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ccccc等于:tensor([[  2.7183,   7.3891,  20.0855],
         [ 54.5982, 148.4132, 403.4288]])
-X等于:tensor([[ 0.2269, -1.3129, -0.3435, -0.7882, -0.8277],
-        [-0.0582,  0.7201, -0.8531,  1.2614, -0.1342]])
-X_exp等于:tensor([[1.2547, 0.2690, 0.7093, 0.4547, 0.4371],
-        [0.9434, 2.0546, 0.4261, 3.5302, 0.8744]])
-partition等于:tensor([[3.1248],
-        [7.8288]])
+X等于:tensor([[ 0.8581,  0.2675, -0.8600,  0.1591, -0.6057],
+        [-0.3412,  1.7277,  0.7523, -0.0815, -0.4099]])
+X_exp等于:tensor([[2.3588, 1.3067, 0.4232, 1.1724, 0.5457],
+        [0.7109, 5.6274, 2.1219, 0.9218, 0.6637]])
+partition等于:tensor([[ 5.8067],
+        [10.0457]])
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[0.4015, 0.0861, 0.2270, 0.1455, 0.1399],
-         [0.1205, 0.2624, 0.0544, 0.4509, 0.1117]]),
- tensor([1.0000, 1.0000]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[0.4062, 0.2250, 0.0729, 0.2019, 0.0940],
+         [0.0708, 0.5602, 0.2112, 0.0918, 0.0661]]),
+ tensor([1., 1.]))
 </pre></div>
 </div>
 </div>
@@ -890,29 +889,29 @@ y_hat:tensor([[0.1000, 0.3000, 0.6000],
 y:tensor([0, 2])
 y_hat.shape:torch.Size([2, 3])
 y.shape:torch.Size([2])
-y_hat.type:&lt;built-in method type of Tensor object at 0x7fbb9250fc90&gt;
+y_hat.type:&lt;built-in method type of Tensor object at 0x7fd1d8e1cdb0&gt;
 y_hat.dtype：torch.float32
-y.type:&lt;built-in method type of Tensor object at 0x7fbb71344450&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fd1d969ca40&gt;
 y.dtype:torch.int64
 对每一行求argmax-每一行中元素最大的那个下标存到y_hat里面:
 y_hat:tensor([2, 2])
 y:tensor([0, 2])
 y_hat.shape:torch.Size([2])
 y.shape:torch.Size([2])
-y_hat.type:&lt;built-in method type of Tensor object at 0x7fbb71327e70&gt;
+y_hat.type:&lt;built-in method type of Tensor object at 0x7fd1d969c6d0&gt;
 y_hat.dtype：torch.int64
-y.type:&lt;built-in method type of Tensor object at 0x7fbb71344450&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fd1d969ca40&gt;
 y.dtype:torch.int64
 y_hat和y的数据类型可能不一样，把y_hat转成y的数据类型，变成一个bool的tensor。
-y_hat.type:&lt;built-in method type of Tensor object at 0x7fbb71327e70&gt;
+y_hat.type:&lt;built-in method type of Tensor object at 0x7fd1d969c6d0&gt;
 y_hat.dtype：torch.int64
-y.type:&lt;built-in method type of Tensor object at 0x7fbb71344450&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fd1d969ca40&gt;
 y.dtype:torch.int64
 cmp:tensor([False,  True])
 cmp转换成y的数据类型，然后求和
-y.type:&lt;built-in method type of Tensor object at 0x7fbb71344450&gt;
+y.type:&lt;built-in method type of Tensor object at 0x7fd1d969ca40&gt;
 y.dtype:torch.int64
-cmp.type:&lt;built-in method type of Tensor object at 0x7fbb71344680&gt;
+cmp.type:&lt;built-in method type of Tensor object at 0x7fd1d969c810&gt;
 cmp.dtype:torch.bool
 True被解释为1，False被解释为0，所以后面相加为1
 cmp:1
@@ -990,7 +989,7 @@ float(cmp.type(y.dtype).sum()):1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.1071
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0998
 </pre></div>
 </div>
 </div>
@@ -1112,7 +1111,7 @@ float(cmp.type(y.dtype).sum()):1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7590b4e6bc672623a358d796ea6fc4fed76b18e73d5e55e8323a998b2251ea3c.svg" src="../_images/7590b4e6bc672623a358d796ea6fc4fed76b18e73d5e55e8323a998b2251ea3c.svg" /></div>
+<img alt="../_images/548c22328be67fb9976cf657bfa51d752f5e1654f52e2c8315095a50da1b9a56.svg" src="../_images/548c22328be67fb9976cf657bfa51d752f5e1654f52e2c8315095a50da1b9a56.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id8">
@@ -1135,7 +1134,7 @@ float(cmp.type(y.dtype).sum()):1.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/431a55145a1272b4566fac361b6ee8c3599d3586cbbc17837ee2432c2b24299e.svg" src="../_images/431a55145a1272b4566fac361b6ee8c3599d3586cbbc17837ee2432c2b24299e.svg" /></div>
+<img alt="../_images/365d9f6171d7c8665ea02052cd6e3c0cc2ad9dfdef77d7e5b2ab5896d6f64f6b.svg" src="../_images/365d9f6171d7c8665ea02052cd6e3c0cc2ad9dfdef77d7e5b2ab5896d6f64f6b.svg" /></div>
 </div>
 </section>
 
