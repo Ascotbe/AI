@@ -203,6 +203,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">Torch Matmul</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.normal.html">Torch Normal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">Torch Zeros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/nn.Linear.html">nn.Linear的基本定义</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../FunctionDetails/nn.ReLU.html">nn.ReLU</a></li>
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
@@ -229,6 +232,12 @@
 
 
 
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../MultilayerPerceptrons/index.html">多层感知机</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
@@ -522,7 +531,29 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ffb4ac33ee1fb8ec34f42bb5241b26d3727b62036129c3493780df145c60b0a2.png" src="../_images/ffb4ac33ee1fb8ec34f42bb5241b26d3727b62036129c3493780df145c60b0a2.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>findfont: Font family [&#39;sans-serif&#39;] not found. Falling back to DejaVu Sans.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>findfont: Generic family &#39;sans-serif&#39; not found because none of the following families were found: SimHei
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>findfont: Font family [&#39;sans-serif&#39;] not found. Falling back to DejaVu Sans.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>findfont: Generic family &#39;sans-serif&#39; not found because none of the following families were found: SimHei
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 21407 (\N{CJK UNIFIED IDEOGRAPH-539F}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 22987 (\N{CJK UNIFIED IDEOGRAPH-59CB}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 22270 (\N{CJK UNIFIED IDEOGRAPH-56FE}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 29255 (\N{CJK UNIFIED IDEOGRAPH-7247}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/09409825a3fce39542d68c6ba200fe69c05de74722cbe0889274d04bf994382f.png" src="../_images/09409825a3fce39542d68c6ba200fe69c05de74722cbe0889274d04bf994382f.png" />
 </div>
 </div>
 </section>
@@ -575,7 +606,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/339710f6eb86f96aa16d43846ebd8a69ebfe18c4dba312039dba5adcef461912.png" src="../_images/339710f6eb86f96aa16d43846ebd8a69ebfe18c4dba312039dba5adcef461912.png" />
+<img alt="../_images/82022cbca218e9f194f45fe7658416d97629669be2ee3c2b2ad32a624f1041ec.png" src="../_images/82022cbca218e9f194f45fe7658416d97629669be2ee3c2b2ad32a624f1041ec.png" />
 </div>
 </div>
 </section>
@@ -638,7 +669,17 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9f02d543bc989cdc465ed0fa06417aba9cc6f645c3378a7548c169d358d4e36c.png" src="../_images/9f02d543bc989cdc465ed0fa06417aba9cc6f645c3378a7548c169d358d4e36c.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 20687 (\N{CJK UNIFIED IDEOGRAPH-50CF}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 21464 (\N{CJK UNIFIED IDEOGRAPH-53D8}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 25442 (\N{CJK UNIFIED IDEOGRAPH-6362}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 21518 (\N{CJK UNIFIED IDEOGRAPH-540E}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/e3f98501289ac508e1bbcbf48fb177727806f4297437fc3acd9b2c101f7f7a41.png" src="../_images/e3f98501289ac508e1bbcbf48fb177727806f4297437fc3acd9b2c101f7f7a41.png" />
 </div>
 </div>
 </section>
@@ -701,7 +742,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2c60562cb0c1d273be70fdebf29ec92eb12be1b51e2f31b487af32b567082ed7.png" src="../_images/2c60562cb0c1d273be70fdebf29ec92eb12be1b51e2f31b487af32b567082ed7.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 26059 (\N{CJK UNIFIED IDEOGRAPH-65CB}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 36716 (\N{CJK UNIFIED IDEOGRAPH-8F6C}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/6626453638e69cb363d3e68bcbee489e7de3be945c8deca7d43f9cc2ff365fd5.png" src="../_images/6626453638e69cb363d3e68bcbee489e7de3be945c8deca7d43f9cc2ff365fd5.png" />
 </div>
 </div>
 <p>在transforms模块中，pytorch对于多数变换都同时提供有类方式和函数方式的实现，但相较于函数，我更加推荐使用类的方式去实现变换，因为这种方式能够在实例化对象时，通过传递参数实现更加个性化的定制，例如进行尺寸变换，可以在构造方法中指定变换尺寸，这是函数方式无法做到的。函数方式更多是用在定义图像变换类使用使用，另外在功能固定、单一，使用函数方式实现也是不错的选择。</p>
@@ -757,7 +804,7 @@ document.write(`
 torch.Tensor类型数据裁切后输出类型为：&lt;class &#39;torch.Tensor&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/5243f66515e9553e45d997f58d9878693a6d5a1457767edea1a94070dec08492.png" src="../_images/5243f66515e9553e45d997f58d9878693a6d5a1457767edea1a94070dec08492.png" />
+<img alt="../_images/61b5124b8cecb59aaab7fb40ee6865937e695734d0404da55801e7ff19004b3c.png" src="../_images/61b5124b8cecb59aaab7fb40ee6865937e695734d0404da55801e7ff19004b3c.png" />
 </div>
 </div>
 <p>上述示例中，对PIL.Image类型和torch.Tensor类型数据进行了裁切，证明了CenterCrop这类通用型API并不会改变数据类型，输入什么类型的图像，输出还是什么类型的图像，另外从图像展示结果上看，对两种类型的图像变换的效果是一样的。</p>
@@ -784,11 +831,15 @@ torch.Tensor类型数据裁切后输出类型为：&lt;class &#39;torch.Tensor&#
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+</pre></div>
+</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>size=300，缩放后图像宽高为：torch.Size([3, 309, 300])
 size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </pre></div>
 </div>
-<img alt="../_images/87c3cc5633be4fdd0740ec40d3b3381eed2c4ee4b3c24b6e363d10b1b155bfbb.png" src="../_images/87c3cc5633be4fdd0740ec40d3b3381eed2c4ee4b3c24b6e363d10b1b155bfbb.png" />
+<img alt="../_images/1aec27c574f799992758063dff764db289e627df9f90c0fcc2989ec4dae00c8a.png" src="../_images/1aec27c574f799992758063dff764db289e627df9f90c0fcc2989ec4dae00c8a.png" />
 </div>
 </div>
 </section>
@@ -848,7 +899,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5d65efa8eb452ebb0b20ff50846ee554999f7c1ae93969227b2ad3eab09f6357.png" src="../_images/5d65efa8eb452ebb0b20ff50846ee554999f7c1ae93969227b2ad3eab09f6357.png" />
+<img alt="../_images/47820b050288e64d0be40344d89815dd9040897f3d1f2795dfeefe71d034af65.png" src="../_images/47820b050288e64d0be40344d89815dd9040897f3d1f2795dfeefe71d034af65.png" />
 </div>
 </div>
 </section>
@@ -914,7 +965,29 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1927cf80dceefdf05365ad7fd4f7cc9f2cefcef7873fb2dfeb8103d46da744dd.png" src="../_images/1927cf80dceefdf05365ad7fd4f7cc9f2cefcef7873fb2dfeb8103d46da744dd.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 38543 (\N{CJK UNIFIED IDEOGRAPH-968F}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 26426 (\N{CJK UNIFIED IDEOGRAPH-673A}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 20142 (\N{CJK UNIFIED IDEOGRAPH-4EAE}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 24230 (\N{CJK UNIFIED IDEOGRAPH-5EA6}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 23545 (\N{CJK UNIFIED IDEOGRAPH-5BF9}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 27604 (\N{CJK UNIFIED IDEOGRAPH-6BD4}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 39281 (\N{CJK UNIFIED IDEOGRAPH-9971}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 21644 (\N{CJK UNIFIED IDEOGRAPH-548C}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 33394 (\N{CJK UNIFIED IDEOGRAPH-8272}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 35843 (\N{CJK UNIFIED IDEOGRAPH-8C03}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/cf4a1c603a8d3a38b62686064159e8babd56ba2fe25959b66da47e1373796427.png" src="../_images/cf4a1c603a8d3a38b62686064159e8babd56ba2fe25959b66da47e1373796427.png" />
 </div>
 </div>
 </section>
@@ -962,7 +1035,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0056be4e809485259942b2af05132080c2df999226affb7b74cf92c1d7feeeef.png" src="../_images/0056be4e809485259942b2af05132080c2df999226affb7b74cf92c1d7feeeef.png" />
+<img alt="../_images/3a3a209708a1951d0e6bb608646e51ce84e5a9636133827290d49a56d59e7ff4.png" src="../_images/3a3a209708a1951d0e6bb608646e51ce84e5a9636133827290d49a56d59e7ff4.png" />
 </div>
 </div>
 </section>
@@ -994,7 +1067,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/075e67ae749529671ecaba15e5341704f0ae534807026f0abe1e5d716be82ee8.png" src="../_images/075e67ae749529671ecaba15e5341704f0ae534807026f0abe1e5d716be82ee8.png" />
+<img alt="../_images/cbea2b67288799bc5adf2ad515f329e95f54f0a3dff97ba2f31f44a3abbc402f.png" src="../_images/cbea2b67288799bc5adf2ad515f329e95f54f0a3dff97ba2f31f44a3abbc402f.png" />
 </div>
 </div>
 </section>
@@ -1030,7 +1103,23 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>转换后输出变量类型为：&lt;class &#39;tuple&#39;&gt;, 输出变量长度为：5
 </pre></div>
 </div>
-<img alt="../_images/1d63f8ed84e3f201c92508e76ba70d2a7e9f9889317339d0cd5715b90abbf148.png" src="../_images/1d63f8ed84e3f201c92508e76ba70d2a7e9f9889317339d0cd5715b90abbf148.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 24038 (\N{CJK UNIFIED IDEOGRAPH-5DE6}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 19978 (\N{CJK UNIFIED IDEOGRAPH-4E0A}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 35282 (\N{CJK UNIFIED IDEOGRAPH-89D2}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 21491 (\N{CJK UNIFIED IDEOGRAPH-53F3}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 19979 (\N{CJK UNIFIED IDEOGRAPH-4E0B}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 20013 (\N{CJK UNIFIED IDEOGRAPH-4E2D}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 24515 (\N{CJK UNIFIED IDEOGRAPH-5FC3}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/f10ab3bff79273066f3112330826d2ee5ce6c114fe11513e480786fa62fd876d.png" src="../_images/f10ab3bff79273066f3112330826d2ee5ce6c114fe11513e480786fa62fd876d.png" />
 </div>
 </div>
 <p>再来说TenCrop(size, vertical_flip=False)。</p>
@@ -1063,7 +1152,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </pre></div>
 </div>
-<img alt="../_images/9139fdd4646cac1f287468d93f6ff5eb42d1c13bf47660af6a374efeecda6ba8.png" src="../_images/9139fdd4646cac1f287468d93f6ff5eb42d1c13bf47660af6a374efeecda6ba8.png" />
+<img alt="../_images/25bdbeb508a1c7e46f935606c64147dc7ae507def27014c0536893488852fc76.png" src="../_images/25bdbeb508a1c7e46f935606c64147dc7ae507def27014c0536893488852fc76.png" />
 </div>
 </div>
 <p>RandomGrayscale以一定的概率将图像变为灰度图像。实际上就是以一定的概率执行torchvision.transforms.Grayscale。参数只有一个概率值p，默认值为0.1。这里不再演示。</p>
@@ -1099,7 +1188,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b79d8b1d734eeae98286c89eebd9dc52b6c86bce00ac1a8369d09b5558ea5835.png" src="../_images/b79d8b1d734eeae98286c89eebd9dc52b6c86bce00ac1a8369d09b5558ea5835.png" />
+<img alt="../_images/310ec0eea0e6007c263eba529a38072aef7c003df71e535270457e5fd220990e.png" src="../_images/310ec0eea0e6007c263eba529a38072aef7c003df71e535270457e5fd220990e.png" />
 </div>
 </div>
 </section>
@@ -1155,7 +1244,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/82c418d62fbd766b4fcddf0ea152e347895ccba24c6e4539e4365b07008797be.png" src="../_images/82c418d62fbd766b4fcddf0ea152e347895ccba24c6e4539e4365b07008797be.png" />
+<img alt="../_images/76403866424294a36527646cbc41c38bee2b8e81f23d802e979865221c9b32bc.png" src="../_images/76403866424294a36527646cbc41c38bee2b8e81f23d802e979865221c9b32bc.png" />
 </div>
 </div>
 </section>
@@ -1207,7 +1296,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4ab620e654b69994e4628a8844c2eec62b03a75e651fc5336f117cd859f1e212.png" src="../_images/4ab620e654b69994e4628a8844c2eec62b03a75e651fc5336f117cd859f1e212.png" />
+<img alt="../_images/35a19713bbf93fe2f878561f8e529e3db034d68ec8f91cad4d33ec7430fb797d.png" src="../_images/35a19713bbf93fe2f878561f8e529e3db034d68ec8f91cad4d33ec7430fb797d.png" />
 </div>
 </div>
 </section>
@@ -1230,7 +1319,15 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1463f2b32636585486a7f756386516417a25bd4ae9ab0048510044aa28eb754f.png" src="../_images/1463f2b32636585486a7f756386516417a25bd4ae9ab0048510044aa28eb754f.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 27700 (\N{CJK UNIFIED IDEOGRAPH-6C34}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 24179 (\N{CJK UNIFIED IDEOGRAPH-5E73}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 32763 (\N{CJK UNIFIED IDEOGRAPH-7FFB}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/c776f98681572a1856811db74819c44cb364f3850c3b79b9bbc1875d95a2c5db.png" src="../_images/c776f98681572a1856811db74819c44cb364f3850c3b79b9bbc1875d95a2c5db.png" />
 </div>
 </div>
 <p>有水平翻转，就有垂直翻转，即RandomVerticalFlip(p=0.5)，用法与RandomHorizontalFlip(p=0.5)完全一致，这里不再介绍。</p>
@@ -1260,7 +1357,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/06616ebee67009781e17edfa65de3847029d3b0fbb6c0418607eb441cb3ad06d.png" src="../_images/06616ebee67009781e17edfa65de3847029d3b0fbb6c0418607eb441cb3ad06d.png" />
+<img alt="../_images/d6ca70e61001ab3f3e9b25c39f5b7ba6ad343caad4083c634771b7f0e8c5092c.png" src="../_images/d6ca70e61001ab3f3e9b25c39f5b7ba6ad343caad4083c634771b7f0e8c5092c.png" />
 </div>
 </div>
 </section>
@@ -1286,7 +1383,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/859a181a921c3aa2fbf33396439ba9b8b04490bd683dbed8258a1ff2ff74bb38.png" src="../_images/859a181a921c3aa2fbf33396439ba9b8b04490bd683dbed8258a1ff2ff74bb38.png" />
+<img alt="../_images/85312f6e34255f8f8d16ac69a4762b480aaebf4170963fa404485a3323fa56ce.png" src="../_images/85312f6e34255f8f8d16ac69a4762b480aaebf4170963fa404485a3323fa56ce.png" />
 </div>
 </div>
 </section>
@@ -1332,7 +1429,13 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3a8d60f01057fef18a2fa01d6c9117e49f93226a029edd6c8f4c0d7ca27da045.png" src="../_images/3a8d60f01057fef18a2fa01d6c9117e49f93226a029edd6c8f4c0d7ca27da045.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 19968 (\N{CJK UNIFIED IDEOGRAPH-4E00}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 27425 (\N{CJK UNIFIED IDEOGRAPH-6B21}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/9e27db43cd62257315eef93908d6615528da5cd2f0a83cb8831781f01125529f.png" src="../_images/9e27db43cd62257315eef93908d6615528da5cd2f0a83cb8831781f01125529f.png" />
 </div>
 </div>
 </section>
@@ -1381,7 +1484,13 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0c09217dbf2f59d09139f7efaa64cb83880919143103d12e14a71e06e33bba8a.png" src="../_images/0c09217dbf2f59d09139f7efaa64cb83880919143103d12e14a71e06e33bba8a.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 25830 (\N{CJK UNIFIED IDEOGRAPH-64E6}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+/Users/ascotbe/anaconda3/lib/python3.10/site-packages/IPython/core/pylabtools.py:152: UserWarning: Glyph 38500 (\N{CJK UNIFIED IDEOGRAPH-9664}) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="../_images/234b416ead5e40dbabe72f3ab5ea990883707b245546de171de729133782c60b.png" src="../_images/234b416ead5e40dbabe72f3ab5ea990883707b245546de171de729133782c60b.png" />
 </div>
 </div>
 </section>
