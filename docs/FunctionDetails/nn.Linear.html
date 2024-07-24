@@ -242,6 +242,12 @@
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../DeepLearning/index.html">深度学习计算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul>
 
     </div>
 </nav></div>
@@ -450,7 +456,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-1.1331], grad_fn=&lt;AddBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.9083], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -466,9 +472,9 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[-0.3285, -0.5169]], requires_grad=True)
+tensor([[ 0.4266, -0.4878]], requires_grad=True)
 Parameter containing:
-tensor([0.2292], requires_grad=True)
+tensor([-0.3593], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -505,7 +511,7 @@ tensor([0.2292], requires_grad=True)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([1.2000], grad_fn=&lt;AddBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([1.2000], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -593,12 +599,12 @@ W_{40} &amp; W_{41} &amp; \cdots &amp; W_{48} &amp; W_{49}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.4160, -0.3060, -0.4477, -0.1926,  0.7353, -0.1322, -0.1598,  0.2048,
-          0.3105, -0.7814],
-        [-0.5623, -0.3645, -0.4395, -0.2518,  1.0629, -0.3065, -0.2675,  0.0859,
-          0.2605, -1.1586],
-        [-0.7086, -0.4230, -0.4313, -0.3111,  1.3905, -0.4808, -0.3753, -0.0329,
-          0.2104, -1.5357]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0862, -0.4761, -0.2895, -0.0469, -0.2535, -0.0178, -0.2911, -0.3080,
+         -0.1375, -0.0317],
+        [-0.0313, -0.7474, -0.1868, -0.0754, -0.1681,  0.0614, -0.2868, -0.3378,
+          0.0286,  0.0399],
+        [ 0.0236, -1.0187, -0.0840, -0.1038, -0.0827,  0.1406, -0.2825, -0.3676,
+          0.1947,  0.1115]], grad_fn=&lt;AddmmBackward0&gt;)
 torch.Size([3, 10])
 </pre></div>
 </div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Softmax 回归原理 &#8212; AI学习笔记</title>
+    <title>深度学习计算 &#8212; AI学习笔记</title>
   
   
   
@@ -59,12 +59,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'LinearNeuralNetwork/Softmax回归原理';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'DeepLearning/index';</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="交叉熵损失函数原理详解" href="%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" />
-    <link rel="prev" title="线性回归" href="%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" />
+    <link rel="next" title="层和块" href="%E5%B1%82%E5%92%8C%E5%9D%97.html" />
+    <link rel="prev" title="多层感知机的简洁实现" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -210,9 +210,9 @@
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">线性神经网络</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../LinearNeuralNetwork/index.html">线性神经网络</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
 
 
 
@@ -220,20 +220,20 @@
 
 
 
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Softmax 回归原理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
 
 
-<li class="toctree-l2"><a class="reference internal" href="%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="../LinearNeuralNetwork/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
 
 
 
 
 
-</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+
+
+
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 <ul class="nav bd-sidenav">
@@ -242,10 +242,10 @@
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../DeepLearning/index.html">深度学习计算</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
-</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">深度学习计算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
 
@@ -316,7 +316,7 @@
       
       
       
-      <li><a href="../_sources/LinearNeuralNetwork/Softmax回归原理.ipynb" target="_blank"
+      <li><a href="../_sources/DeepLearning/index.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -326,7 +326,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -387,9 +387,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -400,25 +398,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Softmax 回归原理</h1>
+    <h1>深度学习计算</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Softmax 回归原理</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实际计算举例</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding">什么是One-hot encoding？</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">手写辨识实作</a></li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -428,50 +412,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p><a class="reference external" href="https://paddlepedia.readthedocs.io/">https://paddlepedia.readthedocs.io/</a></p>
-<section class="tex2jax_ignore mathjax_ignore" id="softmax">
-<h1>Softmax 回归原理<a class="headerlink" href="#softmax" title="Link to this heading">#</a></h1>
-<p>Softmax回归是逻辑回归 (Logistic Regression) 的推广，逻辑回归适用于二元分类的问题，而Softmax回归适用于多分类的问题。</p>
-<p>与线性回归一样，softmax回归也是一个单层神经网络。 由于计算每个输出<span class="math notranslate nohighlight">\(o_1\)</span>、<span class="math notranslate nohighlight">\(o_2\)</span>和<span class="math notranslate nohighlight">\(o_3\)</span>取决于 所有输入<span class="math notranslate nohighlight">\(x_1\)</span>、<span class="math notranslate nohighlight">\(x_2\)</span>、<span class="math notranslate nohighlight">\(x_3\)</span>和<span class="math notranslate nohighlight">\(x_4\)</span>， 所以softmax回归的输出层也是全连接层。</p>
-<p><img alt="softmaxreg.svg" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/1.svg" /></p>
-<p><img alt="img" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/2.png" /></p>
-<p><img alt="img" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/3.png" /></p>
-<p>Softmax回归是使用Softmax运算使得最后一层输出的机率分布总和为1，举一个例子，假设我们要辨识手写数字0~9，输入一张数字的影像后，经由Softmax 回归，最后将会输出该影像属于0 ~ 9 个别的机率为何，且其个别的机率总和为1。</p>
-<div class="math notranslate nohighlight">
-\[\hat{\mathbf{y}}=\operatorname{softmax}(\mathbf{o}) \quad \text { 其中 } \quad \hat{y}_{j}=\frac{\exp \left(o_{j}\right)}{\sum_{k} \exp \left(o_{k}\right)}\]</div>
-<p>Softmax 函数通常会放在类神经网路的最后一层，将最后一层所有节点的输出都通过指数函数 (exponential function)，并将结果相加作为分母，个别的输出作为分子。</p>
-<p><img alt="img" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/4.jpeg" /></p>
-<section id="id1">
-<h2>实际计算举例<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<div class="math notranslate nohighlight">
-\[\begin{split}\left[\begin{array}{c}
-1.4 \\
--0.1 \\
-0.3
-\end{array}\right] \rightarrow \operatorname{softmax} \rightarrow\left[\begin{array}{c}
-\frac{\mathrm{e}^{1.4}}{\mathrm{e}^{1.4}+\mathrm{e}^{-0.1}+\mathrm{e}^{0.3}} \\
-\frac{\mathrm{e}^{-0.1}}{\mathrm{e}^{1.4}+\mathrm{e}^{-0.1}+\mathrm{e}^{0.3}} \\
-\frac{\mathrm{e}^{0.3}}{\mathrm{e}^{1.4}+\mathrm{e}^{-0.1}+\mathrm{e}^{0.3}}
-\end{array}\right]=\left[\begin{array}{l}
-0.643 \\
-0.143 \\
-0.214
-\end{array}\right]\end{split}\]</div>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="one-hot-encoding">
-<h1>什么是One-hot encoding？<a class="headerlink" href="#one-hot-encoding" title="Link to this heading">#</a></h1>
-<p>One-Hot编码: 一种简单的单词编码方式。在NLP领域，如何将单词数值化呢，One-Hot编码就是一种很简单的方式。假设我们现在有单词数量为<span class="math notranslate nohighlight">\(N\)</span>的词表，那可以生成一个长度为<span class="math notranslate nohighlight">\(N\)</span>
-的向量来表示一个单词，在这个向量中该单词对应的位置数值为1，其余单词对应的位置数值全部为0。举例如下：</p>
-<p>词典: [queen, king, man, woman, boy, girl ]</p>
-<p><img alt="image.png" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/7.png" /></p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="id2">
-<h1>手写辨识实作<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
-<p>手写辨识是一个非常经典的深度学习入门范例，该范例是输入一张手写数字 0 ~ 9 的影像，并且通过类神经网路预测该影像为 0 ~ 9 哪一个数字。</p>
-<p><img alt="img" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/5.png" /></p>
-<p>在Softmax 回归这个例子中，我们使用的是TensorFlow 官方提供的MNIST 资料集，MNIST 资料集中的影像是28 x 28 = 784 的手写数字影像，如果将其中一张影像的像素(pixels) 以矩阵的方式呈现，可以看到那些数值所呈现的形状即是手写数字的形状，所以我们将利用这些数值来预测手写数字。</p>
-<p><img alt="img" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/6.png" /></p>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>深度学习计算<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>相关内容</p>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -487,7 +432,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./LinearNeuralNetwork"
+            path: "./DeepLearning"
         },
         predefinedOutput: true
     }
@@ -505,20 +450,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html"
+       href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">线性回归</p>
+        <p class="prev-next-title">多层感知机的简洁实现</p>
       </div>
     </a>
     <a class="right-next"
-       href="%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html"
+       href="%E5%B1%82%E5%92%8C%E5%9D%97.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">交叉熵损失函数原理详解</p>
+        <p class="prev-next-title">层和块</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -528,27 +473,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Softmax 回归原理</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实际计算举例</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding">什么是One-hot encoding？</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">手写辨识实作</a></li>
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>

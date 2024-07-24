@@ -242,6 +242,12 @@
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../DeepLearning/index.html">深度学习计算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul>
 
     </div>
 </nav></div>
@@ -479,13 +485,13 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 2.0000, -3.4000])
-tensor([[ 0.7549,  0.6228],
-        [ 0.0786, -1.0269],
-        [ 0.3915,  0.0763],
+tensor([[-0.5748, -1.5157],
+        [ 0.8897, -0.4399],
+        [ 0.3017, -0.9437],
         ...,
-        [ 0.9933,  0.1474],
-        [-0.9092, -0.2070],
-        [ 1.5116,  0.9257]])
+        [-0.6665, -0.4550],
+        [ 1.5614,  0.2301],
+        [-0.2977, -1.7573]])
 </pre></div>
 </div>
 </div>
@@ -499,15 +505,15 @@ tensor([[ 0.7549,  0.6228],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>features: tensor([0.7549, 0.6228]) 
-label: tensor([3.6039])
-tensor([[ 0.7549,  0.6228],
-        [ 0.0786, -1.0269],
-        [ 0.3915,  0.0763],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>features: tensor([-0.5748, -1.5157]) 
+label: tensor([8.2033])
+tensor([[-0.5748, -1.5157],
+        [ 0.8897, -0.4399],
+        [ 0.3017, -0.9437],
         ...,
-        [ 0.9933,  0.1474],
-        [-0.9092, -0.2070],
-        [ 1.5116,  0.9257]])
+        [-0.6665, -0.4550],
+        [ 1.5614,  0.2301],
+        [-0.2977, -1.7573]])
 </pre></div>
 </div>
 </div>
@@ -521,7 +527,7 @@ tensor([[ 0.7549,  0.6228],
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c3b740f1cee5edbb75c9603b9b80c2524c3e46fc71917df7a19da9c537bf1307.svg" src="../_images/c3b740f1cee5edbb75c9603b9b80c2524c3e46fc71917df7a19da9c537bf1307.svg" /></div>
+<img alt="../_images/c332331af7ba3d54b95ac7e601cb4332acb8d386bb2dcf675235a2e80ba97235.svg" src="../_images/c332331af7ba3d54b95ac7e601cb4332acb8d386bb2dcf675235a2e80ba97235.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id3">
@@ -562,26 +568,26 @@ tensor([[ 0.7549,  0.6228],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.8543, -1.6917],
-        [ 0.3521, -0.1225],
-        [ 0.8617,  1.8986],
-        [-0.2192,  0.8009],
-        [ 1.7249, -0.0615],
-        [-0.6899, -0.3343],
-        [ 1.7381,  0.0422],
-        [ 2.2548, -0.5446],
-        [ 0.8530,  0.3136],
-        [-0.3433, -0.2790]]) 
- tensor([[ 8.2345],
-        [ 5.3373],
-        [-0.5384],
-        [ 1.0317],
-        [ 7.8512],
-        [ 3.9312],
-        [ 7.5330],
-        [10.5622],
-        [ 4.8302],
-        [ 4.4509]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.4868, -0.4447],
+        [-0.4580,  0.4494],
+        [-0.2759,  1.7013],
+        [ 2.1559,  0.4827],
+        [-0.6044, -0.9528],
+        [ 1.3473, -0.5843],
+        [ 1.5614,  0.2301],
+        [-0.2960,  0.6816],
+        [-1.7340,  1.0297],
+        [-0.5324, -1.1552]]) 
+ tensor([[ 6.6846],
+        [ 1.7583],
+        [-2.1436],
+        [ 6.8663],
+        [ 6.2324],
+        [ 8.8774],
+        [ 6.5517],
+        [ 1.2791],
+        [-2.7737],
+        [ 7.0556]])
 </pre></div>
 </div>
 </div>
@@ -693,9 +699,11 @@ tensor([[ 0.7549,  0.6228],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 1, loss 0.027061
-epoch 2, loss 0.000091
-epoch 3, loss 0.000048
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 1, loss 0.044629
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 2, loss 0.000187
+epoch 3, loss 0.000051
 </pre></div>
 </div>
 </div>
@@ -709,7 +717,7 @@ epoch 3, loss 0.000048
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>w的估计误差: tensor([4.0531e-05, 2.9588e-04], grad_fn=&lt;SubBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>w的估计误差: tensor([-0.0003, -0.0007], grad_fn=&lt;SubBackward0&gt;)
 b的估计误差: tensor([0.0003], grad_fn=&lt;RsubBackward1&gt;)
 </pre></div>
 </div>

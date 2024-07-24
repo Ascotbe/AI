@@ -242,6 +242,12 @@
 </ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 </ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../DeepLearning/index.html">深度学习计算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
+</ul>
 
     </div>
 </nav></div>
@@ -431,10 +437,10 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([ 1.1935,  1.6231,  0.0381,  0.4678, -1.1336,  0.4353,  0.6065,  0.6262,
-        -0.8449, -0.4644])
+tensor([ 1.6297, -0.1867, -0.0402, -0.1351, -0.0039,  0.4107, -1.6310,  1.8572,
+        -1.4954, -0.0727])
 经过relu之后
-tensor([1.1935, 1.6231, 0.0381, 0.4678, 0.0000, 0.4353, 0.6065, 0.6262, 0.0000,
+tensor([1.6297, 0.0000, 0.0000, 0.0000, 0.0000, 0.4107, 0.0000, 1.8572, 0.0000,
         0.0000])
 </pre></div>
 </div>
@@ -456,13 +462,13 @@ tensor([1.1935, 1.6231, 0.0381, 0.4678, 0.0000, 0.4353, 0.6065, 0.6262, 0.0000,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([-0.4281,  0.2542, -0.1558,  0.6282,  0.9955,  0.7659, -0.3594,  0.4422,
-        -0.0701, -0.4259])
+tensor([ 0.8425,  0.6898,  1.2008,  1.0578,  0.9397, -0.3992, -2.3105,  0.3455,
+        -1.0479, -1.0469])
 经过relu之后c的值
-tensor([0.0000, 0.2542, 0.0000, 0.6282, 0.9955, 0.7659, 0.0000, 0.4422, 0.0000,
+tensor([0.8425, 0.6898, 1.2008, 1.0578, 0.9397, 0.0000, 0.0000, 0.3455, 0.0000,
         0.0000])
 经过relu之后d的值
-tensor([0.0000, 0.2542, 0.0000, 0.6282, 0.9955, 0.7659, 0.0000, 0.4422, 0.0000,
+tensor([0.8425, 0.6898, 1.2008, 1.0578, 0.9397, 0.0000, 0.0000, 0.3455, 0.0000,
         0.0000])
 </pre></div>
 </div>
