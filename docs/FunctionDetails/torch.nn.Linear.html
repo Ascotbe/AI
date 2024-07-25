@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nn.Linear &#8212; AI学习笔记</title>
+    <title>torch.nn.Linear &#8212; AI学习笔记</title>
   
   
   
@@ -59,12 +59,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/nn.Linear';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.nn.Linear';</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="nn.ReLU" href="nn.ReLU.html" />
-    <link rel="prev" title="Torch Zeros" href="torch.zeros.html" />
+    <link rel="next" title="torch.nn.ReLU" href="torch.nn.ReLU.html" />
+    <link rel="prev" title="torch.zeros" href="torch.zeros.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -199,12 +199,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">Torch Argmax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">Torch Matmul</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">Torch Normal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">Torch Zeros</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">nn.Linear</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nn.ReLU.html">nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -237,6 +238,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
 
     </div>
@@ -306,7 +311,7 @@
       
       
       
-      <li><a href="../_sources/FunctionDetails/nn.Linear.ipynb" target="_blank"
+      <li><a href="../_sources/FunctionDetails/torch.nn.Linear.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -390,7 +395,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>nn.Linear</h1>
+    <h1>torch.nn.Linear</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -412,8 +417,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="nn-linear">
-<h1>nn.Linear<a class="headerlink" href="#nn-linear" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="torch-nn-linear">
+<h1>torch.nn.Linear<a class="headerlink" href="#torch-nn-linear" title="Link to this heading">#</a></h1>
 <p>PyTorch的 nn.Linear() 是用于设置网络中的全连接层的，需要注意在二维图像处理的任务中，全连接层的输入与输出一般都设置为二维张量，形状通常为<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">size]</span></code>，不同于卷积层要求输入输出是四维张量。其用法与形参说明如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="c1"># 输入的神经元个数，也可以说是前一层网络神经元的个数</span>
@@ -469,7 +474,7 @@ tensor([-0.3593], requires_grad=True)
 </div>
 </div>
 </div>
-<p>可以看到，模型有3个参数，分别为两个权重和一个偏执。计算可得：</p>
+<p>可以看到，模型有3个参数，分别为两个权重和一个偏置。计算可得：</p>
 <p><span class="math notranslate nohighlight">\(y=[1,2]∗[0.4266, -0.4878]^T-0.3593=-0.9083\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -639,15 +644,15 @@ torch.Size([3, 10])
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Torch Zeros</p>
+        <p class="prev-next-title">torch.zeros</p>
       </div>
     </a>
     <a class="right-next"
-       href="nn.ReLU.html"
+       href="torch.nn.ReLU.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">nn.ReLU</p>
+        <p class="prev-next-title">torch.nn.ReLU</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

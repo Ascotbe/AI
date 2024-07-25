@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>nn.ReLU &#8212; AI学习笔记</title>
+    <title>torch.nn.init &#8212; AI学习笔记</title>
   
   
   
@@ -57,14 +57,12 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/nn.ReLU';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.nn.init';</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="线性回归" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" />
-    <link rel="prev" title="nn.Linear" href="nn.Linear.html" />
+    <link rel="prev" title="torch.nn.ReLU" href="torch.nn.ReLU.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -199,12 +197,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">Torch Argmax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">Torch Matmul</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">Torch Normal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">Torch Zeros</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nn.Linear.html">nn.Linear</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.nn.init</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -237,6 +236,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
 
     </div>
@@ -306,7 +309,7 @@
       
       
       
-      <li><a href="../_sources/FunctionDetails/nn.ReLU.ipynb" target="_blank"
+      <li><a href="../_sources/FunctionDetails/torch.nn.init.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -388,7 +391,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>nn.ReLU</h1>
+    <h1>torch.nn.init</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -402,68 +405,25 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="nn-relu">
-<h1>nn.ReLU<a class="headerlink" href="#nn-relu" title="Link to this heading">#</a></h1>
-<p>逐元素应用ReLU函数对数据进行激活</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>inplace：是否改变输入数据，如果设置为<code class="docutils literal notranslate"><span class="pre">True</span></code>，则会直接修改输入数据；如果设置为<code class="docutils literal notranslate"><span class="pre">False</span></code>，则不对输入数据做修改</p>
-<p><span class="math notranslate nohighlight">\(\operatorname{ReLU}(x)=(x)^{+}=\max (0, x)\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">relu</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;经过relu之前&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;经过relu之后&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([ 0.2414,  1.3560, -0.7544, -0.6992,  0.6301, -1.5559, -0.3248,  0.0830,
-        -0.1232,  0.6682])
-经过relu之后
-tensor([0.2414, 1.3560, 0.0000, 0.0000, 0.6301, 0.0000, 0.0000, 0.0830, 0.0000,
-        0.6682])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;经过relu之前c的值&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">relu</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;经过relu之后c的值&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;经过relu之后d的值&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 0.7896,  1.1908, -0.3621,  0.2995, -1.3891, -0.3963, -0.1107, -0.2231,
-        -0.4601,  0.9523])
-经过relu之后c的值
-tensor([0.7896, 1.1908, 0.0000, 0.2995, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-        0.9523])
-经过relu之后d的值
-tensor([0.7896, 1.1908, 0.0000, 0.2995, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-        0.9523])
-</pre></div>
-</div>
-</div>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="torch-nn-init">
+<h1>torch.nn.init<a class="headerlink" href="#torch-nn-init" title="Link to this heading">#</a></h1>
+<p>我们可以发现这些函数后缀都带有下划线，意味着这些函数将会直接原地更改输入张量的值</p>
+<ul class="simple">
+<li><p>torch.nn.init.uniform_()</p></li>
+<li><p>torch.nn.init.normal_()</p></li>
+<li><p>torch.nn.init.constant_()</p></li>
+<li><p>torch.nn.init.ones_()</p></li>
+<li><p>torch.nn.init.zeros_()</p></li>
+<li><p>torch.nn.init.eye_()</p></li>
+<li><p>torch.nn.init.dirac_()</p></li>
+<li><p>torch.nn.init.xavier_uniform_()</p></li>
+<li><p>torch.nn.init.xavier_normal_()</p></li>
+<li><p>torch.nn.init.kaiming_uniform_()</p></li>
+<li><p>torch.nn.init.kaiming_normal_()</p></li>
+<li><p>torch.nn.init.trunc_normal_()</p></li>
+<li><p>torch.nn.init.orthogonal_()</p></li>
+<li><p>torch.nn.init.sparse_()</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -497,12 +457,12 @@ tensor([0.7896, 1.1908, 0.0000, 0.2995, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="nn.Linear.html"
+       href="torch.nn.ReLU.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">nn.Linear</p>
+        <p class="prev-next-title">torch.nn.ReLU</p>
       </div>
     </a>
     <a class="right-next"

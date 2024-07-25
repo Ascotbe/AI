@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Torch Argmax &#8212; AI学习笔记</title>
+    <title>torch.argmax &#8212; AI学习笔记</title>
   
   
   
@@ -61,7 +61,7 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Torch Matmul" href="torch.matmul.html" />
+    <link rel="next" title="torch.matmul" href="torch.matmul.html" />
     <link rel="prev" title="PyTorch图像处理" href="../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -197,12 +197,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Torch Argmax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">Torch Matmul</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">Torch Normal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">Torch Zeros</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nn.Linear.html">nn.Linear</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nn.ReLU.html">nn.ReLU</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -235,6 +236,10 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
 
     </div>
@@ -386,7 +391,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Torch Argmax</h1>
+    <h1>torch.argmax</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -401,7 +406,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="torch-argmax">
-<h1>Torch Argmax<a class="headerlink" href="#torch-argmax" title="Link to this heading">#</a></h1>
+<h1>torch.argmax<a class="headerlink" href="#torch-argmax" title="Link to this heading">#</a></h1>
 <p><strong>torch.argmax(input, dim=None, keepdim=False)</strong></p>
 <p>参数说明：</p>
 <ul class="simple">
@@ -418,10 +423,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.8574, -0.3147, -0.4172,  1.4759,  0.9845],
-        [-1.6156,  1.2578,  0.2179,  0.0618, -1.3553],
-        [ 0.8435, -0.1474, -0.1759, -0.7805,  0.2405],
-        [-2.6724, -0.2541,  0.7474,  0.8163,  0.8169]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.9964,  0.2831, -0.3181, -1.7270,  0.2074],
+        [ 0.5860,  1.0929, -0.4021,  0.9368, -1.2672],
+        [-0.5293,  1.1624,  0.3431, -0.0741,  0.1075],
+        [ 0.7987, -0.9229,  0.0198, -1.2020,  0.9190]])
 </pre></div>
 </div>
 </div>
@@ -434,7 +439,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([3, 1, 0, 4])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 1, 1, 4])
 </pre></div>
 </div>
 </div>
@@ -447,7 +452,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(3)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(11)
 </pre></div>
 </div>
 </div>
@@ -460,7 +465,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 1, 3, 0, 0])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 2, 2, 1, 3])
 </pre></div>
 </div>
 </div>
@@ -511,7 +516,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Torch Matmul</p>
+        <p class="prev-next-title">torch.matmul</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
