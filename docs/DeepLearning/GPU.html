@@ -450,7 +450,30 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>zsh:1: command not found: nvidia-smi
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Thu Jul 25 02:39:45 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |
+| N/A   57C    P8             10W /   70W |       1MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  Tesla T4                       Off |   00000000:00:05.0 Off |                    0 |
+| N/A   60C    P8             10W /   70W |       1MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
 </pre></div>
 </div>
 </div>
@@ -515,7 +538,7 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
 </pre></div>
 </div>
 </div>
@@ -530,8 +553,8 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
-0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+2
 </pre></div>
 </div>
 </div>
@@ -556,7 +579,9 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(device(type=&#39;cpu&#39;), device(type=&#39;cpu&#39;), [device(type=&#39;cpu&#39;)])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(device(type=&#39;cuda&#39;, index=0),
+ device(type=&#39;cpu&#39;),
+ [device(type=&#39;cuda&#39;, index=0), device(type=&#39;cuda&#39;, index=1)])
 </pre></div>
 </div>
 </div>
@@ -601,7 +626,7 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1., 1., 1.],
-        [1., 1., 1.]])
+        [1., 1., 1.]], device=&#39;cuda:0&#39;)
 </pre></div>
 </div>
 </div>
@@ -618,8 +643,8 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.7494, 0.3070, 0.7163],
-        [0.8809, 0.4281, 0.3048]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1.0488e-01, 9.0968e-01, 5.3550e-01],
+        [6.8839e-01, 1.0349e-01, 2.6808e-04]], device=&#39;cuda:1&#39;)
 </pre></div>
 </div>
 </div>
@@ -643,24 +668,10 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AssertionError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.10/site-packages/torch/cuda/__init__.py:239,</span> in <span class="ni">_lazy_init</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">235</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">236</span>         <span class="s2">&quot;Cannot re-initialize CUDA in forked subprocess. To use CUDA with &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span>         <span class="s2">&quot;multiprocessing, you must use the &#39;spawn&#39; start method&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">238</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">_C</span><span class="p">,</span> <span class="s1">&#39;_cuda_getDeviceCount&#39;</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">239</span>     <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Torch not compiled with CUDA enabled&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">240</span> <span class="k">if</span> <span class="n">_cudart</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">241</span>     <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">242</span>         <span class="s2">&quot;libcudart functions unavailable. It looks like you have a broken build?&quot;</span><span class="p">)</span>
-
-<span class="ne">AssertionError</span>: Torch not compiled with CUDA enabled
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1., 1., 1.],
+        [1., 1., 1.]], device=&#39;cuda:0&#39;)
+tensor([[1., 1., 1.],
+        [1., 1., 1.]], device=&#39;cuda:1&#39;)
 </pre></div>
 </div>
 </div>
@@ -673,12 +684,8 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">Y</span> <span class="o">+</span> <span class="n">Z</span>
-
-<span class="ne">NameError</span>: name &#39;Z&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1.1049, 1.9097, 1.5355],
+        [1.6884, 1.1035, 1.0003]], device=&#39;cuda:1&#39;)
 </pre></div>
 </div>
 </div>
@@ -693,12 +700,7 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">Z</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Z</span>
-
-<span class="ne">NameError</span>: name &#39;Z&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>
@@ -728,8 +730,8 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0338],
-        [-0.0338]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.4161],
+        [0.4161]], device=&#39;cuda:0&#39;, grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -742,7 +744,7 @@ python<span class="w"> </span>-m<span class="w"> </span>ipykernel<span class="w"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>device(type=&#39;cpu&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>device(type=&#39;cuda&#39;, index=0)
 </pre></div>
 </div>
 </div>
