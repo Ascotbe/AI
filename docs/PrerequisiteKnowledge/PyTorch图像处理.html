@@ -215,6 +215,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
 
 
@@ -525,7 +526,7 @@ document.write(`
 <p>我们通过Pillow中提供的方法，打开一张图片，并通过<code class="docutils literal notranslate"><span class="pre">show_image()</span></code>方法进行展示，下文中各种图像变换，我们都将以此图片为例，进行演示：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">),</span> <span class="s1">&#39;原始图片&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">),</span> <span class="s1">&#39;原始图片&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span><span class="n">raw_img</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -547,7 +548,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img2</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img2</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -627,7 +628,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
 <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
@@ -691,7 +692,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -745,8 +746,8 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
-<span class="n">raw_img2</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
+<span class="n">raw_img2</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
 <span class="n">tran_img1</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
@@ -776,7 +777,7 @@ torch.Tensor类型数据裁切后输出类型为：&lt;class &#39;torch.Tensor&#
 <p>按给定尺寸对图像进行缩放，Resize主要参数size可以为int型，此时，原始图像短边将缩放至size像素，长边将缩放至：size×长边÷短边 。以上述原始图片为例，假设输入size=300，原始图像短边高是448像素，长边宽是596像素，所以缩放后，长边宽为：300×596÷448=399像素；当size为序列时，size=(h, w)，原始图像将高和宽分别缩放至h和w。除了size参数外，Resize还有其他参数，可以参考<a class="reference external" href="https://pytorch.org/vision/stable/generated/torchvision.transforms.functional.resize.html#torchvision.transforms.functional.resize">官方文档</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
 <span class="n">transform1</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 <span class="n">transform2</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
@@ -828,7 +829,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">transforms</span><span class="o">.</span><span class="n">Pad</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padding_mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">)(</span><span class="n">raw_img</span><span class="p">),</span>
@@ -892,7 +893,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -944,7 +945,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -980,7 +981,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 <p>高斯模糊。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1020,7 +1021,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">trans</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">FiveCrop</span><span class="p">((</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
 <span class="n">trans_imgs</span> <span class="o">=</span> <span class="n">trans</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;转换后输出变量类型为：</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">trans_imgs</span><span class="p">)</span><span class="si">}</span><span class="s1">, 输出变量长度为：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trans_imgs</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -1053,7 +1054,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">transform1</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Grayscale</span><span class="p">(</span><span class="n">num_output_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">transform2</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Grayscale</span><span class="p">(</span><span class="n">num_output_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">tran_img1</span> <span class="o">=</span> <span class="n">transform1</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
@@ -1086,7 +1087,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1130,7 +1131,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1198,7 +1199,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1225,7 +1226,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 <p>以一定的概率将图像水平翻转。参数只有一个概率值p，默认值为0.5。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1255,7 +1256,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1281,7 +1282,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1319,7 +1320,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 
 <span class="n">trans</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">RandomChoice</span><span class="p">([</span>
     <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">350</span><span class="p">),</span>
@@ -1376,7 +1377,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="n">show_image</span><span class="p">([</span>
     <span class="p">(</span>
         <span class="n">raw_img</span><span class="p">,</span> <span class="s1">&#39;原始图像&#39;</span>
@@ -1402,7 +1403,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1450,7 +1451,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">read_image</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;转换前图像类型为：</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">img</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">raw_img</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;转换后图像类型为：</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -1470,7 +1471,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 <p>将PIL.Image或numpy.ndarray类型图像转为torch.Tensor类型图像。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;转换前图像类型为：</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">img</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">raw_img</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;转换后图像类型为：</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -1490,7 +1491,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 <p>将PIL.Image(shape为：(H x W x C))类型图像转为torch.Tensor(shape为： (C x H x W))。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../raw/sticker.jpeg&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/sticker.jpeg&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;转换前图像类型为：</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span><span class="si">}</span><span class="s1">，&#39;</span><span class="p">)</span> 
 

@@ -217,6 +217,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
 
 
@@ -413,6 +414,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">定义损失函数</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">定义优化算法</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">训练</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">完整代码</a></li>
 </ul>
 
             </nav>
@@ -427,8 +429,17 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>线性回归<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>学这个之前还是先看下这个视频，能减少很多弯路，本篇说的是线性回归如何使用代码实现
-<a class="reference external" href="https://www.bilibili.com/video/BV1KA411N7Px?p=2">https://www.bilibili.com/video/BV1KA411N7Px?p=2</a></p>
+<blockquote>
+<div><p>线性回归核心就是在x和y轴中，给出一个数x会有相对应的一个y值。我们需要得到这一个模型（通俗说：一个直线公式）。</p>
+</div></blockquote>
+<p>在线性回归中，数据使用线性预测函数来建模，并且未知的模型参数也是通过数据来估计。这些模型被叫做线性模型。[2]最常用的线性回归建模是给定X值的y的条件均值是X的仿射函数。不太一般的情况，线性回归模型可以是一个中位数或一些其他的给定X的条件下y的条件分布的分位数作为X的线性函数表示。
+线性回归有很多实际用途。分为以下两大类：</p>
+<p>线性回归有很多实际用途。分为以下两大类：</p>
+<ol class="arabic simple">
+<li><p>如果目标是预测或者映射，线性回归可以用来对观测数据集的和X的值拟合出一个预测模型。当完成这样一个模型以后，对于一个新增的X值，在没有给定与它相配对的y的情况下，可以用这个拟合过的模型预测出一个y值。</p></li>
+<li><p>给定一个变量y和一些变量<span class="math notranslate nohighlight">\({\displaystyle X_{1}},...,{\displaystyle X_{p}}\)</span>，这些变量有可能与y相关，线性回归分析可以用来量化y与Xj之间相关性的强度，评估出与y不相关的<span class="math notranslate nohighlight">\({\displaystyle X_{j}}\)</span>，并识别出哪些<span class="math notranslate nohighlight">\({\displaystyle X_{j}}\)</span>的子集包含了关于y的冗余信息。</p></li>
+</ol>
+<p><img alt="" src="../_images/Linear_regression.svg" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -480,13 +491,13 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 2.0000, -3.4000])
-tensor([[ 1.0990, -0.0729],
-        [-0.6221, -0.8836],
-        [ 0.2968, -1.2232],
+tensor([[ 1.4176,  0.4431],
+        [-1.1239, -0.3947],
+        [-0.0283, -0.4883],
         ...,
-        [-1.1652, -0.3916],
-        [ 1.3384,  0.8145],
-        [-0.2025,  0.3230]])
+        [ 0.8997,  1.1958],
+        [-0.5728, -0.7003],
+        [-1.5460, -0.7157]])
 </pre></div>
 </div>
 </div>
@@ -500,15 +511,15 @@ tensor([[ 1.0990, -0.0729],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>features: tensor([ 1.0990, -0.0729]) 
-label: tensor([6.6307])
-tensor([[ 1.0990, -0.0729],
-        [-0.6221, -0.8836],
-        [ 0.2968, -1.2232],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>features: tensor([1.4176, 0.4431]) 
+label: tensor([5.5126])
+tensor([[ 1.4176,  0.4431],
+        [-1.1239, -0.3947],
+        [-0.0283, -0.4883],
         ...,
-        [-1.1652, -0.3916],
-        [ 1.3384,  0.8145],
-        [-0.2025,  0.3230]])
+        [ 0.8997,  1.1958],
+        [-0.5728, -0.7003],
+        [-1.5460, -0.7157]])
 </pre></div>
 </div>
 </div>
@@ -522,7 +533,7 @@ tensor([[ 1.0990, -0.0729],
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e49cf4ef9285f555a17a2aa975ec0138713fac3c6891f1ad4e007c623750ccc4.svg" src="../_images/e49cf4ef9285f555a17a2aa975ec0138713fac3c6891f1ad4e007c623750ccc4.svg" /></div>
+<img alt="../_images/19a61caa8df7aff23d631b27616447204dc85bb8f05844d12a8e0b3f301afd2c.svg" src="../_images/19a61caa8df7aff23d631b27616447204dc85bb8f05844d12a8e0b3f301afd2c.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id3">
@@ -540,12 +551,11 @@ tensor([[ 1.0990, -0.0729],
     <span class="c1">#print(indices)</span>
     <span class="c1"># 这些样本是随机读取的，没有特定的顺序,打乱位置</span>
     <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
-        <span class="n">xs</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">)]</span>
-        <span class="c1">#print(xs)</span>
-        <span class="n">batch_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>  <span class="c1"># 从0开始每次+10进行循环到1000为止</span>
+        <span class="n">batch_indices</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">)]</span>  <span class="c1"># 从1000个随机样本里面开始取值，每次取值范围是[i:i+batch_size]         </span>
+        <span class="c1">#print(batch_indices)</span>
         <span class="c1">#https://blog.csdn.net/mieleizhi0522/article/details/82142856/</span>
-        <span class="k">yield</span> <span class="n">features</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="n">features</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>  <span class="c1"># 这个函数表示每次features和labels都会冲上一次进行接下去,然后取值是用上面随机样本进行索引的</span>
 </pre></div>
 </div>
 </div>
@@ -563,26 +573,26 @@ tensor([[ 1.0990, -0.0729],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.2259,  0.9802],
-        [ 0.3069, -1.5406],
-        [-0.2122, -1.8933],
-        [-0.9669,  0.5062],
-        [ 0.3668,  0.4589],
-        [ 0.8819,  1.2799],
-        [ 0.4859, -0.2371],
-        [ 0.7193,  0.2564],
-        [ 1.1767,  0.7552],
-        [ 1.1820, -1.9011]]) 
- tensor([[ 0.4087],
-        [10.0466],
-        [10.2069],
-        [ 0.5367],
-        [ 3.3877],
-        [ 1.6145],
-        [ 5.9766],
-        [ 4.7656],
-        [ 3.9827],
-        [13.0312]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 2.1979,  0.8562],
+        [-1.6895,  0.4137],
+        [-0.5104,  1.5732],
+        [ 0.3331,  1.2325],
+        [-0.1368, -1.6595],
+        [-1.4734, -0.7793],
+        [-1.7074, -1.9633],
+        [ 0.3739,  0.5318],
+        [-0.7322,  0.2454],
+        [ 0.5090,  2.2894]]) 
+ tensor([[ 5.6974],
+        [-0.5926],
+        [-2.1346],
+        [ 0.6761],
+        [ 9.5567],
+        [ 3.9103],
+        [ 7.4685],
+        [ 3.1478],
+        [ 1.9004],
+        [-2.5639]])
 </pre></div>
 </div>
 </div>
@@ -681,12 +691,19 @@ tensor([[ 1.0990, -0.0729],
 <span class="n">loss</span> <span class="o">=</span> <span class="n">squared_loss</span>
 
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+    
     <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="c1"># print(X)</span>
+        <span class="c1"># print(y)</span>
+        <span class="c1"># print(X.shape)</span>
+        <span class="c1"># print(y.shape)</span>
         <span class="n">l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># X和y的小批量损失</span>
         <span class="c1"># 因为l形状是(batch_size,1)，而不是一个标量。l中的所有元素被加到一起，</span>
         <span class="c1"># 并以此计算关于[w,b]的梯度</span>
-        <span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">sgd</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>  <span class="c1"># 使用参数的梯度更新参数</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1">#这个值可以很直观的反映出逐渐下降</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">sgd</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>  <span class="c1"># 使用参数的梯度更新参数,学习率lr是0.03</span>
     <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
         <span class="n">train_l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch </span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">, loss </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">train_l</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="si">:</span><span class="s1">f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -694,9 +711,311 @@ tensor([[ 1.0990, -0.0729],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 1, loss 0.026253
-epoch 2, loss 0.000097
-epoch 3, loss 0.000054
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(180.0851, grad_fn=&lt;SumBackward0&gt;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(232.5599, grad_fn=&lt;SumBackward0&gt;)
+tensor(253.7486, grad_fn=&lt;SumBackward0&gt;)
+tensor(83.6023, grad_fn=&lt;SumBackward0&gt;)
+tensor(156.8628, grad_fn=&lt;SumBackward0&gt;)
+tensor(61.0124, grad_fn=&lt;SumBackward0&gt;)
+tensor(89.6141, grad_fn=&lt;SumBackward0&gt;)
+tensor(92.1333, grad_fn=&lt;SumBackward0&gt;)
+tensor(127.9051, grad_fn=&lt;SumBackward0&gt;)
+tensor(61.7163, grad_fn=&lt;SumBackward0&gt;)
+tensor(123.5585, grad_fn=&lt;SumBackward0&gt;)
+tensor(93.2509, grad_fn=&lt;SumBackward0&gt;)
+tensor(91.3828, grad_fn=&lt;SumBackward0&gt;)
+tensor(108.3888, grad_fn=&lt;SumBackward0&gt;)
+tensor(126.2623, grad_fn=&lt;SumBackward0&gt;)
+tensor(67.9798, grad_fn=&lt;SumBackward0&gt;)
+tensor(38.7869, grad_fn=&lt;SumBackward0&gt;)
+tensor(26.9726, grad_fn=&lt;SumBackward0&gt;)
+tensor(41.4124, grad_fn=&lt;SumBackward0&gt;)
+tensor(35.2858, grad_fn=&lt;SumBackward0&gt;)
+tensor(22.6409, grad_fn=&lt;SumBackward0&gt;)
+tensor(68.0195, grad_fn=&lt;SumBackward0&gt;)
+tensor(37.5214, grad_fn=&lt;SumBackward0&gt;)
+tensor(49.2403, grad_fn=&lt;SumBackward0&gt;)
+tensor(21.2823, grad_fn=&lt;SumBackward0&gt;)
+tensor(23.6256, grad_fn=&lt;SumBackward0&gt;)
+tensor(23.6367, grad_fn=&lt;SumBackward0&gt;)
+tensor(32.0242, grad_fn=&lt;SumBackward0&gt;)
+tensor(27.2757, grad_fn=&lt;SumBackward0&gt;)
+tensor(16.4632, grad_fn=&lt;SumBackward0&gt;)
+tensor(30.5588, grad_fn=&lt;SumBackward0&gt;)
+tensor(13.2739, grad_fn=&lt;SumBackward0&gt;)
+tensor(16.2850, grad_fn=&lt;SumBackward0&gt;)
+tensor(24.8780, grad_fn=&lt;SumBackward0&gt;)
+tensor(21.0498, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.6790, grad_fn=&lt;SumBackward0&gt;)
+tensor(16.4225, grad_fn=&lt;SumBackward0&gt;)
+tensor(18.3267, grad_fn=&lt;SumBackward0&gt;)
+tensor(15.9758, grad_fn=&lt;SumBackward0&gt;)
+tensor(14.9082, grad_fn=&lt;SumBackward0&gt;)
+tensor(13.2106, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.1733, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.3700, grad_fn=&lt;SumBackward0&gt;)
+tensor(5.1052, grad_fn=&lt;SumBackward0&gt;)
+tensor(10.7894, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.1487, grad_fn=&lt;SumBackward0&gt;)
+tensor(5.4873, grad_fn=&lt;SumBackward0&gt;)
+tensor(12.0952, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.8323, grad_fn=&lt;SumBackward0&gt;)
+tensor(8.0186, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.0108, grad_fn=&lt;SumBackward0&gt;)
+tensor(8.7755, grad_fn=&lt;SumBackward0&gt;)
+tensor(8.3585, grad_fn=&lt;SumBackward0&gt;)
+tensor(11.7795, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.9503, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.4796, grad_fn=&lt;SumBackward0&gt;)
+tensor(5.3810, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.0683, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.3825, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.6211, grad_fn=&lt;SumBackward0&gt;)
+tensor(5.2298, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.1176, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.6478, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.8143, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.7084, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.5897, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.6374, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8904, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.6027, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.5750, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.4555, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.1570, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.1849, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.6086, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.3795, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0165, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3211, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.9784, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.7107, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.5861, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.2059, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8226, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.6897, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.4678, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5531, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7175, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0606, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5702, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4981, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9417, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5223, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3046, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4793, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3071, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7747, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8325, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7143, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4766, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3201, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.6083, grad_fn=&lt;SumBackward0&gt;)
+epoch 1, loss 0.040639
+tensor(0.3036, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3302, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3264, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2708, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3188, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2609, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3102, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1917, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3762, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2970, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2360, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2725, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1418, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0369, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1428, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2474, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1153, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2107, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1209, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1211, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1784, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0963, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1221, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0786, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1023, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1474, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0511, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0848, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1212, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0989, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0753, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0260, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0649, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0482, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0239, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0463, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0527, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0978, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0803, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0396, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0788, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0413, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0346, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0601, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0215, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0294, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0383, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0466, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0428, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0222, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0152, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0390, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0176, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0283, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0252, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0163, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0238, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0083, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0092, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0147, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0164, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0105, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0157, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0039, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0153, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0058, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0048, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0057, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0110, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0082, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0038, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0049, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0072, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0063, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0058, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0068, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0054, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0040, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0057, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0040, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0049, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0049, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0047, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0025, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0023, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0037, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0030, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0026, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0029, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0025, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0025, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0020, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0025, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0028, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0024, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+epoch 2, loss 0.000159
+tensor(0.0037, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0017, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0001, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0001, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+epoch 3, loss 0.000052
 </pre></div>
 </div>
 </div>
@@ -710,8 +1029,393 @@ epoch 3, loss 0.000054
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>w的估计误差: tensor([1.0240e-04, 8.2016e-05], grad_fn=&lt;SubBackward0&gt;)
-b的估计误差: tensor([0.0003], grad_fn=&lt;RsubBackward1&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>w的估计误差: tensor([ 0.0006, -0.0003], grad_fn=&lt;SubBackward0&gt;)
+b的估计误差: tensor([0.0008], grad_fn=&lt;RsubBackward1&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id9">
+<h1>完整代码<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="k">def</span> <span class="nf">synthetic_data</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;生成y=Xw+b+噪声&quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_examples</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">true_w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.4</span><span class="p">])</span>
+<span class="n">true_b</span> <span class="o">=</span> <span class="mf">4.2</span>
+<span class="n">features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">synthetic_data</span><span class="p">(</span><span class="n">true_w</span><span class="p">,</span> <span class="n">true_b</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1">#生成特征和标签</span>
+<span class="k">def</span> <span class="nf">data_iter</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">num_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_examples</span><span class="p">))</span>
+    <span class="c1"># 这些样本是随机读取的，没有特定的顺序</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span> <span class="c1">#从0开始每次+10进行循环到1000为止</span>
+        <span class="n">batch_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">)])</span>  <span class="c1"># 从1000个随机样本里面开始取值，每次取值范围是[i:i+batch_size]</span>
+        <span class="c1">#print(batch_indices)</span>
+        <span class="k">yield</span> <span class="n">features</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>  <span class="c1">#这个函数表示每次features和labels都会冲上一次进行接下去,然后取值是用上面随机样本进行索引的</span>
+
+
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">linreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;线性回归模型&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="k">def</span> <span class="nf">squared_loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;均方损失&quot;&quot;&quot;</span>
+    <span class="c1">#查看算出来的值和原来的标签比损失多少</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="k">def</span> <span class="nf">sgd</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;小批量随机梯度下降&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span> <span class="c1">#先更新w然后更新b</span>
+            <span class="n">param</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">param</span><span class="o">.</span><span class="n">grad</span> <span class="o">/</span> <span class="n">batch_size</span>
+            <span class="n">param</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+
+
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="c1"># print(X)</span>
+        <span class="c1"># print(y)</span>
+        <span class="c1"># print(X.shape)</span>
+        <span class="c1"># print(y.shape)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">squared_loss</span><span class="p">(</span><span class="n">linreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># X和y的小批量损失</span>
+        <span class="c1"># 因为l形状是(batch_size,1)，而不是一个标量。l中的所有元素被加到一起，</span>
+        <span class="c1"># 并以此计算关于[w,b]的梯度</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1">#这个值可以很直观的反映出逐渐下降</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">sgd</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># 使用参数的梯度更新参数，学习率lr是0.03</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">train_l</span> <span class="o">=</span> <span class="n">squared_loss</span><span class="p">(</span><span class="n">linreg</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch </span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">, loss </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">train_l</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="si">:</span><span class="s1">f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;w的估计误差: </span><span class="si">{</span><span class="n">true_w</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">true_w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;b的估计误差: </span><span class="si">{</span><span class="n">true_b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[525, 199, 791, 30, 214, 668, 591, 852, 342, 422, 19, 769, 179, 14, 901, 794, 404, 930, 747, 396, 20, 455, 783, 454, 115, 778, 626, 281, 239, 391, 364, 980, 182, 851, 698, 293, 249, 666, 739, 940, 198, 939, 86, 151, 274, 107, 647, 297, 188, 614, 278, 362, 689, 261, 374, 85, 860, 648, 870, 423, 514, 522, 220, 419, 10, 827, 313, 392, 309, 714, 885, 665, 880, 595, 132, 541, 223, 981, 431, 952, 917, 567, 72, 512, 64, 221, 669, 712, 715, 862, 779, 445, 817, 765, 211, 21, 45, 152, 201, 502, 73, 721, 429, 882, 23, 764, 836, 216, 914, 526, 868, 175, 787, 903, 43, 910, 679, 458, 563, 395, 630, 823, 254, 949, 867, 146, 767, 806, 942, 598, 263, 266, 183, 486, 873, 79, 861, 508, 260, 265, 915, 781, 643, 624, 406, 538, 331, 137, 384, 315, 172, 752, 607, 338, 450, 282, 982, 330, 717, 911, 369, 352, 638, 606, 121, 546, 106, 378, 811, 572, 405, 696, 332, 895, 723, 473, 955, 763, 154, 735, 34, 830, 441, 560, 155, 865, 510, 926, 319, 129, 697, 47, 139, 536, 578, 51, 869, 633, 461, 120, 276, 349, 597, 376, 176, 8, 841, 307, 855, 122, 561, 588, 896, 456, 902, 388, 757, 400, 243, 637, 329, 740, 231, 584, 945, 745, 159, 195, 311, 218, 482, 191, 171, 61, 833, 99, 529, 912, 337, 298, 960, 593, 856, 760, 84, 636, 775, 35, 808, 284, 801, 385, 160, 716, 655, 124, 145, 957, 768, 846, 736, 1, 793, 87, 387, 933, 517, 615, 659, 321, 674, 596, 138, 518, 227, 611, 834, 267, 548, 884, 467, 682, 842, 907, 887, 828, 898, 110, 819, 190, 782, 25, 784, 701, 258, 818, 60, 200, 336, 706, 427, 498, 222, 762, 37, 483, 89, 553, 772, 236, 466, 421, 485, 523, 401, 751, 711, 356, 826, 831, 346, 620, 798, 286, 114, 39, 442, 921, 961, 695, 463, 662, 232, 922, 233, 270, 71, 734, 193, 407, 893, 513, 56, 931, 892, 520, 866, 699, 702, 627, 247, 296, 361, 965, 919, 616, 326, 59, 953, 479, 878, 972, 918, 635, 292, 582, 684, 681, 170, 776, 253, 103, 654, 496, 558, 101, 18, 753, 998, 100, 559, 988, 15, 316, 570, 568, 52, 537, 241, 685, 658, 858, 389, 737, 158, 448, 651, 7, 761, 268, 235, 304, 617, 280, 136, 4, 728, 727, 979, 847, 850, 90, 888, 610, 973, 81, 741, 549, 519, 186, 989, 252, 691, 622, 272, 544, 694, 328, 766, 348, 863, 380, 165, 923, 181, 803, 592, 599, 886, 881, 730, 780, 469, 31, 925, 950, 279, 111, 285, 62, 323, 640, 204, 962, 178, 489, 308, 738, 521, 603, 433, 143, 451, 688, 371, 631, 883, 966, 36, 838, 283, 646, 732, 273, 609, 804, 857, 417, 871, 524, 977, 250, 49, 320, 92, 545, 756, 142, 958, 796, 994, 117, 335, 42, 6, 474, 13, 608, 649, 475, 289, 472, 294, 28, 94, 889, 53, 412, 938, 872, 167, 552, 583, 897, 355, 843, 206, 744, 534, 27, 359, 77, 946, 133, 542, 291, 929, 324, 528, 184, 93, 80, 618, 947, 625, 999, 569, 956, 434, 758, 305, 589, 670, 251, 813, 96, 126, 98, 187, 224, 993, 600, 488, 675, 383, 978, 358, 975, 547, 899, 130, 984, 506, 112, 565, 680, 687, 38, 238, 69, 494, 363, 327, 970, 854, 306, 746, 63, 140, 672, 621, 976, 890, 693, 135, 480, 26, 75, 487, 420, 904, 113, 725, 550, 660, 707, 894, 499, 644, 795, 168, 180, 210, 394, 623, 505, 205, 271, 44, 207, 225, 540, 269, 399, 157, 531, 350, 74, 790, 22, 240, 825, 492, 471, 109, 41, 148, 446, 339, 418, 634, 447, 444, 277, 809, 824, 470, 318, 314, 822, 575, 312, 837, 203, 104, 149, 213, 147, 76, 527, 718, 580, 333, 440, 928, 724, 585, 692, 256, 202, 390, 629, 771, 556, 248, 710, 601, 944, 619, 166, 230, 802, 557, 909, 500, 705, 963, 368, 773, 237, 853, 242, 722, 974, 55, 310, 932, 459, 788, 245, 150, 452, 683, 759, 366, 673, 936, 864, 581, 554, 192, 108, 382, 807, 153, 66, 908, 613, 144, 571, 428, 951, 393, 832, 754, 704, 295, 515, 118, 322, 209, 810, 493, 509, 3, 228, 219, 703, 97, 821, 217, 65, 849, 690, 859, 934, 656, 671, 432, 835, 264, 287, 986, 829, 992, 476, 995, 40, 797, 815, 924, 197, 969, 17, 215, 490, 840, 409, 29, 906, 564, 194, 641, 57, 411, 377, 68, 996, 876, 12, 987, 246, 985, 437, 719, 604, 163, 426, 255, 325, 755, 373, 891, 244, 189, 161, 777, 131, 678, 579, 748, 468, 820, 32, 46, 257, 78, 259, 742, 83, 54, 465, 410, 533, 262, 379, 708, 449, 587, 573, 913, 495, 102, 877, 632, 299, 507, 413, 663, 497, 403, 920, 460, 941, 875, 127, 653, 91, 408, 501, 365, 82, 968, 354, 357, 700, 530, 88, 879, 208, 453, 731, 539, 605, 650, 302, 415, 345, 709, 900, 288, 398, 174, 58, 443, 576, 303, 948, 375, 816, 95, 750, 341, 586, 478, 954, 2, 594, 164, 677, 462, 11, 343, 800, 812, 484, 290, 105, 491, 123, 555, 173, 990, 116, 33, 386, 935, 639, 16, 916, 372, 344, 805, 652, 119, 397, 481, 661, 657, 334, 937, 686, 414, 367, 504, 983, 360, 799, 516, 733, 997, 905, 664, 770, 590, 577, 839, 425, 439, 67, 436, 381, 602, 435, 0, 370, 786, 785, 642, 964, 971, 943, 713, 874, 927, 340, 729, 424, 353, 535, 848, 24, 301, 967, 229, 234, 667, 438, 511, 845, 844, 156, 317, 464, 991, 275, 351, 562, 347, 128, 645, 566, 185, 9, 212, 574, 402, 162, 726, 720, 141, 749, 532, 416, 125, 543, 477, 503, 169, 789, 774, 457, 5, 177, 48, 430, 551, 70, 814, 628, 134, 226, 959, 50, 300, 792, 612, 196, 676, 743]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(95.5501, grad_fn=&lt;SumBackward0&gt;)
+tensor(195.3752, grad_fn=&lt;SumBackward0&gt;)
+tensor(217.5753, grad_fn=&lt;SumBackward0&gt;)
+tensor(124.7694, grad_fn=&lt;SumBackward0&gt;)
+tensor(143.4809, grad_fn=&lt;SumBackward0&gt;)
+tensor(54.1369, grad_fn=&lt;SumBackward0&gt;)
+tensor(97.1910, grad_fn=&lt;SumBackward0&gt;)
+tensor(76.7404, grad_fn=&lt;SumBackward0&gt;)
+tensor(79.1033, grad_fn=&lt;SumBackward0&gt;)
+tensor(117.9989, grad_fn=&lt;SumBackward0&gt;)
+tensor(38.6378, grad_fn=&lt;SumBackward0&gt;)
+tensor(49.2727, grad_fn=&lt;SumBackward0&gt;)
+tensor(67.7839, grad_fn=&lt;SumBackward0&gt;)
+tensor(77.8979, grad_fn=&lt;SumBackward0&gt;)
+tensor(77.2607, grad_fn=&lt;SumBackward0&gt;)
+tensor(127.0403, grad_fn=&lt;SumBackward0&gt;)
+tensor(64.8622, grad_fn=&lt;SumBackward0&gt;)
+tensor(41.9901, grad_fn=&lt;SumBackward0&gt;)
+tensor(34.1892, grad_fn=&lt;SumBackward0&gt;)
+tensor(36.0359, grad_fn=&lt;SumBackward0&gt;)
+tensor(70.1997, grad_fn=&lt;SumBackward0&gt;)
+tensor(83.5665, grad_fn=&lt;SumBackward0&gt;)
+tensor(52.6699, grad_fn=&lt;SumBackward0&gt;)
+tensor(54.5075, grad_fn=&lt;SumBackward0&gt;)
+tensor(47.2319, grad_fn=&lt;SumBackward0&gt;)
+tensor(52.7209, grad_fn=&lt;SumBackward0&gt;)
+tensor(35.2193, grad_fn=&lt;SumBackward0&gt;)
+tensor(33.2826, grad_fn=&lt;SumBackward0&gt;)
+tensor(23.6161, grad_fn=&lt;SumBackward0&gt;)
+tensor(21.8941, grad_fn=&lt;SumBackward0&gt;)
+tensor(22.8275, grad_fn=&lt;SumBackward0&gt;)
+tensor(14.5555, grad_fn=&lt;SumBackward0&gt;)
+tensor(35.6937, grad_fn=&lt;SumBackward0&gt;)
+tensor(25.8413, grad_fn=&lt;SumBackward0&gt;)
+tensor(37.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(27.8887, grad_fn=&lt;SumBackward0&gt;)
+tensor(26.9394, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.7530, grad_fn=&lt;SumBackward0&gt;)
+tensor(23.6078, grad_fn=&lt;SumBackward0&gt;)
+tensor(26.1983, grad_fn=&lt;SumBackward0&gt;)
+tensor(12.1597, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.6241, grad_fn=&lt;SumBackward0&gt;)
+tensor(19.9396, grad_fn=&lt;SumBackward0&gt;)
+tensor(12.3555, grad_fn=&lt;SumBackward0&gt;)
+tensor(11.4423, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.0731, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.2191, grad_fn=&lt;SumBackward0&gt;)
+tensor(12.6767, grad_fn=&lt;SumBackward0&gt;)
+tensor(13.1111, grad_fn=&lt;SumBackward0&gt;)
+tensor(11.2427, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.6042, grad_fn=&lt;SumBackward0&gt;)
+tensor(8.8004, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.2203, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.6206, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.3413, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.8319, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.8620, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.7629, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.4007, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.6008, grad_fn=&lt;SumBackward0&gt;)
+tensor(16.1807, grad_fn=&lt;SumBackward0&gt;)
+tensor(5.0513, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.9223, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.3430, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.3733, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.1315, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.5549, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.9719, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.5363, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.9356, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.7987, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.0275, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.2561, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.4352, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3701, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.7997, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9659, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.7947, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5296, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4358, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3890, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.8172, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.5670, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5600, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0823, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.6734, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.6505, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4957, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.0691, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0851, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.2673, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.2699, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8960, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7962, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2332, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9404, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7479, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2626, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4380, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7160, grad_fn=&lt;SumBackward0&gt;)
+epoch 1, loss 0.044237
+[384, 875, 815, 171, 699, 261, 187, 722, 267, 686, 692, 764, 697, 192, 691, 665, 214, 26, 416, 726, 663, 854, 510, 962, 988, 196, 850, 666, 251, 311, 821, 260, 227, 105, 307, 401, 62, 213, 123, 450, 208, 4, 135, 470, 218, 734, 519, 100, 178, 146, 592, 674, 274, 619, 266, 909, 981, 851, 706, 860, 961, 272, 668, 363, 33, 783, 648, 97, 810, 877, 400, 654, 594, 752, 39, 552, 170, 64, 589, 867, 220, 373, 751, 664, 315, 441, 71, 312, 293, 436, 844, 224, 496, 788, 807, 990, 583, 35, 609, 584, 688, 656, 491, 521, 730, 155, 321, 499, 913, 210, 548, 792, 530, 408, 769, 673, 86, 525, 413, 77, 322, 754, 221, 122, 143, 56, 772, 605, 968, 876, 66, 947, 916, 131, 837, 424, 463, 150, 177, 241, 828, 314, 870, 392, 653, 163, 40, 127, 957, 953, 906, 545, 378, 683, 943, 731, 890, 340, 472, 948, 667, 246, 12, 186, 937, 799, 515, 778, 675, 328, 526, 550, 469, 892, 536, 445, 725, 501, 116, 780, 23, 959, 682, 151, 284, 958, 303, 111, 398, 351, 476, 802, 846, 798, 394, 494, 684, 595, 739, 103, 855, 200, 342, 901, 809, 721, 189, 822, 437, 874, 243, 181, 705, 375, 204, 677, 98, 886, 420, 685, 641, 87, 319, 368, 199, 779, 130, 265, 587, 180, 172, 263, 946, 268, 399, 58, 866, 513, 37, 503, 735, 853, 352, 276, 998, 465, 660, 34, 551, 182, 534, 254, 805, 679, 775, 14, 626, 560, 819, 271, 588, 431, 644, 549, 557, 51, 762, 736, 646, 690, 767, 928, 119, 120, 47, 106, 835, 857, 287, 514, 785, 749, 124, 842, 676, 750, 454, 258, 89, 217, 738, 806, 836, 936, 393, 829, 353, 601, 466, 586, 280, 498, 924, 478, 341, 126, 211, 599, 157, 468, 620, 249, 11, 834, 718, 973, 389, 993, 236, 477, 578, 848, 789, 581, 257, 929, 449, 820, 201, 349, 456, 598, 771, 78, 57, 528, 129, 741, 838, 325, 864, 473, 117, 15, 460, 642, 618, 717, 152, 19, 839, 985, 994, 940, 539, 881, 638, 659, 976, 80, 636, 817, 623, 570, 31, 517, 46, 203, 922, 144, 700, 577, 671, 831, 417, 141, 714, 316, 423, 107, 154, 73, 544, 140, 796, 362, 356, 652, 942, 678, 949, 639, 818, 54, 728, 167, 194, 457, 574, 94, 972, 655, 295, 147, 242, 791, 585, 30, 406, 326, 748, 923, 765, 332, 453, 358, 907, 527, 391, 359, 475, 776, 50, 832, 932, 640, 6, 845, 695, 32, 716, 382, 782, 505, 115, 561, 704, 335, 693, 774, 506, 914, 278, 868, 508, 292, 395, 880, 1, 920, 25, 827, 707, 540, 887, 744, 371, 573, 366, 911, 883, 28, 944, 452, 933, 625, 467, 602, 88, 566, 497, 954, 185, 816, 421, 858, 8, 773, 559, 951, 495, 983, 917, 555, 336, 434, 843, 226, 410, 743, 418, 542, 518, 903, 235, 669, 984, 215, 9, 29, 302, 481, 797, 176, 331, 317, 925, 613, 713, 74, 205, 617, 564, 795, 22, 367, 758, 580, 381, 184, 2, 289, 259, 591, 863, 20, 109, 313, 429, 919, 354, 900, 888, 415, 428, 61, 824, 60, 42, 825, 49, 882, 904, 737, 160, 7, 576, 270, 912, 520, 142, 489, 380, 862, 85, 512, 238, 504, 590, 405, 657, 81, 387, 898, 974, 567, 628, 229, 711, 439, 770, 812, 986, 538, 388, 330, 635, 861, 509, 672, 784, 300, 357, 511, 746, 995, 435, 21, 288, 207, 166, 945, 296, 703, 987, 926, 915, 629, 370, 884, 645, 803, 670, 604, 689, 134, 786, 255, 719, 347, 732, 523, 446, 396, 830, 365, 661, 558, 230, 212, 379, 893, 873, 190, 84, 474, 65, 627, 82, 36, 273, 361, 760, 432, 41, 291, 755, 138, 902, 612, 149, 658, 442, 191, 492, 871, 63, 965, 286, 164, 852, 979, 448, 808, 575, 614, 168, 811, 980, 403, 277, 237, 308, 110, 547, 971, 934, 865, 233, 320, 13, 753, 955, 10, 790, 712, 248, 938, 989, 197, 908, 766, 608, 632, 345, 383, 264, 443, 297, 556, 183, 631, 193, 781, 275, 344, 967, 262, 488, 649, 471, 569, 487, 376, 16, 223, 740, 621, 966, 198, 96, 369, 896, 964, 485, 299, 935, 350, 681, 535, 153, 950, 440, 694, 76, 118, 68, 79, 422, 930, 615, 290, 841, 83, 768, 826, 75, 125, 484, 355, 800, 48, 348, 502, 918, 709, 643, 305, 593, 894, 553, 516, 729, 409, 333, 136, 301, 306, 910, 195, 708, 483, 606, 104, 232, 532, 402, 5, 529, 139, 727, 430, 99, 95, 240, 374, 234, 145, 433, 571, 939, 482, 202, 411, 426, 18, 531, 651, 69, 701, 524, 90, 891, 543, 952, 438, 53, 607, 285, 650, 339, 114, 165, 343, 565, 256, 225, 897, 244, 412, 982, 554, 228, 455, 761, 804, 563, 461, 0, 250, 329, 611, 128, 899, 715, 970, 885, 269, 324, 206, 747, 282, 960, 245, 458, 390, 239, 687, 921, 464, 813, 132, 304, 17, 603, 624, 889, 616, 222, 310, 174, 895, 3, 596, 978, 179, 338, 647, 414, 337, 38, 404, 323, 419, 159, 72, 579, 975, 209, 102, 59, 742, 294, 793, 45, 459, 905, 723, 427, 859, 43, 680, 156, 977, 637, 173, 27, 600, 522, 814, 121, 175, 500, 490, 562, 407, 70, 582, 801, 247, 67, 969, 927, 541, 823, 108, 991, 997, 279, 879, 444, 137, 479, 702, 318, 787, 113, 44, 696, 572, 622, 537, 610, 698, 963, 253, 334, 219, 931, 833, 956, 869, 385, 447, 327, 720, 91, 283, 568, 112, 878, 24, 480, 634, 309, 757, 745, 872, 633, 397, 216, 759, 546, 462, 847, 377, 133, 372, 763, 169, 794, 101, 93, 710, 662, 999, 298, 733, 425, 630, 360, 451, 281, 777, 724, 840, 158, 756, 597, 992, 533, 849, 856, 55, 92, 493, 188, 486, 507, 941, 161, 386, 364, 996, 231, 162, 52, 252, 148, 346]
+tensor(0.6080, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4684, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2098, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3598, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2607, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1303, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4304, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2885, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2640, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2812, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1688, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2922, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1588, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3712, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2264, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1027, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2114, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2363, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2284, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2200, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0691, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1633, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0958, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1335, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0997, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1494, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1421, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0697, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0448, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0261, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0435, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0504, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0642, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0424, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0633, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0909, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1244, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0571, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0266, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0336, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0470, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0271, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0143, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0424, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0328, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0034, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0282, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0228, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0554, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0196, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0325, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0276, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0123, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0175, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0174, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0129, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0179, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0302, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0105, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0216, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0113, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0062, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0166, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0110, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0094, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0169, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0098, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0141, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0081, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0118, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0076, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0089, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0083, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0047, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0060, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0055, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0081, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0060, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0038, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0067, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0091, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0047, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0020, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0048, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0030, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0056, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0042, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0050, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0060, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0021, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0031, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0023, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0042, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+epoch 2, loss 0.000173
+[203, 166, 811, 57, 314, 94, 827, 391, 706, 876, 966, 73, 418, 926, 100, 859, 306, 109, 248, 561, 900, 113, 634, 760, 743, 60, 856, 54, 379, 472, 139, 275, 798, 367, 17, 890, 609, 789, 722, 676, 773, 384, 58, 246, 888, 518, 28, 244, 190, 297, 495, 133, 452, 666, 169, 260, 84, 628, 327, 716, 482, 542, 767, 176, 808, 989, 611, 824, 991, 816, 278, 931, 197, 402, 563, 127, 588, 820, 107, 873, 917, 812, 652, 184, 128, 294, 899, 215, 145, 336, 795, 42, 490, 507, 568, 914, 986, 193, 695, 268, 826, 886, 892, 670, 803, 823, 660, 923, 649, 340, 403, 328, 26, 963, 162, 448, 784, 74, 930, 814, 794, 772, 651, 43, 195, 451, 690, 602, 394, 832, 725, 10, 982, 308, 557, 96, 273, 669, 919, 469, 425, 173, 555, 103, 15, 601, 83, 687, 878, 289, 617, 419, 783, 230, 249, 445, 679, 502, 458, 503, 55, 763, 209, 231, 450, 149, 380, 31, 678, 566, 844, 338, 186, 187, 486, 132, 117, 64, 59, 36, 786, 200, 525, 158, 320, 202, 625, 376, 65, 837, 370, 270, 738, 196, 198, 871, 901, 416, 768, 20, 236, 300, 350, 112, 933, 292, 424, 853, 777, 727, 398, 685, 192, 262, 939, 741, 604, 514, 972, 630, 829, 130, 369, 256, 943, 38, 586, 536, 817, 547, 101, 534, 924, 526, 929, 558, 642, 529, 148, 945, 396, 845, 467, 911, 831, 636, 999, 97, 650, 172, 961, 174, 559, 641, 766, 992, 147, 309, 163, 291, 276, 985, 508, 484, 866, 782, 504, 82, 674, 221, 744, 897, 410, 735, 432, 643, 345, 245, 851, 407, 182, 850, 585, 902, 819, 592, 212, 426, 781, 159, 483, 456, 818, 110, 459, 623, 18, 488, 373, 872, 728, 372, 170, 976, 242, 713, 553, 880, 105, 915, 153, 302, 638, 241, 6, 4, 516, 952, 708, 385, 594, 390, 696, 277, 2, 595, 199, 118, 481, 25, 936, 813, 544, 216, 704, 497, 63, 622, 584, 238, 715, 896, 633, 70, 677, 697, 579, 944, 412, 438, 912, 841, 156, 836, 5, 19, 271, 347, 462, 913, 353, 927, 71, 916, 93, 600, 123, 664, 413, 240, 874, 175, 626, 680, 489, 264, 870, 618, 188, 355, 315, 597, 185, 703, 44, 301, 191, 953, 709, 957, 468, 791, 647, 759, 400, 662, 531, 322, 361, 548, 47, 757, 691, 522, 742, 996, 401, 351, 220, 108, 27, 134, 918, 751, 471, 510, 344, 627, 720, 237, 778, 135, 476, 69, 348, 50, 160, 905, 341, 89, 177, 745, 9, 146, 122, 973, 366, 429, 520, 699, 399, 265, 446, 937, 457, 645, 439, 99, 204, 358, 165, 254, 68, 889, 603, 299, 392, 3, 226, 491, 533, 281, 272, 511, 80, 363, 1, 280, 838, 143, 835, 404, 283, 619, 470, 500, 357, 494, 995, 106, 194, 830, 621, 506, 383, 14, 543, 688, 79, 90, 76, 657, 909, 386, 126, 857, 487, 417, 115, 154, 228, 538, 809, 258, 48, 393, 52, 323, 732, 843, 286, 575, 673, 334, 894, 454, 863, 496, 290, 578, 707, 501, 381, 61, 994, 946, 282, 7, 368, 478, 382, 549, 102, 694, 325, 739, 267, 736, 343, 167, 284, 646, 360, 779, 921, 755, 493, 288, 331, 114, 411, 875, 395, 785, 434, 223, 304, 881, 607, 332, 554, 949, 269, 349, 305, 552, 131, 389, 295, 206, 922, 910, 567, 499, 87, 654, 447, 574, 75, 39, 406, 116, 477, 734, 33, 378, 614, 339, 263, 868, 449, 67, 787, 442, 121, 748, 852, 56, 92, 8, 981, 635, 848, 255, 792, 37, 435, 287, 222, 624, 333, 217, 948, 958, 524, 285, 171, 243, 210, 920, 692, 232, 235, 152, 895, 321, 303, 891, 505, 72, 797, 550, 77, 825, 726, 612, 629, 746, 239, 556, 867, 882, 802, 998, 978, 546, 473, 701, 53, 598, 443, 702, 821, 433, 631, 41, 51, 729, 655, 252, 356, 440, 689, 342, 12, 88, 465, 45, 770, 719, 541, 942, 762, 971, 589, 733, 681, 711, 861, 947, 686, 519, 319, 855, 906, 864, 437, 21, 253, 965, 564, 40, 24, 764, 769, 466, 780, 46, 860, 810, 464, 648, 665, 138, 119, 807, 925, 613, 34, 840, 964, 682, 179, 879, 137, 62, 571, 441, 539, 632, 279, 259, 990, 180, 805, 907, 565, 593, 428, 157, 979, 605, 346, 218, 975, 793, 761, 515, 313, 822, 207, 587, 540, 430, 545, 444, 710, 644, 730, 775, 756, 758, 23, 950, 111, 893, 656, 498, 560, 661, 120, 551, 659, 606, 616, 804, 151, 653, 362, 683, 956, 98, 420, 904, 750, 431, 168, 521, 13, 580, 492, 752, 671, 405, 865, 928, 537, 640, 610, 16, 723, 969, 596, 307, 938, 637, 714, 570, 608, 213, 796, 95, 698, 463, 834, 974, 790, 208, 330, 0, 81, 324, 970, 987, 582, 839, 234, 749, 214, 512, 955, 387, 125, 940, 700, 959, 415, 509, 86, 150, 885, 684, 535, 374, 104, 371, 576, 311, 980, 935, 296, 569, 846, 675, 29, 224, 833, 573, 717, 883, 988, 91, 414, 129, 11, 161, 693, 869, 962, 49, 806, 144, 337, 532, 397, 85, 375, 934, 233, 847, 513, 136, 124, 774, 712, 142, 189, 247, 572, 78, 801, 66, 423, 887, 527, 753, 842, 480, 227, 32, 318, 201, 815, 740, 562, 668, 257, 408, 225, 599, 941, 517, 672, 960, 667, 316, 427, 530, 577, 615, 141, 140, 365, 954, 951, 310, 877, 967, 591, 862, 485, 721, 312, 293, 479, 326, 983, 854, 724, 250, 523, 261, 984, 274, 422, 219, 903, 771, 705, 229, 436, 298, 799, 364, 639, 329, 181, 22, 30, 737, 528, 421, 460, 977, 359, 178, 754, 266, 453, 776, 663, 211, 583, 765, 335, 164, 317, 474, 858, 354, 388, 997, 828, 788, 409, 377, 581, 747, 183, 884, 352, 155, 461, 658, 800, 718, 731, 205, 475, 849, 251, 993, 932, 620, 898, 35, 908, 968, 455, 590]
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0018, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0018, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0029, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0024, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.5183e-05, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+epoch 3, loss 0.000048
+w的估计误差: tensor([ 0.0001, -0.0012], grad_fn=&lt;SubBackward0&gt;)
+b的估计误差: tensor([0.0010], grad_fn=&lt;RsubBackward1&gt;)
 </pre></div>
 </div>
 </div>
@@ -790,6 +1494,7 @@ b的估计误差: tensor([0.0003], grad_fn=&lt;RsubBackward1&gt;)
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">定义损失函数</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">定义优化算法</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">训练</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">完整代码</a></li>
 </ul>
 
   </nav></div>
