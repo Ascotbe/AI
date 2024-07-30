@@ -244,6 +244,14 @@
 <li class="toctree-l1"><a class="reference internal" href="%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GPU.html">GPU</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -439,10 +447,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0687,  0.0430,  0.1254,  0.0713,  0.1234, -0.0258,  0.0744, -0.0999,
-          0.0724, -0.0672],
-        [ 0.0666,  0.0349,  0.1240, -0.0641,  0.2003,  0.0686,  0.2931,  0.0417,
-         -0.0700,  0.0692]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.1320, -0.0498,  0.2296, -0.0432, -0.0174, -0.0039,  0.0213, -0.0050,
+         -0.1420,  0.0614],
+        [ 0.0601, -0.1467,  0.1235,  0.0240,  0.0528,  0.0025,  0.0177,  0.1633,
+         -0.1546,  0.2408]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -485,10 +493,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0564, -0.3554,  0.0795, -0.0339, -0.1647, -0.0240, -0.1308, -0.1932,
-          0.2999,  0.1081],
-        [-0.1152, -0.3107, -0.0110, -0.0375, -0.0262,  0.0952, -0.2003, -0.2365,
-          0.2475,  0.0602]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0537, -0.0143,  0.1246, -0.0532,  0.1730,  0.0750,  0.3614, -0.1636,
+         -0.0916, -0.0501],
+        [ 0.0222, -0.0025, -0.0878, -0.0934,  0.1225,  0.0568,  0.2407, -0.2019,
+         -0.0163, -0.1556]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -531,10 +539,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0345,  0.0891, -0.2860, -0.0374, -0.1520,  0.0034,  0.1873, -0.3057,
-         -0.1153,  0.1117],
-        [ 0.0944,  0.2114, -0.2539, -0.0703, -0.2023,  0.1986, -0.0152, -0.0452,
-         -0.1025,  0.1649]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0039, -0.0712, -0.0177,  0.3388, -0.1386,  0.1165,  0.1325, -0.0877,
+          0.0163, -0.1761],
+        [-0.1249, -0.0645, -0.0506,  0.3748,  0.0015,  0.1557,  0.0634, -0.0842,
+          0.0619, -0.1486]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -576,7 +584,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0681, grad_fn=&lt;SumBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0678, grad_fn=&lt;SumBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -600,7 +608,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0371, grad_fn=&lt;SumBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-0.5715, grad_fn=&lt;SumBackward0&gt;)
 </pre></div>
 </div>
 </div>

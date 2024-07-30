@@ -244,6 +244,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -433,11 +441,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([ 0.0255,  0.7150, -0.1991,  1.2310, -0.0474, -0.3022, -1.1919,  0.1711,
-         1.7226, -0.1891])
+tensor([-0.3736, -0.3230, -0.2166, -0.0925, -0.8138,  0.1631,  0.2479, -2.0273,
+        -0.4724,  0.5039])
 经过relu之后
-tensor([0.0255, 0.7150, 0.0000, 1.2310, 0.0000, 0.0000, 0.0000, 0.1711, 1.7226,
-        0.0000])
+tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.1631, 0.2479, 0.0000, 0.0000,
+        0.5039])
 </pre></div>
 </div>
 </div>
@@ -458,14 +466,14 @@ tensor([0.0255, 0.7150, 0.0000, 1.2310, 0.0000, 0.0000, 0.0000, 0.1711, 1.7226,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 0.6972,  0.1850, -0.0907, -0.1467, -0.2540, -0.3893, -0.0725, -0.1843,
-         0.5053,  0.9177])
+tensor([-0.2490, -0.9220, -0.9346, -0.6005,  0.1508,  1.7616,  0.7440,  0.9292,
+        -1.7366, -0.5440])
 经过relu之后c的值
-tensor([0.6972, 0.1850, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.5053,
-        0.9177])
+tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.1508, 1.7616, 0.7440, 0.9292, 0.0000,
+        0.0000])
 经过relu之后d的值
-tensor([0.6972, 0.1850, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.5053,
-        0.9177])
+tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.1508, 1.7616, 0.7440, 0.9292, 0.0000,
+        0.0000])
 </pre></div>
 </div>
 </div>
