@@ -63,8 +63,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="卷积神经网络（LeNet）" href="lenet.html" />
-    <link rel="prev" title="图像卷积" href="conv-layer.html" />
+    <link rel="next" title="汇聚层" href="pooling.html" />
+    <link rel="prev" title="填充和步幅" href="padding-and-strides.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -246,10 +246,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
-<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenet.html">卷积神经网络（LeNet）</a></li>
 </ul>
 
@@ -439,7 +439,7 @@ document.write(`
 <p>当输入包含多个通道时，需要构造一个与输入数据具有相同输入通道数的卷积核，以便与输入数据进行互相关运算。假设输入的通道数为<span class="math notranslate nohighlight">\(c_i\)</span>，那么卷积核的输入通道数也需要为<span class="math notranslate nohighlight">\(c_i\)</span>。如果卷积核的窗口形状是<span class="math notranslate nohighlight">\(k_h\times k_w\)</span>，那么当<span class="math notranslate nohighlight">\(c_i=1\)</span>时，我们可以把卷积核看作形状为<span class="math notranslate nohighlight">\(k_h\times k_w\)</span>的二维张量。</p>
 <p>然而，当<span class="math notranslate nohighlight">\(c_i&gt;1\)</span>时，我们卷积核的每个输入通道将包含形状为<span class="math notranslate nohighlight">\(k_h\times k_w\)</span>的张量。将这些张量<span class="math notranslate nohighlight">\(c_i\)</span>连结在一起可以得到形状为<span class="math notranslate nohighlight">\(c_i\times k_h\times k_w\)</span>的卷积核。由于输入和卷积核都有<span class="math notranslate nohighlight">\(c_i\)</span>个通道，我们可以对每个通道输入的二维张量和卷积核的二维张量进行互相关运算，再对通道求和（将<span class="math notranslate nohighlight">\(c_i\)</span>的结果相加）得到二维张量。这是多通道输入和多输入通道卷积核之间进行二维互相关运算的结果。</p>
 <p>在下图中，我们演示了一个具有两个输入通道的二维互相关运算的示例。阴影部分是第一个输出元素以及用于计算这个输出的输入和核张量元素：<span class="math notranslate nohighlight">\((1\times1+2\times2+4\times3+5\times4)+(0\times0+1\times1+3\times2+4\times3)=56\)</span>。</p>
-<p><img alt="" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/conv-multi-in.svg" /></p>
+<p><img alt="" src="../_images/conv-multi-in.svg" /></p>
 <p>为了加深理解，我们<strong>实现一下多输入通道互相关运算</strong>。
 简而言之，我们所做的就是对每个通道执行互相关操作，然后将结果相加。</p>
 <div class="cell docutils container">
@@ -540,7 +540,7 @@ document.write(`
 我们可以将<span class="math notranslate nohighlight">\(1\times 1\)</span>卷积层看作在每个像素位置应用的全连接层，以<span class="math notranslate nohighlight">\(c_i\)</span>个输入值转换为<span class="math notranslate nohighlight">\(c_o\)</span>个输出值。
 因为这仍然是一个卷积层，所以跨像素的权重是一致的。
 同时，<span class="math notranslate nohighlight">\(1\times 1\)</span>卷积层需要的权重维度为<span class="math notranslate nohighlight">\(c_o\times c_i\)</span>，再额外加上一个偏置。</p>
-<p><img alt="" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/conv-1x1.svg" /></p>
+<p><img alt="" src="../_images/conv-1x1.svg" /></p>
 <p>下面，我们使用全连接层实现<span class="math notranslate nohighlight">\(1 \times 1\)</span>卷积。
 请注意，我们需要对输入和输出的数据形状进行调整。</p>
 <div class="cell docutils container">
@@ -609,20 +609,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="conv-layer.html"
+       href="padding-and-strides.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">图像卷积</p>
+        <p class="prev-next-title">填充和步幅</p>
       </div>
     </a>
     <a class="right-next"
-       href="lenet.html"
+       href="pooling.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">卷积神经网络（LeNet）</p>
+        <p class="prev-next-title">汇聚层</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

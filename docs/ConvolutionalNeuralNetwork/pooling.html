@@ -63,8 +63,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="填充和步幅" href="padding-and-strides.html" />
-    <link rel="prev" title="GPU" href="../DeepLearning/GPU.html" />
+    <link rel="next" title="卷积神经网络（LeNet）" href="lenet.html" />
+    <link rel="prev" title="多输入多输出通道" href="channels.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -246,10 +246,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">汇聚层</a></li>
-<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenet.html">卷积神经网络（LeNet）</a></li>
 </ul>
 
@@ -440,7 +440,7 @@ document.write(`
 然而，不同于卷积层中的输入与卷积核之间的互相关计算，汇聚层不包含参数。
 相反，池运算是确定性的，我们通常计算汇聚窗口中所有元素的最大值或平均值。这些操作分别称为<em>最大汇聚层</em>（maximum pooling）和<em>平均汇聚层</em>（average pooling）。</p>
 <p>在这两种情况下，与互相关运算符一样，汇聚窗口从输入张量的左上角开始，从左往右、从上往下的在输入张量内滑动。在汇聚窗口到达的每个位置，它计算该窗口中输入子张量的最大值或平均值。计算最大值或平均值是取决于使用了最大汇聚层还是平均汇聚层。</p>
-<p><img alt="" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/pooling.svg" /></p>
+<p><img alt="" src="../_images/pooling.svg" /></p>
 <p>上图中的输出张量的高度为<span class="math notranslate nohighlight">\(2\)</span>，宽度为<span class="math notranslate nohighlight">\(2\)</span>。这四个元素为每个汇聚窗口中的最大值：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -651,20 +651,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../DeepLearning/GPU.html"
+       href="channels.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">GPU</p>
+        <p class="prev-next-title">多输入多输出通道</p>
       </div>
     </a>
     <a class="right-next"
-       href="padding-and-strides.html"
+       href="lenet.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">填充和步幅</p>
+        <p class="prev-next-title">卷积神经网络（LeNet）</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

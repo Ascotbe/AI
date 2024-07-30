@@ -63,8 +63,8 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="多输入多输出通道" href="channels.html" />
-    <link rel="prev" title="填充和步幅" href="padding-and-strides.html" />
+    <link rel="next" title="填充和步幅" href="padding-and-strides.html" />
+    <link rel="prev" title="GPU" href="../DeepLearning/GPU.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -246,10 +246,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
-<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenet.html">卷积神经网络（LeNet）</a></li>
 </ul>
 
@@ -454,7 +454,7 @@ document.write(`
 <p>严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是<em>互相关运算</em>（cross-correlation），而不是卷积运算。
 根据在卷积层中，输入张量和核张量通过<strong>互相关运算</strong>产生输出张量。</p>
 <p>首先，我们暂时忽略通道（第三维）这一情况，看看如何处理二维图像数据和隐藏表示。在下图中，输入是高度为<span class="math notranslate nohighlight">\(3\)</span>、宽度为<span class="math notranslate nohighlight">\(3\)</span>的二维张量（即形状为<span class="math notranslate nohighlight">\(3 \times 3\)</span>）。卷积核的高度和宽度都是<span class="math notranslate nohighlight">\(2\)</span>，而卷积核窗口（或卷积窗口）的形状由内核的高度和宽度决定（即<span class="math notranslate nohighlight">\(2 \times 2\)</span>）。</p>
-<p><img alt="" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/correlation.svg" /></p>
+<p><img alt="" src="../_images/correlation.svg" /></p>
 <p>在二维互相关运算中，卷积窗口从输入张量的左上角开始，从左到右、从上到下滑动。
 当卷积窗口滑动到新一个位置时，包含在该窗口中的部分张量与卷积核张量进行按元素相乘，得到的张量再求和得到一个单一的标量值，由此我们得出了这一位置的输出张量值。
 在如上例子中，输出张量的四个元素由二维互相关运算得到，这个输出高度为<span class="math notranslate nohighlight">\(2\)</span>、宽度为<span class="math notranslate nohighlight">\(2\)</span>，如下所示：</p>
@@ -466,7 +466,7 @@ document.write(`
 4\times0+5\times1+7\times2+8\times3=43.
 \end{align}\end{split}\]</div>
 <p>可以通过下面动图来比较详细的理解它（<a class="reference external" href="https://github.com/vdumoulin/conv_arithmetic?tab=readme-ov-file%EF%BC%89">https://github.com/vdumoulin/conv_arithmetic?tab=readme-ov-file）</a></p>
-<p><img alt="" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/no_padding_no_strides.gif" /></p>
+<p><img alt="" src="../_images/no_padding_no_strides.gif" /></p>
 <p>注意，输出大小略小于输入大小。这是因为卷积核的宽度和高度大于1，
 而卷积核只与图像中每个大小完全适合的位置进行互相关运算。
 所以，输出大小等于输入大小<span class="math notranslate nohighlight">\(n_h \times n_w\)</span>减去卷积核大小<span class="math notranslate nohighlight">\(k_h \times k_w\)</span>，即：</p>
@@ -501,35 +501,35 @@ document.write(`
 <tbody>
 <tr class="row-even"><td class="text-center"><p>恒等运算（原图不变）</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}\ \ 0&amp;\ \ 0&amp;\ \ 0\\\ \ 0&amp;\ \ 1&amp;\ \ 0\\\ \ 0&amp;\ \ 0&amp;\ \ 0\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Orig.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Orig.png" /></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>脊检测</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}0&amp;-1&amp;0\\-1&amp;\ \ 4&amp;-1\\0&amp;-1&amp;0\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Rige1.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Rige1.png" /></p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p>边缘检测</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}-1&amp;-1&amp;-1\\-1&amp;\ \ 8&amp;-1\\-1&amp;-1&amp;-1\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Rige2.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Rige2.png" /></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>锐化</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}\ \ 0&amp;-1&amp;\ \ 0\\-1&amp;\ \ 5&amp;-1\\\ \ 0&amp;-1&amp;\ \ 0\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Sharp.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Sharp.png" /></p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p>框模糊</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {1}{9}}{\begin{bmatrix}\ \ 1&amp;\ \ 1&amp;\ \ 1\\\ \ 1&amp;\ \ 1&amp;\ \ 1\\\ \ 1&amp;\ \ 1&amp;\ \ 1\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Blur2.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Blur2.png" /></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>高斯模糊 3 × 3</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {1}{16}}{\begin{bmatrix}\ \ 1&amp;\ \ 2&amp;\ \ 1\\\ \ 2&amp;\ \ 4&amp;\ \ 2\\\ \ 1&amp;\ \ 2&amp;\ \ 1\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Blur1.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Blur1.png" /></p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p>高斯模糊 5 × 5</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {1}{256}}{\begin{bmatrix}1&amp;4&amp;6&amp;4&amp;1\\4&amp;16&amp;24&amp;16&amp;4\\6&amp;24&amp;36&amp;24&amp;6\\4&amp;16&amp;24&amp;16&amp;4\\1&amp;4&amp;6&amp;4&amp;1\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Blur_Gaussian_5x5.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Blur_Gaussian_5x5.png" /></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>模糊遮蔽 5 × 5</p></td>
 <td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {-1}{256}}{\begin{bmatrix}1&amp;4&amp;\ \ 6&amp;4&amp;1\\4&amp;16&amp;\ \ 24&amp;16&amp;4\\6&amp;24&amp;-476&amp;24&amp;6\\4&amp;16&amp;\ \ 24&amp;16&amp;4\\1&amp;4&amp;\ \ 6&amp;4&amp;1\end{bmatrix}}}\)</span></p></td>
-<td class="text-center"><p><img alt="img" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/Vd-Unsharp_5x5.png" /></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Unsharp_5x5.png" /></p></td>
 </tr>
 </tbody>
 </table>
@@ -734,11 +734,11 @@ tensor([[[[ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.]]]])
-epoch 2, loss 2.355
-epoch 4, loss 0.573
-epoch 6, loss 0.169
-epoch 8, loss 0.058
-epoch 10, loss 0.022
+epoch 2, loss 12.790
+epoch 4, loss 3.836
+epoch 6, loss 1.336
+epoch 8, loss 0.508
+epoch 10, loss 0.201
 </pre></div>
 </div>
 </div>
@@ -751,7 +751,7 @@ epoch 10, loss 0.022
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.9785, -1.0082]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.9417, -1.0333]])
 </pre></div>
 </div>
 </div>
@@ -762,7 +762,7 @@ epoch 10, loss 0.022
 <h2>一维卷积、二维卷积、三维卷积<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
 <section id="id12">
 <h3>一维卷积<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
-<p><img alt="image.png" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/1223117-20180212193102531-761358003.png" /></p>
+<p><img alt="image.png" src="../_images/1223117-20180212193102531-761358003.png" /></p>
 <div class="math notranslate nohighlight">
 \[y_{i}=\sum_{a=1}^{h} w_{a} x_{i+a}\]</div>
 <ul class="simple">
@@ -783,7 +783,7 @@ epoch 10, loss 0.022
 </section>
 <section id="id14">
 <h3>三维卷积<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
-<p><img alt="" src="ConvolutionalNeuralNetwork/image/ConvolutionalNeuralNetwork/1223117-20180212194618921-376193862.png" /></p>
+<p><img alt="" src="../_images/1223117-20180212194618921-376193862.png" /></p>
 <div class="math notranslate nohighlight">
 \[y_{i, j, k}=\sum_{a=1}^{h} \sum_{b=1}^{w} \sum_{c=1}^{d} w_{a, b, c} x_{i+a, j+b, k+c}\]</div>
 <p>这里采用代数的方式对三维卷积进行介绍，具体思想与一维卷积、二维卷积相同。</p>
@@ -827,20 +827,20 @@ epoch 10, loss 0.022
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="padding-and-strides.html"
+       href="../DeepLearning/GPU.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">填充和步幅</p>
+        <p class="prev-next-title">GPU</p>
       </div>
     </a>
     <a class="right-next"
-       href="channels.html"
+       href="padding-and-strides.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">多输入多输出通道</p>
+        <p class="prev-next-title">填充和步幅</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
