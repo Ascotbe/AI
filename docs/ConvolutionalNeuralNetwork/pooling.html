@@ -431,14 +431,11 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>汇聚层<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>通常当我们处理图像时，我们希望逐渐降低隐藏表示的空间分辨率、聚集信息，这样随着我们在神经网络中层叠的上升，每个神经元对其敏感的感受野（输入）就越大。</p>
-<p>而我们的机器学习任务通常会跟全局图像的问题有关（例如，“图像是否包含一只猫呢？”），所以我们最后一层的神经元应该对整个输入的全局敏感。通过逐渐聚合信息，生成越来越粗糙的映射，最终实现学习全局表示的目标，同时将卷积图层的所有优势保留在中间层。</p>
-<p>此外，当检测较底层的特征时（例如《填充与步幅》中所讨论的边缘），我们通常希望这些特征保持某种程度上的平移不变性。例如，如果我们拍摄黑白之间轮廓清晰的图像<code class="docutils literal notranslate"><span class="pre">X</span></code>，并将整个图像向右移动一个像素，即<code class="docutils literal notranslate"><span class="pre">Z[i,</span> <span class="pre">j]</span> <span class="pre">=</span> <span class="pre">X[i,</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1]</span></code>，则新图像<code class="docutils literal notranslate"><span class="pre">Z</span></code>的输出可能大不相同。而在现实中，随着拍摄角度的移动，任何物体几乎不可能发生在同一像素上。即使用三脚架拍摄一个静止的物体，由于快门的移动而引起的相机振动，可能会使所有物体左右移动一个像素（除了高端相机配备了特殊功能来解决这个问题）。</p>
-<p>本节将介绍<em>汇聚</em>（pooling）层，它具有双重目的：降低卷积层对位置的敏感性，同时降低对空间降采样表示的敏感性。</p>
 <section id="id2">
 <h2>最大汇聚层和平均汇聚层<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>与卷积层类似，汇聚层运算符由一个固定形状的窗口组成，该窗口根据其步幅大小在输入的所有区域上滑动，为固定形状窗口（有时称为<em>汇聚窗口</em>）遍历的每个位置计算一个输出。
+<p>与卷积层类似，汇聚层运算符由一个固定形状的窗口组成，该窗口根据其步幅大小在输入的所有区域上滑动，为固定形状窗口（有时称为<strong>汇聚窗口</strong>）遍历的每个位置计算一个输出。
 然而，不同于卷积层中的输入与卷积核之间的互相关计算，汇聚层不包含参数。
-相反，池运算是确定性的，我们通常计算汇聚窗口中所有元素的最大值或平均值。这些操作分别称为<em>最大汇聚层</em>（maximum pooling）和<em>平均汇聚层</em>（average pooling）。</p>
+相反，池运算是确定性的，我们通常计算汇聚窗口中所有元素的最大值或平均值。这些操作分别称为<strong>最大汇聚层</strong>（maximum pooling）和<strong>平均汇聚层</strong>（average pooling）。</p>
 <p>在这两种情况下，与互相关运算符一样，汇聚窗口从输入张量的左上角开始，从左往右、从上往下的在输入张量内滑动。在汇聚窗口到达的每个位置，它计算该窗口中输入子张量的最大值或平均值。计算最大值或平均值是取决于使用了最大汇聚层还是平均汇聚层。</p>
 <p><img alt="" src="../_images/pooling.svg" /></p>
 <p>上图中的输出张量的高度为<span class="math notranslate nohighlight">\(2\)</span>，宽度为<span class="math notranslate nohighlight">\(2\)</span>。这四个元素为每个汇聚窗口中的最大值：</p>
@@ -454,7 +451,7 @@ document.write(`
 设置卷积层输入为<code class="docutils literal notranslate"><span class="pre">X</span></code>，汇聚层输出为<code class="docutils literal notranslate"><span class="pre">Y</span></code>。
 无论<code class="docutils literal notranslate"><span class="pre">X[i,</span> <span class="pre">j]</span></code>和<code class="docutils literal notranslate"><span class="pre">X[i,</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1]</span></code>的值相同与否，或<code class="docutils literal notranslate"><span class="pre">X[i,</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1]</span></code>和<code class="docutils literal notranslate"><span class="pre">X[i,</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">2]</span></code>的值相同与否，汇聚层始终输出<code class="docutils literal notranslate"><span class="pre">Y[i,</span> <span class="pre">j]</span> <span class="pre">=</span> <span class="pre">1</span></code>。
 也就是说，使用<span class="math notranslate nohighlight">\(2\times 2\)</span>最大汇聚层，即使在高度或宽度上移动一个元素，卷积层仍然可以识别到模式。</p>
-<p>在下面的代码中的<code class="docutils literal notranslate"><span class="pre">pool2d</span></code>函数，我们(<strong>实现汇聚层的前向传播</strong>)。
+<p>在下面的代码中的<code class="docutils literal notranslate"><span class="pre">pool2d</span></code>函数，我们<strong>实现汇聚层的前向传播</strong>。
 这类似于《图像卷积》中的<code class="docutils literal notranslate"><span class="pre">corr2d</span></code>函数。
 然而，这里我们没有卷积核，输出为输入中每个区域的最大值或平均值。</p>
 <div class="cell docutils container">

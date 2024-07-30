@@ -440,17 +440,20 @@ document.write(`
 <p>如上所述，在应用多层卷积时，我们常常丢失边缘像素。
 由于我们通常使用小卷积核，因此对于任何单个卷积，我们可能只会丢失几个像素。
 但随着我们应用许多连续卷积层，累积丢失的像素数就多了。
-解决这个问题的简单方法即为<em>填充</em>（padding）：在输入图像的边界填充元素（通常填充元素是<span class="math notranslate nohighlight">\(0\)</span>）。
-例如，在 :numref:<code class="docutils literal notranslate"><span class="pre">img_conv_pad</span></code>中，我们将<span class="math notranslate nohighlight">\(3 \times 3\)</span>输入填充到<span class="math notranslate nohighlight">\(5 \times 5\)</span>，那么它的输出就增加为<span class="math notranslate nohighlight">\(4 \times 4\)</span>。阴影部分是第一个输出元素以及用于输出计算的输入和核张量元素：
+解决这个问题的简单方法即为<strong>填充</strong>（padding）：在输入图像的边界填充元素（通常填充元素是<span class="math notranslate nohighlight">\(0\)</span>）。
+例如，在下图中，我们将<span class="math notranslate nohighlight">\(3 \times 3\)</span>输入填充到<span class="math notranslate nohighlight">\(5 \times 5\)</span>，那么它的输出就增加为<span class="math notranslate nohighlight">\(4 \times 4\)</span>。阴影部分是第一个输出元素以及用于输出计算的输入和核张量元素：
 <span class="math notranslate nohighlight">\(0\times0+0\times1+0\times2+0\times3=0\)</span>。</p>
 <p><img alt="" src="../_images/conv-pad.svg" /></p>
 <p>通常，如果我们添加<span class="math notranslate nohighlight">\(p_h\)</span>行填充（大约一半在顶部，一半在底部）和<span class="math notranslate nohighlight">\(p_w\)</span>列填充（左侧大约一半，右侧一半），则输出形状将为</p>
 <div class="math notranslate nohighlight">
 \[(n_h-k_h+p_h+1)\times(n_w-k_w+p_w+1)。\]</div>
+<p><img alt="" src="../_images/arbitrary_padding_no_strides.gif" /></p>
 <p>这意味着输出的高度和宽度将分别增加<span class="math notranslate nohighlight">\(p_h\)</span>和<span class="math notranslate nohighlight">\(p_w\)</span>。</p>
-<p>在许多情况下，我们需要设置<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，使输入和输出具有相同的高度和宽度。
-这样可以在构建网络时更容易地预测每个图层的输出形状。假设<span class="math notranslate nohighlight">\(k_h\)</span>是奇数，我们将在高度的两侧填充<span class="math notranslate nohighlight">\(p_h/2\)</span>行。
-如果<span class="math notranslate nohighlight">\(k_h\)</span>是偶数，则一种可能性是在输入顶部填充<span class="math notranslate nohighlight">\(\lceil p_h/2\rceil\)</span>行，在底部填充<span class="math notranslate nohighlight">\(\lfloor p_h/2\rfloor\)</span>行。同理，我们填充宽度的两侧。</p>
+<p>在许多情况下，我们需要设置<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，使输入和输出具有相同的高度和宽度。</p>
+<ul class="simple">
+<li><p>当<span class="math notranslate nohighlight">\(k_h\)</span>是奇数，在上下两侧填充<span class="math notranslate nohighlight">\(p_h/2\)</span>行。</p></li>
+<li><p>当<span class="math notranslate nohighlight">\(k_h\)</span>是偶数，在输入顶部填充<span class="math notranslate nohighlight">\(\lceil p_h/2\rceil\)</span>行，在底部填充<span class="math notranslate nohighlight">\(\lfloor p_h/2\rfloor\)</span>行。</p></li>
+</ul>
 <p>卷积神经网络中卷积核的高度和宽度通常为奇数，例如1、3、5或7。
 选择奇数的好处是，保持空间维度的同时，我们可以在顶部和底部填充相同数量的行，在左侧和右侧填充相同数量的列。</p>
 <p>此外，使用奇数的核大小和填充大小也提供了书写上的便利。对于任何二维张量<code class="docutils literal notranslate"><span class="pre">X</span></code>，当满足：</p>
@@ -506,10 +509,12 @@ document.write(`
 </section>
 <section id="id3">
 <h2>步幅<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<p>在计算互相关时，卷积窗口从输入张量的左上角开始，向下、向右滑动。
-在前面的例子中，我们默认每次滑动一个元素。
-但是，有时候为了高效计算或是缩减采样次数，卷积窗口可以跳过中间位置，每次滑动多个元素。</p>
-<p>我们将每次滑动元素的数量称为<em>步幅</em>（stride）。到目前为止，我们只使用过高度或宽度为<span class="math notranslate nohighlight">\(1\)</span>的步幅，那么如何使用较大的步幅呢？
+<p>填充减少的输出大小与层数线性相关</p>
+<ul class="simple">
+<li><p>给定输入大小<span class="math notranslate nohighlight">\(224*224\)</span>，在使用<span class="math notranslate nohighlight">\(5*5\)</span>卷积核的情况下，需要44层将输出降低到<span class="math notranslate nohighlight">\(4*4\)</span></p></li>
+<li><p>需要大量计算才能得到较小输出</p></li>
+</ul>
+<p>我们将每次滑动元素的数量称为<strong>步幅</strong>（stride）。
 下图是垂直步幅为<span class="math notranslate nohighlight">\(3\)</span>，水平步幅为<span class="math notranslate nohighlight">\(2\)</span>的二维互相关运算。
 着色部分是输出元素以及用于输出计算的输入和内核张量元素：<span class="math notranslate nohighlight">\(0\times0+0\times1+1\times2+2\times3=8\)</span>、<span class="math notranslate nohighlight">\(0\times0+6\times1+0\times2+0\times3=6\)</span>。</p>
 <p>可以看到，为了计算输出中第一列的第二个元素和第一行的第二个元素，卷积窗口分别向下滑动三行和向右滑动两列。但是，当卷积窗口继续向右滑动两列时，没有输出，因为输入元素无法填充窗口（除非我们添加另一列填充）。</p>
@@ -517,8 +522,9 @@ document.write(`
 <p>通常，当垂直步幅为<span class="math notranslate nohighlight">\(s_h\)</span>、水平步幅为<span class="math notranslate nohighlight">\(s_w\)</span>时，输出形状为</p>
 <div class="math notranslate nohighlight">
 \[\lfloor(n_h-k_h+p_h+s_h)/s_h\rfloor \times \lfloor(n_w-k_w+p_w+s_w)/s_w\rfloor.\]</div>
-<p>如果我们设置了<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，则输出形状将简化为<span class="math notranslate nohighlight">\(\lfloor(n_h+s_h-1)/s_h\rfloor \times \lfloor(n_w+s_w-1)/s_w\rfloor\)</span>。
-更进一步，如果输入的高度和宽度可以被垂直和水平步幅整除，则输出形状将为<span class="math notranslate nohighlight">\((n_h/s_h) \times (n_w/s_w)\)</span>。</p>
+<p>如果我们设置了<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，则输出形状将简化为<span class="math notranslate nohighlight">\(\lfloor(n_h+s_h-1)/s_h\rfloor \times \lfloor(n_w+s_w-1)/s_w\rfloor\)</span>。</p>
+<p>更进一步，如果输入的高度和宽度可以被垂直和水平步幅整除，则输出形状将为<span class="math notranslate nohighlight">\((n_h/s_h) \times (n_w/s_w)\)</span>。</p>
+<p><img alt="" src="../_images/no_padding_strides.gif" /></p>
 <p>下面，我们<strong>将高度和宽度的步幅设置为2</strong>，从而将输入的高度和宽度减半。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -547,7 +553,6 @@ document.write(`
 </div>
 </div>
 </div>
-<p>为了简洁起见，当输入高度和宽度两侧的填充数量分别为<span class="math notranslate nohighlight">\(p_h\)</span>和<span class="math notranslate nohighlight">\(p_w\)</span>时，我们称之为填充<span class="math notranslate nohighlight">\((p_h, p_w)\)</span>。当<span class="math notranslate nohighlight">\(p_h = p_w = p\)</span>时，填充是<span class="math notranslate nohighlight">\(p\)</span>。同理，当高度和宽度上的步幅分别为<span class="math notranslate nohighlight">\(s_h\)</span>和<span class="math notranslate nohighlight">\(s_w\)</span>时，我们称之为步幅<span class="math notranslate nohighlight">\((s_h, s_w)\)</span>。特别地，当<span class="math notranslate nohighlight">\(s_h = s_w = s\)</span>时，我们称步幅为<span class="math notranslate nohighlight">\(s\)</span>。默认情况下，填充为0，步幅为1。在实践中，我们很少使用不一致的步幅或填充，也就是说，我们通常有<span class="math notranslate nohighlight">\(p_h = p_w\)</span>和<span class="math notranslate nohighlight">\(s_h = s_w\)</span>。</p>
 </section>
 </section>
 

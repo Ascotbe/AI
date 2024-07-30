@@ -414,9 +414,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">多输入通道</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">多输出通道</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#times-1"><span class="math notranslate nohighlight">\(1\times 1\)</span> 卷积层</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">多输入通道</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">相关公式</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">多输出通道</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">相关公式</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#times-1"><span class="math notranslate nohighlight">\(1\times 1\)</span> 卷积层</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">二维卷积层</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -433,12 +442,10 @@ document.write(`
 <p>虽然我们在《全连接层到卷积》中描述了构成每个图像的多个通道和多层卷积层。例如彩色图像具有标准的RGB通道来代表红、绿和蓝。
 但是到目前为止，我们仅展示了单个输入和单个输出通道的简化例子。
 这使得我们可以将输入、卷积核和输出看作二维张量。</p>
-<p>当我们添加通道时，我们的输入和隐藏的表示都变成了三维张量。例如，每个RGB输入图像具有<span class="math notranslate nohighlight">\(3\times h\times w\)</span>的形状。我们将这个大小为<span class="math notranslate nohighlight">\(3\)</span>的轴称为<strong>通道</strong>（channel）维度。本节将更深入地研究具有多输入和多输出通道的卷积核。</p>
+<p>当我们添加通道时，我们的输入和隐藏的表示都变成了三维张量。例如，每个RGB输入图像具有<span class="math notranslate nohighlight">\(3\times h\times w\)</span>的形状。我们将这个大小为<span class="math notranslate nohighlight">\(3\)</span>的轴称为<strong>通道</strong>（channel）维度。</p>
 <section id="id2">
 <h2>多输入通道<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>当输入包含多个通道时，需要构造一个与输入数据具有相同输入通道数的卷积核，以便与输入数据进行互相关运算。假设输入的通道数为<span class="math notranslate nohighlight">\(c_i\)</span>，那么卷积核的输入通道数也需要为<span class="math notranslate nohighlight">\(c_i\)</span>。如果卷积核的窗口形状是<span class="math notranslate nohighlight">\(k_h\times k_w\)</span>，那么当<span class="math notranslate nohighlight">\(c_i=1\)</span>时，我们可以把卷积核看作形状为<span class="math notranslate nohighlight">\(k_h\times k_w\)</span>的二维张量。</p>
-<p>然而，当<span class="math notranslate nohighlight">\(c_i&gt;1\)</span>时，我们卷积核的每个输入通道将包含形状为<span class="math notranslate nohighlight">\(k_h\times k_w\)</span>的张量。将这些张量<span class="math notranslate nohighlight">\(c_i\)</span>连结在一起可以得到形状为<span class="math notranslate nohighlight">\(c_i\times k_h\times k_w\)</span>的卷积核。由于输入和卷积核都有<span class="math notranslate nohighlight">\(c_i\)</span>个通道，我们可以对每个通道输入的二维张量和卷积核的二维张量进行互相关运算，再对通道求和（将<span class="math notranslate nohighlight">\(c_i\)</span>的结果相加）得到二维张量。这是多通道输入和多输入通道卷积核之间进行二维互相关运算的结果。</p>
-<p>在下图中，我们演示了一个具有两个输入通道的二维互相关运算的示例。阴影部分是第一个输出元素以及用于计算这个输出的输入和核张量元素：<span class="math notranslate nohighlight">\((1\times1+2\times2+4\times3+5\times4)+(0\times0+1\times1+3\times2+4\times3)=56\)</span>。</p>
+<p>在下图中，我们演示了一个具有两个输入通道的二维互相关运算的示例。每个通道都有一个卷积核，结果是所有通道卷积结果的和：<span class="math notranslate nohighlight">\((1\times1+2\times2+4\times3+5\times4)+(0\times0+1\times1+3\times2+4\times3)=56\)</span>。</p>
 <p><img alt="" src="../_images/conv-multi-in.svg" /></p>
 <p>为了加深理解，我们<strong>实现一下多输入通道互相关运算</strong>。
 简而言之，我们所做的就是对每个通道执行互相关操作，然后将结果相加。</p>
@@ -446,13 +453,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="c1"># 先遍历“X”和“K”的第0个维度（通道维度），再把它们加在一起</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">corr2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">))</span>
 </pre></div>
@@ -477,10 +478,20 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
 <section id="id3">
-<h2>多输出通道<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<p>到目前为止，不论有多少输入通道，我们还只有一个输出通道。然而，正如我们在 :numref:<code class="docutils literal notranslate"><span class="pre">subsec_why-conv-channels</span></code>中所讨论的，每一层有多个输出通道是至关重要的。在最流行的神经网络架构中，随着神经网络层数的加深，我们常会增加输出通道的维数，通过减少空间分辨率以获得更大的通道深度。直观地说，我们可以将每个通道看作对不同特征的响应。而现实可能更为复杂一些，因为每个通道不是独立学习的，而是为了共同使用而优化的。因此，多输出通道并不仅是学习多个单通道的检测器。</p>
+<h3>相关公式<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>输入<span class="math notranslate nohighlight">\(\mathbf{X}: c_{i} \times n_{h} \times n_{w}\)</span></p></li>
+<li><p>核<span class="math notranslate nohighlight">\(\mathbf{W}: c_{i} \times k_{h} \times k_{w}\)</span></p></li>
+<li><p>输出<span class="math notranslate nohighlight">\(\mathbf{Y}: m_{h} \times m_{w}\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\mathbf{Y}=\sum_{i=0}^{c_{i}} \mathbf{X}_{i,,:}^{*} \star \mathbf{W}_{i,,:}\]</div>
+</section>
+</section>
+<section id="id4">
+<h2>多输出通道<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>不论有多少输入通道，到目前为止我们只用到单输出通道。我们可以有多个三维卷积核，每个核生成一个输出通道</p>
 <p>用<span class="math notranslate nohighlight">\(c_i\)</span>和<span class="math notranslate nohighlight">\(c_o\)</span>分别表示输入和输出通道的数目，并让<span class="math notranslate nohighlight">\(k_h\)</span>和<span class="math notranslate nohighlight">\(k_w\)</span>为卷积核的高度和宽度。为了获得多个通道的输出，我们可以为每个输出通道创建一个形状为<span class="math notranslate nohighlight">\(c_i\times k_h\times k_w\)</span>的卷积核张量，这样卷积核的形状是<span class="math notranslate nohighlight">\(c_o\times c_i\times k_h\times k_w\)</span>。在互相关运算中，每个输出通道先获取所有输入通道，再以对应该输出通道的卷积核计算出结果。</p>
 <p>如下所示，我们实现一个<strong>计算多个通道的输出的互相关函数</strong>。</p>
 <div class="cell docutils container">
@@ -527,6 +538,16 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="id5">
+<h3>相关公式<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>输入<span class="math notranslate nohighlight">\(\mathbf{X}: c_{i} \times n_{h} \times n_{w}\)</span></p></li>
+<li><p>核<span class="math notranslate nohighlight">\(\mathbf{W}: c_{o} \times c_{i} \times k_{h} \times k_{w}\)</span></p></li>
+<li><p>输出<span class="math notranslate nohighlight">\(\mathbf{Y}: {c_{o}} \times m_{h}  \times  m_{w}\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\mathbf{Y}_{i,:,:}=\mathbf{X} \star \mathbf{W}_{i \cdot:,:} \quad \text { for } i=1, \ldots, c_{o}\]</div>
+</section>
 </section>
 <section id="times-1">
 <h2><span class="math notranslate nohighlight">\(1\times 1\)</span> 卷积层<a class="headerlink" href="#times-1" title="Link to this heading">#</a></h2>
@@ -575,6 +596,28 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="id6">
+<h3>二维卷积层<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>输入<span class="math notranslate nohighlight">\(\mathbf{X}: c_{i} \times n_{h} \times n_{w}\)</span></p></li>
+<li><p>核<span class="math notranslate nohighlight">\(\mathbf{W}: c_{o} \times c_{i} \times k_{h} \times k_{w}\)</span></p></li>
+<li><p>偏差<span class="math notranslate nohighlight">\(B :  c_{o} \times c_{i}\)</span></p></li>
+<li><p>输出<span class="math notranslate nohighlight">\(\mathbf{Y}: c_{o} \times m_{h} \times m_{w}\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\mathbf{Y}=\mathbf{X} \star \mathbf{W}+\mathbf{B}\]</div>
+<p>计算复杂度：<span class="math notranslate nohighlight">\(O\left(c_{i} c_{o} k_{h} k_{w} m_{h} m_{w}\right)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+c_{i} &amp; =c_{o}=100 \\
+k_{h} &amp; =h_{w}=5 \\
+m_{h} &amp; =m_{w}=64
+\end{aligned}\end{split}\]</div>
+<ul class="simple">
+<li><p>10 层，1M样本，10 PFlops</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\text {(CPU: 0.15 TF = 18h, GPU: } 12 \mathrm{TF}=14 \mathrm{~min})\)</span></p>
+</section>
 </section>
 </section>
 
@@ -642,9 +685,18 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">多输入通道</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">多输出通道</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#times-1"><span class="math notranslate nohighlight">\(1\times 1\)</span> 卷积层</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">多输入通道</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">相关公式</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">多输出通道</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">相关公式</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#times-1"><span class="math notranslate nohighlight">\(1\times 1\)</span> 卷积层</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">二维卷积层</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

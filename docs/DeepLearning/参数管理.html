@@ -460,12 +460,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.1355, 0.0119, 0.8791, 0.1440],
-        [0.0833, 0.2886, 0.6253, 0.6248]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.3379, 0.8517, 0.1057, 0.2521],
+        [0.1873, 0.3180, 0.4689, 0.7783]])
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.4208],
-        [0.2281]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.2712],
+        [-0.2633]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -485,7 +485,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedDict([(&#39;weight&#39;, tensor([[-0.2503,  0.0245,  0.1105,  0.2759,  0.1302, -0.3532,  0.2457, -0.0788]])), (&#39;bias&#39;, tensor([0.2853]))])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedDict([(&#39;weight&#39;, tensor([[-0.0077,  0.1212, -0.3035,  0.0377,  0.1427,  0.2280, -0.0938,  0.0797]])), (&#39;bias&#39;, tensor([-0.0926]))])
 </pre></div>
 </div>
 </div>
@@ -511,8 +511,8 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;torch.nn.parameter.Parameter&#39;&gt;
 Parameter containing:
-tensor([0.2853], requires_grad=True)
-tensor([0.2853])
+tensor([-0.0926], requires_grad=True)
+tensor([-0.0926])
 </pre></div>
 </div>
 </div>
@@ -562,7 +562,7 @@ tensor([0.2853])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0.2853])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.0926])
 </pre></div>
 </div>
 </div>
@@ -591,8 +591,8 @@ tensor([0.2853])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.2994],
-        [0.2994]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.4312],
+        [-0.4312]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -657,7 +657,7 @@ tensor([0.2853])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.3356,  0.4079,  0.1542,  0.3272, -0.4368,  0.4050, -0.0317, -0.1508])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.2381,  0.4736, -0.3874, -0.4721, -0.1665,  0.3816, -0.2261,  0.4600])
 </pre></div>
 </div>
 </div>
@@ -691,7 +691,7 @@ PyTorch的<code class="docutils literal notranslate"><span class="pre">nn.init</
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([ 0.0041,  0.0108,  0.0175, -0.0134]), tensor(0.))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([0.0126, 0.0144, 0.0095, 0.0161]), tensor(0.))
 </pre></div>
 </div>
 </div>
@@ -734,7 +734,7 @@ PyTorch的<code class="docutils literal notranslate"><span class="pre">nn.init</
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.6657, -0.6469, -0.5558,  0.0077])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.2443,  0.4270,  0.6304, -0.3583])
 tensor([[42., 42., 42., 42., 42., 42., 42., 42.]])
 </pre></div>
 </div>
@@ -775,8 +775,8 @@ tensor([[42., 42., 42., 42., 42., 42., 42., 42.]])
 Init weight torch.Size([1, 8])
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-7.8966,  9.6330,  0.0000, -8.8181],
-        [ 6.2890, -0.0000, -0.0000,  0.0000]], grad_fn=&lt;SliceBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-6.4428,  0.0000,  8.9170, -8.1482],
+        [ 0.0000,  7.8720, -5.1334,  8.2313]], grad_fn=&lt;SliceBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -791,7 +791,7 @@ Init weight torch.Size([1, 8])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([42.0000, 10.6330,  1.0000, -7.8181])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([42.0000,  1.0000,  9.9170, -7.1482])
 </pre></div>
 </div>
 </div>

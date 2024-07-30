@@ -428,28 +428,20 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="lenet">
 <h1>卷积神经网络（LeNet）<a class="headerlink" href="#lenet" title="Link to this heading">#</a></h1>
-<p>:label:<code class="docutils literal notranslate"><span class="pre">sec_lenet</span></code></p>
-<p>通过之前几节，我们学习了构建一个完整卷积神经网络的所需组件。
-回想一下，之前我们将softmax回归模型（ :numref:<code class="docutils literal notranslate"><span class="pre">sec_softmax_scratch</span></code>）和多层感知机模型（ :numref:<code class="docutils literal notranslate"><span class="pre">sec_mlp_scratch</span></code>）应用于Fashion-MNIST数据集中的服装图片。
-为了能够应用softmax回归和多层感知机，我们首先将每个大小为<span class="math notranslate nohighlight">\(28\times28\)</span>的图像展平为一个784维的固定长度的一维向量，然后用全连接层对其进行处理。
-而现在，我们已经掌握了卷积层的处理方法，我们可以在图像中保留空间结构。
-同时，用卷积层代替全连接层的另一个好处是：模型更简洁、所需的参数更少。</p>
-<p>本节将介绍LeNet，它是最早发布的卷积神经网络之一，因其在计算机视觉任务中的高效性能而受到广泛关注。
-这个模型是由AT&amp;T贝尔实验室的研究员Yann LeCun在1989年提出的（并以其命名），目的是识别图像 :cite:<code class="docutils literal notranslate"><span class="pre">LeCun.Bottou.Bengio.ea.1998</span></code>中的手写数字。
-当时，Yann LeCun发表了第一篇通过反向传播成功训练卷积神经网络的研究，这项工作代表了十多年来神经网络研究开发的成果。</p>
-<p>当时，LeNet取得了与支持向量机（support vector machines）性能相媲美的成果，成为监督学习的主流方法。
-LeNet被广泛用于自动取款机（ATM）机中，帮助识别处理支票的数字。
-时至今日，一些自动取款机仍在运行Yann LeCun和他的同事Leon Bottou在上世纪90年代写的代码呢！</p>
+<p>之前我们将softmax回归模型和多层感知机模型应用于Fashion-MNIST数据集中的服装图片。</p>
+<p>为了能够应用softmax回归和多层感知机，我们首先将每个大小为<span class="math notranslate nohighlight">\(28\times28\)</span>的图像展平为一个784维的固定长度的一维向量，然后用全连接层对其进行处理。</p>
+<p>而现在，我们已经掌握了卷积层的处理方法，我们可以在图像中保留空间结构。</p>
+<p>同时，用卷积层代替全连接层的另一个好处是：模型更简洁、所需的参数更少。</p>
+<p>本节将介绍LeNet，它是最早发布的卷积神经网络之一，因其在计算机视觉任务中的高效性能而受到广泛关注。</p>
 <section id="id1">
 <h2>LeNet<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>总体来看，(<strong>LeNet（LeNet-5）由两个部分组成：</strong>)(~~卷积编码器和全连接层密集块~~)</p>
+<p>总体来看，<strong>LeNet（LeNet-5）由两个部分组成</strong>：</p>
 <ul class="simple">
 <li><p>卷积编码器：由两个卷积层组成;</p></li>
 <li><p>全连接层密集块：由三个全连接层组成。</p></li>
 </ul>
-<p>该架构如 :numref:<code class="docutils literal notranslate"><span class="pre">img_lenet</span></code>所示。</p>
-<p><img alt="LeNet中的数据流。输入是手写数字，输出为10种可能结果的概率。" src="http://d2l.ai/_images/lenet.svg" />
-:label:<code class="docutils literal notranslate"><span class="pre">img_lenet</span></code></p>
+<p>该架构如下图所示。</p>
+<p><img alt="" src="../_images/lenet.svg" /></p>
 <p>每个卷积块中的基本单元是一个卷积层、一个sigmoid激活函数和平均汇聚层。请注意，虽然ReLU和最大汇聚层更有效，但它们在20世纪90年代还没有出现。每个卷积层使用<span class="math notranslate nohighlight">\(5\times 5\)</span>卷积核和一个sigmoid激活函数。这些层将输入映射到多个二维特征输出，通常同时增加通道的数量。第一卷积层有6个输出通道，而第二个卷积层有16个输出通道。每个<span class="math notranslate nohighlight">\(2\times2\)</span>池操作（步幅2）通过空间下采样将维数减少4倍。卷积的输出形状由批量大小、通道数、高度、宽度决定。</p>
 <p>为了将卷积块的输出传递给稠密块，我们必须在小批量中展平每个样本。换言之，我们将这个四维输入转换成全连接层所期望的二维输入。这里的二维表示的第一个维度索引小批量中的样本，第二个维度给出每个样本的平面向量表示。LeNet的稠密块有三个全连接层，分别有120、84和10个输出。因为我们在执行分类任务，所以输出层的10维对应于最后输出结果的数量。</p>
 <p>通过下面的LeNet代码，可以看出用深度学习框架实现此类模型非常简单。我们只需要实例化一个<code class="docutils literal notranslate"><span class="pre">Sequential</span></code>块并将需要的层连接在一起。</p>
@@ -458,6 +450,11 @@ LeNet被广泛用于自动取款机（ATM）机中，帮助识别处理支票的
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="c1">#下载模型使用</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span><span class="p">,</span><span class="n">datasets</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
     <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">(),</span>
@@ -473,9 +470,8 @@ LeNet被广泛用于自动取款机（ATM）机中，帮助识别处理支票的
 </div>
 </div>
 <p>我们对原始模型做了一点小改动，去掉了最后一层的高斯激活。除此之外，这个网络与最初的LeNet-5一致。</p>
-<p>下面，我们将一个大小为<span class="math notranslate nohighlight">\(28 \times 28\)</span>的单通道（黑白）图像通过LeNet。通过在每一层打印输出的形状，我们可以[<strong>检查模型</strong>]，以确保其操作与我们期望的 :numref:<code class="docutils literal notranslate"><span class="pre">img_lenet_vert</span></code>一致。</p>
-<p><img alt="LeNet 的简化版。" src="img/lenet-vert.svg" />
-:label:<code class="docutils literal notranslate"><span class="pre">img_lenet_vert</span></code></p>
+<p>下面，我们将一个大小为<span class="math notranslate nohighlight">\(28 \times 28\)</span>的单通道（黑白）图像通过LeNet。通过在每一层打印输出的形状，我们可以<strong>检查模型</strong>，以确保其操作与我们期望的下图一致。</p>
+<p><img alt="" src="../_images/lenet-vert.svg" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -510,19 +506,33 @@ Linear output shape: 	 torch.Size([1, 10])
 </section>
 <section id="id2">
 <h2>模型训练<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>现在我们已经实现了LeNet，让我们看看[<strong>LeNet在Fashion-MNIST数据集上的表现</strong>]。</p>
+<p>现在我们已经实现了LeNet，让我们看看<strong>LeNet在Fashion-MNIST数据集上的表现</strong>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">256</span>
-<span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_data_fashion_mnist</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># batch_size = 256</span>
+<span class="c1"># train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size=batch_size)</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">data_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="c1">#transforms.ToPILImage(),   # 将torch.Tensor或numpy.ndarray类型图像转为PIL.Image类型图像。这段里面可以移除transforms.ToPILImage()，因为 FashionMNIST 数据集已经是 PIL.Image 类型</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">image_size</span><span class="p">),</span><span class="c1">#按给定尺寸对图像进行缩放</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span> <span class="c1">#将PIL.Image或numpy.ndarray类型图像转为torch.Tensor类型图像</span>
+<span class="p">])</span>
+<span class="c1"># train表示是否是训练集，download表示是否需要下载，transform表示是否需要进行数据变换</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../raw/data/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../raw/data/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">)</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">num_workers</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1">#mac 不知道为什么变为4也报错   # 对于Windows用户，这里应设置为0，否则会出现多线程错误</span>
+<span class="c1"># DataLoader是一个用于生成batch数据的迭代器，可以设置batch_size、shuffle、num_workers等参数</span>
+<span class="c1">#batch_size是指每个批次中包含的样本数量。shuffle=True表示在每个epoch开始时，将训练数据集打乱顺序，以增加模型的泛化能力。num_workers是指用于数据加载的线程数量，可以加快数据加载的速度。drop_last=True表示如果训练数据集的样本数量不能被batch_size整除，最后一个不完整的批次将被丢弃。</span>
+<span class="n">train_iter</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_iter</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>虽然卷积神经网络的参数较少，但与深度的多层感知机相比，它们的计算成本仍然很高，因为每个参数都参与更多的乘法。
 通过使用GPU，可以用它加快训练。</p>
-<p>为了进行评估，我们需要[<strong>对</strong>] :numref:<code class="docutils literal notranslate"><span class="pre">sec_softmax_scratch</span></code>中描述的(<strong><code class="docutils literal notranslate"><span class="pre">evaluate_accuracy</span></code>函数进行轻微的修改</strong>)。
-由于完整的数据集位于内存中，因此在模型使用GPU计算数据集之前，我们需要将其复制到显存中。</p>
+<p>由于完整的数据集位于内存中，因此在模型使用GPU计算数据集之前，我们需要将其复制到显存中。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">evaluate_accuracy_gpu</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">data_iter</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1">#@save</span>
@@ -547,17 +557,15 @@ Linear output shape: 	 torch.Size([1, 10])
 </div>
 </div>
 </div>
-<p>[<strong>为了使用GPU，我们还需要一点小改动</strong>]。
-与 :numref:<code class="docutils literal notranslate"><span class="pre">sec_softmax_scratch</span></code>中定义的<code class="docutils literal notranslate"><span class="pre">train_epoch_ch3</span></code>不同，在进行正向和反向传播之前，我们需要将每一小批量数据移动到我们指定的设备（例如GPU）上。</p>
-<p>如下所示，训练函数<code class="docutils literal notranslate"><span class="pre">train_ch6</span></code>也类似于 :numref:<code class="docutils literal notranslate"><span class="pre">sec_softmax_scratch</span></code>中定义的<code class="docutils literal notranslate"><span class="pre">train_ch3</span></code>。
-由于我们将实现多层神经网络，因此我们将主要使用高级API。
+<p><strong>为了使用GPU，我们还需要一点小改动</strong>。
+在进行正向和反向传播之前，我们需要将每一小批量数据移动到我们指定的设备（例如GPU）上。</p>
+<p>由于我们将实现多层神经网络，因此我们将主要使用高级API。
 以下训练函数假定从高级API创建的模型作为输入，并进行相应的优化。
-我们使用在 :numref:<code class="docutils literal notranslate"><span class="pre">subsec_xavier</span></code>中介绍的Xavier随机初始化模型参数。
+我们使用Xavier随机初始化模型参数。
 与全连接层一样，我们使用交叉熵损失函数和小批量随机梯度下降。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@save</span>
-<span class="k">def</span> <span class="nf">train_ch6</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_ch6</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;用GPU训练模型(在第六章定义)&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">init_weights</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">==</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">==</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">:</span>
@@ -600,7 +608,7 @@ Linear output shape: 	 torch.Size([1, 10])
 </div>
 </div>
 </div>
-<p>现在，我们[<strong>训练和评估LeNet-5模型</strong>]。</p>
+<p>现在，我们<strong>训练和评估LeNet-5模型</strong>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="p">,</span> <span class="n">num_epochs</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">10</span>
@@ -609,11 +617,11 @@ Linear output shape: 	 torch.Size([1, 10])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.469, train acc 0.823, test acc 0.779
-55296.6 examples/sec on cuda:0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss 0.463, train acc 0.827, test acc 0.813
+20592.9 examples/sec on cuda:0
 </pre></div>
 </div>
-<img alt="../_images/ba63ed07494eef1291019e0dab17f1c8dd50a2d3f61c4ae64ac125a3baa87764.svg" src="../_images/ba63ed07494eef1291019e0dab17f1c8dd50a2d3f61c4ae64ac125a3baa87764.svg" /></div>
+<img alt="../_images/b6de519b385b07b3ff93f0e3928ce213275dbc5bf1fa90b805572b8bb69bf080.svg" src="../_images/b6de519b385b07b3ff93f0e3928ce213275dbc5bf1fa90b805572b8bb69bf080.svg" /></div>
 </div>
 </section>
 </section>
@@ -630,13 +638,13 @@ Linear output shape: 	 torch.Size([1, 10])
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
+            name: "python3_ai",
             path: "./ConvolutionalNeuralNetwork"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'python3_ai'</script>
 
                 </article>
               
