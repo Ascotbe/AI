@@ -443,11 +443,11 @@ document.write(`
 解决这个问题的简单方法即为<strong>填充</strong>（padding）：在输入图像的边界填充元素（通常填充元素是<span class="math notranslate nohighlight">\(0\)</span>）。
 例如，在下图中，我们将<span class="math notranslate nohighlight">\(3 \times 3\)</span>输入填充到<span class="math notranslate nohighlight">\(5 \times 5\)</span>，那么它的输出就增加为<span class="math notranslate nohighlight">\(4 \times 4\)</span>。阴影部分是第一个输出元素以及用于输出计算的输入和核张量元素：
 <span class="math notranslate nohighlight">\(0\times0+0\times1+0\times2+0\times3=0\)</span>。</p>
-<p><img alt="" src="../_images/conv-pad.svg" /></p>
+<img src="../image/ConvolutionalNeuralNetwork/conv-pad.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
 <p>通常，如果我们添加<span class="math notranslate nohighlight">\(p_h\)</span>行填充（大约一半在顶部，一半在底部）和<span class="math notranslate nohighlight">\(p_w\)</span>列填充（左侧大约一半，右侧一半），则输出形状将为</p>
 <div class="math notranslate nohighlight">
 \[(n_h-k_h+p_h+1)\times(n_w-k_w+p_w+1)。\]</div>
-<p><img alt="" src="../_images/arbitrary_padding_no_strides.gif" /></p>
+<img src="../image/ConvolutionalNeuralNetwork/arbitrary_padding_no_strides.gif" alt="" style="zoom: 70%; display: block; margin: 0px auto;" />
 <p>这意味着输出的高度和宽度将分别增加<span class="math notranslate nohighlight">\(p_h\)</span>和<span class="math notranslate nohighlight">\(p_w\)</span>。</p>
 <p>在许多情况下，我们需要设置<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，使输入和输出具有相同的高度和宽度。</p>
 <ul class="simple">
@@ -518,13 +518,13 @@ document.write(`
 下图是垂直步幅为<span class="math notranslate nohighlight">\(3\)</span>，水平步幅为<span class="math notranslate nohighlight">\(2\)</span>的二维互相关运算。
 着色部分是输出元素以及用于输出计算的输入和内核张量元素：<span class="math notranslate nohighlight">\(0\times0+0\times1+1\times2+2\times3=8\)</span>、<span class="math notranslate nohighlight">\(0\times0+6\times1+0\times2+0\times3=6\)</span>。</p>
 <p>可以看到，为了计算输出中第一列的第二个元素和第一行的第二个元素，卷积窗口分别向下滑动三行和向右滑动两列。但是，当卷积窗口继续向右滑动两列时，没有输出，因为输入元素无法填充窗口（除非我们添加另一列填充）。</p>
-<p><img alt="" src="../_images/conv-stride.svg" /></p>
+<img src="../image/ConvolutionalNeuralNetwork/conv-stride.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
 <p>通常，当垂直步幅为<span class="math notranslate nohighlight">\(s_h\)</span>、水平步幅为<span class="math notranslate nohighlight">\(s_w\)</span>时，输出形状为</p>
 <div class="math notranslate nohighlight">
 \[\lfloor(n_h-k_h+p_h+s_h)/s_h\rfloor \times \lfloor(n_w-k_w+p_w+s_w)/s_w\rfloor.\]</div>
 <p>如果我们设置了<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，则输出形状将简化为<span class="math notranslate nohighlight">\(\lfloor(n_h+s_h-1)/s_h\rfloor \times \lfloor(n_w+s_w-1)/s_w\rfloor\)</span>。</p>
 <p>更进一步，如果输入的高度和宽度可以被垂直和水平步幅整除，则输出形状将为<span class="math notranslate nohighlight">\((n_h/s_h) \times (n_w/s_w)\)</span>。</p>
-<p><img alt="" src="../_images/no_padding_strides.gif" /></p>
+<img src="../image/ConvolutionalNeuralNetwork/no_padding_strides.gif" alt="" style="zoom: 80%; display: block; margin: 0px auto;" />
 <p>下面，我们<strong>将高度和宽度的步幅设置为2</strong>，从而将输入的高度和宽度减半。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

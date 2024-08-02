@@ -533,7 +533,7 @@ tensor([[0.0900, 0.2447, 0.6652],
 <section id="id3">
 <h2>轴的实例<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>其实一个轴设定的变化，会带来很大的差异，最典型的就是 BatchNorm 和 LayerNorm 了。</p>
-<p><img alt="img" src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/8.webp" /></p>
+<img src="https://raw.githubusercontent.com/Ascotbe/Image/master/Jupyter/SoftmaxRegression/8.webp" alt="" style="zoom: 40%; display: block; margin: 0px auto;" />
 <p>BatchNorm 和 LayerNorm 是针对数据的不同轴去做norm，假设输入数据的维度是(N,H,W,C)，分别对应batch数，高，宽，通道数，BatchNorm 就对应dim=0，LayerNorm 就对应dim=-1，在不考虑移动平均等具体细节问题时，两者在形式上可以统一，只有一个dim参数的差别。</p>
 <p>Pytorch 的实现（简化版）如下：</p>
 <div class="cell docutils container">
