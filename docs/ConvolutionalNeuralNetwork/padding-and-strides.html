@@ -253,6 +253,16 @@
 <li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenet.html">卷积神经网络（LeNet）</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -448,6 +458,9 @@ document.write(`
 <p>通常，如果我们添加<span class="math notranslate nohighlight">\(p_h\)</span>行填充（大约一半在顶部，一半在底部）和<span class="math notranslate nohighlight">\(p_w\)</span>列填充（左侧大约一半，右侧一半），则输出形状将为</p>
 <div class="math notranslate nohighlight">
 \[(n_h-k_h+p_h+1)\times(n_w-k_w+p_w+1)。\]</div>
+<blockquote>
+<div><p>可以理解为如果我们使用了<code class="docutils literal notranslate"><span class="pre">nn.Conv2d()</span></code>函数，然后把参数<code class="docutils literal notranslate"><span class="pre">padding=(2,4)</span></code>赋值进去，这个值就是<span class="math notranslate nohighlight">\(p_h=2*2=4\)</span>，<span class="math notranslate nohighlight">\(p_w=2*4=8\)</span>，因为这个参数是指单边的</p>
+</div></blockquote>
 <img src="../image/ConvolutionalNeuralNetwork/arbitrary_padding_no_strides.gif" alt="" style="zoom: 70%; display: block; margin: 0px auto;" />
 <p>这意味着输出的高度和宽度将分别增加<span class="math notranslate nohighlight">\(p_h\)</span>和<span class="math notranslate nohighlight">\(p_w\)</span>。</p>
 <p>在许多情况下，我们需要设置<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，使输入和输出具有相同的高度和宽度。</p>
@@ -522,7 +535,7 @@ document.write(`
 <img src="../image/ConvolutionalNeuralNetwork/conv-stride.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
 <p>通常，当垂直步幅为<span class="math notranslate nohighlight">\(s_h\)</span>、水平步幅为<span class="math notranslate nohighlight">\(s_w\)</span>时，输出形状为</p>
 <div class="math notranslate nohighlight">
-\[\lfloor(n_h-k_h+p_h+s_h)/s_h\rfloor \times \lfloor(n_w-k_w+p_w+s_w)/s_w\rfloor.\]</div>
+\[\lfloor(n_h-k_h+p_h+s_h)/s_h\rfloor \times \lfloor(n_w-k_w+p_w+s_w)/s_w\rfloor\]</div>
 <p>如果我们设置了<span class="math notranslate nohighlight">\(p_h=k_h-1\)</span>和<span class="math notranslate nohighlight">\(p_w=k_w-1\)</span>，则输出形状将简化为<span class="math notranslate nohighlight">\(\lfloor(n_h+s_h-1)/s_h\rfloor \times \lfloor(n_w+s_w-1)/s_w\rfloor\)</span>。</p>
 <p>更进一步，如果输入的高度和宽度可以被垂直和水平步幅整除，则输出形状将为<span class="math notranslate nohighlight">\((n_h/s_h) \times (n_w/s_w)\)</span>。</p>
 <img src="../image/ConvolutionalNeuralNetwork/no_padding_strides.gif" alt="" style="zoom: 80%; display: block; margin: 0px auto;" />
@@ -540,6 +553,9 @@ document.write(`
 </div>
 </div>
 </div>
+<p>因为行列都一样，计算后结果需要向下取整，所以计算如下：</p>
+<div class="math notranslate nohighlight">
+\[\lfloor\frac{8-3+1*2+2}{2}\rfloor=4\]</div>
 <p>接下来，看<strong>一个稍微复杂的例子</strong>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -554,6 +570,11 @@ document.write(`
 </div>
 </div>
 </div>
+<p>复杂例子的计算公式：</p>
+<p>行：
+$<span class="math notranslate nohighlight">\(\lfloor\frac{8-3+0*2+3}{3}\rfloor=2\)</span><span class="math notranslate nohighlight">\(
+列：
+\)</span><span class="math notranslate nohighlight">\(\lfloor\frac{8-5+1*2+4}{4}\rfloor=2\)</span>$</p>
 </section>
 </section>
 

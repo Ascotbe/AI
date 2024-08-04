@@ -251,6 +251,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -482,7 +492,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(3.6089e-09, grad_fn=&lt;MeanBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(5.5879e-09, grad_fn=&lt;MeanBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -523,11 +533,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[-0.7427, -1.4399, -0.6983],
-        [-0.0663, -0.2817, -0.0912],
-        [-0.5896, -0.2479, -0.2854],
-        [ 0.6173, -0.9470, -0.8451],
-        [ 1.4152, -0.0040, -0.6871]], requires_grad=True)
+tensor([[-0.1412, -1.3956,  0.3682],
+        [ 0.0403,  0.1688, -0.6564],
+        [ 1.7224, -0.1502,  1.3911],
+        [-0.3299,  2.0466, -0.4493],
+        [ 1.1907,  1.4401, -1.4244]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -540,8 +550,8 @@ tensor([[-0.7427, -1.4399, -0.6983],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.4647, 0.0000, 0.0000],
-        [1.3881, 0.0000, 0.0000]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[2.4169, 0.6311, 0.6419],
+        [2.3560, 0.0000, 2.1253]])
 </pre></div>
 </div>
 </div>
@@ -555,8 +565,8 @@ tensor([[-0.7427, -1.4399, -0.6983],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.],
-        [0.]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[6.0650],
+        [2.4151]])
 </pre></div>
 </div>
 </div>
