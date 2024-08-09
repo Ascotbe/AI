@@ -263,6 +263,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+</ul>
 
     </div>
 </nav></div>
@@ -458,10 +464,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0464, -0.1680,  0.3247, -0.1066, -0.2562,  0.3424,  0.2302, -0.0234,
-         -0.0191,  0.1299],
-        [ 0.0093, -0.1405,  0.2560, -0.0988, -0.2219,  0.2466,  0.1211, -0.0063,
-          0.0292,  0.1522]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0715, -0.1428,  0.0674, -0.2172, -0.0871,  0.0514,  0.0475, -0.1074,
+         -0.0780,  0.1079],
+        [-0.0864, -0.0165,  0.0227, -0.2666, -0.0937,  0.1142, -0.1217, -0.0862,
+         -0.1585,  0.1744]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -504,10 +510,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0655,  0.0891, -0.2942,  0.0942, -0.1490,  0.0638, -0.2843, -0.0468,
-          0.0356, -0.1145],
-        [-0.1645,  0.1173, -0.2545,  0.0671, -0.0792,  0.0905, -0.2887, -0.0871,
-          0.0505, -0.0788]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.1816, -0.1736, -0.0067,  0.0529, -0.0540, -0.1986,  0.0419,  0.2275,
+         -0.2431, -0.1541],
+        [ 0.1868, -0.2234,  0.0229,  0.0725, -0.1106, -0.3393,  0.0564,  0.2252,
+         -0.1818, -0.0722]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -550,10 +556,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0972, -0.0331, -0.0977,  0.1746,  0.1381,  0.0975, -0.0426,  0.3766,
-         -0.1736,  0.1399],
-        [ 0.1461, -0.0872, -0.1445,  0.1537,  0.1323,  0.0477, -0.0191,  0.3719,
-         -0.1302,  0.1982]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0807,  0.1369, -0.0172, -0.0691, -0.1754,  0.1647, -0.1330, -0.1445,
+         -0.0224, -0.0960],
+        [-0.0221,  0.2508, -0.1024, -0.0824, -0.1843,  0.2323, -0.2386, -0.1471,
+         -0.0619, -0.2105]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -595,7 +601,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-0.1299, grad_fn=&lt;SumBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-0.0590, grad_fn=&lt;SumBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -619,7 +625,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-0.0122, grad_fn=&lt;SumBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.1497, grad_fn=&lt;SumBackward0&gt;)
 </pre></div>
 </div>
 </div>

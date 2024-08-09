@@ -263,6 +263,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+</ul>
 
     </div>
 </nav></div>
@@ -452,10 +458,10 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-1.0427,  3.3628,  0.1393, -0.1463, -0.9610, -0.4892, -0.0137,  0.2379,
-        -0.5995, -0.1995])
+tensor([-1.0540, -0.4972,  1.5706, -0.8608,  1.1506, -2.3582, -0.4500, -0.1097,
+        -0.6480, -0.2567])
 经过relu之后
-tensor([0.0000, 3.3628, 0.1393, 0.0000, 0.0000, 0.0000, 0.0000, 0.2379, 0.0000,
+tensor([0.0000, 0.0000, 1.5706, 0.0000, 1.1506, 0.0000, 0.0000, 0.0000, 0.0000,
         0.0000])
 </pre></div>
 </div>
@@ -477,13 +483,13 @@ tensor([0.0000, 3.3628, 0.1393, 0.0000, 0.0000, 0.0000, 0.0000, 0.2379, 0.0000,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 0.0589,  1.3098,  0.0594,  1.7331,  0.2366,  1.2747,  0.9615,  0.2835,
-        -1.9371, -0.6087])
+tensor([ 1.2139,  0.8564, -0.0699,  1.3897, -0.2726, -1.4032,  0.0279,  0.0990,
+         1.3137, -1.3708])
 经过relu之后c的值
-tensor([0.0589, 1.3098, 0.0594, 1.7331, 0.2366, 1.2747, 0.9615, 0.2835, 0.0000,
+tensor([1.2139, 0.8564, 0.0000, 1.3897, 0.0000, 0.0000, 0.0279, 0.0990, 1.3137,
         0.0000])
 经过relu之后d的值
-tensor([0.0589, 1.3098, 0.0594, 1.7331, 0.2366, 1.2747, 0.9615, 0.2835, 0.0000,
+tensor([1.2139, 0.8564, 0.0000, 1.3897, 0.0000, 0.0000, 0.0279, 0.0990, 1.3137,
         0.0000])
 </pre></div>
 </div>

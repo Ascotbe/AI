@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>torch.nn.Linear &#8212; AI学习笔记</title>
+    <title>参数服务器 &#8212; AI学习笔记</title>
   
   
   
@@ -59,12 +59,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.nn.Linear';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ComputationalPerformance/parameterserver';</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="torch.nn.ReLU" href="torch.nn.ReLU.html" />
-    <link rel="prev" title="torch.zeros" href="torch.zeros.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,6 +124,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -199,14 +199,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">torch.argmax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">torch.normal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.nn.Linear</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -265,7 +265,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="async-computation.html">异步计算</a></li>
 
 
 </ul>
@@ -337,7 +337,7 @@
       
       
       
-      <li><a href="../_sources/FunctionDetails/torch.nn.Linear.ipynb" target="_blank"
+      <li><a href="../_sources/ComputationalPerformance/parameterserver.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -421,7 +421,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>torch.nn.Linear</h1>
+    <h1>参数服务器</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -431,7 +431,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实战</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">数据并行训练</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ring-synchronization">环同步（Ring Synchronization）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">多机训练</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">键值存储</a></li>
 </ul>
             </nav>
         </div>
@@ -443,190 +446,83 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="torch-nn-linear">
-<h1>torch.nn.Linear<a class="headerlink" href="#torch-nn-linear" title="Link to this heading">#</a></h1>
-<p>PyTorch的 nn.Linear() 是用于设置网络中的全连接层的，需要注意在二维图像处理的任务中，全连接层的输入与输出一般都设置为二维张量，形状通常为<code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">size]</span></code>，不同于卷积层要求输入输出是四维张量。其用法与形参说明如下：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="c1"># 输入的神经元个数，也可以说是前一层网络神经元的个数</span>
-           <span class="n">out_features</span><span class="p">,</span> <span class="c1"># 输出神经元个数，也可以说是该网络层神经元的个数</span>
-           <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># 网络层是否有偏置，默认存在</span>
-           <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-           <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>对传入数据应用线性变换： <span class="math notranslate nohighlight">\(y=xA^{T}+b\)</span></p>
-<p>Linear其实就是对输入<span class="math notranslate nohighlight">\(X_{n\times i}\)</span>执行了一个线性变换，既:</p>
-<p><span class="math notranslate nohighlight">\(Y_{n\times o}=X_{n\times i}W_{i\times o}+b\)</span></p>
-<p>其中<span class="math notranslate nohighlight">\(W\)</span>是模型要学习的参数，<span class="math notranslate nohighlight">\(W\)</span>的维度为<span class="math notranslate nohighlight">\(W_{i\times o}\)</span>，<span class="math notranslate nohighlight">\(b\)</span>是<span class="math notranslate nohighlight">\(o\)</span>维的向量偏置，<span class="math notranslate nohighlight">\(n\)</span>为输入向量的行数(例如，你想一次输入10个样本，即<code class="docutils literal notranslate"><span class="pre">batch_size</span></code>为10，则<span class="math notranslate nohighlight">\(n=10\)</span>)，<span class="math notranslate nohighlight">\(i\)</span>为输入神经元的个数(例如你的样本特征数为5，则<span class="math notranslate nohighlight">\(i=5\)</span>)，<span class="math notranslate nohighlight">\(o\)</span>为输出神经元的个数。</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>参数服务器<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>当我们从一个GPU迁移到多个GPU时，以及再迁移到包含多个GPU的多个服务器时（可能所有服务器的分布跨越了多个机架和多个网络交换机），分布式并行训练算法也需要变得更加复杂。通过细节可以知道，一方面是不同的互连方式的带宽存在极大的区别（例如，NVLink可以通过设置实现跨<span class="math notranslate nohighlight">\(6\)</span>条链路的高达100GB/s的带宽，16通道的PCIe4.0提供32GB/s的带宽，而即使是高速100GbE以太网也只能提供大约10GB/s的带宽）；另一方面是期望开发者既能完成统计学习建模还精通系统和网络也是不切实际的。</p>
+<section id="id2">
+<h2>数据并行训练<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>让我们回顾一下在分布式架构中数据并行的训练方法，因为在实践中它的实现相对简单，因此本节将排除其他内容只对其进行介绍。由于当今的GPU拥有大量的显存，因此在实际场景中（不包括图深度学习）只有数据并行这种并行训练策略值得推荐。下图描述了在上一节中实现的数据并行的变体。其中的关键是梯度的聚合需要在单个GPU（GPU 0）上完成，然后再将更新后的参数广播给所有GPU。</p>
+<img src="../image/ComputationalPerformance/ps.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>左图是单GPU训练；右图是多GPU训练的一个变体：（1）计算损失和梯度，（2）所有梯度聚合在一个GPU上，（3）发生参数更新，并将参数重新广播给所有GPU</p>
+<p>回顾来看，选择GPU 0进行聚合似乎是个很随便的决定，当然也可以选择CPU上聚合，事实上只要优化算法支持，在实际操作中甚至可以在某个GPU上聚合其中一些参数，而在另一个GPU上聚合另一些参数。例如，如果有四个与参数向量相关的梯度<span class="math notranslate nohighlight">\(\mathbf{g}_1, \ldots, \mathbf{g}_4\)</span>，还可以一个GPU对一个<span class="math notranslate nohighlight">\(\mathbf{g}_i (i = 1, \ldots, 4\)</span>）地进行梯度聚合。</p>
+<p>考虑一个如下图中所述的真实的<span class="math notranslate nohighlight">\(4\)</span>路GPU服务器。如果它的连接是特别完整的，那么可能拥有一个100GbE的网卡。更有代表性的数字是1-10GbE范围内，其有效带宽为100MB/s到1GB/s。因为CPU的PCIe通道太少（例如，消费级的Intel CPU有<span class="math notranslate nohighlight">\(24\)</span>个通道），所以无法直接与所有的GPU相连接，因此需要<a class="reference external" href="https://www.broadcom.com/products/pcie-switches-bridges/pcie-switches">multiplexer</a>。CPU在16x Gen3链路上的带宽为16GB/s，这也是每个GPU连接到交换机的速度，这意味着GPU设备之间的通信更有效。</p>
+<img src="../image/ComputationalPerformance/bw-hierarchy.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>为了便于讨论，我们假设所有梯度共需160MB。在这种情况下，将其中<span class="math notranslate nohighlight">\(3\)</span>个GPU的梯度发送到第<span class="math notranslate nohighlight">\(4\)</span>个GPU上需要<span class="math notranslate nohighlight">\(30\)</span>毫秒（每次传输需要<span class="math notranslate nohighlight">\(10\)</span>毫秒=160MB/16GB/s）。再加上<span class="math notranslate nohighlight">\(30\)</span>毫秒将权重向量传输回来，得到的结果是总共需要<span class="math notranslate nohighlight">\(60\)</span>毫秒。如果将所有的数据发送到CPU，总共需要<span class="math notranslate nohighlight">\(80\)</span>毫秒，其中将有<span class="math notranslate nohighlight">\(40\)</span>毫秒的惩罚，因为<span class="math notranslate nohighlight">\(4\)</span>个GPU每个都需要将数据发送到CPU。最后，假设能够将梯度分为<span class="math notranslate nohighlight">\(4\)</span>个部分，每个部分为<span class="math notranslate nohighlight">\(40\)</span>MB，现在可以在不同的GPU上同时聚合每个部分。因为PCIe交换机在所有链路之间提供全带宽操作，所以传输需要<span class="math notranslate nohighlight">\(2.5\times 3=7.5\)</span>毫秒，而不是<span class="math notranslate nohighlight">\(30\)</span>毫秒，因此同步操作总共需要<span class="math notranslate nohighlight">\(15\)</span>毫秒。简而言之，一样的参数同步操作基于不同的策略时间可能在<span class="math notranslate nohighlight">\(15\)</span>毫秒到<span class="math notranslate nohighlight">\(80\)</span>毫秒之间。下图描述了交换参数的不同策略。</p>
+<img src="../image/ComputationalPerformance/ps-distributed.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+</section>
+<section id="ring-synchronization">
+<h2>环同步（Ring Synchronization）<a class="headerlink" href="#ring-synchronization" title="Link to this heading">#</a></h2>
+<p>当谈及现代深度学习硬件的同步问题时，我们经常会遇到大量的定制的网络连接。例如，AWS p3.16xlarge和NVIDIA DGX-2实例中的连接都使用了下图中的结构（在8台V100 GPU服务器上连接NVLink）。每个GPU通过PCIe链路连接到主机CPU，该链路最多只能以16GB/s的速度运行。此外，每个GPU还具有<span class="math notranslate nohighlight">\(6\)</span>个NVLink连接，每个NVLink连接都能够以300Gbit/s进行双向传输。这相当于每个链路每个方向约<span class="math notranslate nohighlight">\(300\div 8\div 2\approx 18 \mathrm{GB/s}\)</span>。简言之，聚合的NVLink带宽明显高于PCIe带宽，问题是如何有效地使用它。，</p>
+<img src="../image/ComputationalPerformance/ps-distributed.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>下图描述了网络可以分解为一个具有双NVLink带宽的环（1-2-3-4-5-6-7-8-1）和一个具有常规带宽的环（1-4-6-3-5-8-2-7-1）。在这种情况下，设计一个高效的同步协议是非常重要的。</p>
+<img src="../image/ComputationalPerformance/nvlink-twoloop.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>考虑下面的思维试验：给定由<span class="math notranslate nohighlight">\(n\)</span>个计算节点（或GPU）组成的一个环，梯度可以从第一个节点发送到第二个节点，在第二个结点将本地的梯度与传送的梯度相加并发送到第三个节点，依此类推。在<span class="math notranslate nohighlight">\(n-1\)</span>步之后，可以在最后访问的节点中找到聚合梯度。也就是说，聚合梯度的时间随节点数线性增长。但如果照此操作，算法是相当低效的。归根结底，在任何时候都只有一个节点在通信。如果我们将梯度分为<span class="math notranslate nohighlight">\(n\)</span>个块，并从节点<span class="math notranslate nohighlight">\(i\)</span>开始同步块<span class="math notranslate nohighlight">\(i\)</span>，会怎么样？因为每个块的大小是<span class="math notranslate nohighlight">\(1/n\)</span>，所以总时间现在是<span class="math notranslate nohighlight">\((n-1)/n \approx 1\)</span>。换句话说，当我们增大环的大小时，聚合梯度所花费的时间不会增加。这是一个相当惊人的结果。 下图（跨4个节点的环同步。每个节点开始向其左邻居发送部分梯度，直到在其右邻居中找到聚合的梯度）说明了<span class="math notranslate nohighlight">\(n=4\)</span>个节点上的步骤顺序。</p>
+<img src="../image/ComputationalPerformance/ringsync.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>如果我们使用相同的例子，跨<span class="math notranslate nohighlight">\(8\)</span>个V100 GPU同步160MB，我们得到的结果大约是<span class="math notranslate nohighlight">\(2 \times 160 \mathrm{MB} \div (3 \times18 \mathrm{GB/s}) \approx 6 \mathrm{ms}\)</span>。这比使用PCIe总线要好，即使我们现在使用的是<span class="math notranslate nohighlight">\(8\)</span>个GPU。请注意，这些数字在实践中通常会差一些，因为深度学习框架无法将通信组合成大的突发传输。</p>
+<p>注意到有一种常见的误解认为环同步与其他同步算法在本质上是不同的，实际上与简单的树算法相比其唯一的区别是同步路径稍微精细一些。</p>
+</section>
+<section id="id3">
+<h2>多机训练<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>新的挑战出现在多台机器上进行分布式训练：我们需要服务器之间相互通信，而这些服务器又只通过相对较低的带宽结构连接，在某些情况下这种连接的速度可能会慢一个数量级，因此跨设备同步是个棘手的问题。毕竟，在不同机器上运行训练代码的速度会有细微的差别，因此如果想使用分布式优化的同步算法就需要<em>同步</em>（synchronize）这些机器。
+下图说明了分布式并行训练是如何发生的。</p>
+<ol class="arabic simple">
+<li><p>在每台机器上读取一组（不同的）批量数据，在多个GPU之间分割数据并传输到GPU的显存中。基于每个GPU上的批量数据分别计算预测和梯度。</p></li>
+<li><p>来自一台机器上的所有的本地GPU的梯度聚合在一个GPU上（或者在不同的GPU上聚合梯度的某些部分）。</p></li>
+<li><p>每台机器的梯度被发送到其本地CPU中。</p></li>
+<li><p>所有的CPU将梯度发送到中央参数服务器中，由该服务器聚合所有梯度。</p></li>
+<li><p>然后使用聚合后的梯度来更新参数，并将更新后的参数广播回各个CPU中。</p></li>
+<li><p>更新后的参数信息发送到本地一个（或多个）GPU中。</p></li>
+<li><p>所有GPU上的参数更新完成。</p></li>
+</ol>
+<img src="../image/ComputationalPerformance/ps-multimachine.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>以上这些操作似乎都相当简单，而且事实上它们可以在一台机器内高效地执行，但是当我们考虑多台机器时，就会发现中央的参数服务器成为了瓶颈。毕竟，每个服务器的带宽是有限的，因此对<span class="math notranslate nohighlight">\(m\)</span>个工作节点来说，将所有梯度发送到服务器所需的时间是<span class="math notranslate nohighlight">\(\mathcal{O}(m)\)</span>。我们也可以通过将参数服务器数量增加到<span class="math notranslate nohighlight">\(n\)</span>来突破这一障碍。此时，每个服务器只需要存储<span class="math notranslate nohighlight">\(\mathcal{O}(1/n)\)</span>个参数，因此更新和优化的总时间变为<span class="math notranslate nohighlight">\(\mathcal{O}(m/n)\)</span>。这两个数字的匹配会产生稳定的伸缩性，而不用在乎我们需要处理多少工作节点。在实际应用中，我们使用同一台机器既作为工作节点还作为服务器。特别是，确保多台机器只在没有不合理延迟的情况下工作是相当困难的。</p>
+<img src="../image/ComputationalPerformance/ps-multips.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+</section>
+<section id="id4">
+<h2>键值存储<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>在实践中，实现分布式多GPU训练所需要的步骤绝非易事。这就是公共抽象值得使用的原因，公共抽象即重新定义具有更新语义的<strong>键－值存储</strong>（key-value store）的抽象。</p>
+<p>在许多工作节点和许多GPU中，梯度<span class="math notranslate nohighlight">\(i\)</span>的计算可以定义为</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{g}_{i} = \sum_{k \in \text{workers}} \sum_{j \in \text{GPUs}} \mathbf{g}_{ijk},\]</div>
+<p>其中<span class="math notranslate nohighlight">\(\mathbf{g}_{ijk}\)</span>是在工作节点<span class="math notranslate nohighlight">\(k\)</span>的GPU<span class="math notranslate nohighlight">\(j\)</span>上拆分的梯度<span class="math notranslate nohighlight">\(i\)</span>的一部分。这个运算的关键在于它是一个<em>交换归约</em>（commutative reduction），也就是说，它把许多向量变换成一个向量，而运算顺序在完成向量变换时并不重要。这对实现我们的目标来说是非常好的，因为不需要为何时接收哪个梯度进行细粒度的控制。此外，请注意，这个操作在不同的<span class="math notranslate nohighlight">\(i\)</span>之间是独立的。</p>
+<p>这就允许我们定义下面两个操作：<em>push</em>（用于累积梯度）和<em>pull</em>（用于取得聚合梯度）。因为我们有很多层，也就有很多不同的梯度集合，因此需要用一个键<span class="math notranslate nohighlight">\(i\)</span>来对梯度建索引。它们两个定义都拥有许多相似的性质，特别是在多个服务器之间分发参数时。</p>
+<p><em>键－值存储</em>的push与pull操作描述如下：</p>
+<ul class="simple">
+<li><p>**push（key，value）**将特定的梯度值从工作节点发送到公共存储，在那里通过某种方式（例如，相加）来聚合值；</p></li>
+<li><p>**pull（key，value）**从公共存储中取得某种方式（例如，组合来自所有工作节点的梯度）的聚合值。</p></li>
+</ul>
+<p>通过将同步的所有复杂性隐藏在一个简单的push和pull操作背后，我们可以将统计建模人员（他们希望能够用简单的术语表达优化）和系统工程师（他们需要处理分布式同步中固有的复杂性）的关注点解耦。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="k">def</span> <span class="nf">copy_to_cpu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="c1"># 将一个列表 x（假设其中包含张量或具有 to() 方法的对象）中的每个元素转移到 CPU 设备上</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="n">non_blocking</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>   <span class="c1">#non_blocking：一个布尔值，默认为 False。如果设置为 True，并且设备支持，则可以进行非阻塞传输</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 输入特征数为2，输出特征数为1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="c1"># 给一个样本，该样本有2个特征（这两个特征的值分别为1和2）</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-<span class="n">output</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.9083], grad_fn=&lt;ViewBackward0&gt;)
-</pre></div>
-</div>
-</div>
-</div>
-<p>我们的输入为<code class="docutils literal notranslate"><span class="pre">[1,2]</span></code>，输出了<code class="docutils literal notranslate"><span class="pre">[-0.9083]</span></code>。可以查看模型参数验证一下上述的式子：</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 当我们不设置权重和偏执的时候，可以使用下面方式查看系统自动生成的参数</span>
-<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[ 0.4266, -0.4878]], requires_grad=True)
-Parameter containing:
-tensor([-0.3593], requires_grad=True)
-</pre></div>
-</div>
-</div>
-</div>
-<p>可以看到，模型有3个参数，分别为两个权重和一个偏置。计算可得：</p>
-<p><span class="math notranslate nohighlight">\(y=[1,2]∗[0.4266, -0.4878]^T-0.3593=-0.9083\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 通过系统给出的值进行计算</span>
-<span class="n">cc</span><span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="n">bb</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mf">0.4266</span><span class="p">],[</span><span class="o">-</span><span class="mf">0.4878</span><span class="p">]])</span> <span class="c1">#转置后的值</span>
-<span class="n">dd</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">cc</span><span class="p">,</span><span class="n">bb</span><span class="p">)</span><span class="o">-</span><span class="mf">0.3593</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-0.9083])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 设置权重和偏置</span>
-<span class="n">weight</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]])</span>  <span class="c1"># 2x1的权重矩阵</span>
-<span class="n">bias</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.1</span><span class="p">])</span>  <span class="c1"># 偏置向量</span>
-<span class="n">model</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">weight</span>
-<span class="n">model</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">bias</span>
-<span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="c1"># 给一个样本，该样本有2个特征（这两个特征的值分别为1和2）</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-<span class="n">output</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([1.2000], grad_fn=&lt;ViewBackward0&gt;)
-</pre></div>
-</div>
-</div>
-</div>
-<p>通过给固定的两个权重和一个偏执。计算可得：</p>
-<p><span class="math notranslate nohighlight">\(y=[1,2]∗[0.5, 0.3]^T+0.1=1.2000\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 进行验证</span>
+<span class="c1"># 假设 x 是一个 GPU 张量列表</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)]</span>
 
-<span class="n">ee</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">],[</span><span class="mf">0.3</span><span class="p">]]))</span><span class="o">+</span><span class="mf">0.1</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ee</span><span class="p">)</span>
+<span class="c1"># 将张量复制到 CPU</span>
+<span class="n">cpu_tensors</span> <span class="o">=</span> <span class="n">copy_to_cpu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cpu_tensors</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([1.2000])
-</pre></div>
-</div>
-</div>
-</div>
-<section id="id1">
-<h2>实战<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>假设我们的一次输入三个样本A,B,C（即batch_size为3），每个样本的特征数量为5：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">]</span>
-<span class="n">B</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.6</span><span class="p">]</span>
-<span class="n">C</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.9</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>则我们的输入向量<span class="math notranslate nohighlight">\(X_{3x5}\)</span> 为:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span>
-    <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.6</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.9</span><span class="p">],</span>
-<span class="p">])</span>
-<span class="n">X</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.1000, 0.2000, 0.3000, 0.3000, 0.3000],
-        [0.4000, 0.5000, 0.6000, 0.6000, 0.6000],
-        [0.7000, 0.8000, 0.9000, 0.9000, 0.9000]])
-</pre></div>
-</div>
-</div>
-</div>
-<p>定义线性层， 我们的输入特征为5，所以 in_feature=5，我们想让下一层的神经元个数为10，所以 out feature=10， 则模型参数为<span class="math notranslate nohighlight">\(W_{5x10}\)</span>：</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>经过线性层，其实就是做了一件事，即：</p>
-<p><span class="math notranslate nohighlight">\(Y_{3X10}=X_{3x5}W_{5x10}+b\)</span></p>
-<p>具体表示则为：</p>
-<p><span class="math notranslate nohighlight">\(\begin{align}
-\left[\begin{array}{lllll}
-Y_{00} &amp; Y_{01} &amp; \cdots &amp; Y_{08} &amp; Y_{09} \\
-Y_{10} &amp; Y_{11} &amp; \cdots &amp; Y_{18} &amp; Y_{19} \\
-Y_{20} &amp; Y_{21} &amp; \cdots &amp; Y_{28} &amp; Y_{29}
-\end{array}\right] &amp; = \left[\begin{array}{lllll}
-X_{00} &amp; X_{01} &amp; X_{02} &amp; X_{03} &amp; X_{04} \\
-X_{10} &amp; X_{11} &amp; X_{12} &amp; X_{13} &amp; X_{14} \\
-X_{20} &amp; X_{21} &amp; X_{22} &amp; X_{23} &amp; X_{24}
-\end{array}\right]\left[\begin{array}{lllll}
-W_{00} &amp; W_{01} &amp; \cdots &amp; W_{08} &amp; W_{09} \\
-W_{10} &amp; W_{11} &amp; \cdots &amp; W_{18} &amp; W_{19} \\
-W_{20} &amp; W_{21} &amp; \cdots &amp; W_{28} &amp; W_{29} \\
-W_{30} &amp; W_{31} &amp; \cdots &amp; W_{38} &amp; W_{39} \\
-W_{40} &amp; W_{41} &amp; \cdots &amp; W_{48} &amp; W_{49}
-\end{array}\right]+b
-\end{align}\)</span></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="o">=</span><span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">__</span><span class="o">=</span><span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">__</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0862, -0.4761, -0.2895, -0.0469, -0.2535, -0.0178, -0.2911, -0.3080,
-         -0.1375, -0.0317],
-        [-0.0313, -0.7474, -0.1868, -0.0754, -0.1681,  0.0614, -0.2868, -0.3378,
-          0.0286,  0.0399],
-        [ 0.0236, -1.0187, -0.0840, -0.1038, -0.0827,  0.1406, -0.2825, -0.3676,
-          0.1947,  0.1115]], grad_fn=&lt;AddmmBackward0&gt;)
-torch.Size([3, 10])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[tensor([[ 0.1834, -1.0597],
+        [-0.9935, -1.4631]]), tensor([[ 1.5282, -0.9434],
+        [-0.5542,  0.7339]])]
 </pre></div>
 </div>
 </div>
@@ -646,13 +542,13 @@ torch.Size([3, 10])
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
-            path: "./FunctionDetails"
+            name: "python3_ai",
+            path: "./ComputationalPerformance"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'python3_ai'</script>
 
                 </article>
               
@@ -664,24 +560,6 @@ torch.Size([3, 10])
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="torch.zeros.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">torch.zeros</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="torch.nn.ReLU.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">torch.nn.ReLU</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -698,7 +576,10 @@ torch.Size([3, 10])
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">实战</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">数据并行训练</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ring-synchronization">环同步（Ring Synchronization）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">多机训练</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">键值存储</a></li>
 </ul>
   </nav></div>
 
