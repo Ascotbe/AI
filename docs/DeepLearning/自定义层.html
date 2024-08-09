@@ -266,6 +266,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 
     </div>
@@ -498,7 +499,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-5.5879e-09, grad_fn=&lt;MeanBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(2.3283e-10, grad_fn=&lt;MeanBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -539,11 +540,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[-0.1984,  0.5276,  0.2985],
-        [ 1.9440,  1.5422, -3.0508],
-        [ 1.0817,  0.1906, -0.1862],
-        [ 1.5739,  0.3292, -0.7534],
-        [-1.2897,  0.1455, -2.7249]], requires_grad=True)
+tensor([[-0.2757,  1.1415, -0.4377],
+        [ 0.0746, -1.4974,  0.0339],
+        [ 1.4117, -0.1440, -0.3483],
+        [ 2.0795,  0.8416, -1.9873],
+        [-0.1177, -1.4866,  2.0321]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -556,8 +557,8 @@ tensor([[-0.1984,  0.5276,  0.2985],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.0000, 1.5882, 0.0000],
-        [1.0028, 2.1949, 0.0000]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.0000, 0.0000, 0.0000],
+        [0.3587, 0.0000, 0.0000]])
 </pre></div>
 </div>
 </div>
@@ -571,8 +572,8 @@ tensor([[-0.1984,  0.5276,  0.2985],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.0000],
-        [0.4361]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1.0167],
+        [0.0000]])
 </pre></div>
 </div>
 </div>

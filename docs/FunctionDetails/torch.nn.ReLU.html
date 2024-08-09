@@ -268,6 +268,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 
     </div>
@@ -458,11 +459,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-1.0540, -0.4972,  1.5706, -0.8608,  1.1506, -2.3582, -0.4500, -0.1097,
-        -0.6480, -0.2567])
+tensor([ 0.7094, -0.0754,  0.2037, -0.7523, -0.9249, -0.5846, -0.9340, -0.3732,
+        -2.2454,  0.5871])
 经过relu之后
-tensor([0.0000, 0.0000, 1.5706, 0.0000, 1.1506, 0.0000, 0.0000, 0.0000, 0.0000,
-        0.0000])
+tensor([0.7094, 0.0000, 0.2037, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
+        0.5871])
 </pre></div>
 </div>
 </div>
@@ -483,14 +484,14 @@ tensor([0.0000, 0.0000, 1.5706, 0.0000, 1.1506, 0.0000, 0.0000, 0.0000, 0.0000,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 1.2139,  0.8564, -0.0699,  1.3897, -0.2726, -1.4032,  0.0279,  0.0990,
-         1.3137, -1.3708])
+tensor([ 0.4128,  1.2821, -0.7916, -0.3674,  1.0823,  0.7000,  1.8529,  0.0449,
+        -1.6872,  0.0036])
 经过relu之后c的值
-tensor([1.2139, 0.8564, 0.0000, 1.3897, 0.0000, 0.0000, 0.0279, 0.0990, 1.3137,
-        0.0000])
+tensor([0.4128, 1.2821, 0.0000, 0.0000, 1.0823, 0.7000, 1.8529, 0.0449, 0.0000,
+        0.0036])
 经过relu之后d的值
-tensor([1.2139, 0.8564, 0.0000, 1.3897, 0.0000, 0.0000, 0.0279, 0.0990, 1.3137,
-        0.0000])
+tensor([0.4128, 1.2821, 0.0000, 0.0000, 1.0823, 0.7000, 1.8529, 0.0449, 0.0000,
+        0.0036])
 </pre></div>
 </div>
 </div>
