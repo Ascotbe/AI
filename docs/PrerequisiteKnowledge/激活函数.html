@@ -488,8 +488,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-1.1615, -0.2611])
-tensor([0.2384, 0.4351])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0.0687, 0.3976])
+tensor([0.5172, 0.5981])
 </pre></div>
 </div>
 </div>
@@ -518,8 +518,8 @@ tensor([0.2384, 0.4351])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.1042, -1.6150])
-tensor([ 0.1038, -0.9239])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.6266, -0.3483])
+tensor([ 0.9256, -0.3349])
 </pre></div>
 </div>
 </div>
@@ -564,11 +564,11 @@ tensor([ 0.1038, -0.9239])
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-0.6729, -0.8123, -0.0571, -1.1321,  0.4707, -0.3404,  2.6480, -0.6151,
-         0.2750,  1.4762])
+tensor([ 0.7634, -0.9970, -2.3708,  0.2317,  0.7898, -0.9797, -0.6486,  0.8499,
+         0.6570,  0.5895])
 经过relu之后
-tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.4707, 0.0000, 2.6480, 0.0000, 0.2750,
-        1.4762])
+tensor([0.7634, 0.0000, 0.0000, 0.2317, 0.7898, 0.0000, 0.0000, 0.8499, 0.6570,
+        0.5895])
 </pre></div>
 </div>
 </div>
@@ -589,14 +589,14 @@ tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.4707, 0.0000, 2.6480, 0.0000, 0.2750,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 1.3282, -1.9983, -0.4857, -0.9444, -1.9078,  1.4785,  0.4414, -0.0802,
-        -1.2175,  1.0774])
+tensor([-1.3791,  0.0702, -2.4199, -0.5133, -1.4498, -0.8122,  0.8889,  0.5160,
+        -1.7863, -0.9462])
 经过relu之后c的值
-tensor([1.3282, 0.0000, 0.0000, 0.0000, 0.0000, 1.4785, 0.4414, 0.0000, 0.0000,
-        1.0774])
+tensor([0.0000, 0.0702, 0.0000, 0.0000, 0.0000, 0.0000, 0.8889, 0.5160, 0.0000,
+        0.0000])
 经过relu之后d的值
-tensor([1.3282, 0.0000, 0.0000, 0.0000, 0.0000, 1.4785, 0.4414, 0.0000, 0.0000,
-        1.0774])
+tensor([0.0000, 0.0702, 0.0000, 0.0000, 0.0000, 0.0000, 0.8889, 0.5160, 0.0000,
+        0.0000])
 </pre></div>
 </div>
 </div>
@@ -634,8 +634,8 @@ tensor([1.3282, 0.0000, 0.0000, 0.0000, 0.0000, 1.4785, 0.4414, 0.0000, 0.0000,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.1042, -1.6150])
-tensor([ 0.1042, -0.1615])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.6266, -0.3483])
+tensor([ 1.6266, -0.0348])
 </pre></div>
 </div>
 </div>
@@ -668,8 +668,8 @@ tensor([ 0.1042, -0.1615])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.1042, -1.6150])
-tensor([ 0.1042, -0.8011])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.6266, -0.3483])
+tensor([ 1.6266, -0.2941])
 </pre></div>
 </div>
 </div>
@@ -707,8 +707,8 @@ tensor([ 0.1042, -0.8011])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.1042, -1.6150])
-tensor([ 0.1042, -0.4037], grad_fn=&lt;PreluKernelBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.6266, -0.3483])
+tensor([ 1.6266, -0.0871], grad_fn=&lt;PreluKernelBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -733,10 +733,10 @@ tensor([ 0.1042, -0.4037], grad_fn=&lt;PreluKernelBackward0&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.6946,  1.8051,  2.0605],
-        [ 0.1797, -1.2996,  0.1609]])
-tensor([[0.1257, 0.3816, 0.4927],
-        [0.4527, 0.1031, 0.4442]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.5904, -0.1495, -1.4590],
+        [ 0.1747,  1.8015,  0.9792]])
+tensor([[0.3363, 0.5226, 0.1411],
+        [0.1201, 0.6113, 0.2686]])
 </pre></div>
 </div>
 </div>
@@ -764,10 +764,10 @@ tensor([[0.1257, 0.3816, 0.4927],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.6291, -1.3146,  0.3766],
-        [-0.1467,  0.3674, -0.0794]])
-tensor([[-0.2188, -0.2783,  0.2233],
-        [-0.0680,  0.2171, -0.0381]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-1.6532,  2.7436,  0.2125],
+        [-0.2941, -1.2129,  0.2746]])
+tensor([[-0.2656,  2.5778,  0.1175],
+        [-0.1256, -0.2780,  0.1560]])
 </pre></div>
 </div>
 </div>
@@ -796,10 +796,10 @@ tensor([[-0.2188, -0.2783,  0.2233],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-1.0816e+00, -6.6556e-01, -1.6456e+00],
-        [ 2.0384e+00,  2.6269e-05,  1.2195e+00]])
-tensor([[0.2920, 0.4147, 0.1764],
-        [2.1609, 0.6932, 1.4783]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.5909,  0.3444, -1.0315],
+        [ 0.1157,  1.9225,  0.3763]])
+tensor([[1.0316, 0.8801, 0.3049],
+        [0.7527, 2.0590, 0.8989]])
 </pre></div>
 </div>
 </div>

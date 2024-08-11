@@ -486,9 +486,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([[-0.7057, -0.5858, -0.5657,  0.2071],
-        [ 0.5093,  0.0065,  0.7059,  0.6499],
-        [ 0.2112, -0.3156,  1.3813, -0.0550]], requires_grad=True)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([[ 0.8663, -1.4189,  0.0596,  0.4667],
+        [-0.0788,  0.6656, -1.9587,  0.6638],
+        [-0.6653,  0.2844,  0.4768,  0.5987]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -502,9 +502,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([[4.9795e-01, 3.4320e-01, 3.2002e-01, 4.2884e-02],
-        [2.5934e-01, 4.1742e-05, 4.9827e-01, 4.2236e-01],
-        [4.4592e-02, 9.9576e-02, 1.9081e+00, 3.0251e-03]],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([[7.5044e-01, 2.0132e+00, 3.5515e-03, 2.1783e-01],
+        [6.2161e-03, 4.4306e-01, 3.8363e+00, 4.4065e-01],
+        [4.4269e-01, 8.0898e-02, 2.2737e-01, 3.5847e-01]],
        grad_fn=&lt;PowBackward0&gt;)
 </pre></div>
 </div>
@@ -518,7 +518,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y.grad_fn:&lt;PowBackward0 object at 0x7fd6d1247a30&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y.grad_fn:&lt;PowBackward0 object at 0x7fbf0096fa90&gt;
 </pre></div>
 </div>
 </div>
@@ -535,12 +535,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>z.grad_fn:&lt;MulBackward0 object at 0x7fd6d0c55450&gt;
-z:tensor([[7.4386e-01, 3.5336e-01, 3.0723e-01, 5.5172e-03],
-        [2.0177e-01, 5.2272e-09, 7.4482e-01, 5.3516e-01],
-        [5.9653e-03, 2.9746e-02, 1.0922e+01, 2.7454e-05]],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>z.grad_fn:&lt;MulBackward0 object at 0x7fbf10602c50&gt;
+z:tensor([[1.6895e+00, 1.2159e+01, 3.7840e-05, 1.4234e-01],
+        [1.1592e-04, 5.8892e-01, 4.4152e+01, 5.8250e-01],
+        [5.8791e-01, 1.9633e-02, 1.5509e-01, 3.8549e-01]],
        grad_fn=&lt;MulBackward0&gt;)
-out:1.1541354656219482
+out:5.038604259490967
 </pre></div>
 </div>
 </div>
@@ -561,7 +561,7 @@ out:1.1541354656219482
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.requires_grad:False
 a.requires_grad:True
-b.grad_fn:&lt;SumBackward0 object at 0x7fd6901cb3a0&gt;
+b.grad_fn:&lt;SumBackward0 object at 0x7fbef03933a0&gt;
 </pre></div>
 </div>
 </div>
@@ -579,7 +579,7 @@ b.grad_fn:&lt;SumBackward0 object at 0x7fd6901cb3a0&gt;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>out:tensor(1.1541, grad_fn=&lt;MeanBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>out:tensor(5.0386, grad_fn=&lt;MeanBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -592,9 +592,9 @@ b.grad_fn:&lt;SumBackward0 object at 0x7fd6901cb3a0&gt;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[-3.5138e-01, -2.0106e-01, -1.8103e-01,  8.8808e-03],
-        [ 1.3207e-01,  2.6969e-07,  3.5172e-01,  2.7449e-01],
-        [ 9.4163e-03, -3.1422e-02,  2.6357e+00, -1.6638e-04]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[ 6.5009e-01, -2.8566e+00,  2.1165e-04,  1.0166e-01],
+        [-4.9009e-04,  2.9492e-01, -7.5140e+00,  2.9251e-01],
+        [-2.9454e-01,  2.3009e-02,  1.0842e-01,  2.1462e-01]])
 </pre></div>
 </div>
 </div>
@@ -626,9 +626,9 @@ b.grad_fn:&lt;SumBackward0 object at 0x7fd6901cb3a0&gt;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[0.6486, 0.7989, 0.8190, 1.0089],
-        [1.1321, 1.0000, 1.3517, 1.2745],
-        [1.0094, 0.9686, 3.6357, 0.9998]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[ 1.6501, -1.8566,  1.0002,  1.1017],
+        [ 0.9995,  1.2949, -6.5140,  1.2925],
+        [ 0.7055,  1.0230,  1.1084,  1.2146]])
 x.grad:tensor([[1., 1., 1., 1.],
         [1., 1., 1., 1.],
         [1., 1., 1., 1.]])
@@ -653,8 +653,8 @@ x.grad:tensor([[1., 1., 1., 1.],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([-2.0317,  0.7965,  0.1590], requires_grad=True)
-y:tensor([-1040.2258,   407.7904,    81.3991], grad_fn=&lt;MulBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([ 1.3031, -1.3437,  1.7994], requires_grad=True)
+y:tensor([ 667.1892, -687.9499,  921.2756], grad_fn=&lt;MulBackward0&gt;)
 i:8
 </pre></div>
 </div>
@@ -958,7 +958,7 @@ x_{2} x_{3} &amp; x_{1} x_{3} &amp; x_{1} x_{2} \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([-1.0063, -1.7308,  0.4852])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([-1.8006,  1.0036,  0.7810])
 y:tensor([6., 6., 7.], grad_fn=&lt;CopySlices&gt;)
 x1.grad:1.100000023841858
 x2.grad:1.4000000953674316

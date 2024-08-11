@@ -496,37 +496,12 @@ document.write(`
 \[\mathbf{g}_{i} = \sum_{k \in \text{workers}} \sum_{j \in \text{GPUs}} \mathbf{g}_{ijk},\]</div>
 <p>其中<span class="math notranslate nohighlight">\(\mathbf{g}_{ijk}\)</span>是在工作节点<span class="math notranslate nohighlight">\(k\)</span>的GPU<span class="math notranslate nohighlight">\(j\)</span>上拆分的梯度<span class="math notranslate nohighlight">\(i\)</span>的一部分。这个运算的关键在于它是一个<em>交换归约</em>（commutative reduction），也就是说，它把许多向量变换成一个向量，而运算顺序在完成向量变换时并不重要。这对实现我们的目标来说是非常好的，因为不需要为何时接收哪个梯度进行细粒度的控制。此外，请注意，这个操作在不同的<span class="math notranslate nohighlight">\(i\)</span>之间是独立的。</p>
 <p>这就允许我们定义下面两个操作：<em>push</em>（用于累积梯度）和<em>pull</em>（用于取得聚合梯度）。因为我们有很多层，也就有很多不同的梯度集合，因此需要用一个键<span class="math notranslate nohighlight">\(i\)</span>来对梯度建索引。它们两个定义都拥有许多相似的性质，特别是在多个服务器之间分发参数时。</p>
-<p><em>键－值存储</em>的push与pull操作描述如下：</p>
+<p>*键－值存储**的push与pull操作描述如下：</p>
 <ul class="simple">
-<li><p>**push（key，value）**将特定的梯度值从工作节点发送到公共存储，在那里通过某种方式（例如，相加）来聚合值；</p></li>
-<li><p>**pull（key，value）**从公共存储中取得某种方式（例如，组合来自所有工作节点的梯度）的聚合值。</p></li>
+<li><p>push(key，value)将特定的梯度值从工作节点发送到公共存储，在那里通过某种方式（例如，相加）来聚合值；</p></li>
+<li><p>pull(key，value)从公共存储中取得某种方式（例如，组合来自所有工作节点的梯度）的聚合值。</p></li>
 </ul>
 <p>通过将同步的所有复杂性隐藏在一个简单的push和pull操作背后，我们可以将统计建模人员（他们希望能够用简单的术语表达优化）和系统工程师（他们需要处理分布式同步中固有的复杂性）的关注点解耦。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="k">def</span> <span class="nf">copy_to_cpu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="c1"># 将一个列表 x（假设其中包含张量或具有 to() 方法的对象）中的每个元素转移到 CPU 设备上</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="n">non_blocking</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>   <span class="c1">#non_blocking：一个布尔值，默认为 False。如果设置为 True，并且设备支持，则可以进行非阻塞传输</span>
-
-<span class="c1"># 假设 x 是一个 GPU 张量列表</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)]</span>
-
-<span class="c1"># 将张量复制到 CPU</span>
-<span class="n">cpu_tensors</span> <span class="o">=</span> <span class="n">copy_to_cpu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">cpu_tensors</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[tensor([[ 0.1834, -1.0597],
-        [-0.9935, -1.4631]]), tensor([[ 1.5282, -0.9434],
-        [-0.5542,  0.7339]])]
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 </section>
 
