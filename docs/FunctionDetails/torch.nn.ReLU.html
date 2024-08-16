@@ -270,6 +270,12 @@
 
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -459,11 +465,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-0.1370,  1.1793, -0.1575,  1.1505, -0.1659,  1.4920,  0.4074, -0.9718,
-         0.0991, -0.8111])
+tensor([-0.7304, -0.5549,  0.9891, -0.4909, -0.8672,  0.3669, -0.0961,  0.8249,
+         1.1470,  0.2901])
 经过relu之后
-tensor([0.0000, 1.1793, 0.0000, 1.1505, 0.0000, 1.4920, 0.4074, 0.0000, 0.0991,
-        0.0000])
+tensor([0.0000, 0.0000, 0.9891, 0.0000, 0.0000, 0.3669, 0.0000, 0.8249, 1.1470,
+        0.2901])
 </pre></div>
 </div>
 </div>
@@ -484,14 +490,14 @@ tensor([0.0000, 1.1793, 0.0000, 1.1505, 0.0000, 1.4920, 0.4074, 0.0000, 0.0991,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([-0.1921, -1.2096, -0.0904, -0.6350, -0.1192,  0.5581,  0.9111,  0.5949,
-         0.8965,  2.1998])
+tensor([-0.0794,  0.4928, -0.1186, -0.2135,  0.1380, -0.9210, -0.6354,  0.0225,
+        -0.0967,  1.8260])
 经过relu之后c的值
-tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.5581, 0.9111, 0.5949, 0.8965,
-        2.1998])
+tensor([0.0000, 0.4928, 0.0000, 0.0000, 0.1380, 0.0000, 0.0000, 0.0225, 0.0000,
+        1.8260])
 经过relu之后d的值
-tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.5581, 0.9111, 0.5949, 0.8965,
-        2.1998])
+tensor([0.0000, 0.4928, 0.0000, 0.0000, 0.1380, 0.0000, 0.0000, 0.0225, 0.0000,
+        1.8260])
 </pre></div>
 </div>
 </div>

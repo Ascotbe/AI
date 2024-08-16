@@ -268,6 +268,12 @@
 
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -499,7 +505,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-6.0536e-09, grad_fn=&lt;MeanBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(4.6566e-10, grad_fn=&lt;MeanBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -540,11 +546,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[-0.6929,  0.1289,  0.8944],
-        [ 1.4308,  0.5772,  0.7095],
-        [-1.6901,  0.4197, -0.1509],
-        [ 0.4971, -0.4771,  1.2686],
-        [-0.2940, -0.0536, -1.5823]], requires_grad=True)
+tensor([[-1.2017,  0.4449, -0.2315],
+        [-0.0713, -1.3240,  0.2696],
+        [ 1.0195,  1.4655,  0.2827],
+        [-1.7677,  0.3992,  0.4190],
+        [ 1.3455,  1.0360, -0.1323]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -557,8 +563,8 @@ tensor([[-0.6929,  0.1289,  0.8944],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.0000, 1.0116, 1.4226],
-        [0.0000, 0.9606, 1.8967]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.0000, 1.0485, 0.0103],
+        [0.6009, 0.1692, 0.0000]])
 </pre></div>
 </div>
 </div>
@@ -572,8 +578,8 @@ tensor([[-0.6929,  0.1289,  0.8944],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[5.9656],
-        [2.5930]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[11.4227],
+        [ 7.3069]])
 </pre></div>
 </div>
 </div>
