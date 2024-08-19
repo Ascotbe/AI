@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>torch.normal &#8212; AI学习笔记</title>
+    <title>torch.arange &#8212; AI学习笔记</title>
   
   
   
@@ -57,12 +57,12 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.normal';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.arange';</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="torch.zeros" href="torch.zeros.html" />
-    <link rel="prev" title="torch.matmul" href="torch.matmul.html" />
+    <link rel="next" title="torch.meshgrid" href="torch.meshgrid.html" />
+    <link rel="prev" title="torch.nn.init" href="torch.nn.init.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -200,12 +200,12 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">torch.argmax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">torch.normal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.Linear.html">torch.nn.Linear</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.arange</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.meshgrid.html">torch.meshgrid</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
@@ -344,7 +344,7 @@
       
       
       
-      <li><a href="../_sources/FunctionDetails/torch.normal.ipynb" target="_blank"
+      <li><a href="../_sources/FunctionDetails/torch.arange.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -415,7 +415,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -426,11 +428,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>torch.normal</h1>
+    <h1>torch.arange</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">函数定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">解释</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">示例</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -440,37 +452,58 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="torch-normal">
-<h1>torch.normal<a class="headerlink" href="#torch-normal" title="Link to this heading">#</a></h1>
-<p><strong>torch.normal(means, std, out=None)</strong></p>
-<p>返回一个张量，包含从给定参数means,std的离散正态分布中抽取随机数。 均值means是一个张量，包含每个输出元素相关的正态分布的均值。 std是一个张量，包含每个输出元素相关的正态分布的标准差。 均值和标准差的形状不须匹配，但每个张量的元素个数须相同。</p>
-<p>参数:</p>
+  <section id="torch-arange">
+<h1>torch.arange<a class="headerlink" href="#torch-arange" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">torch.arange</span></code> 是 PyTorch 中用于生成一个等差数列的函数，类似于 Python 中的 <code class="docutils literal notranslate"><span class="pre">range</span></code> 函数，但 <code class="docutils literal notranslate"><span class="pre">torch.arange</span></code> 会返回一个 PyTorch 张量。</p>
+<section id="id1">
+<h2>函数定义<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">strided</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
 <ul class="simple">
-<li><p>means (Tensor) – 均值（平均值）</p></li>
-<li><p>std (Tensor) – 标准差 <a class="reference external" href="https://zh.wikihow.com/%E8%AE%A1%E7%AE%97%E6%A0%87%E5%87%86%E5%B7%AE">https://zh.wikihow.com/计算标准差</a></p></li>
-<li><p>out (Tensor) – 可选的输出张量</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">start</span></code></strong>: 起始值（包含），默认是 <code class="docutils literal notranslate"><span class="pre">0</span></code>。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">end</span></code></strong>: 结束值（不包含）。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">step</span></code></strong>: 步长，默认为 <code class="docutils literal notranslate"><span class="pre">1</span></code>。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">out</span></code></strong>: 输出张量。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dtype</span></code></strong>: 数据类型，默认根据输入数据推断。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">layout</span></code></strong>: 张量布局，默认为 <code class="docutils literal notranslate"><span class="pre">torch.strided</span></code>。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">device</span></code></strong>: 指定生成张量的设备（如 <code class="docutils literal notranslate"><span class="pre">cpu</span></code> 或 <code class="docutils literal notranslate"><span class="pre">cuda</span></code>）。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">requires_grad</span></code></strong>: 是否记录梯度，默认为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。</p></li>
 </ul>
+</section>
+<section id="id2">
+<h2>解释<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">in_height</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">in_height</span></code></strong>: 这是 <code class="docutils literal notranslate"><span class="pre">arange</span></code> 函数中的 <code class="docutils literal notranslate"><span class="pre">end</span></code> 参数，表示生成的张量的值将从 <code class="docutils literal notranslate"><span class="pre">0</span></code> 开始到 <code class="docutils literal notranslate"><span class="pre">in_height-1</span></code> 结束。这里的 <code class="docutils literal notranslate"><span class="pre">in_height</span></code> 通常表示图像的高度或其他尺寸。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">device=device</span></code></strong>: 这个参数指定生成的张量将被放置在什么设备上。例如，如果 <code class="docutils literal notranslate"><span class="pre">device=torch.device('cpu')</span></code>，张量会被生成在 CPU 上；如果 <code class="docutils literal notranslate"><span class="pre">device=torch.device('cuda')</span></code>，则会在 GPU 上生成张量。<code class="docutils literal notranslate"><span class="pre">device</span></code> 参数确保你可以在所需的硬件上执行后续操作。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>示例<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>假设 <code class="docutils literal notranslate"><span class="pre">in_height=5</span></code>，<code class="docutils literal notranslate"><span class="pre">device='cpu'</span></code>，则：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>    
-<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.4</span><span class="p">])</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
-<span class="n">X</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">in_height</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">in_height</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3916,  0.2801],
-        [ 1.3365, -0.3674],
-        [ 0.1696,  0.9589],
-        ...,
-        [-1.0172, -2.5246],
-        [-0.4408, -0.4187],
-        [-0.8016,  0.3972]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 1, 2, 3, 4])
 </pre></div>
 </div>
 </div>
 </div>
+<p>这个张量表示从 <code class="docutils literal notranslate"><span class="pre">0</span></code> 到 <code class="docutils literal notranslate"><span class="pre">4</span></code> 的整数序列，位于 CPU 上。
+<code class="docutils literal notranslate"><span class="pre">torch.arange(in_height,</span> <span class="pre">device=device)</span></code> 生成一个从 <code class="docutils literal notranslate"><span class="pre">0</span></code> 开始、以 <code class="docutils literal notranslate"><span class="pre">1</span></code> 为步长、到 <code class="docutils literal notranslate"><span class="pre">in_height-1</span></code> 结束的一维张量。生成的张量位于指定的 <code class="docutils literal notranslate"><span class="pre">device</span></code> 上（如 CPU 或 GPU），这使得在不同硬件上进行计算变得方便。</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -504,20 +537,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="torch.matmul.html"
+       href="torch.nn.init.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">torch.matmul</p>
+        <p class="prev-next-title">torch.nn.init</p>
       </div>
     </a>
     <a class="right-next"
-       href="torch.zeros.html"
+       href="torch.meshgrid.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">torch.zeros</p>
+        <p class="prev-next-title">torch.meshgrid</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -527,6 +560,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">函数定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">解释</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">示例</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

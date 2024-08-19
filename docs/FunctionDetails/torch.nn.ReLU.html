@@ -207,6 +207,8 @@
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.Linear.html">torch.nn.Linear</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.nn.ReLU</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.meshgrid.html">torch.meshgrid</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -465,11 +467,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-0.7304, -0.5549,  0.9891, -0.4909, -0.8672,  0.3669, -0.0961,  0.8249,
-         1.1470,  0.2901])
+tensor([ 0.3471,  2.7261, -0.8716, -0.4125,  1.7444, -0.1900,  0.4667,  0.2047,
+        -0.1502, -0.6328])
 经过relu之后
-tensor([0.0000, 0.0000, 0.9891, 0.0000, 0.0000, 0.3669, 0.0000, 0.8249, 1.1470,
-        0.2901])
+tensor([0.3471, 2.7261, 0.0000, 0.0000, 1.7444, 0.0000, 0.4667, 0.2047, 0.0000,
+        0.0000])
 </pre></div>
 </div>
 </div>
@@ -490,14 +492,14 @@ tensor([0.0000, 0.0000, 0.9891, 0.0000, 0.0000, 0.3669, 0.0000, 0.8249, 1.1470,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([-0.0794,  0.4928, -0.1186, -0.2135,  0.1380, -0.9210, -0.6354,  0.0225,
-        -0.0967,  1.8260])
+tensor([ 0.6706,  0.1477,  0.5188,  0.4745,  0.1934,  0.4080,  0.7628,  1.7828,
+        -1.2258, -1.3045])
 经过relu之后c的值
-tensor([0.0000, 0.4928, 0.0000, 0.0000, 0.1380, 0.0000, 0.0000, 0.0225, 0.0000,
-        1.8260])
+tensor([0.6706, 0.1477, 0.5188, 0.4745, 0.1934, 0.4080, 0.7628, 1.7828, 0.0000,
+        0.0000])
 经过relu之后d的值
-tensor([0.0000, 0.4928, 0.0000, 0.0000, 0.1380, 0.0000, 0.0000, 0.0225, 0.0000,
-        1.8260])
+tensor([0.6706, 0.1477, 0.5188, 0.4745, 0.1934, 0.4080, 0.7628, 1.7828, 0.0000,
+        0.0000])
 </pre></div>
 </div>
 </div>

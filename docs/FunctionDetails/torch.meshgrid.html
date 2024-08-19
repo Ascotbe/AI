@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>torch.normal &#8212; AI学习笔记</title>
+    <title>torch.meshgrid &#8212; AI学习笔记</title>
   
   
   
@@ -57,12 +57,12 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.normal';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.meshgrid';</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="torch.zeros" href="torch.zeros.html" />
-    <link rel="prev" title="torch.matmul" href="torch.matmul.html" />
+    <link rel="next" title="线性回归" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html" />
+    <link rel="prev" title="torch.arange" href="torch.arange.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -200,13 +200,13 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">torch.argmax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">torch.normal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.Linear.html">torch.nn.Linear</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.arange.html">torch.arange</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.meshgrid</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -344,7 +344,7 @@
       
       
       
-      <li><a href="../_sources/FunctionDetails/torch.normal.ipynb" target="_blank"
+      <li><a href="../_sources/FunctionDetails/torch.meshgrid.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -415,7 +415,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -426,11 +428,23 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>torch.normal</h1>
+    <h1>torch.meshgrid</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">函数定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">解释</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xy"><code class="docutils literal notranslate"><span class="pre">'xy'</span></code> 模式的用法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">应用场景</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -440,37 +454,101 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="torch-normal">
-<h1>torch.normal<a class="headerlink" href="#torch-normal" title="Link to this heading">#</a></h1>
-<p><strong>torch.normal(means, std, out=None)</strong></p>
-<p>返回一个张量，包含从给定参数means,std的离散正态分布中抽取随机数。 均值means是一个张量，包含每个输出元素相关的正态分布的均值。 std是一个张量，包含每个输出元素相关的正态分布的标准差。 均值和标准差的形状不须匹配，但每个张量的元素个数须相同。</p>
-<p>参数:</p>
+  <section id="torch-meshgrid">
+<h1>torch.meshgrid<a class="headerlink" href="#torch-meshgrid" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">torch.meshgrid</span></code> 是 PyTorch 中用于生成坐标网格的函数，适用于需要在多维空间中生成坐标的情况。该函数接受一个或多个一维张量，并返回与这些张量维度相对应的坐标网格。这在计算机视觉、物理仿真等领域非常常用。</p>
+<section id="id1">
+<h2>函数定义<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">tensors</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
 <ul class="simple">
-<li><p>means (Tensor) – 均值（平均值）</p></li>
-<li><p>std (Tensor) – 标准差 <a class="reference external" href="https://zh.wikihow.com/%E8%AE%A1%E7%AE%97%E6%A0%87%E5%87%86%E5%B7%AE">https://zh.wikihow.com/计算标准差</a></p></li>
-<li><p>out (Tensor) – 可选的输出张量</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">\*tensors</span></code></strong>: 这是一个或多个一维张量。每个张量表示要生成网格的一个维度的坐标。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">indexing</span></code>: 决定了网格的索引方式，可以是 ‘xy’ 或 ‘ij’。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'ij'</span></code> 是默认值，使用矩阵索引方式。第一个返回的网格对应第一个输入张量，第二个网格对应第二个输入张量。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'xy'</span></code> 使用 Cartesian 索引方式，常用于图像处理或绘图，第一个返回的网格表示 x 轴坐标，第二个网格表示 y 轴坐标。</p></li>
 </ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>示例<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>假设你有两个一维张量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y</span></code>，表示某个二维平面上的坐标。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>    
-<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.4</span><span class="p">])</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
-<span class="n">X</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="c1"># 使用 meshgrid 生成坐标网格</span>
+<span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">grid_x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grid_y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3916,  0.2801],
-        [ 1.3365, -0.3674],
-        [ 0.1696,  0.9589],
-        ...,
-        [-1.0172, -2.5246],
-        [-0.4408, -0.4187],
-        [-0.8016,  0.3972]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1, 1],
+        [2, 2],
+        [3, 3]])
+tensor([[4, 5],
+        [4, 5],
+        [4, 5]])
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="id3">
+<h2>解释<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong>: <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> 表示第一维度上的三个坐标值。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong>: <code class="docutils literal notranslate"><span class="pre">[4,</span> <span class="pre">5]</span></code> 表示第二维度上的两个坐标值。</p></li>
+</ul>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">torch.meshgrid(x,</span> <span class="pre">y,</span> <span class="pre">indexing='ij')</span></code>，生成了两个二维张量：</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">grid_x</span></code></strong>: 每行都是 x 方向的坐标，长度与 y 的长度相同，重复了 <code class="docutils literal notranslate"><span class="pre">len(y)</span></code> 次。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">grid_y</span></code></strong>: 每列都是 y 方向的坐标，长度与 x 的长度相同，重复了 <code class="docutils literal notranslate"><span class="pre">len(x)</span></code> 次。</p></li>
+</ul>
+</section>
+<section id="xy">
+<h2><code class="docutils literal notranslate"><span class="pre">'xy'</span></code> 模式的用法<a class="headerlink" href="#xy" title="Link to this heading">#</a></h2>
+<p>如果你将 <code class="docutils literal notranslate"><span class="pre">indexing='xy'</span></code>，结果将是不同的，适合用于图像处理中的网格生成。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">grid_x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grid_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1, 2, 3],
+        [1, 2, 3]])
+tensor([[4, 4, 4],
+        [5, 5, 5]])
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">grid_x</span></code></strong>: 每列是 x 方向的坐标，重复了 <code class="docutils literal notranslate"><span class="pre">len(y)</span></code> 次。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">grid_y</span></code></strong>: 每行是 y 方向的坐标，重复了 <code class="docutils literal notranslate"><span class="pre">len(x)</span></code> 次。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>应用场景<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>图像处理</strong>: 生成坐标网格，用于像素操作、变换或生成锚框。</p></li>
+<li><p><strong>物理仿真</strong>: 创建空间中的坐标网格，用于模拟物理现象。</p></li>
+<li><p><strong>数学计算</strong>: 在多维空间中生成网格点，用于数值积分或其他计算。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">torch.meshgrid</span></code> 是一个强大而常用的工具，能够在多维空间中轻松生成坐标网格，适用于各种计算场景。</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -504,20 +582,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="torch.matmul.html"
+       href="torch.arange.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">torch.matmul</p>
+        <p class="prev-next-title">torch.arange</p>
       </div>
     </a>
     <a class="right-next"
-       href="torch.zeros.html"
+       href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">torch.zeros</p>
+        <p class="prev-next-title">线性回归</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -527,6 +605,25 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">函数定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">解释</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xy"><code class="docutils literal notranslate"><span class="pre">'xy'</span></code> 模式的用法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">应用场景</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
