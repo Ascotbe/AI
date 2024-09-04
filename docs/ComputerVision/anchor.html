@@ -277,6 +277,9 @@
 <li class="toctree-l1"><a class="reference internal" href="fine-tuning.html">微调</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bounding-box.html">目标检测和边界框</a></li>
 <li class="toctree-l1"><a class="reference internal" href="object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neural-style.html">风格迁移</a></li>
 </ul>
 
     </div>
@@ -516,33 +519,55 @@ document.write(`
     <span class="n">steps_h</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">in_height</span>  <span class="c1"># 在y轴上缩放步长</span>
     <span class="n">steps_w</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">in_width</span>  <span class="c1"># 在x轴上缩放步长</span>
 
-    <span class="c1"># 生成锚框的所有中心点</span>
+    <span class="c1"># 生成锚框的所有中心点，先用等差数列生成初始化数据，然后根据步长和偏移进行运算，最后根据算法生成一个笛卡尔网格</span>
     <span class="n">center_h</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">in_height</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset_h</span><span class="p">)</span> <span class="o">*</span> <span class="n">steps_h</span>
     <span class="c1"># 生成0到in_height的等差数列然后全部加上0.5再乘以步长</span>
     <span class="n">center_w</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">in_width</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset_w</span><span class="p">)</span> <span class="o">*</span> <span class="n">steps_w</span>
     <span class="c1"># print(f&#39;等差数列：{torch.arange(in_height, device=device)}&#39;)</span>
     <span class="c1"># print(f&#39;等差数列加上offset_h：{torch.arange(in_height, device=device) + offset_h}&#39;)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;center_h：</span><span class="si">{</span><span class="n">center_h</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;center_w：</span><span class="si">{</span><span class="n">center_w</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">shift_y</span><span class="p">,</span> <span class="n">shift_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">center_h</span><span class="p">,</span> <span class="n">center_w</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
-    <span class="n">shift_y</span><span class="p">,</span> <span class="n">shift_x</span> <span class="o">=</span> <span class="n">shift_y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">shift_x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
+    <span class="c1">#print(f&#39;center_h：{center_h}&#39;)</span>
+    <span class="c1">#print(f&#39;center_w：{center_w}&#39;)</span>
+    <span class="n">shift_y</span><span class="p">,</span> <span class="n">shift_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">center_h</span><span class="p">,</span> <span class="n">center_w</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>  <span class="c1"># 生成一个笛卡尔网格（坐标网格）</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;shift_y：</span><span class="si">{</span><span class="n">shift_y</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;shift_x：</span><span class="si">{</span><span class="n">shift_x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">shift_y</span><span class="p">,</span> <span class="n">shift_x</span> <span class="o">=</span> <span class="n">shift_y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">shift_x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 把二维的数据降为一维的</span>
+    <span class="c1"># print(f&#39;shift_y：{shift_y}&#39;)</span>
+    <span class="c1"># print(f&#39;shift_x：{shift_x}&#39;)</span>
     <span class="c1"># 生成“boxes_per_pixel”个高和宽，</span>
     <span class="c1"># 之后用于创建锚框的四角坐标(xmin,xmax,ymin,ymax)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">size_tensor</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
                    <span class="n">sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span>\
                    <span class="o">*</span> <span class="n">in_height</span> <span class="o">/</span> <span class="n">in_width</span>  <span class="c1"># 处理矩形输入</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;size_tensor：</span><span class="si">{</span><span class="n">size_tensor</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># 表示不同尺度的锚框（如小、中、大）</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ratio_tensor[0]：</span><span class="si">{</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># 代表第一个比例因子（通常为1.0，即宽高比为1的正方形），torch.sqrt(ratio_tensor[0]) 的结果是1（因为1的平方根是1）</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;sizes[0]：</span><span class="si">{</span><span class="n">sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ratio_tensor[1:]：</span><span class="si">{</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># torch.cat 将上面两部分生成的宽度值拼接在一起，得到一个包含所有宽度值的张量。</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;torch.sqrt(ratio_tensor[1:])=</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;torch.cat值：</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">size_tensor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">size_tensor</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
                    <span class="n">sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ratio_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span>
     <span class="c1"># 除以2来获得半高和半宽</span>
+    <span class="c1"># 先用torch.stack((-w, -h, w, h))来生成(xmin,xmax,ymin,ymax)</span>
+    <span class="c1"># 然后将堆叠后的张量从形状 (4, boxes_per_pixel) 转置为 (boxes_per_pixel, 4)</span>
+    <span class="c1"># 接着转置一下</span>
+    <span class="c1"># 再接着接把数据重复408408次后 除以2</span>
     <span class="n">anchor_manipulations</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="o">-</span><span class="n">w</span><span class="p">,</span> <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
                                         <span class="n">in_height</span> <span class="o">*</span> <span class="n">in_width</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;-w=</span><span class="si">{</span><span class="o">-</span><span class="n">w</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;-h=</span><span class="si">{</span><span class="o">-</span><span class="n">h</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;torch.stack((-w, -h, w, h))=</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="o">-</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;torch.stack((-w, -h, w, h)).T=</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="o">-</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;in_height * in_width=</span><span class="si">{</span><span class="n">in_height</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">in_width</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;这个torch.stack((-w, -h, w, h)).T的shape是</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="o">-</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">,所以重复</span><span class="si">{</span><span class="n">in_height</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">in_width</span><span class="si">}</span><span class="s1">次后是2042040&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">anchor_manipulations</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;anchor_manipulations.shape=</span><span class="si">{</span><span class="n">anchor_manipulations</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="c1"># 每个中心点都将有“boxes_per_pixel”个锚框，</span>
     <span class="c1"># 所以生成含所有锚框中心的网格，重复了“boxes_per_pixel”次</span>
     <span class="n">out_grid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">shift_x</span><span class="p">,</span> <span class="n">shift_y</span><span class="p">,</span> <span class="n">shift_x</span><span class="p">,</span> <span class="n">shift_y</span><span class="p">],</span>
                 <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span><span class="n">boxes_per_pixel</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">out_grid</span> <span class="o">+</span> <span class="n">anchor_manipulations</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -571,191 +596,48 @@ X的shape是：torch.Size([1, 3, 561, 728])
 device：cpu
 num_sizes：3
 num_ratios：3
-center_h：tensor([8.91e-04, 2.67e-03, 4.46e-03, 6.24e-03, 8.02e-03, 9.80e-03, 1.16e-02,
-        1.34e-02, 1.52e-02, 1.69e-02, 1.87e-02, 2.05e-02, 2.23e-02, 2.41e-02,
-        2.58e-02, 2.76e-02, 2.94e-02, 3.12e-02, 3.30e-02, 3.48e-02, 3.65e-02,
-        3.83e-02, 4.01e-02, 4.19e-02, 4.37e-02, 4.55e-02, 4.72e-02, 4.90e-02,
-        5.08e-02, 5.26e-02, 5.44e-02, 5.61e-02, 5.79e-02, 5.97e-02, 6.15e-02,
-        6.33e-02, 6.51e-02, 6.68e-02, 6.86e-02, 7.04e-02, 7.22e-02, 7.40e-02,
-        7.58e-02, 7.75e-02, 7.93e-02, 8.11e-02, 8.29e-02, 8.47e-02, 8.65e-02,
-        8.82e-02, 9.00e-02, 9.18e-02, 9.36e-02, 9.54e-02, 9.71e-02, 9.89e-02,
-        1.01e-01, 1.02e-01, 1.04e-01, 1.06e-01, 1.08e-01, 1.10e-01, 1.11e-01,
-        1.13e-01, 1.15e-01, 1.17e-01, 1.19e-01, 1.20e-01, 1.22e-01, 1.24e-01,
-        1.26e-01, 1.27e-01, 1.29e-01, 1.31e-01, 1.33e-01, 1.35e-01, 1.36e-01,
-        1.38e-01, 1.40e-01, 1.42e-01, 1.43e-01, 1.45e-01, 1.47e-01, 1.49e-01,
-        1.51e-01, 1.52e-01, 1.54e-01, 1.56e-01, 1.58e-01, 1.60e-01, 1.61e-01,
-        1.63e-01, 1.65e-01, 1.67e-01, 1.68e-01, 1.70e-01, 1.72e-01, 1.74e-01,
-        1.76e-01, 1.77e-01, 1.79e-01, 1.81e-01, 1.83e-01, 1.84e-01, 1.86e-01,
-        1.88e-01, 1.90e-01, 1.92e-01, 1.93e-01, 1.95e-01, 1.97e-01, 1.99e-01,
-        2.01e-01, 2.02e-01, 2.04e-01, 2.06e-01, 2.08e-01, 2.09e-01, 2.11e-01,
-        2.13e-01, 2.15e-01, 2.17e-01, 2.18e-01, 2.20e-01, 2.22e-01, 2.24e-01,
-        2.25e-01, 2.27e-01, 2.29e-01, 2.31e-01, 2.33e-01, 2.34e-01, 2.36e-01,
-        2.38e-01, 2.40e-01, 2.42e-01, 2.43e-01, 2.45e-01, 2.47e-01, 2.49e-01,
-        2.50e-01, 2.52e-01, 2.54e-01, 2.56e-01, 2.58e-01, 2.59e-01, 2.61e-01,
-        2.63e-01, 2.65e-01, 2.66e-01, 2.68e-01, 2.70e-01, 2.72e-01, 2.74e-01,
-        2.75e-01, 2.77e-01, 2.79e-01, 2.81e-01, 2.83e-01, 2.84e-01, 2.86e-01,
-        2.88e-01, 2.90e-01, 2.91e-01, 2.93e-01, 2.95e-01, 2.97e-01, 2.99e-01,
-        3.00e-01, 3.02e-01, 3.04e-01, 3.06e-01, 3.07e-01, 3.09e-01, 3.11e-01,
-        3.13e-01, 3.15e-01, 3.16e-01, 3.18e-01, 3.20e-01, 3.22e-01, 3.24e-01,
-        3.25e-01, 3.27e-01, 3.29e-01, 3.31e-01, 3.32e-01, 3.34e-01, 3.36e-01,
-        3.38e-01, 3.40e-01, 3.41e-01, 3.43e-01, 3.45e-01, 3.47e-01, 3.48e-01,
-        3.50e-01, 3.52e-01, 3.54e-01, 3.56e-01, 3.57e-01, 3.59e-01, 3.61e-01,
-        3.63e-01, 3.65e-01, 3.66e-01, 3.68e-01, 3.70e-01, 3.72e-01, 3.73e-01,
-        3.75e-01, 3.77e-01, 3.79e-01, 3.81e-01, 3.82e-01, 3.84e-01, 3.86e-01,
-        3.88e-01, 3.89e-01, 3.91e-01, 3.93e-01, 3.95e-01, 3.97e-01, 3.98e-01,
-        4.00e-01, 4.02e-01, 4.04e-01, 4.06e-01, 4.07e-01, 4.09e-01, 4.11e-01,
-        4.13e-01, 4.14e-01, 4.16e-01, 4.18e-01, 4.20e-01, 4.22e-01, 4.23e-01,
-        4.25e-01, 4.27e-01, 4.29e-01, 4.30e-01, 4.32e-01, 4.34e-01, 4.36e-01,
-        4.38e-01, 4.39e-01, 4.41e-01, 4.43e-01, 4.45e-01, 4.47e-01, 4.48e-01,
-        4.50e-01, 4.52e-01, 4.54e-01, 4.55e-01, 4.57e-01, 4.59e-01, 4.61e-01,
-        4.63e-01, 4.64e-01, 4.66e-01, 4.68e-01, 4.70e-01, 4.71e-01, 4.73e-01,
-        4.75e-01, 4.77e-01, 4.79e-01, 4.80e-01, 4.82e-01, 4.84e-01, 4.86e-01,
-        4.88e-01, 4.89e-01, 4.91e-01, 4.93e-01, 4.95e-01, 4.96e-01, 4.98e-01,
-        5.00e-01, 5.02e-01, 5.04e-01, 5.05e-01, 5.07e-01, 5.09e-01, 5.11e-01,
-        5.12e-01, 5.14e-01, 5.16e-01, 5.18e-01, 5.20e-01, 5.21e-01, 5.23e-01,
-        5.25e-01, 5.27e-01, 5.29e-01, 5.30e-01, 5.32e-01, 5.34e-01, 5.36e-01,
-        5.37e-01, 5.39e-01, 5.41e-01, 5.43e-01, 5.45e-01, 5.46e-01, 5.48e-01,
-        5.50e-01, 5.52e-01, 5.53e-01, 5.55e-01, 5.57e-01, 5.59e-01, 5.61e-01,
-        5.62e-01, 5.64e-01, 5.66e-01, 5.68e-01, 5.70e-01, 5.71e-01, 5.73e-01,
-        5.75e-01, 5.77e-01, 5.78e-01, 5.80e-01, 5.82e-01, 5.84e-01, 5.86e-01,
-        5.87e-01, 5.89e-01, 5.91e-01, 5.93e-01, 5.94e-01, 5.96e-01, 5.98e-01,
-        6.00e-01, 6.02e-01, 6.03e-01, 6.05e-01, 6.07e-01, 6.09e-01, 6.11e-01,
-        6.12e-01, 6.14e-01, 6.16e-01, 6.18e-01, 6.19e-01, 6.21e-01, 6.23e-01,
-        6.25e-01, 6.27e-01, 6.28e-01, 6.30e-01, 6.32e-01, 6.34e-01, 6.35e-01,
-        6.37e-01, 6.39e-01, 6.41e-01, 6.43e-01, 6.44e-01, 6.46e-01, 6.48e-01,
-        6.50e-01, 6.52e-01, 6.53e-01, 6.55e-01, 6.57e-01, 6.59e-01, 6.60e-01,
-        6.62e-01, 6.64e-01, 6.66e-01, 6.68e-01, 6.69e-01, 6.71e-01, 6.73e-01,
-        6.75e-01, 6.76e-01, 6.78e-01, 6.80e-01, 6.82e-01, 6.84e-01, 6.85e-01,
-        6.87e-01, 6.89e-01, 6.91e-01, 6.93e-01, 6.94e-01, 6.96e-01, 6.98e-01,
-        7.00e-01, 7.01e-01, 7.03e-01, 7.05e-01, 7.07e-01, 7.09e-01, 7.10e-01,
-        7.12e-01, 7.14e-01, 7.16e-01, 7.17e-01, 7.19e-01, 7.21e-01, 7.23e-01,
-        7.25e-01, 7.26e-01, 7.28e-01, 7.30e-01, 7.32e-01, 7.34e-01, 7.35e-01,
-        7.37e-01, 7.39e-01, 7.41e-01, 7.42e-01, 7.44e-01, 7.46e-01, 7.48e-01,
-        7.50e-01, 7.51e-01, 7.53e-01, 7.55e-01, 7.57e-01, 7.58e-01, 7.60e-01,
-        7.62e-01, 7.64e-01, 7.66e-01, 7.67e-01, 7.69e-01, 7.71e-01, 7.73e-01,
-        7.75e-01, 7.76e-01, 7.78e-01, 7.80e-01, 7.82e-01, 7.83e-01, 7.85e-01,
-        7.87e-01, 7.89e-01, 7.91e-01, 7.92e-01, 7.94e-01, 7.96e-01, 7.98e-01,
-        7.99e-01, 8.01e-01, 8.03e-01, 8.05e-01, 8.07e-01, 8.08e-01, 8.10e-01,
-        8.12e-01, 8.14e-01, 8.16e-01, 8.17e-01, 8.19e-01, 8.21e-01, 8.23e-01,
-        8.24e-01, 8.26e-01, 8.28e-01, 8.30e-01, 8.32e-01, 8.33e-01, 8.35e-01,
-        8.37e-01, 8.39e-01, 8.40e-01, 8.42e-01, 8.44e-01, 8.46e-01, 8.48e-01,
-        8.49e-01, 8.51e-01, 8.53e-01, 8.55e-01, 8.57e-01, 8.58e-01, 8.60e-01,
-        8.62e-01, 8.64e-01, 8.65e-01, 8.67e-01, 8.69e-01, 8.71e-01, 8.73e-01,
-        8.74e-01, 8.76e-01, 8.78e-01, 8.80e-01, 8.81e-01, 8.83e-01, 8.85e-01,
-        8.87e-01, 8.89e-01, 8.90e-01, 8.92e-01, 8.94e-01, 8.96e-01, 8.98e-01,
-        8.99e-01, 9.01e-01, 9.03e-01, 9.05e-01, 9.06e-01, 9.08e-01, 9.10e-01,
-        9.12e-01, 9.14e-01, 9.15e-01, 9.17e-01, 9.19e-01, 9.21e-01, 9.22e-01,
-        9.24e-01, 9.26e-01, 9.28e-01, 9.30e-01, 9.31e-01, 9.33e-01, 9.35e-01,
-        9.37e-01, 9.39e-01, 9.40e-01, 9.42e-01, 9.44e-01, 9.46e-01, 9.47e-01,
-        9.49e-01, 9.51e-01, 9.53e-01, 9.55e-01, 9.56e-01, 9.58e-01, 9.60e-01,
-        9.62e-01, 9.63e-01, 9.65e-01, 9.67e-01, 9.69e-01, 9.71e-01, 9.72e-01,
-        9.74e-01, 9.76e-01, 9.78e-01, 9.80e-01, 9.81e-01, 9.83e-01, 9.85e-01,
-        9.87e-01, 9.88e-01, 9.90e-01, 9.92e-01, 9.94e-01, 9.96e-01, 9.97e-01,
-        9.99e-01])
-center_w：tensor([6.87e-04, 2.06e-03, 3.43e-03, 4.81e-03, 6.18e-03, 7.55e-03, 8.93e-03,
-        1.03e-02, 1.17e-02, 1.30e-02, 1.44e-02, 1.58e-02, 1.72e-02, 1.85e-02,
-        1.99e-02, 2.13e-02, 2.27e-02, 2.40e-02, 2.54e-02, 2.68e-02, 2.82e-02,
-        2.95e-02, 3.09e-02, 3.23e-02, 3.37e-02, 3.50e-02, 3.64e-02, 3.78e-02,
-        3.91e-02, 4.05e-02, 4.19e-02, 4.33e-02, 4.46e-02, 4.60e-02, 4.74e-02,
-        4.88e-02, 5.01e-02, 5.15e-02, 5.29e-02, 5.43e-02, 5.56e-02, 5.70e-02,
-        5.84e-02, 5.98e-02, 6.11e-02, 6.25e-02, 6.39e-02, 6.52e-02, 6.66e-02,
-        6.80e-02, 6.94e-02, 7.07e-02, 7.21e-02, 7.35e-02, 7.49e-02, 7.62e-02,
-        7.76e-02, 7.90e-02, 8.04e-02, 8.17e-02, 8.31e-02, 8.45e-02, 8.59e-02,
-        8.72e-02, 8.86e-02, 9.00e-02, 9.13e-02, 9.27e-02, 9.41e-02, 9.55e-02,
-        9.68e-02, 9.82e-02, 9.96e-02, 1.01e-01, 1.02e-01, 1.04e-01, 1.05e-01,
-        1.06e-01, 1.08e-01, 1.09e-01, 1.11e-01, 1.12e-01, 1.13e-01, 1.15e-01,
-        1.16e-01, 1.17e-01, 1.19e-01, 1.20e-01, 1.22e-01, 1.23e-01, 1.24e-01,
-        1.26e-01, 1.27e-01, 1.28e-01, 1.30e-01, 1.31e-01, 1.33e-01, 1.34e-01,
-        1.35e-01, 1.37e-01, 1.38e-01, 1.39e-01, 1.41e-01, 1.42e-01, 1.44e-01,
-        1.45e-01, 1.46e-01, 1.48e-01, 1.49e-01, 1.50e-01, 1.52e-01, 1.53e-01,
-        1.55e-01, 1.56e-01, 1.57e-01, 1.59e-01, 1.60e-01, 1.61e-01, 1.63e-01,
-        1.64e-01, 1.66e-01, 1.67e-01, 1.68e-01, 1.70e-01, 1.71e-01, 1.72e-01,
-        1.74e-01, 1.75e-01, 1.77e-01, 1.78e-01, 1.79e-01, 1.81e-01, 1.82e-01,
-        1.83e-01, 1.85e-01, 1.86e-01, 1.88e-01, 1.89e-01, 1.90e-01, 1.92e-01,
-        1.93e-01, 1.94e-01, 1.96e-01, 1.97e-01, 1.98e-01, 2.00e-01, 2.01e-01,
-        2.03e-01, 2.04e-01, 2.05e-01, 2.07e-01, 2.08e-01, 2.09e-01, 2.11e-01,
-        2.12e-01, 2.14e-01, 2.15e-01, 2.16e-01, 2.18e-01, 2.19e-01, 2.20e-01,
-        2.22e-01, 2.23e-01, 2.25e-01, 2.26e-01, 2.27e-01, 2.29e-01, 2.30e-01,
-        2.31e-01, 2.33e-01, 2.34e-01, 2.36e-01, 2.37e-01, 2.38e-01, 2.40e-01,
-        2.41e-01, 2.42e-01, 2.44e-01, 2.45e-01, 2.47e-01, 2.48e-01, 2.49e-01,
-        2.51e-01, 2.52e-01, 2.53e-01, 2.55e-01, 2.56e-01, 2.58e-01, 2.59e-01,
-        2.60e-01, 2.62e-01, 2.63e-01, 2.64e-01, 2.66e-01, 2.67e-01, 2.69e-01,
-        2.70e-01, 2.71e-01, 2.73e-01, 2.74e-01, 2.75e-01, 2.77e-01, 2.78e-01,
-        2.80e-01, 2.81e-01, 2.82e-01, 2.84e-01, 2.85e-01, 2.86e-01, 2.88e-01,
-        2.89e-01, 2.91e-01, 2.92e-01, 2.93e-01, 2.95e-01, 2.96e-01, 2.97e-01,
-        2.99e-01, 3.00e-01, 3.02e-01, 3.03e-01, 3.04e-01, 3.06e-01, 3.07e-01,
-        3.08e-01, 3.10e-01, 3.11e-01, 3.12e-01, 3.14e-01, 3.15e-01, 3.17e-01,
-        3.18e-01, 3.19e-01, 3.21e-01, 3.22e-01, 3.23e-01, 3.25e-01, 3.26e-01,
-        3.28e-01, 3.29e-01, 3.30e-01, 3.32e-01, 3.33e-01, 3.34e-01, 3.36e-01,
-        3.37e-01, 3.39e-01, 3.40e-01, 3.41e-01, 3.43e-01, 3.44e-01, 3.45e-01,
-        3.47e-01, 3.48e-01, 3.50e-01, 3.51e-01, 3.52e-01, 3.54e-01, 3.55e-01,
-        3.56e-01, 3.58e-01, 3.59e-01, 3.61e-01, 3.62e-01, 3.63e-01, 3.65e-01,
-        3.66e-01, 3.67e-01, 3.69e-01, 3.70e-01, 3.72e-01, 3.73e-01, 3.74e-01,
-        3.76e-01, 3.77e-01, 3.78e-01, 3.80e-01, 3.81e-01, 3.83e-01, 3.84e-01,
-        3.85e-01, 3.87e-01, 3.88e-01, 3.89e-01, 3.91e-01, 3.92e-01, 3.94e-01,
-        3.95e-01, 3.96e-01, 3.98e-01, 3.99e-01, 4.00e-01, 4.02e-01, 4.03e-01,
-        4.05e-01, 4.06e-01, 4.07e-01, 4.09e-01, 4.10e-01, 4.11e-01, 4.13e-01,
-        4.14e-01, 4.16e-01, 4.17e-01, 4.18e-01, 4.20e-01, 4.21e-01, 4.22e-01,
-        4.24e-01, 4.25e-01, 4.27e-01, 4.28e-01, 4.29e-01, 4.31e-01, 4.32e-01,
-        4.33e-01, 4.35e-01, 4.36e-01, 4.38e-01, 4.39e-01, 4.40e-01, 4.42e-01,
-        4.43e-01, 4.44e-01, 4.46e-01, 4.47e-01, 4.48e-01, 4.50e-01, 4.51e-01,
-        4.53e-01, 4.54e-01, 4.55e-01, 4.57e-01, 4.58e-01, 4.59e-01, 4.61e-01,
-        4.62e-01, 4.64e-01, 4.65e-01, 4.66e-01, 4.68e-01, 4.69e-01, 4.70e-01,
-        4.72e-01, 4.73e-01, 4.75e-01, 4.76e-01, 4.77e-01, 4.79e-01, 4.80e-01,
-        4.81e-01, 4.83e-01, 4.84e-01, 4.86e-01, 4.87e-01, 4.88e-01, 4.90e-01,
-        4.91e-01, 4.92e-01, 4.94e-01, 4.95e-01, 4.97e-01, 4.98e-01, 4.99e-01,
-        5.01e-01, 5.02e-01, 5.03e-01, 5.05e-01, 5.06e-01, 5.08e-01, 5.09e-01,
-        5.10e-01, 5.12e-01, 5.13e-01, 5.14e-01, 5.16e-01, 5.17e-01, 5.19e-01,
-        5.20e-01, 5.21e-01, 5.23e-01, 5.24e-01, 5.25e-01, 5.27e-01, 5.28e-01,
-        5.30e-01, 5.31e-01, 5.32e-01, 5.34e-01, 5.35e-01, 5.36e-01, 5.38e-01,
-        5.39e-01, 5.41e-01, 5.42e-01, 5.43e-01, 5.45e-01, 5.46e-01, 5.47e-01,
-        5.49e-01, 5.50e-01, 5.52e-01, 5.53e-01, 5.54e-01, 5.56e-01, 5.57e-01,
-        5.58e-01, 5.60e-01, 5.61e-01, 5.62e-01, 5.64e-01, 5.65e-01, 5.67e-01,
-        5.68e-01, 5.69e-01, 5.71e-01, 5.72e-01, 5.73e-01, 5.75e-01, 5.76e-01,
-        5.78e-01, 5.79e-01, 5.80e-01, 5.82e-01, 5.83e-01, 5.84e-01, 5.86e-01,
-        5.87e-01, 5.89e-01, 5.90e-01, 5.91e-01, 5.93e-01, 5.94e-01, 5.95e-01,
-        5.97e-01, 5.98e-01, 6.00e-01, 6.01e-01, 6.02e-01, 6.04e-01, 6.05e-01,
-        6.06e-01, 6.08e-01, 6.09e-01, 6.11e-01, 6.12e-01, 6.13e-01, 6.15e-01,
-        6.16e-01, 6.17e-01, 6.19e-01, 6.20e-01, 6.22e-01, 6.23e-01, 6.24e-01,
-        6.26e-01, 6.27e-01, 6.28e-01, 6.30e-01, 6.31e-01, 6.33e-01, 6.34e-01,
-        6.35e-01, 6.37e-01, 6.38e-01, 6.39e-01, 6.41e-01, 6.42e-01, 6.44e-01,
-        6.45e-01, 6.46e-01, 6.48e-01, 6.49e-01, 6.50e-01, 6.52e-01, 6.53e-01,
-        6.55e-01, 6.56e-01, 6.57e-01, 6.59e-01, 6.60e-01, 6.61e-01, 6.63e-01,
-        6.64e-01, 6.66e-01, 6.67e-01, 6.68e-01, 6.70e-01, 6.71e-01, 6.72e-01,
-        6.74e-01, 6.75e-01, 6.77e-01, 6.78e-01, 6.79e-01, 6.81e-01, 6.82e-01,
-        6.83e-01, 6.85e-01, 6.86e-01, 6.88e-01, 6.89e-01, 6.90e-01, 6.92e-01,
-        6.93e-01, 6.94e-01, 6.96e-01, 6.97e-01, 6.98e-01, 7.00e-01, 7.01e-01,
-        7.03e-01, 7.04e-01, 7.05e-01, 7.07e-01, 7.08e-01, 7.09e-01, 7.11e-01,
-        7.12e-01, 7.14e-01, 7.15e-01, 7.16e-01, 7.18e-01, 7.19e-01, 7.20e-01,
-        7.22e-01, 7.23e-01, 7.25e-01, 7.26e-01, 7.27e-01, 7.29e-01, 7.30e-01,
-        7.31e-01, 7.33e-01, 7.34e-01, 7.36e-01, 7.37e-01, 7.38e-01, 7.40e-01,
-        7.41e-01, 7.42e-01, 7.44e-01, 7.45e-01, 7.47e-01, 7.48e-01, 7.49e-01,
-        7.51e-01, 7.52e-01, 7.53e-01, 7.55e-01, 7.56e-01, 7.58e-01, 7.59e-01,
-        7.60e-01, 7.62e-01, 7.63e-01, 7.64e-01, 7.66e-01, 7.67e-01, 7.69e-01,
-        7.70e-01, 7.71e-01, 7.73e-01, 7.74e-01, 7.75e-01, 7.77e-01, 7.78e-01,
-        7.80e-01, 7.81e-01, 7.82e-01, 7.84e-01, 7.85e-01, 7.86e-01, 7.88e-01,
-        7.89e-01, 7.91e-01, 7.92e-01, 7.93e-01, 7.95e-01, 7.96e-01, 7.97e-01,
-        7.99e-01, 8.00e-01, 8.02e-01, 8.03e-01, 8.04e-01, 8.06e-01, 8.07e-01,
-        8.08e-01, 8.10e-01, 8.11e-01, 8.12e-01, 8.14e-01, 8.15e-01, 8.17e-01,
-        8.18e-01, 8.19e-01, 8.21e-01, 8.22e-01, 8.23e-01, 8.25e-01, 8.26e-01,
-        8.28e-01, 8.29e-01, 8.30e-01, 8.32e-01, 8.33e-01, 8.34e-01, 8.36e-01,
-        8.37e-01, 8.39e-01, 8.40e-01, 8.41e-01, 8.43e-01, 8.44e-01, 8.45e-01,
-        8.47e-01, 8.48e-01, 8.50e-01, 8.51e-01, 8.52e-01, 8.54e-01, 8.55e-01,
-        8.56e-01, 8.58e-01, 8.59e-01, 8.61e-01, 8.62e-01, 8.63e-01, 8.65e-01,
-        8.66e-01, 8.67e-01, 8.69e-01, 8.70e-01, 8.72e-01, 8.73e-01, 8.74e-01,
-        8.76e-01, 8.77e-01, 8.78e-01, 8.80e-01, 8.81e-01, 8.83e-01, 8.84e-01,
-        8.85e-01, 8.87e-01, 8.88e-01, 8.89e-01, 8.91e-01, 8.92e-01, 8.94e-01,
-        8.95e-01, 8.96e-01, 8.98e-01, 8.99e-01, 9.00e-01, 9.02e-01, 9.03e-01,
-        9.05e-01, 9.06e-01, 9.07e-01, 9.09e-01, 9.10e-01, 9.11e-01, 9.13e-01,
-        9.14e-01, 9.16e-01, 9.17e-01, 9.18e-01, 9.20e-01, 9.21e-01, 9.22e-01,
-        9.24e-01, 9.25e-01, 9.27e-01, 9.28e-01, 9.29e-01, 9.31e-01, 9.32e-01,
-        9.33e-01, 9.35e-01, 9.36e-01, 9.38e-01, 9.39e-01, 9.40e-01, 9.42e-01,
-        9.43e-01, 9.44e-01, 9.46e-01, 9.47e-01, 9.48e-01, 9.50e-01, 9.51e-01,
-        9.53e-01, 9.54e-01, 9.55e-01, 9.57e-01, 9.58e-01, 9.59e-01, 9.61e-01,
-        9.62e-01, 9.64e-01, 9.65e-01, 9.66e-01, 9.68e-01, 9.69e-01, 9.70e-01,
-        9.72e-01, 9.73e-01, 9.75e-01, 9.76e-01, 9.77e-01, 9.79e-01, 9.80e-01,
-        9.81e-01, 9.83e-01, 9.84e-01, 9.86e-01, 9.87e-01, 9.88e-01, 9.90e-01,
-        9.91e-01, 9.92e-01, 9.94e-01, 9.95e-01, 9.97e-01, 9.98e-01, 9.99e-01])
+shift_y：tensor([[8.91e-04, 8.91e-04, 8.91e-04,  ..., 8.91e-04, 8.91e-04, 8.91e-04],
+        [2.67e-03, 2.67e-03, 2.67e-03,  ..., 2.67e-03, 2.67e-03, 2.67e-03],
+        [4.46e-03, 4.46e-03, 4.46e-03,  ..., 4.46e-03, 4.46e-03, 4.46e-03],
+        ...,
+        [9.96e-01, 9.96e-01, 9.96e-01,  ..., 9.96e-01, 9.96e-01, 9.96e-01],
+        [9.97e-01, 9.97e-01, 9.97e-01,  ..., 9.97e-01, 9.97e-01, 9.97e-01],
+        [9.99e-01, 9.99e-01, 9.99e-01,  ..., 9.99e-01, 9.99e-01, 9.99e-01]])
+shift_x：tensor([[6.87e-04, 2.06e-03, 3.43e-03,  ..., 9.97e-01, 9.98e-01, 9.99e-01],
+        [6.87e-04, 2.06e-03, 3.43e-03,  ..., 9.97e-01, 9.98e-01, 9.99e-01],
+        [6.87e-04, 2.06e-03, 3.43e-03,  ..., 9.97e-01, 9.98e-01, 9.99e-01],
+        ...,
+        [6.87e-04, 2.06e-03, 3.43e-03,  ..., 9.97e-01, 9.98e-01, 9.99e-01],
+        [6.87e-04, 2.06e-03, 3.43e-03,  ..., 9.97e-01, 9.98e-01, 9.99e-01],
+        [6.87e-04, 2.06e-03, 3.43e-03,  ..., 9.97e-01, 9.98e-01, 9.99e-01]])
+size_tensor：tensor([0.75, 0.50, 0.25])
+ratio_tensor[0]：1.0
+sizes[0]：0.75
+ratio_tensor[1:]：tensor([2.00, 0.50])
+torch.sqrt(ratio_tensor[1:])=tensor([1.41, 0.71])
+torch.cat值：tensor([0.75, 0.50, 0.25, 1.06, 0.53])
+-w=tensor([-0.58, -0.39, -0.19, -0.82, -0.41])
+-h=tensor([-0.75, -0.50, -0.25, -0.53, -1.06])
+torch.stack((-w, -h, w, h))=tensor([[-0.58, -0.39, -0.19, -0.82, -0.41],
+        [-0.75, -0.50, -0.25, -0.53, -1.06],
+        [ 0.58,  0.39,  0.19,  0.82,  0.41],
+        [ 0.75,  0.50,  0.25,  0.53,  1.06]])
+torch.stack((-w, -h, w, h)).T=tensor([[-0.58, -0.75,  0.58,  0.75],
+        [-0.39, -0.50,  0.39,  0.50],
+        [-0.19, -0.25,  0.19,  0.25],
+        [-0.82, -0.53,  0.82,  0.53],
+        [-0.41, -1.06,  0.41,  1.06]])
+in_height * in_width=408408
+这个torch.stack((-w, -h, w, h)).T的shape是torch.Size([5, 4]),所以重复408408次后是2042040
+tensor([[-0.29, -0.38,  0.29,  0.38],
+        [-0.19, -0.25,  0.19,  0.25],
+        [-0.10, -0.12,  0.10,  0.12],
+        ...,
+        [-0.10, -0.12,  0.10,  0.12],
+        [-0.41, -0.27,  0.41,  0.27],
+        [-0.20, -0.53,  0.20,  0.53]])
+anchor_manipulations.shape=torch.Size([2042040, 4])
+torch.Size([2042040, 4])
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([1, 2042040, 4])
@@ -769,12 +651,16 @@ center_w：tensor([6.87e-04, 2.06e-03, 3.43e-03, 4.81e-03, 6.18e-03, 7.55e-03, 8
 输出中两个轴的坐标各分别除以了图像的宽度和高度。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boxes</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">boxes</span><span class="p">[</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boxes</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1">#5：表示每个像素点上有5个锚框，4：表示每个锚框的4个坐标值，这通常是 (xmin, ymin, xmax, ymax)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">boxes</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">boxes</span><span class="p">[</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>  
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([561, 728, 5, 4])
+</pre></div>
+</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0.06, 0.07, 0.63, 0.82])
 </pre></div>
 </div>
@@ -783,7 +669,7 @@ center_w：tensor([6.87e-04, 2.06e-03, 3.43e-03, 4.81e-03, 6.18e-03, 7.55e-03, 8
 <p>为了<strong>显示以图像中以某个像素为中心的所有锚框</strong>，定义下面的<code class="docutils literal notranslate"><span class="pre">show_bboxes</span></code>函数来在图像上绘制多个边界框。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_bboxes</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">bboxes</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_bboxes</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">bboxes</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1"># bboxes为实际转换的像素坐标</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;显示所有边界框&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_make_list</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -819,12 +705,12 @@ center_w：tensor([6.87e-04, 2.06e-03, 3.43e-03, 4.81e-03, 6.18e-03, 7.55e-03, 8
 <span class="n">fig</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">show_bboxes</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="n">boxes</span><span class="p">[</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">bbox_scale</span><span class="p">,</span>
             <span class="p">[</span><span class="s1">&#39;s=0.75, r=1&#39;</span><span class="p">,</span> <span class="s1">&#39;s=0.5, r=1&#39;</span><span class="p">,</span> <span class="s1">&#39;s=0.25, r=1&#39;</span><span class="p">,</span> <span class="s1">&#39;s=0.75, r=2&#39;</span><span class="p">,</span>
-             <span class="s1">&#39;s=0.75, r=0.5&#39;</span><span class="p">])</span>
+             <span class="s1">&#39;s=0.75, r=0.5&#39;</span><span class="p">])</span> <span class="c1"># s 代表尺寸（scale），r 代表宽高比（ratio）</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e4ed01c4e79d8b56f96901e423f959642e7109e6697e31ae4b7274a68ac101a4.svg" src="../_images/e4ed01c4e79d8b56f96901e423f959642e7109e6697e31ae4b7274a68ac101a4.svg" /></div>
+<img alt="../_images/adf3c1df24ab86f3a289258bef3b3e4e14430f9b31bccc0affb6c528198f42ff.svg" src="../_images/adf3c1df24ab86f3a289258bef3b3e4e14430f9b31bccc0affb6c528198f42ff.svg" /></div>
 </div>
 </section>
 <section id="iou">

@@ -275,6 +275,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
 </ul>
 
     </div>
@@ -439,8 +442,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">函数定义</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">解释</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">解释</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xy"><code class="docutils literal notranslate"><span class="pre">'xy'</span></code> 模式的用法</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">应用场景</a></li>
 </ul>
@@ -454,7 +459,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="torch-meshgrid">
+  <section class="tex2jax_ignore mathjax_ignore" id="torch-meshgrid">
 <h1>torch.meshgrid<a class="headerlink" href="#torch-meshgrid" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">torch.meshgrid</span></code> 是 PyTorch 中用于生成坐标网格的函数，适用于需要在多维空间中生成坐标的情况。该函数接受一个或多个一维张量，并返回与这些张量维度相对应的坐标网格。这在计算机视觉、物理仿真等领域非常常用。</p>
 <section id="id1">
@@ -501,9 +506,8 @@ tensor([[4, 5],
 </div>
 </div>
 </div>
-</section>
 <section id="id3">
-<h2>解释<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h3>解释<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">x</span></code></strong>: <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> 表示第一维度上的三个坐标值。</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">y</span></code></strong>: <code class="docutils literal notranslate"><span class="pre">[4,</span> <span class="pre">5]</span></code> 表示第二维度上的两个坐标值。</p></li>
@@ -513,6 +517,37 @@ tensor([[4, 5],
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">grid_x</span></code></strong>: 每行都是 x 方向的坐标，长度与 y 的长度相同，重复了 <code class="docutils literal notranslate"><span class="pre">len(y)</span></code> 次。</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">grid_y</span></code></strong>: 每列都是 y 方向的坐标，长度与 x 的长度相同，重复了 <code class="docutils literal notranslate"><span class="pre">len(x)</span></code> 次。</p></li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># 使用 meshgrid 生成坐标网格</span>
+<span class="n">grid_x_</span><span class="p">,</span> <span class="n">grid_y_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">grid_x_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grid_y_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1, 1, 1, 1],
+        [2, 2, 2, 2],
+        [3, 3, 3, 3],
+        [4, 4, 4, 4],
+        [5, 5, 5, 5],
+        [6, 6, 6, 6]])
+tensor([[4, 5, 0, 2],
+        [4, 5, 0, 2],
+        [4, 5, 0, 2],
+        [4, 5, 0, 2],
+        [4, 5, 0, 2],
+        [4, 5, 0, 2]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="xy">
 <h2><code class="docutils literal notranslate"><span class="pre">'xy'</span></code> 模式的用法<a class="headerlink" href="#xy" title="Link to this heading">#</a></h2>
@@ -616,8 +651,10 @@ tensor([[4, 4, 4],
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">函数定义</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">解释</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">示例</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">解释</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xy"><code class="docutils literal notranslate"><span class="pre">'xy'</span></code> 模式的用法</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">应用场景</a></li>
 </ul>
