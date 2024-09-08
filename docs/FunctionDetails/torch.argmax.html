@@ -275,9 +275,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是LLMs</a></li>
 </ul>
 
     </div>
@@ -461,10 +466,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.1804, -0.3287,  1.2024, -0.2349,  0.9182],
-        [-0.2021, -0.5065,  0.0589,  0.8519, -0.0865],
-        [ 0.1196,  0.8774,  0.4341, -1.5480,  0.0855],
-        [-0.4598, -0.3850,  0.4855, -1.7182,  0.5251]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.4362,  0.2078, -0.2451, -1.3784, -0.9203],
+        [-0.3433,  0.0475, -0.0927,  0.2349,  0.8132],
+        [ 0.0752, -1.2615, -0.1390, -0.1840,  0.0843],
+        [ 0.5286, -0.0272, -0.2754,  0.8780, -0.4528]])
 </pre></div>
 </div>
 </div>
@@ -477,7 +482,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([2, 3, 1, 4])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 4, 4, 3])
 </pre></div>
 </div>
 </div>
@@ -490,7 +495,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(2)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(18)
 </pre></div>
 </div>
 </div>
@@ -503,7 +508,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 2, 0, 1, 0])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([3, 0, 1, 3, 1])
 </pre></div>
 </div>
 </div>
