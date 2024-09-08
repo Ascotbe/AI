@@ -676,8 +676,8 @@ j:[[1 2 3]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>k:tensor([[0.5823, 0.4987, 0.1949],
-        [0.1525, 0.4388, 0.5870]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>k:tensor([[0.6326, 0.8952, 0.3704],
+        [0.2932, 0.7644, 0.0328]])
 l:tensor([[1., 1., 1.],
         [1., 1., 1.]])
 m:tensor([[0., 0., 0.],
@@ -714,10 +714,10 @@ k.size():torch.Size([2, 3])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o:tensor([[1.5823, 1.4987, 1.1949],
-        [1.1525, 1.4388, 1.5870]])
-k + l:tensor([[1.5823, 1.4987, 1.1949],
-        [1.1525, 1.4388, 1.5870]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o:tensor([[1.6326, 1.8952, 1.3704],
+        [1.2932, 1.7644, 1.0328]])
+k + l:tensor([[1.6326, 1.8952, 1.3704],
+        [1.2932, 1.7644, 1.0328]])
 </pre></div>
 </div>
 </div>
@@ -733,9 +733,9 @@ k + l:tensor([[1.5823, 1.4987, 1.1949],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o[:,1]:tensor([1.4987, 1.4388])
-o[0:1,1]:tensor([1.4987])
-o[0,:]:tensor([1.5823, 1.4987, 1.1949])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o[:,1]:tensor([1.8952, 1.7644])
+o[0:1,1]:tensor([1.8952])
+o[0,:]:tensor([1.6326, 1.8952, 1.3704])
 </pre></div>
 </div>
 </div>
@@ -749,12 +749,12 @@ o[0,:]:tensor([1.5823, 1.4987, 1.1949])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o.reshape(3,2):tensor([[1.5823, 1.4987],
-        [1.1949, 1.1525],
-        [1.4388, 1.5870]])
-o.reshape(-1,2):tensor([[1.5823, 1.4987],
-        [1.1949, 1.1525],
-        [1.4388, 1.5870]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o.reshape(3,2):tensor([[1.6326, 1.8952],
+        [1.3704, 1.2932],
+        [1.7644, 1.0328]])
+o.reshape(-1,2):tensor([[1.6326, 1.8952],
+        [1.3704, 1.2932],
+        [1.7644, 1.0328]])
 </pre></div>
 </div>
 </div>
@@ -806,9 +806,9 @@ q+p:tensor([[2, 3],
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o.shape:torch.Size([2, 3])
-r:tensor([[[1.5823, 1.4987, 1.1949]],
+r:tensor([[[1.6326, 1.8952, 1.3704]],
 
-        [[1.1525, 1.4388, 1.5870]]])
+        [[1.2932, 1.7644, 1.0328]]])
 r.shape:torch.Size([2, 1, 3])
 r_.shape:torch.Size([2, 3, 1])
 </pre></div>
@@ -852,13 +852,13 @@ r_.shape:torch.Size([2, 3, 1])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r:tensor([[[1.5823, 1.4987, 1.1949]],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r:tensor([[[1.6326, 1.8952, 1.3704]],
 
-        [[1.1525, 1.4388, 1.5870]]])
+        [[1.2932, 1.7644, 1.0328]]])
 r.shape:torch.Size([2, 1, 3])
-s:tensor([[[1.5823, 1.4987, 1.1949]],
+s:tensor([[[1.6326, 1.8952, 1.3704]],
 
-        [[1.1525, 1.4388, 1.5870]]])
+        [[1.2932, 1.7644, 1.0328]]])
 s.shape:torch.Size([2, 1, 3])
 </pre></div>
 </div>
@@ -873,8 +873,8 @@ s.shape:torch.Size([2, 1, 3])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t:tensor([[1.5823, 1.4987, 1.1949],
-        [1.1525, 1.4388, 1.5870]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t:tensor([[1.6326, 1.8952, 1.3704],
+        [1.2932, 1.7644, 1.0328]])
 t.shape:torch.Size([2, 3])
 </pre></div>
 </div>
@@ -889,8 +889,8 @@ t.shape:torch.Size([2, 3])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t_:tensor([[1.5823, 1.4987, 1.1949],
-        [1.1525, 1.4388, 1.5870]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t_:tensor([[1.6326, 1.8952, 1.3704],
+        [1.2932, 1.7644, 1.0328]])
 t_.shape:torch.Size([2, 3])
 </pre></div>
 </div>

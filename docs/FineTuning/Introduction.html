@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>torch.normal &#8212; AI学习笔记</title>
+    <title>什么是LLMs &#8212; AI学习笔记</title>
   
   
   
@@ -57,12 +57,10 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.normal';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'FineTuning/Introduction';</script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="torch.zeros" href="torch.zeros.html" />
-    <link rel="prev" title="torch.matmul" href="torch.matmul.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,6 +122,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -197,16 +197,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="torch.argmax.html">torch.argmax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.normal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.Linear.html">torch.nn.Linear</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.arange.html">torch.arange</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.meshgrid.html">torch.meshgrid</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -347,7 +347,7 @@
       
       
       
-      <li><a href="../_sources/FunctionDetails/torch.normal.ipynb" target="_blank"
+      <li><a href="../_sources/FineTuning/Introduction.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -418,7 +418,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -429,11 +431,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>torch.normal</h1>
+    <h1>什么是LLMs</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">什么是微调</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">目前的微调策略</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">常见的微调框架</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -443,37 +455,38 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="torch-normal">
-<h1>torch.normal<a class="headerlink" href="#torch-normal" title="Link to this heading">#</a></h1>
-<p><strong>torch.normal(means, std, out=None)</strong></p>
-<p>返回一个张量，包含从给定参数means,std的离散正态分布中抽取随机数。 均值means是一个张量，包含每个输出元素相关的正态分布的均值。 std是一个张量，包含每个输出元素相关的正态分布的标准差。 均值和标准差的形状不须匹配，但每个张量的元素个数须相同。</p>
-<p>参数:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="llms">
+<h1>什么是LLMs<a class="headerlink" href="#llms" title="Link to this heading">#</a></h1>
+<p>LLMs（Large Language Models，大型语言模型）是一个广泛的术语，指的是任何规模巨大的语言模型，能够处理自然语言理解、生成、翻译等任务。它们可以有不同的架构和训练目标。典型的 LLMs 包括 GPT 系列、BERT、T5 等。这些模型通常训练在大规模数据集上，拥有数亿到数千亿的参数，支持复杂的语言任务。</p>
+<section id="id1">
+<h2>什么是微调<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>深度学习领域中常见的一种技术，用于将预先训练好的模型适配到特定的任务或数据集上。这个过程包括几个主要步骤：</p>
 <ul class="simple">
-<li><p>means (Tensor) – 均值（平均值）</p></li>
-<li><p>std (Tensor) – 标准差 <a class="reference external" href="https://zh.wikihow.com/%E8%AE%A1%E7%AE%97%E6%A0%87%E5%87%86%E5%B7%AE">https://zh.wikihow.com/计算标准差</a></p></li>
-<li><p>out (Tensor) – 可选的输出张量</p></li>
+<li><p>基础模型选择：选择一个通用文本数据的基础语言模型，使其能够理解基本的语言结构和语义。</p></li>
+<li><p>准备训练数据集：选择一个与目标任务相关的较小数据集。</p></li>
+<li><p>微调：在此数据集上训练模型，但通常使用较低的学习率，以保留基础模型学到的知识，同时学习目标任务的特定知识。</p></li>
+<li><p>评估：在目标任务的验证集上评估模型的性能，需要准备评估数据集。</p></li>
+<li><p>应用：如果性能满意，则可以将模型应用于实际任务。</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>    
-<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.4</span><span class="p">])</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
-<span class="n">X</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-1.7967, -2.1949],
-        [ 0.0112,  0.1013],
-        [-0.2620, -0.8012],
-        ...,
-        [ 0.4893,  1.4990],
-        [ 0.4839,  0.1295],
-        [-1.2997, -1.3374]])
-</pre></div>
-</div>
-</div>
-</div>
+<img src="../image/FineTuning/1680832117725700255.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+</section>
+<section id="id2">
+<h2>目前的微调策略<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>LoRA：LoRA 是一种用于微调大型语言模型的技术，通过低秩近似方法降低适应数十亿参数模型（如 GPT-3）到特定任务或领域的计算和财务成本。</p></li>
+<li><p>QLoRA：QLoRA 是一种高效的大型语言模型微调方法，它显著降低了内存使用量，同时保持了全 16 位微调的性能。它通过在一个固定的、4 位量化的预训练语言模型中反向传播梯度到低秩适配器来实现这一目标。</p></li>
+<li><p>PEFT：PEFT 是一种 NLP 技术，通过仅微调一小部分参数，高效地将预训练的语言模型适应到各种应用，降低计算和存储成本。它通过调整特定任务的关键参数来对抗灾难性遗忘，并在多种模式（如图像分类和稳定扩散梦展台）中提供与全微调相当的性能。这是一种在最少的可训练参数情况下实现高性能的有价值方法。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>常见的微调框架<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/hiyouga/LLaMA-Factory">hiyouga/LLaMA-Factory</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/unslothai/unsloth">unslothai/unsloth</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/huggingface/peft">huggingface/peft</a></p></li>
+<li><p>待补充</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -489,7 +502,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./FunctionDetails"
+            path: "./FineTuning"
         },
         predefinedOutput: true
     }
@@ -506,30 +519,29 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="torch.matmul.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">torch.matmul</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="torch.zeros.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">torch.zeros</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">什么是微调</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">目前的微调策略</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">常见的微调框架</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
