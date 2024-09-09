@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>什么是LLMs &#8212; AI学习笔记</title>
+    <title>什么是微调 &#8212; AI学习笔记</title>
   
   
   
@@ -61,7 +61,7 @@
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="风格迁移" href="../ComputerVision/neural-style.html" />
+    <link rel="prev" title="参考文章" href="../NaturalLanguageProcessing/LargeLanguageModels.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -279,9 +279,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LargeLanguageModels.html">参考文章</a></li>
+
+
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">什么是LLMs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">什么是微调</a></li>
 </ul>
 
     </div>
@@ -435,7 +441,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>什么是LLMs</h1>
+    <h1>什么是微调</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -445,7 +451,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">什么是微调</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">目前的微调策略</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">常见的微调框架</a></li>
 </ul>
@@ -459,11 +464,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="llms">
-<h1>什么是LLMs<a class="headerlink" href="#llms" title="Link to this heading">#</a></h1>
-<p>LLMs（Large Language Models，大型语言模型）是一个广泛的术语，指的是任何规模巨大的语言模型，能够处理自然语言理解、生成、翻译等任务。它们可以有不同的架构和训练目标。典型的 LLMs 包括 GPT 系列、BERT、T5 等。这些模型通常训练在大规模数据集上，拥有数亿到数千亿的参数，支持复杂的语言任务。</p>
-<section id="id1">
-<h2>什么是微调<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>什么是微调<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>深度学习领域中常见的一种技术，用于将预先训练好的模型适配到特定的任务或数据集上。这个过程包括几个主要步骤：</p>
 <ul class="simple">
 <li><p>基础模型选择：选择一个通用文本数据的基础语言模型，使其能够理解基本的语言结构和语义。</p></li>
@@ -473,7 +475,6 @@ document.write(`
 <li><p>应用：如果性能满意，则可以将模型应用于实际任务。</p></li>
 </ul>
 <img src="../image/FineTuning/1680832117725700255.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
-</section>
 <section id="id2">
 <h2>目前的微调策略<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -524,12 +525,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../ComputerVision/neural-style.html"
+       href="../NaturalLanguageProcessing/LargeLanguageModels.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">风格迁移</p>
+        <p class="prev-next-title">参考文章</p>
       </div>
     </a>
 </div>
@@ -548,7 +549,6 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">什么是微调</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">目前的微调策略</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">常见的微调框架</a></li>
 </ul>

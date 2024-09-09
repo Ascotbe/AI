@@ -280,9 +280,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LargeLanguageModels.html">参考文章</a></li>
+
+
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是LLMs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
 </ul>
 
     </div>
@@ -515,7 +521,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(5.1223e-09, grad_fn=&lt;MeanBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-3.7253e-09, grad_fn=&lt;MeanBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -556,11 +562,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[ 0.5125, -0.1626, -0.7077],
-        [ 0.4383,  1.3563,  1.2418],
-        [-0.2345, -0.5181,  2.4463],
-        [-1.6771,  1.3576,  0.5573],
-        [-0.8690,  0.3438,  1.1519]], requires_grad=True)
+tensor([[-0.5071, -0.4855, -0.4165],
+        [-1.1064,  1.1668, -1.3426],
+        [-0.3578, -1.2874,  0.5984],
+        [-0.0451,  2.3271, -1.4946],
+        [-0.0261, -0.3762, -1.3909]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -573,8 +579,8 @@ tensor([[ 0.5125, -0.1626, -0.7077],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.7355, 2.4231, 2.9907],
-        [0.0000, 2.8343, 3.5385]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0., 0., 0.],
+        [0., 0., 0.]])
 </pre></div>
 </div>
 </div>
