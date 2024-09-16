@@ -284,9 +284,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LargeLanguageModels.html">参考文章</a></li>
-
-
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer.html">Transformer</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
 <ul class="nav bd-sidenav">
@@ -508,9 +507,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([[-0.6866, -2.6046,  0.2700,  0.5451],
-        [ 0.3730, -0.0451, -0.3636,  0.1972],
-        [ 0.3633,  0.3142, -0.2050,  0.8372]], requires_grad=True)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([[ 0.3732, -0.4626, -0.0423,  0.9020],
+        [ 0.8046, -0.5964,  1.1069, -2.2851],
+        [-0.3188, -0.3160, -1.8246,  0.6766]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -524,9 +523,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([[4.7147e-01, 6.7837e+00, 7.2885e-02, 2.9713e-01],
-        [1.3913e-01, 2.0369e-03, 1.3219e-01, 3.8905e-02],
-        [1.3201e-01, 9.8716e-02, 4.2019e-02, 7.0084e-01]],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([[1.3928e-01, 2.1399e-01, 1.7880e-03, 8.1363e-01],
+        [6.4736e-01, 3.5563e-01, 1.2253e+00, 5.2216e+00],
+        [1.0166e-01, 9.9886e-02, 3.3293e+00, 4.5778e-01]],
        grad_fn=&lt;PowBackward0&gt;)
 </pre></div>
 </div>
@@ -540,7 +539,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y.grad_fn:&lt;PowBackward0 object at 0x7fdfa0e0f5e0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y.grad_fn:&lt;PowBackward0 object at 0x7f94e8cd3cd0&gt;
 </pre></div>
 </div>
 </div>
@@ -557,12 +556,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>z.grad_fn:&lt;MulBackward0 object at 0x7fdfa0d42b60&gt;
-z:tensor([[6.6685e-01, 1.3806e+02, 1.5936e-02, 2.6486e-01],
-        [5.8071e-02, 1.2447e-05, 5.2426e-02, 4.5408e-03],
-        [5.2282e-02, 2.9235e-02, 5.2967e-03, 1.4735e+00]],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>z.grad_fn:&lt;MulBackward0 object at 0x7f94a8d1d480&gt;
+z:tensor([[5.8194e-02, 1.3737e-01, 9.5912e-06, 1.9860e+00],
+        [1.2572e+00, 3.7943e-01, 4.5042e+00, 8.1795e+01],
+        [3.1002e-02, 2.9932e-02, 3.3253e+01, 6.2869e-01]],
        grad_fn=&lt;MulBackward0&gt;)
-out:11.72317886352539
+out:10.338366508483887
 </pre></div>
 </div>
 </div>
@@ -583,7 +582,7 @@ out:11.72317886352539
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.requires_grad:False
 a.requires_grad:True
-b.grad_fn:&lt;SumBackward0 object at 0x7fdf702bf4f0&gt;
+b.grad_fn:&lt;SumBackward0 object at 0x7f94c8c43910&gt;
 </pre></div>
 </div>
 </div>
@@ -601,7 +600,7 @@ b.grad_fn:&lt;SumBackward0 object at 0x7fdf702bf4f0&gt;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>out:tensor(11.7232, grad_fn=&lt;MeanBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>out:tensor(10.3384, grad_fn=&lt;MeanBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -614,9 +613,9 @@ b.grad_fn:&lt;SumBackward0 object at 0x7fdf702bf4f0&gt;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[-3.2373e-01, -1.7668e+01,  1.9677e-02,  1.6196e-01],
-        [ 5.1895e-02, -9.1932e-05, -4.8064e-02,  7.6738e-03],
-        [ 4.7965e-02,  3.1016e-02, -8.6132e-03,  5.8672e-01]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[ 5.1978e-02, -9.8988e-02, -7.5607e-05,  7.3390e-01],
+        [ 5.2086e-01, -2.1208e-01,  1.3564e+00, -1.1932e+01],
+        [-3.2412e-02, -3.1569e-02, -6.0749e+00,  3.0973e-01]])
 </pre></div>
 </div>
 </div>
@@ -648,9 +647,9 @@ b.grad_fn:&lt;SumBackward0 object at 0x7fdf702bf4f0&gt;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[  0.6763, -16.6684,   1.0197,   1.1620],
-        [  1.0519,   0.9999,   0.9519,   1.0077],
-        [  1.0480,   1.0310,   0.9914,   1.5867]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([[  1.0520,   0.9010,   0.9999,   1.7339],
+        [  1.5209,   0.7879,   2.3564, -10.9317],
+        [  0.9676,   0.9684,  -5.0749,   1.3097]])
 x.grad:tensor([[1., 1., 1., 1.],
         [1., 1., 1., 1.],
         [1., 1., 1., 1.]])
@@ -675,9 +674,9 @@ x.grad:tensor([[1., 1., 1., 1.],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([-0.5121,  1.0361,  0.4202], requires_grad=True)
-y:tensor([-524.3619, 1060.9873,  430.3073], grad_fn=&lt;MulBackward0&gt;)
-i:9
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x:tensor([ 0.7936, -0.3908, -0.3300], requires_grad=True)
+y:tensor([1625.1957, -800.4380, -675.7932], grad_fn=&lt;MulBackward0&gt;)
+i:10
 </pre></div>
 </div>
 </div>
@@ -693,7 +692,7 @@ i:9
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([1.0240e+02, 1.0240e+03, 1.0240e-01])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.grad:tensor([2.0480e+02, 2.0480e+03, 2.0480e-01])
 </pre></div>
 </div>
 </div>
@@ -980,7 +979,7 @@ x_{2} x_{3} &amp; x_{1} x_{3} &amp; x_{1} x_{2} \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([-0.0741,  0.0530, -2.0815])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y:tensor([-0.8306, -1.3096, -1.0119])
 y:tensor([6., 6., 7.], grad_fn=&lt;CopySlices&gt;)
 x1.grad:1.100000023841858
 x2.grad:1.4000000953674316
