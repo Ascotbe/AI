@@ -285,9 +285,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer.html">Transformer</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
 </ul>
@@ -480,11 +479,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([ 1.0240,  0.3841,  0.8483, -1.8077, -0.2006, -2.4427,  0.9230,  2.0358,
-        -0.9176, -1.7497])
+tensor([-0.3129, -0.9733, -0.1225,  2.3894,  0.1950, -0.1270,  1.6853, -0.6566,
+        -0.3289,  0.9075])
 经过relu之后
-tensor([1.0240, 0.3841, 0.8483, 0.0000, 0.0000, 0.0000, 0.9230, 2.0358, 0.0000,
-        0.0000])
+tensor([0.0000, 0.0000, 0.0000, 2.3894, 0.1950, 0.0000, 1.6853, 0.0000, 0.0000,
+        0.9075])
 </pre></div>
 </div>
 </div>
@@ -505,14 +504,14 @@ tensor([1.0240, 0.3841, 0.8483, 0.0000, 0.0000, 0.0000, 0.9230, 2.0358, 0.0000,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 0.4361,  0.9042,  0.5571, -1.0194, -0.2028, -1.5167, -1.2096, -0.3755,
-         0.3982, -0.2430])
+tensor([ 0.1295, -0.4923, -0.2580,  1.2900, -0.9101, -0.9761,  1.0374, -1.8148,
+         2.2215,  2.7767])
 经过relu之后c的值
-tensor([0.4361, 0.9042, 0.5571, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.3982,
-        0.0000])
+tensor([0.1295, 0.0000, 0.0000, 1.2900, 0.0000, 0.0000, 1.0374, 0.0000, 2.2215,
+        2.7767])
 经过relu之后d的值
-tensor([0.4361, 0.9042, 0.5571, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.3982,
-        0.0000])
+tensor([0.1295, 0.0000, 0.0000, 1.2900, 0.0000, 0.0000, 1.0374, 0.0000, 2.2215,
+        2.7767])
 </pre></div>
 </div>
 </div>

@@ -285,9 +285,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer.html">Transformer</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">微调</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
 </ul>
@@ -596,6 +595,14 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: &#39;dlopen(/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so, 0x0006): Symbol not found: __ZN3c1017RegisterOperatorsD1Ev
+  Referenced from: &lt;6A7076EE-85BD-37A7-BC35-1D4867F2B3D3&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so
+  Expected in:     &lt;A84DFEFF-287E-3B94-A7DB-731FA5F9CBBC&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torch/lib/libtorch_cpu.dylib&#39;If you don&#39;t plan on using image functionality from `torchvision.io`, you can ignore this warning. Otherwise, there might be something wrong with your environment. Did you have `libjpeg` or `libpng` installed before building `torchvision` from source?
+  warn(
+</pre></div>
+</div>
+</div>
 </div>
 <p>通过输入张量<code class="docutils literal notranslate"><span class="pre">X</span></code>和卷积核张量<code class="docutils literal notranslate"><span class="pre">K</span></code>，我们来验证上述二维互相关运算的输出。</p>
 <div class="cell docutils container">
@@ -773,11 +780,11 @@ tensor([[[[ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.]]]])
-epoch 2, loss 7.736
-epoch 4, loss 1.301
-epoch 6, loss 0.219
-epoch 8, loss 0.037
-epoch 10, loss 0.006
+epoch 2, loss 6.217
+epoch 4, loss 1.135
+epoch 6, loss 0.228
+epoch 8, loss 0.054
+epoch 10, loss 0.015
 </pre></div>
 </div>
 </div>
@@ -790,7 +797,7 @@ epoch 10, loss 0.006
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.9874, -0.9837]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.9981, -0.9768]])
 </pre></div>
 </div>
 </div>
