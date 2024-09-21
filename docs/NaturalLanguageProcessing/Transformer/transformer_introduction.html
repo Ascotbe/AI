@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Transformer &#8212; AI学习笔记</title>
+    <title>Transformer介绍 &#8212; AI学习笔记</title>
   
   
   
@@ -281,18 +281,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural-style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../LLMs.html">什么是LLMs</a><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Transformer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
-<li class="toctree-l2"><a class="reference internal" href="embedding.html">Embedding 词嵌入</a></li>
-<li class="toctree-l2"><a class="reference internal" href="attention.html">Attention 注意力机制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="positional_encoding.html">Positional Encoding  位置编码</a></li>
-<li class="toctree-l2"><a class="reference internal" href="residuals.html">The Residuals  残差</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mask.html">Mask机制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="end.html">堆叠多层</a></li>
-</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
-</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="end.html">堆叠多层</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -450,7 +451,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Transformer</h1>
+    <h1>Transformer介绍</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -474,7 +475,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transformer">
-<h1>Transformer<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h1>
+<h1>Transformer介绍<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h1>
 <p>transformer的结构如下：</p>
 <img src="../../image/NaturalLanguageProcessing/1.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" />
 重点关注这几个概念：
@@ -489,6 +490,8 @@ document.write(`
 <li><p>Linear 线性层</p></li>
 <li><p>Feed Forward 前馈神经网络</p></li>
 </ul>
+<p>下面是来自沐神的图</p>
+<img src="../../image/NaturalLanguageProcessing/transformer.svg" alt="" style="zoom: 60%; display: block; margin: 0px auto;" />
 <section id="encoder-decoder">
 <h2>Encoder-Decoder 架构<a class="headerlink" href="#encoder-decoder" title="Link to this heading">#</a></h2>
 <p>Encoder-Decoder 是一种神经网络架构，用来处理输入序列并生成输出序列。它包括两个主要部分：</p>

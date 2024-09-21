@@ -282,17 +282,18 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
-</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
-</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -695,8 +696,8 @@ j:[[1 2 3]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>k:tensor([[0.2826, 0.4684, 0.6048],
-        [0.8072, 0.3526, 0.0283]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>k:tensor([[0.3633, 0.8772, 0.9559],
+        [0.3792, 0.1839, 0.7833]])
 l:tensor([[1., 1., 1.],
         [1., 1., 1.]])
 m:tensor([[0., 0., 0.],
@@ -733,10 +734,10 @@ k.size():torch.Size([2, 3])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o:tensor([[1.2826, 1.4684, 1.6048],
-        [1.8072, 1.3526, 1.0283]])
-k + l:tensor([[1.2826, 1.4684, 1.6048],
-        [1.8072, 1.3526, 1.0283]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o:tensor([[1.3633, 1.8772, 1.9559],
+        [1.3792, 1.1839, 1.7833]])
+k + l:tensor([[1.3633, 1.8772, 1.9559],
+        [1.3792, 1.1839, 1.7833]])
 </pre></div>
 </div>
 </div>
@@ -752,9 +753,9 @@ k + l:tensor([[1.2826, 1.4684, 1.6048],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o[:,1]:tensor([1.4684, 1.3526])
-o[0:1,1]:tensor([1.4684])
-o[0,:]:tensor([1.2826, 1.4684, 1.6048])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o[:,1]:tensor([1.8772, 1.1839])
+o[0:1,1]:tensor([1.8772])
+o[0,:]:tensor([1.3633, 1.8772, 1.9559])
 </pre></div>
 </div>
 </div>
@@ -768,12 +769,12 @@ o[0,:]:tensor([1.2826, 1.4684, 1.6048])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o.reshape(3,2):tensor([[1.2826, 1.4684],
-        [1.6048, 1.8072],
-        [1.3526, 1.0283]])
-o.reshape(-1,2):tensor([[1.2826, 1.4684],
-        [1.6048, 1.8072],
-        [1.3526, 1.0283]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o.reshape(3,2):tensor([[1.3633, 1.8772],
+        [1.9559, 1.3792],
+        [1.1839, 1.7833]])
+o.reshape(-1,2):tensor([[1.3633, 1.8772],
+        [1.9559, 1.3792],
+        [1.1839, 1.7833]])
 </pre></div>
 </div>
 </div>
@@ -825,9 +826,9 @@ q+p:tensor([[2, 3],
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>o.shape:torch.Size([2, 3])
-r:tensor([[[1.2826, 1.4684, 1.6048]],
+r:tensor([[[1.3633, 1.8772, 1.9559]],
 
-        [[1.8072, 1.3526, 1.0283]]])
+        [[1.3792, 1.1839, 1.7833]]])
 r.shape:torch.Size([2, 1, 3])
 r_.shape:torch.Size([2, 3, 1])
 </pre></div>
@@ -871,13 +872,13 @@ r_.shape:torch.Size([2, 3, 1])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r:tensor([[[1.2826, 1.4684, 1.6048]],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r:tensor([[[1.3633, 1.8772, 1.9559]],
 
-        [[1.8072, 1.3526, 1.0283]]])
+        [[1.3792, 1.1839, 1.7833]]])
 r.shape:torch.Size([2, 1, 3])
-s:tensor([[[1.2826, 1.4684, 1.6048]],
+s:tensor([[[1.3633, 1.8772, 1.9559]],
 
-        [[1.8072, 1.3526, 1.0283]]])
+        [[1.3792, 1.1839, 1.7833]]])
 s.shape:torch.Size([2, 1, 3])
 </pre></div>
 </div>
@@ -892,8 +893,8 @@ s.shape:torch.Size([2, 1, 3])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t:tensor([[1.2826, 1.4684, 1.6048],
-        [1.8072, 1.3526, 1.0283]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t:tensor([[1.3633, 1.8772, 1.9559],
+        [1.3792, 1.1839, 1.7833]])
 t.shape:torch.Size([2, 3])
 </pre></div>
 </div>
@@ -908,8 +909,8 @@ t.shape:torch.Size([2, 3])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t_:tensor([[1.2826, 1.4684, 1.6048],
-        [1.8072, 1.3526, 1.0283]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t_:tensor([[1.3633, 1.8772, 1.9559],
+        [1.3792, 1.1839, 1.7833]])
 t_.shape:torch.Size([2, 3])
 </pre></div>
 </div>
