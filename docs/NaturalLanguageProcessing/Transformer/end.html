@@ -63,6 +63,8 @@
     <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="什么是微调" href="../../FineTuning/Introduction.html" />
+    <link rel="prev" title="Mask机制" href="mask.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +126,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -283,8 +283,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural-style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../LLMs.html">什么是LLMs</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../LLMs.html">什么是LLMs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transformer_introduction.html">Transformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mask.html">Mask机制</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">堆叠多层</a></li>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -452,12 +462,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">堆叠多层</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-decoder-side">The Decoder Side 解码器端</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-and-softmax">Linear and Softmax</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">参考文章</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-decoder-side">The Decoder Side 解码器端</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-and-softmax">Linear and Softmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">参考文章</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -468,30 +476,30 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="id1">
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>堆叠多层<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>由于我们传入的<span class="math notranslate nohighlight">\(X\)</span>经过自注意机制后最终会得到<span class="math notranslate nohighlight">\(r_1\)</span>，这个<span class="math notranslate nohighlight">\(r_1\)</span>也是一个向量，我们就可以依旧使用上面的方式进行<strong>堆叠相同的方式</strong>进行处理，这样可以使特征更明显</p>
 <img src="../../image/NaturalLanguageProcessing/encoder_with_tensors_2.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" />
 <p>如果考虑上面两个堆叠在一起就是这样的
 <img src="../../image/NaturalLanguageProcessing/transformer_resideual_layer_norm_3.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" /></p>
-</section>
 <section id="the-decoder-side">
-<h1>The Decoder Side 解码器端<a class="headerlink" href="#the-decoder-side" title="Link to this heading">#</a></h1>
+<h2>The Decoder Side 解码器端<a class="headerlink" href="#the-decoder-side" title="Link to this heading">#</a></h2>
 <p>编码器首先处理输入序列，顶部编码器的输出被转换为一组注意力向量<span class="math notranslate nohighlight">\(K\)</span>和<span class="math notranslate nohighlight">\(V\)</span>，给到解码器后通过与解码器中的<span class="math notranslate nohighlight">\(Q\)</span>结合运算出结果</p>
 <img src="../../image/NaturalLanguageProcessing/transformer_decoding_1.gif" alt="" style="zoom: 60%; display: block; margin: 0px auto;" />
 <p>以下步骤重复该过程，直到到达表示变压器解码器已完成其输出的特殊符号。</p>
 <img src="../../image/NaturalLanguageProcessing/transformer_decoding_2.gif" alt="" style="zoom: 60%; display: block; margin: 0px auto;" /></section>
 <section id="linear-and-softmax">
-<h1>Linear and Softmax<a class="headerlink" href="#linear-and-softmax" title="Link to this heading">#</a></h1>
+<h2>Linear and Softmax<a class="headerlink" href="#linear-and-softmax" title="Link to this heading">#</a></h2>
 <p>解码器堆栈输出浮点数向量。我们如何把它变成一个词？这就是最后一个 Linear 层的工作，后面是 Softmax 层
 <img src="../../image/NaturalLanguageProcessing/transformer_decoder_output_softmax.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" /></p>
 </section>
 <section id="id2">
-<h1>参考文章<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<h2>参考文章<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p><a class="reference external" href="https://zhuanlan.zhihu.com/p/631463712">https://zhuanlan.zhihu.com/p/631463712</a></p>
 <p><a class="reference external" href="https://blog.csdn.net/m0_48923489/article/details/136829740">https://blog.csdn.net/m0_48923489/article/details/136829740</a></p>
 <p><a class="reference external" href="https://www.zhaokangkang.com/article/6843fe1d-f846-4eae-9fd1-cf10fdfb5d15">https://www.zhaokangkang.com/article/6843fe1d-f846-4eae-9fd1-cf10fdfb5d15</a></p>
 <p><a class="reference external" href="https://jalammar.github.io/illustrated-transformer/">https://jalammar.github.io/illustrated-transformer/</a></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -524,6 +532,24 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="mask.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Mask机制</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../FineTuning/Introduction.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">什么是微调</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -540,12 +566,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">堆叠多层</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-decoder-side">The Decoder Side 解码器端</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-and-softmax">Linear and Softmax</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">参考文章</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-decoder-side">The Decoder Side 解码器端</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-and-softmax">Linear and Softmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">参考文章</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

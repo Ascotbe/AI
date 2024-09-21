@@ -284,7 +284,17 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -479,11 +489,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-0.3129, -0.9733, -0.1225,  2.3894,  0.1950, -0.1270,  1.6853, -0.6566,
-        -0.3289,  0.9075])
+tensor([-0.1167, -0.5145,  0.0269,  0.2719,  1.3545,  0.5946,  0.1137, -0.7544,
+         0.5200, -0.1593])
 经过relu之后
-tensor([0.0000, 0.0000, 0.0000, 2.3894, 0.1950, 0.0000, 1.6853, 0.0000, 0.0000,
-        0.9075])
+tensor([0.0000, 0.0000, 0.0269, 0.2719, 1.3545, 0.5946, 0.1137, 0.0000, 0.5200,
+        0.0000])
 </pre></div>
 </div>
 </div>
@@ -504,14 +514,14 @@ tensor([0.0000, 0.0000, 0.0000, 2.3894, 0.1950, 0.0000, 1.6853, 0.0000, 0.0000,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 0.1295, -0.4923, -0.2580,  1.2900, -0.9101, -0.9761,  1.0374, -1.8148,
-         2.2215,  2.7767])
+tensor([-0.8394,  1.7381,  2.7788,  0.3101, -1.9390,  0.2041,  0.7886, -0.0249,
+        -0.6547,  1.1037])
 经过relu之后c的值
-tensor([0.1295, 0.0000, 0.0000, 1.2900, 0.0000, 0.0000, 1.0374, 0.0000, 2.2215,
-        2.7767])
+tensor([0.0000, 1.7381, 2.7788, 0.3101, 0.0000, 0.2041, 0.7886, 0.0000, 0.0000,
+        1.1037])
 经过relu之后d的值
-tensor([0.1295, 0.0000, 0.0000, 1.2900, 0.0000, 0.0000, 1.0374, 0.0000, 2.2215,
-        2.7767])
+tensor([0.0000, 1.7381, 2.7788, 0.3101, 0.0000, 0.2041, 0.7886, 0.0000, 0.0000,
+        1.1037])
 </pre></div>
 </div>
 </div>

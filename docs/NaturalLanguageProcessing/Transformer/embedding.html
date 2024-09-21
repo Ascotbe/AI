@@ -61,6 +61,8 @@
     <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Attention 注意力机制" href="attention.html" />
+    <link rel="prev" title="Seq2Seq 模型" href="seq2seq.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +124,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -281,8 +281,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural-style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../LLMs.html">什么是LLMs</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../LLMs.html">什么是LLMs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transformer_introduction.html">Transformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Embedding 词嵌入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mask.html">Mask机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="end.html">堆叠多层</a></li>
+</ul><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -450,13 +460,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">Tokenization 分词</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-byte-pair-encoding-bpe">GPT族：Byte-Pair Encoding (BPE)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">具体样例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">Tokenization 分词</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-byte-pair-encoding-bpe">GPT族：Byte-Pair Encoding (BPE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">具体样例</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-word-piece">BERT族：Word-Piece</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-word-piece">BERT族：Word-Piece</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -468,7 +480,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="embedding">
+  <section class="tex2jax_ignore mathjax_ignore" id="embedding">
 <h1>Embedding 词嵌入<a class="headerlink" href="#embedding" title="Link to this heading">#</a></h1>
 <p>向量Embedding的核心是指在数学空间中将单词、句子甚至整个文档表示为密集的低维向量的过程。与依赖于稀疏表示(如one-hot编码)的传统方法不同，向量Embeddings封装了单词之间的语义关系，并使算法能够理解它们的上下文含义。</p>
 <img src="../../image/NaturalLanguageProcessing/ICGYEfQuwRUoadqbWrZLkw.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
@@ -570,9 +582,8 @@ document.write(`
 </tbody>
 </table>
 </div>
-</section>
 <section id="gpt-byte-pair-encoding-bpe">
-<h2>GPT族：Byte-Pair Encoding (BPE)<a class="headerlink" href="#gpt-byte-pair-encoding-bpe" title="Link to this heading">#</a></h2>
+<h3>GPT族：Byte-Pair Encoding (BPE)<a class="headerlink" href="#gpt-byte-pair-encoding-bpe" title="Link to this heading">#</a></h3>
 <p>Byte Pair Encoding (BPE) 算法最初是作为一种数据压缩技术被提出的。然而，在自然语言处理（NLP）领域，BPE 被重新发现并用作一种有效的子词分词方法，特别是在处理语言模型和机器翻译等任务时。提出 BPE 用于 NLP 的原因主要有以下几点：</p>
 <p><strong>处理未知词汇</strong>： 传统的词汇表方法面临一个挑战，即如何处理训练数据中未出现的单词（即未知词汇或 OOV，Out-Of-Vocabulary）。BPE 方法通过将单词分解为更小的单位（子词）来解决这个问题。即使是未见过的单词，也有可能由已见过的子词组合而成，因此模型能够更好地处理和理解这些新单词。</p>
 <p><strong>减小词汇表大小</strong>： 在大型文本数据集中，完整的词汇表可能非常庞大，这对模型的存储和计算效率都是一个挑战。BPE 通过构建一个更小、更高效的子词集来缩减词汇表的大小，同时仍保持了对原始文本的良好覆盖。这样不仅减少了模型的参数量，还提高了训练和推理的效率。</p>
@@ -580,7 +591,7 @@ document.write(`
 <p><strong>适应性强</strong>： BPE 算法非常灵活，可以根据需要调整子词的数量，这使得它可以根据不同的应用场景和资源限制来优化性能。这种适应性使得 BPE 成为了一种在各种语言和任务中都非常实用的分词方法。</p>
 <p><strong>语言无关性</strong>： BPE 不依赖于任何特定语言的语法或词汇规则，使其成为一种通用的分词方法。这意味着它可以被应用于不同的语言，而无需对每种语言做特殊的适配或修改。</p>
 <section id="id1">
-<h3>具体样例<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<h4>具体样例<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <p>让我们通过一个简化的中文样例来详细展示BPE分词的步骤。我们将使用以下句子作为样例文本：</p>
 <blockquote>
 <div><p>“猫喜欢吃鱼，狗喜欢吃肉，人喜欢吃鱼，人喜欢吃肉”</p>
@@ -636,7 +647,7 @@ document.write(`
 <p>经过4次合并后，我们得到了一个包含了更长字符序列的新词汇表。通过这个过程，BPE算法能够逐步构建出更长的、更意义丰富的字符序列，这有助于提高分词的精度和效率。需要注意的是，这里的例子非常简化，实际应用中的BPE算法会在一个更大的数据集上执行更多的合并操作，以构建出一个更完整、更有效的分词词汇表。<strong>不同的合并方式得到的词表也可能不同。</strong></p>
 </section>
 <section id="id2">
-<h3>代码<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h4>代码<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">collections</span>
  
 <span class="k">def</span> <span class="nf">get_stats</span><span class="p">(</span><span class="n">vocab</span><span class="p">):</span>
@@ -683,8 +694,9 @@ document.write(`
 </section>
 </section>
 <section id="bert-word-piece">
-<h2>BERT族：Word-Piece<a class="headerlink" href="#bert-word-piece" title="Link to this heading">#</a></h2>
+<h3>BERT族：Word-Piece<a class="headerlink" href="#bert-word-piece" title="Link to this heading">#</a></h3>
 <p>wordpiece算法可以看作是BPE的变种。不同的是，WordPiece基于概率生成新的subword而不是下一最高频字节对。WordPiece算法也是每次从词表中选出两个子词合并成新的子词。BPE选择频数最高的相邻子词合并，而WordPiece选择使得语言模型概率最大的相邻子词加入词表。</p>
+</section>
 </section>
 </section>
 
@@ -718,6 +730,24 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="seq2seq.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Seq2Seq 模型</strong></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="attention.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Attention 注意力机制</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -734,13 +764,15 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">Tokenization 分词</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-byte-pair-encoding-bpe">GPT族：Byte-Pair Encoding (BPE)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">具体样例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">Tokenization 分词</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpt-byte-pair-encoding-bpe">GPT族：Byte-Pair Encoding (BPE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">具体样例</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-word-piece">BERT族：Word-Piece</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bert-word-piece">BERT族：Word-Piece</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

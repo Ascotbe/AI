@@ -284,7 +284,17 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -780,11 +790,11 @@ tensor([[[[ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.]]]])
-epoch 2, loss 6.217
-epoch 4, loss 1.135
-epoch 6, loss 0.228
-epoch 8, loss 0.054
-epoch 10, loss 0.015
+epoch 2, loss 1.390
+epoch 4, loss 0.278
+epoch 6, loss 0.065
+epoch 8, loss 0.018
+epoch 10, loss 0.006
 </pre></div>
 </div>
 </div>
@@ -797,7 +807,7 @@ epoch 10, loss 0.015
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.9981, -0.9768]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.0017, -0.9869]])
 </pre></div>
 </div>
 </div>

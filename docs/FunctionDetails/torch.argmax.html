@@ -282,7 +282,17 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -470,10 +480,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-1.7682, -0.4324,  1.0251,  0.3364,  0.8745],
-        [ 0.3825,  0.4147, -1.2620, -0.0139, -0.6162],
-        [ 3.1012, -1.2730,  0.8700, -1.3763,  0.0163],
-        [-0.6612,  0.9047,  0.3911,  1.6601, -0.5128]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.1654,  0.3287,  0.7983, -0.4665,  0.4725],
+        [-0.1119, -0.6829,  0.8904, -0.6861,  0.3146],
+        [ 0.2489, -0.5315, -0.5494,  0.0061,  1.2471],
+        [-1.2915, -0.2671, -0.8955, -0.2696,  0.4088]])
 </pre></div>
 </div>
 </div>
@@ -486,7 +496,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([2, 1, 0, 3])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([2, 2, 4, 4])
 </pre></div>
 </div>
 </div>
@@ -499,7 +509,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(10)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(14)
 </pre></div>
 </div>
 </div>
@@ -512,7 +522,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([2, 3, 0, 3, 0])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([2, 0, 1, 2, 2])
 </pre></div>
 </div>
 </div>
