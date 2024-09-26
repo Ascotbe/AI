@@ -1,0 +1,1729 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>线性回归 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'LinearNeuralNetwork/线性回归';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Softmax 回归原理" href="Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html" />
+    <link rel="prev" title="torch.meshgrid" href="../FunctionDetails/torch.meshgrid.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    📚 AI 学习笔记 🧠
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">线性回归</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/LinearNeuralNetwork/线性回归.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>线性回归</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">线性回归</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">生成数据集</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">读取数据集</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">初始化模型参数</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">定义模型</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">定义损失函数</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">定义优化算法</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">训练</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">完整代码</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>线性回归<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>线性回归核心就是在x和y轴中，给出一个数x会有相对应的一个y值。我们需要得到这一个模型（通俗说：一个直线公式）。</p>
+</div></blockquote>
+<img src="../image/LinearNeuralNetwork/Linear_regression.svg" alt="" style="zoom: 90%; display: block; margin: 0px auto;" />
+<p>在线性回归中，数据使用线性预测函数来建模，并且未知的模型参数也是通过数据来估计。这些模型被叫做线性模型。最常用的线性回归建模是给定X值的y的条件均值是X的仿射函数。不太一般的情况，线性回归模型可以是一个中位数或一些其他的给定X的条件下y的条件分布的分位数作为X的线性函数表示。
+线性回归有很多实际用途。分为以下两大类：</p>
+<ol class="arabic simple">
+<li><p>如果目标是预测或者映射，线性回归可以用来对观测数据集的和X的值拟合出一个预测模型。当完成这样一个模型以后，对于一个新增的X值，在没有给定与它相配对的y的情况下，可以用这个拟合过的模型预测出一个y值。</p></li>
+<li><p>给定一个变量y和一些变量<span class="math notranslate nohighlight">\({\displaystyle X_{1}},...,{\displaystyle X_{p}}\)</span>，这些变量有可能与y相关，线性回归分析可以用来量化y与Xj之间相关性的强度，评估出与y不相关的<span class="math notranslate nohighlight">\({\displaystyle X_{j}}\)</span>，并识别出哪些<span class="math notranslate nohighlight">\({\displaystyle X_{j}}\)</span>的子集包含了关于y的冗余信息。</p></li>
+</ol>
+<p>训练的过程下图会更直观的展示</p>
+<div class="toggle docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">mindspore.train.callback</span> <span class="kn">import</span> <span class="n">Callback</span>
+<span class="kn">from</span> <span class="nn">mindspore</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">mindspore</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">mindspore.common.initializer</span> <span class="kn">import</span> <span class="n">Normal</span>
+<span class="kn">from</span> <span class="nn">mindspore</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">mindspore</span> <span class="kn">import</span> <span class="n">dataset</span> <span class="k">as</span> <span class="n">ds</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">mindspore</span> <span class="kn">import</span> <span class="n">context</span>
+
+<span class="n">context</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">GRAPH_MODE</span><span class="p">,</span> <span class="n">device_target</span><span class="o">=</span><span class="s2">&quot;CPU&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">w</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">noise</span>
+        <span class="k">yield</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">eval_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_data</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+<span class="n">x_target_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="n">y_target_label</span> <span class="o">=</span> <span class="n">x_target_label</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="n">x_eval_label</span><span class="p">,</span><span class="n">y_eval_label</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">eval_data</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_eval_label</span><span class="p">,</span> <span class="n">y_eval_label</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_target_label</span><span class="p">,</span> <span class="n">y_target_label</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Eval data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">create_dataset</span><span class="p">(</span><span class="n">num_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">repeat_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GeneratorDataset</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">get_data</span><span class="p">(</span><span class="n">num_data</span><span class="p">)),</span> <span class="n">column_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">])</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">repeat_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">input_data</span>
+<span class="n">data_number</span> <span class="o">=</span> <span class="mi">1600</span>
+<span class="n">batch_number</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">repeat_number</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">ds_train</span> <span class="o">=</span> <span class="n">create_dataset</span><span class="p">(</span><span class="n">data_number</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_number</span><span class="p">,</span> <span class="n">repeat_size</span><span class="o">=</span><span class="n">repeat_number</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dataset size of ds_train:&quot;</span><span class="p">,</span> <span class="n">ds_train</span><span class="o">.</span><span class="n">get_dataset_size</span><span class="p">())</span>
+<span class="n">dict_datasets</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">ds_train</span><span class="o">.</span><span class="n">create_dict_iterator</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">dict_datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The x label value shape:&quot;</span><span class="p">,</span> <span class="n">dict_datasets</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The y label value shape:&quot;</span><span class="p">,</span> <span class="n">dict_datasets</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">LinearNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Cell</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LinearNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Normal</span><span class="p">(</span><span class="mf">0.02</span><span class="p">),</span> <span class="n">Normal</span><span class="p">(</span><span class="mf">0.02</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">LinearNet</span><span class="p">()</span>
+<span class="n">model_params</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">trainable_params</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_params</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+<span class="n">x_model_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="n">y_model_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_model_label</span> <span class="o">*</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">model_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
+                 <span class="n">Tensor</span><span class="p">(</span><span class="n">model_params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_eval_label</span><span class="p">,</span> <span class="n">y_eval_label</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_model_label</span><span class="p">,</span> <span class="n">y_model_label</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_target_label</span><span class="p">,</span> <span class="n">y_target_label</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">LinearNet</span><span class="p">()</span>
+<span class="n">net_loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Momentum</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">trainable_params</span><span class="p">(),</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">net_loss</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Momentum</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">trainable_params</span><span class="p">(),</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_model_and_datasets</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">eval_data</span><span class="p">):</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">trainable_params</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">bias</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">trainable_params</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">bias</span><span class="p">)</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">eval_data</span><span class="p">)</span>
+    <span class="n">x_target</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">y_target</span> <span class="o">=</span> <span class="n">x_target</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_target</span><span class="p">,</span> <span class="n">y_target</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.02</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ImageShowCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">eval_data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">net</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_data</span> <span class="o">=</span> <span class="n">eval_data</span>
+
+    <span class="k">def</span> <span class="nf">step_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_context</span><span class="p">):</span>
+        <span class="n">plot_model_and_datasets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_data</span><span class="p">)</span>
+        <span class="n">display</span><span class="o">.</span><span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">imageshow_cb</span> <span class="o">=</span> <span class="n">ImageShowCallback</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">eval_data</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">ds_train</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">imageshow_cb</span><span class="p">],</span> <span class="n">dataset_sink_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plot_model_and_datasets</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">eval_data</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">net</span><span class="o">.</span><span class="n">trainable_params</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<img src="../image/LinearNeuralNetwork/linear_regression.gif" alt="" style="zoom: 90%; display: block; margin: 0px auto;" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: &#39;dlopen(/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so, 0x0006): Symbol not found: __ZN3c1017RegisterOperatorsD1Ev
+  Referenced from: &lt;6A7076EE-85BD-37A7-BC35-1D4867F2B3D3&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so
+  Expected in:     &lt;A84DFEFF-287E-3B94-A7DB-731FA5F9CBBC&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torch/lib/libtorch_cpu.dylib&#39;If you don&#39;t plan on using image functionality from `torchvision.io`, you can ignore this warning. Otherwise, there might be something wrong with your environment. Did you have `libjpeg` or `libpng` installed before building `torchvision` from source?
+  warn(
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>生成数据集<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>在下面的代码中，我们生成一个包含1000个样本的数据集，
+每个样本包含从标准正态分布中采样的2个特征。
+我们的合成数据集是一个矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{1000 \times 2}\)</span>。</p>
+<p>我们使用线性模型参数<span class="math notranslate nohighlight">\(\mathbf{w} = [2, -3.4]^\top\)</span>、<span class="math notranslate nohighlight">\(b = 4.2\)</span>
+和噪声项<span class="math notranslate nohighlight">\(\epsilon\)</span>生成数据集及其标签：</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y}= \mathbf{X} \mathbf{w} + b + \mathbf\epsilon.\]</div>
+<p><span class="math notranslate nohighlight">\(\epsilon\)</span>可以视为模型预测和标签时的潜在观测误差。
+在这里我们认为标准假设成立，即<span class="math notranslate nohighlight">\(\epsilon\)</span>服从均值为0的正态分布。
+为了简化问题，我们将标准差设为0.01。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">synthetic_data</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;生成y=Xw+b+噪声&quot;&quot;&quot;</span>
+    <span class="c1">#means (Tensor) – 均值（平均值）</span>
+    <span class="c1">#std (Tensor) – 标准差 https://zh.wikihow.com/%E8%AE%A1%E7%AE%97%E6%A0%87%E5%87%86%E5%B7%AE</span>
+    <span class="c1">#out (Tensor) – 可选的输出张量</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_examples</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="c1">#两个张量矩阵相乘，在PyTorch中可以通过torch.matmul函数实现</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="c1">#print(y)</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="c1">#print(y)</span>
+    <span class="c1">#torch.shape 和 torch.size()</span>
+    <span class="c1">#-1表示总数所在的位置</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+<span class="c1">#创建张量</span>
+<span class="n">true_w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">true_w</span><span class="p">)</span>
+<span class="n">true_b</span> <span class="o">=</span> <span class="mf">4.2</span>
+<span class="n">features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">synthetic_data</span><span class="p">(</span><span class="n">true_w</span><span class="p">,</span> <span class="n">true_b</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 2.0000, -3.4000])
+tensor([[-0.1036, -1.0911],
+        [ 0.8532, -0.1112],
+        [ 1.4715, -0.7820],
+        ...,
+        [-0.8860,  0.1264],
+        [ 2.2338,  0.5678],
+        [ 1.8196, -1.3359]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>features中的每一行都包含一个二维数据样本， labels中的每一行都包含一维标签值（一个标量）</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;features:&#39;</span><span class="p">,</span> <span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">label:&#39;</span><span class="p">,</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>features: tensor([-0.1036, -1.0911]) 
+label: tensor([7.7139])
+tensor([[-0.1036, -1.0911],
+        [ 0.8532, -0.1112],
+        [ 1.4715, -0.7820],
+        ...,
+        [-0.8860,  0.1264],
+        [ 2.2338,  0.5678],
+        [ 1.8196, -1.3359]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>通过生成第二个特征features[:, 1]和labels的散点图， 可以直观观察到两者之间的线性关系。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">features</span><span class="p">[:,</span> <span class="p">(</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">labels</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d16b9882bd3e2ec1803a0db76def61bec2394e387d11c1bf68699bcfb200ccd5.svg" src="../_images/d16b9882bd3e2ec1803a0db76def61bec2394e387d11c1bf68699bcfb200ccd5.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id3">
+<h1>读取数据集<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>我们定义一个data_iter函数， 该函数接收批量大小、特征矩阵和标签向量作为输入，生成大小为batch_size的小批量。 每个小批量包含一组特征和标签。</p>
+<p>使用下面代码的时候先阅读下用法</p>
+<p><strong>yueld用法</strong></p>
+<p>直接参考 <a class="reference external" href="https://blog.csdn.net/mieleizhi0522/article/details/82142856/">https://blog.csdn.net/mieleizhi0522/article/details/82142856/</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">data_iter</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">num_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="c1">#print(num_examples)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_examples</span><span class="p">))</span>
+    <span class="c1">#print(indices)</span>
+    <span class="c1"># 这些样本是随机读取的，没有特定的顺序,打乱位置</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>  <span class="c1"># 从0开始每次+10进行循环到1000为止</span>
+        <span class="n">batch_indices</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">)]</span>  <span class="c1"># 从1000个随机样本里面开始取值，每次取值范围是[i:i+batch_size]         </span>
+        <span class="c1">#print(batch_indices)</span>
+        <span class="c1">#https://blog.csdn.net/mieleizhi0522/article/details/82142856/</span>
+        <span class="k">yield</span> <span class="n">features</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>  <span class="c1"># 这个函数表示每次features和labels都会冲上一次进行接下去,然后取值是用上面随机样本进行索引的</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>通常，我们利用GPU并行运算的优势，处理合理大小的“小批量”。 每个样本都可以并行地进行模型计算，且每个样本损失函数的梯度也可以被并行计算。 GPU可以在处理几百个样本时，所花费的时间不比处理一个样本时多太多。</p>
+<p>我们直观感受一下小批量运算：读取第一个小批量数据样本并打印。 每个批量的特征维度显示批量大小和输入特征数。 同样的，批量的标签形状与batch_size相等。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.4872,  0.4241],
+        [-1.3785,  0.2029],
+        [-0.8025, -1.2707],
+        [ 0.0510,  0.1510],
+        [-0.0888, -0.2264],
+        [-1.4283,  0.2959],
+        [ 2.3653, -0.5981],
+        [ 0.1786,  0.4846],
+        [ 0.8415, -0.8144],
+        [ 0.1008, -0.8232]]) 
+ tensor([[ 3.7393],
+        [ 0.7590],
+        [ 6.9170],
+        [ 3.7971],
+        [ 4.7906],
+        [ 0.3256],
+        [10.9726],
+        [ 2.8983],
+        [ 8.6659],
+        [ 7.2184]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id4">
+<h1>初始化模型参数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<p>在下面的代码中，我们通过从均值为0、标准差为0.01的正态分布中采样随机数来初始化权重， 并将偏置初始化为0。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id5">
+<h1>定义模型<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<p>我们只需计算输入特征<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>和模型权重<span class="math notranslate nohighlight">\(\mathbf{w}\)</span>的矩阵-向量乘法后加上偏置<span class="math notranslate nohighlight">\(b\)</span>。
+注意，上面的<span class="math notranslate nohighlight">\(\mathbf{Xw}\)</span>是一个向量，而<span class="math notranslate nohighlight">\(b\)</span>是一个标量。
+回想一下广播机制：
+当我们用一个向量加一个标量时，标量会被加到向量的每个分量上。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">linreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;线性回归模型&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>定义损失函数<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<p>因为需要计算损失函数的梯度，所以我们应该先定义损失函数。在实现中，我们需要将真实值y的形状转换为和预测值y_hat的形状相同</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">squared_loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;均方损失&quot;&quot;&quot;</span>
+    <span class="c1">#print(y_hat.shape)</span>
+    <span class="c1">#print(y_hat)</span>
+    <span class="c1">#真实值y的形状转换为和预测值y_hat的形状相同</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id7">
+<h1>定义优化算法<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<p>下面的函数实现小批量随机梯度下降更新。 该函数接受模型参数集合、学习速率和批量大小作为输入。每 一步更新的大小由学习速率lr决定。 因为我们计算的损失是一个批量样本的总和，所以我们用批量大小（batch_size） 来规范化步长，这样步长大小就不会取决于我们对批量大小的选择</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sgd</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;小批量随机梯度下降&quot;&quot;&quot;</span>
+    <span class="c1">#with 语句适用于对资源进行访问的场合，确保不管使用过程中是否发生异常都会执行必要的“清理”操作，释放资源，比如文件使用后自动关闭／线程中锁的自动获取和释放等。</span>
+    <span class="c1"># no_grad用来关闭梯度计算</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">param</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">param</span><span class="o">.</span><span class="n">grad</span> <span class="o">/</span> <span class="n">batch_size</span>
+            <span class="c1">#需要清理梯度值不然会累加</span>
+            <span class="n">param</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id8">
+<h1>训练<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<p>现在我们已经准备好了模型训练所有需要的要素，可以实现主要的训练过程部分了。
+理解这段代码至关重要，因为从事深度学习后，
+相同的训练过程几乎一遍又一遍地出现。
+在每次迭代中，我们读取一小批量训练样本，并通过我们的模型来获得一组预测。
+计算完损失后，我们开始反向传播，存储每个参数的梯度。
+最后，我们调用优化算法<code class="docutils literal notranslate"><span class="pre">sgd</span></code>来更新模型参数。</p>
+<p>概括一下，我们将执行以下循环：</p>
+<ul class="simple">
+<li><p>初始化参数</p></li>
+<li><p>重复以下训练，直到完成</p>
+<ul>
+<li><p>计算梯度<span class="math notranslate nohighlight">\(\mathbf{g} \leftarrow \partial_{(\mathbf{w},b)} \frac{1}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} l(\mathbf{x}^{(i)}, y^{(i)}, \mathbf{w}, b)\)</span></p></li>
+<li><p>更新参数<span class="math notranslate nohighlight">\((\mathbf{w}, b) \leftarrow (\mathbf{w}, b) - \eta \mathbf{g}\)</span></p></li>
+</ul>
+</li>
+</ul>
+<p>在每个<em>迭代周期</em>（epoch）中，我们使用<code class="docutils literal notranslate"><span class="pre">data_iter</span></code>函数遍历整个数据集，
+并将训练数据集中所有样本都使用一次（假设样本数能够被批量大小整除）。
+这里的迭代周期个数<code class="docutils literal notranslate"><span class="pre">num_epochs</span></code>和学习率<code class="docutils literal notranslate"><span class="pre">lr</span></code>都是超参数，分别设为3和0.03。
+设置超参数很棘手，需要通过反复试验进行调整。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">linreg</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">squared_loss</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+    
+    <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="c1"># print(X)</span>
+        <span class="c1"># print(y)</span>
+        <span class="c1"># print(X.shape)</span>
+        <span class="c1"># print(y.shape)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># X和y的小批量损失</span>
+        <span class="c1"># 因为l形状是(batch_size,1)，而不是一个标量。l中的所有元素被加到一起，</span>
+        <span class="c1"># 并以此计算关于[w,b]的梯度</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1">#这个值可以很直观的反映出逐渐下降</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">sgd</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>  <span class="c1"># 使用参数的梯度更新参数,学习率lr是0.03</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">train_l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch </span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">, loss </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">train_l</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="si">:</span><span class="s1">f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(66.4077, grad_fn=&lt;SumBackward0&gt;)
+tensor(163.1084, grad_fn=&lt;SumBackward0&gt;)
+tensor(86.3433, grad_fn=&lt;SumBackward0&gt;)
+tensor(94.0419, grad_fn=&lt;SumBackward0&gt;)
+tensor(192.7304, grad_fn=&lt;SumBackward0&gt;)
+tensor(127.1995, grad_fn=&lt;SumBackward0&gt;)
+tensor(143.0710, grad_fn=&lt;SumBackward0&gt;)
+tensor(183.0721, grad_fn=&lt;SumBackward0&gt;)
+tensor(53.9968, grad_fn=&lt;SumBackward0&gt;)
+tensor(110.1849, grad_fn=&lt;SumBackward0&gt;)
+tensor(87.9164, grad_fn=&lt;SumBackward0&gt;)
+tensor(63.4335, grad_fn=&lt;SumBackward0&gt;)
+tensor(98.5052, grad_fn=&lt;SumBackward0&gt;)
+tensor(78.0878, grad_fn=&lt;SumBackward0&gt;)
+tensor(46.2521, grad_fn=&lt;SumBackward0&gt;)
+tensor(100.1292, grad_fn=&lt;SumBackward0&gt;)
+tensor(53.7721, grad_fn=&lt;SumBackward0&gt;)
+tensor(51.3601, grad_fn=&lt;SumBackward0&gt;)
+tensor(58.2626, grad_fn=&lt;SumBackward0&gt;)
+tensor(46.2517, grad_fn=&lt;SumBackward0&gt;)
+tensor(51.6058, grad_fn=&lt;SumBackward0&gt;)
+tensor(53.4850, grad_fn=&lt;SumBackward0&gt;)
+tensor(87.2759, grad_fn=&lt;SumBackward0&gt;)
+tensor(47.6313, grad_fn=&lt;SumBackward0&gt;)
+tensor(50.3708, grad_fn=&lt;SumBackward0&gt;)
+tensor(30.8793, grad_fn=&lt;SumBackward0&gt;)
+tensor(34.3866, grad_fn=&lt;SumBackward0&gt;)
+tensor(15.6121, grad_fn=&lt;SumBackward0&gt;)
+tensor(27.1052, grad_fn=&lt;SumBackward0&gt;)
+tensor(27.1429, grad_fn=&lt;SumBackward0&gt;)
+tensor(33.8882, grad_fn=&lt;SumBackward0&gt;)
+tensor(35.5745, grad_fn=&lt;SumBackward0&gt;)
+tensor(20.5074, grad_fn=&lt;SumBackward0&gt;)
+tensor(29.3232, grad_fn=&lt;SumBackward0&gt;)
+tensor(21.6282, grad_fn=&lt;SumBackward0&gt;)
+tensor(22.3277, grad_fn=&lt;SumBackward0&gt;)
+tensor(14.2811, grad_fn=&lt;SumBackward0&gt;)
+tensor(19.8313, grad_fn=&lt;SumBackward0&gt;)
+tensor(21.6637, grad_fn=&lt;SumBackward0&gt;)
+tensor(17.4675, grad_fn=&lt;SumBackward0&gt;)
+tensor(16.1062, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.1964, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.8292, grad_fn=&lt;SumBackward0&gt;)
+tensor(15.7730, grad_fn=&lt;SumBackward0&gt;)
+tensor(11.1060, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.1780, grad_fn=&lt;SumBackward0&gt;)
+tensor(13.9410, grad_fn=&lt;SumBackward0&gt;)
+tensor(13.5633, grad_fn=&lt;SumBackward0&gt;)
+tensor(5.6858, grad_fn=&lt;SumBackward0&gt;)
+tensor(8.8304, grad_fn=&lt;SumBackward0&gt;)
+tensor(13.1174, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.6934, grad_fn=&lt;SumBackward0&gt;)
+tensor(12.0905, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.6989, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.5963, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.3791, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.6883, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.8292, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.3371, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.8416, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.9868, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.2997, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.2638, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.8409, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.4359, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.7832, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.9075, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0165, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.3589, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.3470, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.2618, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.1479, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.4911, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.0422, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3634, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3363, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.8295, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.7458, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.4635, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.6334, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3855, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9179, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.2648, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.6836, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.6249, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.4221, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.6048, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.2990, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0603, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.6656, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.1599, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.9701, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0137, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8806, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5896, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9761, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9908, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1841, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3092, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.2013, grad_fn=&lt;SumBackward0&gt;)
+epoch 1, loss 0.052552
+tensor(0.3090, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3492, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2075, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4383, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3404, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4937, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4713, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5347, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7121, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4355, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2114, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5188, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1942, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3579, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1368, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1487, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1248, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2401, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1772, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1213, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0996, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2734, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1557, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1018, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1324, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1616, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1597, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0411, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1251, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1301, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1084, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1046, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1500, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0802, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0301, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1221, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0507, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1288, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0224, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0334, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0348, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0743, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0653, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0436, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0241, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0634, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0275, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0428, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0192, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0173, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0134, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0198, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0269, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0226, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0202, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0163, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0253, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0246, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0244, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0106, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0155, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0133, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0053, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0070, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0134, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0096, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0080, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0175, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0166, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0176, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0098, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0092, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0075, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0106, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0095, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0045, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0095, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0046, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0089, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0036, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0064, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0075, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0079, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0047, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0064, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0036, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0026, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0037, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0048, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0051, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0048, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0027, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0035, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0029, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0018, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0024, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0041, grad_fn=&lt;SumBackward0&gt;)
+epoch 2, loss 0.000230
+tensor(0.0024, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0029, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0022, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0025, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0023, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0023, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0018, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.8470e-05, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+epoch 3, loss 0.000046
+</pre></div>
+</div>
+</div>
+</div>
+<p>因为我们使用的是自己合成的数据集，所以我们知道真正的参数是什么。 因此，我们可以通过比较真实参数和通过训练学到的参数来评估训练的成功程度。 事实上，真实参数和通过训练学到的参数确实非常接近。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;w的估计误差: </span><span class="si">{</span><span class="n">true_w</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">true_w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;b的估计误差: </span><span class="si">{</span><span class="n">true_b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>w的估计误差: tensor([ 4.7207e-05, -8.9812e-04], grad_fn=&lt;SubBackward0&gt;)
+b的估计误差: tensor([0.0009], grad_fn=&lt;RsubBackward1&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id9">
+<h1>完整代码<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="k">def</span> <span class="nf">synthetic_data</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;生成y=Xw+b+噪声&quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_examples</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">true_w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.4</span><span class="p">])</span>
+<span class="n">true_b</span> <span class="o">=</span> <span class="mf">4.2</span>
+<span class="n">features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">synthetic_data</span><span class="p">(</span><span class="n">true_w</span><span class="p">,</span> <span class="n">true_b</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1">#生成特征和标签</span>
+<span class="k">def</span> <span class="nf">data_iter</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">num_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_examples</span><span class="p">))</span>
+    <span class="c1"># 这些样本是随机读取的，没有特定的顺序</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span> <span class="c1">#从0开始每次+10进行循环到1000为止</span>
+        <span class="n">batch_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_examples</span><span class="p">)])</span>  <span class="c1"># 从1000个随机样本里面开始取值，每次取值范围是[i:i+batch_size]</span>
+        <span class="c1">#print(batch_indices)</span>
+        <span class="k">yield</span> <span class="n">features</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>  <span class="c1">#这个函数表示每次features和labels都会冲上一次进行接下去,然后取值是用上面随机样本进行索引的</span>
+
+
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">linreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;线性回归模型&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="k">def</span> <span class="nf">squared_loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;均方损失&quot;&quot;&quot;</span>
+    <span class="c1">#查看算出来的值和原来的标签比损失多少</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="k">def</span> <span class="nf">sgd</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>  <span class="c1">#@save</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;小批量随机梯度下降&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span> <span class="c1">#先更新w然后更新b</span>
+            <span class="n">param</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">param</span><span class="o">.</span><span class="n">grad</span> <span class="o">/</span> <span class="n">batch_size</span>
+            <span class="n">param</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+
+
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="c1"># print(X)</span>
+        <span class="c1"># print(y)</span>
+        <span class="c1"># print(X.shape)</span>
+        <span class="c1"># print(y.shape)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">squared_loss</span><span class="p">(</span><span class="n">linreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># X和y的小批量损失</span>
+        <span class="c1"># 因为l形状是(batch_size,1)，而不是一个标量。l中的所有元素被加到一起，</span>
+        <span class="c1"># 并以此计算关于[w,b]的梯度</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1">#这个值可以很直观的反映出逐渐下降</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">sgd</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># 使用参数的梯度更新参数，学习率lr是0.03</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">train_l</span> <span class="o">=</span> <span class="n">squared_loss</span><span class="p">(</span><span class="n">linreg</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch </span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">, loss </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">train_l</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="si">:</span><span class="s1">f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;w的估计误差: </span><span class="si">{</span><span class="n">true_w</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">true_w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;b的估计误差: </span><span class="si">{</span><span class="n">true_b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[84, 468, 476, 92, 970, 716, 680, 579, 625, 485, 538, 740, 991, 865, 471, 548, 713, 735, 284, 45, 217, 720, 178, 374, 186, 52, 337, 896, 347, 817, 530, 547, 691, 318, 541, 156, 898, 434, 3, 17, 785, 447, 648, 646, 958, 311, 100, 739, 820, 331, 606, 207, 363, 324, 776, 636, 210, 992, 805, 778, 377, 925, 917, 200, 517, 847, 263, 315, 608, 588, 566, 652, 960, 432, 132, 430, 266, 369, 513, 421, 67, 419, 698, 642, 997, 542, 270, 366, 707, 993, 726, 978, 700, 598, 729, 784, 738, 843, 148, 942, 443, 157, 869, 995, 298, 265, 251, 292, 399, 462, 436, 658, 75, 1, 855, 781, 884, 231, 748, 376, 988, 725, 689, 76, 488, 931, 413, 815, 831, 813, 411, 612, 741, 308, 307, 840, 814, 388, 686, 342, 53, 333, 155, 465, 255, 195, 585, 282, 930, 280, 375, 694, 94, 955, 387, 961, 22, 479, 811, 969, 261, 829, 902, 239, 956, 49, 550, 797, 368, 305, 484, 957, 294, 225, 952, 203, 919, 137, 407, 189, 297, 390, 605, 105, 628, 382, 232, 450, 823, 928, 111, 472, 637, 786, 696, 323, 522, 423, 41, 345, 682, 555, 866, 12, 794, 629, 424, 895, 724, 71, 343, 441, 179, 487, 880, 589, 65, 569, 702, 440, 400, 89, 9, 600, 768, 151, 617, 675, 577, 760, 659, 24, 527, 134, 603, 873, 351, 690, 848, 591, 654, 104, 582, 526, 215, 197, 425, 963, 903, 149, 502, 101, 878, 90, 370, 373, 147, 620, 795, 113, 216, 644, 539, 908, 545, 946, 478, 604, 446, 645, 918, 489, 761, 346, 389, 198, 240, 340, 935, 46, 772, 987, 30, 166, 355, 386, 87, 327, 40, 574, 393, 448, 320, 118, 892, 433, 852, 822, 321, 202, 514, 621, 313, 267, 678, 354, 624, 861, 93, 607, 929, 140, 932, 595, 429, 219, 277, 983, 872, 870, 618, 623, 350, 986, 688, 889, 874, 314, 213, 704, 48, 770, 250, 248, 632, 245, 868, 764, 977, 990, 766, 11, 123, 173, 214, 310, 894, 856, 842, 482, 816, 639, 329, 773, 317, 565, 381, 410, 584, 171, 516, 401, 126, 220, 710, 679, 96, 706, 609, 828, 558, 567, 356, 445, 755, 124, 458, 385, 404, 29, 398, 60, 344, 116, 362, 316, 826, 933, 168, 205, 247, 994, 135, 470, 14, 519, 281, 144, 846, 341, 78, 188, 276, 244, 985, 966, 233, 28, 295, 587, 927, 504, 746, 496, 160, 765, 120, 563, 638, 619, 8, 913, 334, 309, 108, 438, 180, 77, 699, 127, 505, 72, 668, 73, 825, 273, 326, 463, 769, 456, 165, 602, 349, 800, 31, 509, 365, 787, 58, 798, 209, 640, 590, 139, 962, 372, 181, 681, 136, 672, 300, 191, 190, 420, 967, 258, 753, 665, 759, 572, 228, 697, 900, 528, 175, 204, 23, 844, 599, 503, 167, 676, 667, 685, 466, 81, 141, 332, 536, 359, 102, 405, 666, 486, 937, 537, 185, 890, 196, 193, 417, 891, 743, 182, 394, 718, 361, 615, 395, 752, 169, 119, 832, 981, 56, 508, 117, 296, 580, 839, 630, 708, 426, 495, 218, 860, 379, 464, 886, 649, 714, 437, 83, 998, 18, 807, 455, 158, 949, 989, 164, 494, 328, 851, 968, 732, 715, 727, 223, 286, 6, 893, 176, 85, 835, 70, 744, 660, 731, 745, 493, 791, 330, 911, 352, 875, 380, 754, 138, 442, 747, 338, 586, 194, 757, 121, 256, 272, 881, 790, 656, 864, 709, 481, 693, 268, 279, 112, 260, 661, 474, 879, 819, 208, 227, 54, 897, 378, 593, 945, 924, 129, 243, 883, 402, 348, 899, 230, 939, 285, 849, 737, 304, 109, 871, 271, 763, 36, 201, 242, 853, 551, 506, 253, 523, 838, 483, 979, 449, 721, 862, 974, 10, 7, 68, 103, 653, 796, 792, 427, 439, 252, 357, 980, 371, 290, 734, 774, 549, 114, 325, 834, 467, 982, 13, 97, 836, 564, 16, 515, 941, 418, 161, 79, 384, 452, 532, 37, 360, 301, 938, 782, 821, 857, 779, 142, 335, 909, 287, 887, 492, 303, 553, 824, 235, 43, 575, 996, 408, 581, 803, 562, 159, 976, 533, 841, 951, 238, 756, 719, 705, 810, 888, 170, 867, 571, 473, 576, 647, 717, 554, 457, 695, 162, 110, 454, 921, 269, 521, 66, 224, 812, 80, 128, 613, 475, 88, 322, 568, 511, 535, 531, 460, 32, 944, 187, 627, 650, 804, 131, 664, 559, 20, 59, 302, 422, 673, 206, 409, 543, 592, 947, 626, 145, 845, 771, 922, 510, 854, 133, 406, 684, 122, 546, 222, 762, 453, 172, 711, 364, 192, 643, 177, 63, 959, 670, 507, 692, 107, 972, 793, 259, 383, 663, 291, 677, 199, 954, 730, 597, 512, 570, 999, 907, 610, 358, 544, 99, 936, 396, 184, 51, 687, 500, 50, 221, 39, 973, 35, 984, 758, 749, 818, 780, 501, 367, 477, 480, 529, 62, 728, 241, 27, 435, 833, 491, 174, 777, 830, 915, 254, 498, 905, 611, 904, 560, 82, 130, 964, 859, 914, 767, 882, 415, 152, 143, 2, 858, 226, 69, 975, 750, 274, 264, 594, 47, 920, 249, 783, 392, 674, 916, 106, 275, 971, 64, 901, 662, 540, 428, 616, 808, 431, 61, 319, 671, 934, 339, 906, 403, 801, 651, 391, 469, 552, 163, 26, 806, 561, 288, 183, 257, 57, 34, 525, 622, 877, 596, 283, 926, 461, 751, 802, 236, 733, 950, 262, 837, 0, 789, 33, 524, 91, 353, 910, 557, 21, 246, 497, 912, 55, 703, 499, 827, 601, 153, 641, 397, 631, 211, 943, 885, 98, 614, 234, 863, 850, 15, 736, 573, 683, 336, 923, 19, 712, 115, 95, 518, 953, 4, 657, 556, 459, 520, 490, 634, 299, 229, 633, 809, 948, 278, 237, 444, 38, 940, 150, 451, 42, 125, 669, 788, 289, 5, 578, 723, 86, 701, 146, 25, 583, 44, 534, 965, 799, 306, 876, 154, 74, 412, 775, 212, 635, 416, 655, 293, 742, 312, 414, 722]
+tensor(244.0148, grad_fn=&lt;SumBackward0&gt;)
+tensor(155.4310, grad_fn=&lt;SumBackward0&gt;)
+tensor(132.8170, grad_fn=&lt;SumBackward0&gt;)
+tensor(43.5006, grad_fn=&lt;SumBackward0&gt;)
+tensor(89.2504, grad_fn=&lt;SumBackward0&gt;)
+tensor(117.0972, grad_fn=&lt;SumBackward0&gt;)
+tensor(144.8535, grad_fn=&lt;SumBackward0&gt;)
+tensor(67.2442, grad_fn=&lt;SumBackward0&gt;)
+tensor(80.5919, grad_fn=&lt;SumBackward0&gt;)
+tensor(100.1927, grad_fn=&lt;SumBackward0&gt;)
+tensor(100.7798, grad_fn=&lt;SumBackward0&gt;)
+tensor(83.8286, grad_fn=&lt;SumBackward0&gt;)
+tensor(77.2914, grad_fn=&lt;SumBackward0&gt;)
+tensor(79.4564, grad_fn=&lt;SumBackward0&gt;)
+tensor(27.3462, grad_fn=&lt;SumBackward0&gt;)
+tensor(73.0290, grad_fn=&lt;SumBackward0&gt;)
+tensor(100.0715, grad_fn=&lt;SumBackward0&gt;)
+tensor(37.7457, grad_fn=&lt;SumBackward0&gt;)
+tensor(58.8942, grad_fn=&lt;SumBackward0&gt;)
+tensor(28.5695, grad_fn=&lt;SumBackward0&gt;)
+tensor(71.1816, grad_fn=&lt;SumBackward0&gt;)
+tensor(43.5246, grad_fn=&lt;SumBackward0&gt;)
+tensor(34.3831, grad_fn=&lt;SumBackward0&gt;)
+tensor(47.6958, grad_fn=&lt;SumBackward0&gt;)
+tensor(50.5878, grad_fn=&lt;SumBackward0&gt;)
+tensor(36.0652, grad_fn=&lt;SumBackward0&gt;)
+tensor(49.1119, grad_fn=&lt;SumBackward0&gt;)
+tensor(47.6420, grad_fn=&lt;SumBackward0&gt;)
+tensor(34.1569, grad_fn=&lt;SumBackward0&gt;)
+tensor(29.4410, grad_fn=&lt;SumBackward0&gt;)
+tensor(33.5952, grad_fn=&lt;SumBackward0&gt;)
+tensor(23.1689, grad_fn=&lt;SumBackward0&gt;)
+tensor(31.1377, grad_fn=&lt;SumBackward0&gt;)
+tensor(17.8741, grad_fn=&lt;SumBackward0&gt;)
+tensor(48.9829, grad_fn=&lt;SumBackward0&gt;)
+tensor(27.2332, grad_fn=&lt;SumBackward0&gt;)
+tensor(26.5039, grad_fn=&lt;SumBackward0&gt;)
+tensor(20.8458, grad_fn=&lt;SumBackward0&gt;)
+tensor(17.2432, grad_fn=&lt;SumBackward0&gt;)
+tensor(8.5793, grad_fn=&lt;SumBackward0&gt;)
+tensor(15.5688, grad_fn=&lt;SumBackward0&gt;)
+tensor(29.3230, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.6203, grad_fn=&lt;SumBackward0&gt;)
+tensor(19.8011, grad_fn=&lt;SumBackward0&gt;)
+tensor(11.6529, grad_fn=&lt;SumBackward0&gt;)
+tensor(10.9839, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.9303, grad_fn=&lt;SumBackward0&gt;)
+tensor(12.6582, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.2414, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.8671, grad_fn=&lt;SumBackward0&gt;)
+tensor(8.7722, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.9395, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.5282, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.4137, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.6444, grad_fn=&lt;SumBackward0&gt;)
+tensor(9.2847, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.1850, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.0933, grad_fn=&lt;SumBackward0&gt;)
+tensor(5.3790, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.1494, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.7652, grad_fn=&lt;SumBackward0&gt;)
+tensor(6.1339, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.5157, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.4090, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.5329, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.2192, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.4640, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.8235, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.1725, grad_fn=&lt;SumBackward0&gt;)
+tensor(4.3920, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.4590, grad_fn=&lt;SumBackward0&gt;)
+tensor(3.1744, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.7370, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.9278, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.9221, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.5140, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.1275, grad_fn=&lt;SumBackward0&gt;)
+tensor(2.7884, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.0045, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.4739, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.9703, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3242, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7814, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.1002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9150, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.3404, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.1875, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8191, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.7617, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9535, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9879, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8759, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.9217, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4047, grad_fn=&lt;SumBackward0&gt;)
+tensor(1.4179, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.4633, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.8396, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1973, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.5071, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1759, grad_fn=&lt;SumBackward0&gt;)
+epoch 1, loss 0.041342
+[241, 202, 801, 574, 599, 59, 176, 636, 944, 278, 887, 389, 841, 114, 49, 108, 450, 456, 590, 498, 614, 205, 343, 110, 291, 595, 275, 493, 918, 712, 24, 512, 517, 843, 497, 80, 677, 903, 746, 790, 673, 731, 231, 32, 53, 601, 719, 755, 981, 773, 608, 861, 664, 559, 452, 782, 977, 480, 640, 632, 465, 23, 612, 822, 793, 186, 678, 622, 2, 329, 84, 33, 477, 871, 620, 499, 922, 516, 327, 91, 868, 197, 215, 175, 624, 455, 297, 52, 973, 58, 600, 402, 20, 203, 165, 854, 419, 833, 779, 360, 8, 295, 611, 799, 136, 863, 188, 968, 775, 964, 572, 30, 293, 957, 100, 420, 663, 902, 64, 342, 267, 985, 237, 900, 754, 672, 617, 219, 820, 828, 784, 749, 234, 364, 424, 470, 338, 397, 827, 818, 860, 437, 326, 588, 142, 401, 524, 22, 785, 217, 344, 722, 28, 334, 149, 279, 844, 651, 936, 646, 761, 996, 700, 373, 557, 805, 960, 691, 282, 929, 556, 851, 509, 403, 213, 872, 532, 876, 254, 762, 482, 288, 346, 218, 14, 882, 685, 292, 331, 873, 400, 656, 659, 992, 695, 869, 752, 300, 380, 184, 285, 385, 751, 361, 310, 657, 274, 842, 853, 927, 633, 533, 704, 829, 439, 240, 299, 893, 958, 777, 370, 340, 920, 390, 395, 653, 982, 19, 809, 196, 948, 289, 281, 224, 550, 490, 457, 855, 371, 125, 696, 859, 251, 62, 494, 747, 117, 575, 418, 995, 866, 604, 377, 130, 429, 535, 728, 150, 222, 864, 146, 970, 792, 111, 896, 671, 709, 392, 800, 375, 743, 780, 954, 536, 158, 993, 407, 164, 980, 345, 277, 96, 908, 776, 541, 813, 178, 764, 119, 46, 765, 296, 529, 878, 602, 959, 322, 124, 78, 414, 118, 724, 698, 814, 314, 232, 578, 153, 726, 486, 449, 432, 950, 485, 821, 195, 884, 703, 411, 652, 501, 488, 644, 955, 378, 634, 816, 147, 489, 492, 18, 897, 440, 504, 98, 647, 686, 565, 422, 26, 737, 879, 82, 306, 391, 669, 47, 180, 576, 416, 155, 587, 569, 947, 140, 16, 674, 566, 848, 711, 547, 173, 584, 645, 699, 716, 45, 271, 994, 991, 226, 867, 839, 253, 553, 115, 352, 1, 885, 635, 856, 781, 77, 889, 787, 514, 610, 444, 56, 766, 930, 870, 932, 243, 167, 443, 835, 159, 181, 50, 55, 239, 123, 459, 961, 894, 778, 796, 562, 120, 17, 522, 962, 260, 662, 513, 697, 54, 427, 372, 170, 131, 357, 94, 943, 207, 132, 151, 741, 972, 895, 744, 190, 899, 221, 771, 988, 692, 31, 834, 13, 302, 609, 483, 560, 308, 689, 989, 845, 121, 4, 355, 874, 949, 305, 582, 263, 911, 924, 990, 898, 3, 156, 670, 727, 453, 75, 934, 847, 163, 705, 212, 233, 963, 607, 81, 831, 315, 236, 268, 738, 223, 660, 625, 316, 605, 67, 916, 888, 276, 21, 658, 665, 238, 166, 506, 41, 975, 730, 840, 965, 756, 172, 750, 298, 913, 931, 320, 235, 126, 649, 815, 273, 598, 157, 748, 303, 496, 567, 786, 101, 953, 548, 72, 458, 328, 83, 613, 15, 189, 258, 881, 43, 287, 701, 928, 883, 36, 714, 519, 926, 383, 134, 763, 399, 311, 255, 941, 88, 388, 832, 907, 603, 102, 788, 476, 430, 770, 511, 162, 348, 168, 74, 266, 732, 35, 366, 463, 63, 837, 38, 394, 791, 974, 406, 261, 742, 687, 552, 865, 952, 774, 688, 849, 852, 875, 249, 789, 725, 836, 558, 539, 265, 200, 92, 332, 721, 858, 523, 525, 387, 630, 877, 86, 904, 359, 627, 568, 248, 309, 808, 945, 127, 540, 551, 304, 379, 573, 487, 606, 349, 769, 745, 500, 667, 423, 174, 245, 51, 520, 341, 446, 890, 42, 655, 66, 484, 543, 708, 823, 79, 247, 438, 228, 435, 666, 723, 580, 891, 434, 137, 999, 772, 491, 128, 363, 938, 40, 546, 824, 448, 650, 216, 95, 324, 368, 85, 690, 105, 257, 826, 393, 914, 9, 906, 269, 381, 442, 143, 976, 191, 6, 768, 710, 586, 417, 886, 336, 286, 892, 68, 545, 478, 909, 335, 912, 803, 138, 757, 464, 323, 910, 942, 838, 462, 759, 321, 227, 139, 767, 758, 733, 794, 441, 301, 740, 61, 940, 570, 680, 505, 185, 542, 129, 563, 229, 93, 937, 819, 530, 280, 508, 830, 454, 210, 684, 199, 451, 44, 206, 330, 515, 405, 252, 694, 7, 209, 461, 739, 521, 89, 857, 433, 921, 681, 479, 915, 979, 594, 69, 661, 717, 290, 939, 639, 534, 925, 693, 313, 549, 804, 817, 194, 144, 426, 259, 736, 177, 597, 90, 467, 73, 460, 445, 571, 410, 171, 966, 628, 642, 812, 734, 471, 365, 619, 591, 425, 76, 798, 676, 707, 502, 901, 113, 283, 408, 244, 583, 447, 39, 319, 284, 795, 564, 325, 472, 107, 307, 230, 179, 986, 135, 807, 187, 70, 473, 384, 581, 998, 48, 702, 538, 648, 555, 99, 192, 116, 376, 528, 0, 256, 333, 104, 537, 25, 198, 367, 436, 97, 729, 967, 317, 413, 183, 507, 623, 87, 374, 862, 715, 415, 880, 211, 106, 585, 592, 527, 468, 984, 412, 382, 356, 152, 495, 122, 554, 262, 951, 518, 596, 396, 682, 969, 220, 201, 631, 160, 339, 169, 65, 337, 270, 917, 983, 629, 428, 637, 103, 760, 404, 431, 811, 71, 679, 905, 109, 783, 706, 112, 351, 5, 720, 57, 182, 475, 154, 797, 34, 997, 474, 718, 561, 544, 469, 312, 264, 12, 141, 27, 933, 161, 806, 242, 531, 350, 802, 294, 145, 133, 956, 668, 208, 37, 354, 978, 971, 214, 250, 503, 643, 246, 358, 618, 593, 935, 421, 193, 318, 825, 810, 919, 29, 923, 616, 846, 753, 683, 11, 638, 615, 946, 510, 10, 347, 735, 481, 987, 675, 589, 850, 272, 526, 641, 398, 225, 369, 466, 654, 577, 148, 386, 579, 626, 409, 204, 60, 362, 621, 713, 353]
+tensor(0.7202, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2161, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0979, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3099, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3685, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1297, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3176, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2417, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3874, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1430, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1390, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2227, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2837, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1817, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.2695, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.3356, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1773, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0445, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0880, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1288, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1127, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1070, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1659, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0740, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1020, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0742, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0857, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0727, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0929, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.1065, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0931, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0875, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0977, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0309, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0638, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0340, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0250, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0750, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0556, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0504, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0602, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0265, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0293, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0386, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0396, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0338, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0196, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0476, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0468, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0345, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0326, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0288, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0248, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0093, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0140, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0200, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0335, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0161, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0124, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0073, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0095, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0208, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0160, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0098, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0084, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0084, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0140, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0079, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0067, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0104, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0105, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0082, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0107, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0045, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0040, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0073, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0104, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0056, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0055, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0056, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0038, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0063, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0049, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0049, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0046, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0032, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0034, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0054, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0026, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0020, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0046, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0040, grad_fn=&lt;SumBackward0&gt;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0028, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0017, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0026, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0016, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0025, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+epoch 2, loss 0.000163
+[616, 70, 847, 857, 287, 42, 95, 276, 21, 148, 128, 909, 391, 953, 83, 619, 679, 583, 100, 236, 831, 498, 16, 249, 575, 709, 130, 804, 404, 708, 620, 61, 214, 687, 437, 967, 927, 593, 455, 281, 659, 81, 986, 795, 983, 459, 74, 989, 814, 856, 317, 955, 240, 817, 615, 387, 943, 512, 724, 853, 315, 239, 223, 995, 349, 829, 561, 988, 427, 89, 507, 890, 675, 596, 233, 474, 704, 431, 361, 738, 433, 930, 658, 777, 311, 374, 267, 951, 314, 429, 301, 158, 613, 302, 854, 621, 581, 1, 638, 648, 389, 897, 728, 35, 674, 22, 93, 946, 798, 504, 144, 810, 332, 497, 54, 532, 673, 283, 304, 421, 220, 114, 523, 488, 163, 999, 85, 328, 880, 923, 482, 345, 394, 312, 787, 959, 872, 4, 423, 367, 279, 13, 865, 813, 27, 707, 213, 189, 242, 119, 493, 492, 71, 577, 413, 914, 17, 432, 956, 877, 855, 800, 870, 643, 753, 481, 134, 933, 533, 937, 559, 968, 691, 850, 776, 987, 219, 830, 371, 480, 859, 862, 607, 801, 77, 625, 135, 32, 217, 298, 174, 586, 717, 65, 33, 510, 509, 887, 325, 109, 629, 222, 141, 938, 293, 642, 542, 366, 568, 825, 640, 710, 183, 600, 672, 736, 175, 319, 729, 204, 369, 584, 397, 78, 399, 705, 395, 818, 689, 36, 916, 692, 167, 740, 166, 359, 2, 19, 250, 487, 341, 264, 963, 136, 767, 428, 343, 992, 713, 570, 273, 122, 351, 891, 80, 411, 543, 544, 96, 113, 380, 885, 300, 401, 462, 844, 284, 608, 499, 604, 695, 18, 683, 867, 833, 838, 440, 726, 973, 624, 435, 90, 254, 209, 170, 589, 14, 318, 263, 567, 205, 698, 66, 489, 211, 101, 400, 406, 364, 612, 412, 271, 104, 179, 52, 910, 275, 768, 917, 417, 241, 990, 55, 576, 895, 821, 573, 681, 893, 230, 984, 685, 162, 922, 716, 338, 379, 747, 443, 518, 645, 447, 715, 516, 714, 419, 684, 483, 192, 650, 176, 198, 426, 569, 324, 121, 425, 942, 456, 907, 944, 958, 653, 663, 383, 848, 514, 277, 901, 375, 827, 670, 299, 269, 623, 678, 353, 92, 722, 628, 139, 970, 547, 869, 720, 742, 495, 816, 237, 975, 694, 823, 227, 828, 940, 218, 340, 977, 603, 469, 464, 888, 599, 697, 102, 500, 358, 633, 773, 595, 636, 780, 630, 294, 256, 873, 868, 597, 731, 69, 88, 702, 169, 321, 43, 918, 363, 146, 696, 502, 556, 924, 784, 979, 160, 846, 157, 408, 306, 477, 3, 840, 565, 184, 598, 149, 244, 912, 903, 203, 836, 841, 494, 614, 733, 23, 606, 365, 881, 108, 563, 116, 225, 171, 188, 527, 755, 802, 452, 639, 520, 73, 272, 486, 181, 145, 745, 677, 664, 920, 762, 173, 676, 839, 368, 553, 424, 280, 468, 296, 981, 323, 549, 25, 133, 348, 172, 164, 131, 377, 730, 667, 721, 342, 105, 863, 372, 190, 782, 508, 734, 969, 303, 680, 322, 908, 609, 657, 147, 231, 610, 837, 741, 703, 253, 785, 540, 889, 961, 789, 199, 436, 637, 290, 690, 501, 388, 997, 766, 381, 913, 210, 53, 939, 834, 216, 655, 118, 186, 819, 931, 137, 112, 892, 535, 711, 165, 460, 156, 87, 775, 864, 552, 117, 668, 56, 99, 457, 245, 646, 524, 585, 858, 719, 994, 883, 902, 871, 64, 515, 247, 503, 441, 485, 26, 511, 815, 75, 195, 528, 824, 757, 744, 921, 652, 151, 335, 191, 706, 671, 725, 793, 948, 268, 808, 91, 764, 473, 851, 8, 754, 30, 37, 803, 845, 622, 331, 289, 63, 783, 450, 934, 68, 718, 34, 743, 788, 590, 998, 288, 682, 860, 537, 579, 262, 326, 965, 344, 985, 476, 521, 393, 405, 578, 398, 453, 29, 661, 305, 10, 517, 330, 746, 255, 115, 155, 976, 866, 904, 993, 947, 154, 735, 964, 566, 97, 626, 295, 790, 835, 200, 534, 950, 699, 505, 805, 554, 226, 960, 656, 732, 84, 693, 392, 415, 252, 350, 434, 362, 791, 221, 634, 370, 376, 11, 159, 935, 180, 259, 925, 333, 982, 337, 751, 161, 86, 41, 320, 194, 309, 651, 611, 403, 496, 929, 461, 763, 257, 712, 471, 356, 416, 458, 779, 796, 538, 206, 884, 270, 820, 177, 470, 601, 842, 991, 539, 382, 572, 445, 941, 962, 996, 617, 635, 251, 396, 555, 727, 316, 346, 9, 72, 410, 390, 386, 79, 7, 849, 919, 898, 232, 582, 67, 402, 246, 463, 654, 618, 759, 260, 224, 541, 6, 936, 479, 124, 770, 522, 50, 140, 594, 761, 911, 215, 132, 234, 797, 688, 592, 966, 384, 261, 506, 472, 641, 928, 360, 591, 491, 765, 127, 758, 336, 40, 882, 876, 106, 243, 490, 794, 750, 451, 466, 24, 274, 94, 952, 339, 588, 182, 478, 602, 285, 291, 310, 926, 409, 58, 861, 235, 407, 46, 662, 774, 972, 739, 665, 769, 536, 669, 258, 932, 957, 420, 265, 843, 660, 378, 809, 212, 126, 905, 974, 385, 120, 187, 760, 530, 772, 47, 971, 208, 125, 564, 48, 446, 752, 945, 701, 886, 31, 228, 238, 454, 193, 954, 550, 531, 107, 666, 282, 201, 15, 152, 580, 632, 38, 529, 978, 894, 627, 357, 129, 807, 5, 778, 153, 551, 103, 900, 51, 574, 786, 879, 571, 546, 414, 82, 449, 278, 110, 647, 0, 197, 327, 519, 826, 548, 352, 906, 373, 560, 513, 76, 832, 44, 297, 448, 57, 756, 229, 444, 587, 980, 557, 438, 334, 143, 545, 138, 852, 430, 355, 439, 168, 949, 644, 799, 49, 771, 781, 313, 266, 307, 111, 28, 60, 737, 12, 896, 354, 812, 748, 915, 700, 150, 525, 422, 792, 442, 811, 62, 196, 185, 465, 329, 806, 248, 418, 39, 899, 286, 874, 292, 207, 202, 178, 878, 631, 686, 526, 467, 98, 475, 723, 142, 45, 562, 649, 875, 484, 59, 605, 822, 749, 123, 558, 347, 308, 20]
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0022, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0019, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0012, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0015, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0011, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0013, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0014, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(7.6437e-05, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0002, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0010, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0008, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0007, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0009, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0006, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0003, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0004, grad_fn=&lt;SumBackward0&gt;)
+tensor(0.0005, grad_fn=&lt;SumBackward0&gt;)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epoch 3, loss 0.000053
+w的估计误差: tensor([-0.0002, -0.0010], grad_fn=&lt;SubBackward0&gt;)
+b的估计误差: tensor([0.0002], grad_fn=&lt;RsubBackward1&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./LinearNeuralNetwork"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../FunctionDetails/torch.meshgrid.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">torch.meshgrid</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Softmax 回归原理</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">线性回归</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">生成数据集</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">读取数据集</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">初始化模型参数</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">定义模型</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">定义损失函数</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">定义优化算法</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">训练</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">完整代码</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1182 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>语义分割和数据集 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ComputerVision/semantic-segmentation-and-dataset';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="风格迁移" href="neural-style.html" />
+    <link rel="prev" title="多尺度目标检测" href="multiscale-object-detection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    📚 AI 学习笔记 🧠
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fine-tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bounding-box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neural-style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ComputerVision/semantic-segmentation-and-dataset.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>语义分割和数据集</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">图像分割和实例分割</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pascal-voc2012">Pascal VOC2012 语义分割数据集</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">预处理数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">自定义语义分割数据集类</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">读取数据集</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">整合所有组件</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>patool
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: patool in /Users/ascotbe/anaconda3/lib/python3.10/site-packages (2.4.0)
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>语义分割和数据集<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>本节将探讨语义分割（semantic segmentation）问题，它重点关注于如何将图像分割成属于不同语义类别的区域。
+与目标检测不同，语义分割可以识别并理解图像中每一个像素的内容：其语义区域的标注和预测是像素级的。
+下图展示了语义分割中图像有关狗、猫和背景的标签。
+与目标检测相比，语义分割标注的像素级的边框显然更加精细。</p>
+<img src="../image/ComputerVision/segmentation.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<section id="id2">
+<h2>图像分割和实例分割<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>计算机视觉领域还有2个与语义分割相似的重要问题，即<em>图像分割</em>（image segmentation）和<em>实例分割</em>（instance segmentation）。
+我们在这里将它们同语义分割简单区分一下。</p>
+<ul class="simple">
+<li><p><em>图像分割</em>将图像划分为若干组成区域，这类问题的方法通常利用图像中像素之间的相关性。它在训练时不需要有关图像像素的标签信息，在预测时也无法保证分割出的区域具有我们希望得到的语义。图像分割可能会将狗分为两个区域：一个覆盖以黑色为主的嘴和眼睛，另一个覆盖以黄色为主的其余部分身体。</p></li>
+<li><p><em>实例分割</em>也叫<em>同时检测并分割</em>（simultaneous detection and segmentation），它研究如何识别图像中各个目标实例的像素级区域。与语义分割不同，实例分割不仅需要区分语义，还要区分不同的目标实例。例如，如果图像中有两条狗，则实例分割需要区分像素属于的两条狗中的哪一条。</p></li>
+</ul>
+</section>
+<section id="pascal-voc2012">
+<h2>Pascal VOC2012 语义分割数据集<a class="headerlink" href="#pascal-voc2012" title="Link to this heading">#</a></h2>
+<p><strong>最重要的语义分割数据集之一是<a class="reference external" href="http://host.robots.ox.ac.uk/pascal/VOC/voc2012/">Pascal VOC2012</a>。</strong>
+下面我们深入了解一下这个数据集。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>数据集的tar文件大约为2GB，所以下载可能需要一段时间。
+提取出的数据集位于<code class="docutils literal notranslate"><span class="pre">../raw/data/VOCdevkit/VOC2012</span></code>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">patoolib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># 文件的 URL</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://d2l-data.s3-accelerate.amazonaws.com/VOCtrainval_11-May-2012.tar&quot;</span>
+<span class="c1"># 下载到本地的文件路径</span>
+<span class="n">local_filename</span> <span class="o">=</span> <span class="s2">&quot;../raw/data/VOCtrainval_11-May-2012.tar&quot;</span>
+<span class="c1"># 解压缩的目录</span>
+<span class="n">extract_to</span> <span class="o">=</span> <span class="s2">&quot;../raw/data/&quot;</span>
+<span class="c1"># 下载文件</span>
+<span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_filename</span><span class="p">,</span><span class="n">sha1_hash</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">local_filename</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sha1</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1048576</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">sha1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sha1</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="n">sha1_hash</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;文件已存在: </span><span class="si">{</span><span class="n">local_filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">local_filename</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">):</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;文件已下载: </span><span class="si">{</span><span class="n">local_filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">local_filename</span>
+<span class="c1"># 解压文件</span>
+<span class="k">def</span> <span class="nf">extract_archive</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">extract_to</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">extract_to</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">extract_to</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    
+    <span class="c1"># 获取文件扩展名</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="c1"># 根据文件扩展名选择解压方式</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.zip&#39;</span><span class="p">]:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">unpack_archive</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">extract_to</span><span class="p">,</span> <span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.tar&#39;</span><span class="p">,</span> <span class="s1">&#39;.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;.bz2&#39;</span><span class="p">,</span> <span class="s1">&#39;.xz&#39;</span><span class="p">]:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">unpack_archive</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">extract_to</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.rar&#39;</span><span class="p">]:</span>
+            <span class="n">patoolib</span><span class="o">.</span><span class="n">extract_archive</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">extract_to</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未知的文件扩展名 &#39;</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&#39;。尝试使用 patoolib 解压...&quot;</span><span class="p">)</span>
+            <span class="n">patoolib</span><span class="o">.</span><span class="n">extract_archive</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">extract_to</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;解压完成: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">extract_to</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;解压 </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> 时出错: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_filename</span><span class="p">,</span><span class="s2">&quot;4e443f8a2eca6b1dac8a6c57641b67dd40621a49&quot;</span><span class="p">)</span>
+<span class="n">extract_archive</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="n">extract_to</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>文件已存在: ../raw/data/VOCtrainval_11-May-2012.tar
+解压完成: ../raw/data/VOCtrainval_11-May-2012.tar -&gt; ../raw/data/
+</pre></div>
+</div>
+</div>
+</div>
+<p>进入路径<code class="docutils literal notranslate"><span class="pre">../raw/data/VOCdevkit/VOC2012</span></code>之后，我们可以看到数据集的不同组件。
+<code class="docutils literal notranslate"><span class="pre">ImageSets/Segmentation</span></code>路径包含用于训练和测试样本的文本文件，而<code class="docutils literal notranslate"><span class="pre">JPEGImages</span></code>和<code class="docutils literal notranslate"><span class="pre">SegmentationClass</span></code>路径分别存储着每个示例的输入图像和标签。
+此处的标签也采用图像格式，其尺寸和它所标注的输入图像的尺寸相同。
+此外，标签中颜色相同的像素属于同一个语义类别。
+下面将<code class="docutils literal notranslate"><span class="pre">read_voc_images</span></code>函数定义为<strong>将所有输入的图像和标签读入内存</strong>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_voc_images</span><span class="p">(</span><span class="n">voc_dir</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;读取所有VOC图像并标注&quot;&quot;&quot;</span>
+    <span class="n">txt_fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">voc_dir</span><span class="p">,</span> <span class="s1">&#39;ImageSets&#39;</span><span class="p">,</span> <span class="s1">&#39;Segmentation&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;train.txt&#39;</span> <span class="k">if</span> <span class="n">is_train</span> <span class="k">else</span> <span class="s1">&#39;val.txt&#39;</span><span class="p">)</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ImageReadMode</span><span class="o">.</span><span class="n">RGB</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">txt_fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">voc_dir</span><span class="p">,</span> <span class="s1">&#39;JPEGImages&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s1">.jpg&#39;</span><span class="p">)))</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torchvision</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">voc_dir</span><span class="p">,</span> <span class="s1">&#39;SegmentationClass&#39;</span> <span class="p">,</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">),</span> <span class="n">mode</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span>
+<span class="n">voc_dir</span><span class="o">=</span><span class="s2">&quot;../raw/data/VOCdevkit/VOC2012/&quot;</span>
+<span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span> <span class="o">=</span> <span class="n">read_voc_images</span><span class="p">(</span><span class="s2">&quot;../raw/data/VOCdevkit/VOC2012/&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># 训练特征、训练标签</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">train_features</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[131, 131, 131,  ..., 182, 182, 182],
+         [132, 132, 133,  ..., 183, 183, 182],
+         [133, 133, 134,  ..., 183, 183, 182],
+         ...,
+         [  6,   5,   7,  ...,  16,  16,  16],
+         [  4,   9,  10,  ...,  16,  17,  17],
+         [  5,   6,  10,  ...,  16,  12,  17]],
+
+        [[193, 193, 193,  ..., 232, 232, 232],
+         [194, 194, 195,  ..., 233, 233, 232],
+         [195, 195, 196,  ..., 233, 233, 232],
+         ...,
+         [ 15,  14,  13,  ...,  34,  34,  34],
+         [ 14,  18,  18,  ...,  34,  35,  35],
+         [ 15,  16,  18,  ...,  33,  29,  34]],
+
+        [[208, 208, 208,  ..., 241, 241, 241],
+         [209, 209, 210,  ..., 242, 242, 241],
+         [210, 210, 211,  ..., 242, 242, 241],
+         ...,
+         [ 12,  13,  13,  ...,  38,  38,  38],
+         [ 13,  17,  20,  ...,  38,  39,  39],
+         [ 14,  15,  20,  ...,  40,  36,  41]]], dtype=torch.uint8)
+tensor([[[0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         ...,
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0]],
+
+        [[0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         ...,
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0]],
+
+        [[0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         ...,
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0]]], dtype=torch.uint8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>下面我们<strong>绘制前5个输入图像及其标签</strong>。
+在标签图像中，白色和黑色分别表示边框和背景，而其他颜色则对应不同的类别。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">imgs</span> <span class="o">=</span> <span class="n">train_features</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">train_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+<span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">imgs</span><span class="p">]</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_images</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ee71110144e3da01e662e2f3ae7168e24719689bf50d0a9828e16189480947e7.png" src="../_images/ee71110144e3da01e662e2f3ae7168e24719689bf50d0a9828e16189480947e7.png" />
+</div>
+</div>
+<p>接下来，我们<strong>列举RGB颜色值和类名</strong>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">VOC_COLORMAP</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">]]</span>
+
+
+<span class="n">VOC_CLASSES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">,</span> <span class="s1">&#39;aeroplane&#39;</span><span class="p">,</span> <span class="s1">&#39;bicycle&#39;</span><span class="p">,</span> <span class="s1">&#39;bird&#39;</span><span class="p">,</span> <span class="s1">&#39;boat&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;bottle&#39;</span><span class="p">,</span> <span class="s1">&#39;bus&#39;</span><span class="p">,</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;chair&#39;</span><span class="p">,</span> <span class="s1">&#39;cow&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;diningtable&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;horse&#39;</span><span class="p">,</span> <span class="s1">&#39;motorbike&#39;</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;potted plant&#39;</span><span class="p">,</span> <span class="s1">&#39;sheep&#39;</span><span class="p">,</span> <span class="s1">&#39;sofa&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;tv/monitor&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>通过上面定义的两个常量，我们可以方便地<strong>查找标签中每个像素的类索引</strong>。
+我们定义了<code class="docutils literal notranslate"><span class="pre">voc_colormap2label</span></code>函数来构建从上述RGB颜色值到类别索引的映射，而<code class="docutils literal notranslate"><span class="pre">voc_label_indices</span></code>函数将RGB值映射到在Pascal VOC2012数据集中的类别索引。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">voc_colormap2label</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;构建从RGB到VOC类别索引的映射&quot;&quot;&quot;</span>
+    <span class="n">colormap2label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">256</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span> <span class="c1">#创建了一个大小为 256^3的一维张量，用来存储每个可能的RGB值对应的类别索引。每个像素的RGB颜色组合有256×256×256个可能性。</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">colormap</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">VOC_COLORMAP</span><span class="p">):</span>
+        <span class="n">colormap2label</span><span class="p">[</span>
+            <span class="p">(</span><span class="n">colormap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">colormap</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">colormap</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span> <span class="c1"># 将对应的RGB颜色值映射到类别索引i</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">colormap</span><span class="p">)</span>
+    <span class="c1"># 找到所有非零的索引和值</span>
+    <span class="n">nonzero_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">colormap2label</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">nonzero_values</span> <span class="o">=</span> <span class="n">colormap2label</span><span class="p">[</span><span class="n">nonzero_indices</span><span class="p">]</span>
+
+    <span class="c1"># 打印这些非零的RGB值和它们对应的类别索引</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nonzero_indices</span><span class="p">,</span> <span class="n">nonzero_values</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">//</span> <span class="p">(</span><span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx</span> <span class="o">//</span> <span class="mi">256</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">256</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RGB: (</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">) -&gt; 类别索引: </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">colormap2label</span>
+
+
+<span class="k">def</span> <span class="nf">voc_label_indices</span><span class="p">(</span><span class="n">colormap</span><span class="p">,</span> <span class="n">colormap2label</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将VOC标签中的RGB值映射到它们的类别索引&quot;&quot;&quot;</span>
+    <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="p">((</span><span class="n">colormap</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">colormap</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span>
+           <span class="o">+</span> <span class="n">colormap</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">colormap2label</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">colormap2label</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>*例如，在第一张样本图像中，飞机头部区域的类别索引为1，而背景索引为0。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">voc_label_indices</span><span class="p">(</span><span class="n">train_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">voc_colormap2label</span><span class="p">())</span>
+<span class="n">y</span><span class="p">[</span><span class="mi">105</span><span class="p">:</span><span class="mi">115</span><span class="p">,</span> <span class="mi">130</span><span class="p">:</span><span class="mi">140</span><span class="p">],</span> <span class="n">VOC_CLASSES</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 [0, 0, 0]
+1 [128, 0, 0]
+2 [0, 128, 0]
+3 [128, 128, 0]
+4 [0, 0, 128]
+5 [128, 0, 128]
+6 [0, 128, 128]
+7 [128, 128, 128]
+8 [64, 0, 0]
+9 [192, 0, 0]
+10 [64, 128, 0]
+11 [192, 128, 0]
+12 [64, 0, 128]
+13 [192, 0, 128]
+14 [64, 128, 128]
+15 [192, 128, 128]
+16 [0, 64, 0]
+17 [128, 64, 0]
+18 [0, 192, 0]
+19 [128, 192, 0]
+20 [0, 64, 128]
+RGB: (0, 0, 128) -&gt; 类别索引: 4
+RGB: (0, 64, 0) -&gt; 类别索引: 16
+RGB: (0, 64, 128) -&gt; 类别索引: 20
+RGB: (0, 128, 0) -&gt; 类别索引: 2
+RGB: (0, 128, 128) -&gt; 类别索引: 6
+RGB: (0, 192, 0) -&gt; 类别索引: 18
+RGB: (64, 0, 0) -&gt; 类别索引: 8
+RGB: (64, 0, 128) -&gt; 类别索引: 12
+RGB: (64, 128, 0) -&gt; 类别索引: 10
+RGB: (64, 128, 128) -&gt; 类别索引: 14
+RGB: (128, 0, 0) -&gt; 类别索引: 1
+RGB: (128, 0, 128) -&gt; 类别索引: 5
+RGB: (128, 64, 0) -&gt; 类别索引: 17
+RGB: (128, 128, 0) -&gt; 类别索引: 3
+RGB: (128, 128, 128) -&gt; 类别索引: 7
+RGB: (128, 192, 0) -&gt; 类别索引: 19
+RGB: (192, 0, 0) -&gt; 类别索引: 9
+RGB: (192, 0, 128) -&gt; 类别索引: 13
+RGB: (192, 128, 0) -&gt; 类别索引: 11
+RGB: (192, 128, 128) -&gt; 类别索引: 15
+tensor([[0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0],
+        ...,
+        [0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0]])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+         [0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+         [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+         [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+         [0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+         [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+         [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+         [0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+         [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]]),
+ &#39;aeroplane&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id3">
+<h3>预处理数据<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>在之前的实验，我们通过再缩放图像使其符合模型的输入形状。
+然而在语义分割中，这样做需要将预测的像素类别重新映射回原始尺寸的输入图像。
+这样的映射可能不够精确，尤其在不同语义的分割区域。
+为了避免这个问题，我们将图像裁剪为固定尺寸，而不是再缩放。
+具体来说，我们<strong>使用图像增广中的随机裁剪，裁剪输入图像和标签的相同区域</strong>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">voc_rand_crop</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;随机裁剪特征和标签图像&quot;&quot;&quot;</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">RandomCrop</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span>
+        <span class="n">feature</span><span class="p">,</span> <span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">))</span>
+    <span class="n">feature</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="o">*</span><span class="n">rect</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="o">*</span><span class="n">rect</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">feature</span><span class="p">,</span> <span class="n">label</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imgs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">imgs</span> <span class="o">+=</span> <span class="n">voc_rand_crop</span><span class="p">(</span><span class="n">train_features</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">train_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">imgs</span><span class="p">]</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_images</span><span class="p">(</span><span class="n">imgs</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">imgs</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4850d97b83f28e74d18ae9812c446b34f13392dd66304156e72267680f3c7bba.png" src="../_images/4850d97b83f28e74d18ae9812c446b34f13392dd66304156e72267680f3c7bba.png" />
+</div>
+</div>
+</section>
+<section id="id4">
+<h3>自定义语义分割数据集类<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>我们通过继承高级API提供的<code class="docutils literal notranslate"><span class="pre">Dataset</span></code>类，自定义了一个语义分割数据集类<code class="docutils literal notranslate"><span class="pre">VOCSegDataset</span></code>。
+通过实现<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>函数，我们可以任意访问数据集中索引为<code class="docutils literal notranslate"><span class="pre">idx</span></code>的输入图像及其每个像素的类别索引。
+由于数据集中有些图像的尺寸可能小于随机裁剪所指定的输出尺寸，这些样本可以通过自定义的<code class="docutils literal notranslate"><span class="pre">filter</span></code>函数移除掉。
+此外，我们还定义了<code class="docutils literal notranslate"><span class="pre">normalize_image</span></code>函数，从而对输入图像的RGB三个通道的值分别做标准化。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">VOCSegDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;一个用于加载VOC数据集的自定义数据集&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_train</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">,</span> <span class="n">voc_dir</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span>
+            <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crop_size</span> <span class="o">=</span> <span class="n">crop_size</span>
+        <span class="n">features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">read_voc_images</span><span class="p">(</span><span class="n">voc_dir</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="n">is_train</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">normalize_image</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">features</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colormap2label</span> <span class="o">=</span> <span class="n">voc_colormap2label</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; examples&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">normalize_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imgs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">img</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">imgs</span> <span class="k">if</span> <span class="p">(</span>
+            <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span>
+            <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">feature</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">voc_rand_crop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+                                       <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">crop_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">voc_label_indices</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colormap2label</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h3>读取数据集<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>我们通过自定义的<code class="docutils literal notranslate"><span class="pre">VOCSegDataset</span></code>类来分别创建训练集和测试集的实例。
+假设我们指定随机裁剪的输出图像的形状为<span class="math notranslate nohighlight">\(320\times 480\)</span>，
+下面我们可以查看训练集和测试集所保留的样本个数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crop_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">320</span><span class="p">,</span> <span class="mi">480</span><span class="p">)</span>
+<span class="n">voc_train</span> <span class="o">=</span> <span class="n">VOCSegDataset</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">,</span> <span class="n">voc_dir</span><span class="p">)</span>
+<span class="n">voc_test</span> <span class="o">=</span> <span class="n">VOCSegDataset</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">,</span> <span class="n">voc_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 [0, 0, 0]
+1 [128, 0, 0]
+2 [0, 128, 0]
+3 [128, 128, 0]
+4 [0, 0, 128]
+5 [128, 0, 128]
+6 [0, 128, 128]
+7 [128, 128, 128]
+8 [64, 0, 0]
+9 [192, 0, 0]
+10 [64, 128, 0]
+11 [192, 128, 0]
+12 [64, 0, 128]
+13 [192, 0, 128]
+14 [64, 128, 128]
+15 [192, 128, 128]
+16 [0, 64, 0]
+17 [128, 64, 0]
+18 [0, 192, 0]
+19 [128, 192, 0]
+20 [0, 64, 128]
+RGB: (0, 0, 128) -&gt; 类别索引: 4
+RGB: (0, 64, 0) -&gt; 类别索引: 16
+RGB: (0, 64, 128) -&gt; 类别索引: 20
+RGB: (0, 128, 0) -&gt; 类别索引: 2
+RGB: (0, 128, 128) -&gt; 类别索引: 6
+RGB: (0, 192, 0) -&gt; 类别索引: 18
+RGB: (64, 0, 0) -&gt; 类别索引: 8
+RGB: (64, 0, 128) -&gt; 类别索引: 12
+RGB: (64, 128, 0) -&gt; 类别索引: 10
+RGB: (64, 128, 128) -&gt; 类别索引: 14
+RGB: (128, 0, 0) -&gt; 类别索引: 1
+RGB: (128, 0, 128) -&gt; 类别索引: 5
+RGB: (128, 64, 0) -&gt; 类别索引: 17
+RGB: (128, 128, 0) -&gt; 类别索引: 3
+RGB: (128, 128, 128) -&gt; 类别索引: 7
+RGB: (128, 192, 0) -&gt; 类别索引: 19
+RGB: (192, 0, 0) -&gt; 类别索引: 9
+RGB: (192, 0, 128) -&gt; 类别索引: 13
+RGB: (192, 128, 0) -&gt; 类别索引: 11
+RGB: (192, 128, 128) -&gt; 类别索引: 15
+read 1114 examples
+0 [0, 0, 0]
+1 [128, 0, 0]
+2 [0, 128, 0]
+3 [128, 128, 0]
+4 [0, 0, 128]
+5 [128, 0, 128]
+6 [0, 128, 128]
+7 [128, 128, 128]
+8 [64, 0, 0]
+9 [192, 0, 0]
+10 [64, 128, 0]
+11 [192, 128, 0]
+12 [64, 0, 128]
+13 [192, 0, 128]
+14 [64, 128, 128]
+15 [192, 128, 128]
+16 [0, 64, 0]
+17 [128, 64, 0]
+18 [0, 192, 0]
+19 [128, 192, 0]
+20 [0, 64, 128]
+RGB: (0, 0, 128) -&gt; 类别索引: 4
+RGB: (0, 64, 0) -&gt; 类别索引: 16
+RGB: (0, 64, 128) -&gt; 类别索引: 20
+RGB: (0, 128, 0) -&gt; 类别索引: 2
+RGB: (0, 128, 128) -&gt; 类别索引: 6
+RGB: (0, 192, 0) -&gt; 类别索引: 18
+RGB: (64, 0, 0) -&gt; 类别索引: 8
+RGB: (64, 0, 128) -&gt; 类别索引: 12
+RGB: (64, 128, 0) -&gt; 类别索引: 10
+RGB: (64, 128, 128) -&gt; 类别索引: 14
+RGB: (128, 0, 0) -&gt; 类别索引: 1
+RGB: (128, 0, 128) -&gt; 类别索引: 5
+RGB: (128, 64, 0) -&gt; 类别索引: 17
+RGB: (128, 128, 0) -&gt; 类别索引: 3
+RGB: (128, 128, 128) -&gt; 类别索引: 7
+RGB: (128, 192, 0) -&gt; 类别索引: 19
+RGB: (192, 0, 0) -&gt; 类别索引: 9
+RGB: (192, 0, 128) -&gt; 类别索引: 13
+RGB: (192, 128, 0) -&gt; 类别索引: 11
+RGB: (192, 128, 128) -&gt; 类别索引: 15
+read 1078 examples
+</pre></div>
+</div>
+</div>
+</div>
+<p>设批量大小为64，我们定义训练集的迭代器。
+打印第一个小批量的形状会发现：与图像分类或目标检测不同，这里的标签是一个三维数组。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">train_iter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">voc_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">num_workers</span><span class="o">=</span><span class="n">d2l</span><span class="o">.</span><span class="n">get_dataloader_workers</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="ow">in</span> <span class="n">train_iter</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+  File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;/Users/ascotbe/anaconda3/lib/python3.10/multiprocessing/spawn.py&quot;, line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File &quot;/Users/ascotbe/anaconda3/lib/python3.10/multiprocessing/spawn.py&quot;, line 126, in _main
+    self = reduction.pickle.load(from_parent)
+AttributeError: Can&#39;t get attribute &#39;VOCSegDataset&#39; on &lt;module &#39;__main__&#39; (built-in)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h3>整合所有组件<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>最后，我们定义以下<code class="docutils literal notranslate"><span class="pre">load_data_voc</span></code>函数来下载并读取Pascal VOC2012语义分割数据集。
+它返回训练集和测试集的数据迭代器。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_data_voc</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;加载VOC语义分割数据集&quot;&quot;&quot;</span>
+    <span class="n">voc_dir</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">download_extract</span><span class="p">(</span><span class="s1">&#39;voc2012&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="s1">&#39;VOCdevkit&#39;</span><span class="p">,</span> <span class="s1">&#39;VOC2012&#39;</span><span class="p">))</span>
+    <span class="n">num_workers</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">get_dataloader_workers</span><span class="p">()</span>
+    <span class="n">train_iter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">VOCSegDataset</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">,</span> <span class="n">voc_dir</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+    <span class="n">test_iter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">VOCSegDataset</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">,</span> <span class="n">voc_dir</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">test_iter</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ComputerVision"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="multiscale-object-detection.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">多尺度目标检测</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="neural-style.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">风格迁移</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">图像分割和实例分割</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pascal-voc2012">Pascal VOC2012 语义分割数据集</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">预处理数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">自定义语义分割数据集类</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">读取数据集</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">整合所有组件</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

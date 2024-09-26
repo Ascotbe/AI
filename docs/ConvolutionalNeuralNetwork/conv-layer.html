@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>图像卷积 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ConvolutionalNeuralNetwork/conv-layer';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="填充和步幅" href="padding-and-strides.html" />
+    <link rel="prev" title="GPU" href="../DeepLearning/GPU.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    📚 AI 学习笔记 🧠
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ConvolutionalNeuralNetwork/conv-layer.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>图像卷积</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">二维卷积层</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">互相关运算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">公式总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">卷积核的作用</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">图像卷积代码实现</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">想互关运算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">卷积层</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">图像中目标的边缘检测（简单应用）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">学习卷积核</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">一维卷积、二维卷积、三维卷积</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">一维卷积</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">二维卷积</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">三维卷积</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>图像卷积<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://www.bilibili.com/video/BV1VV411478E">https://www.bilibili.com/video/BV1VV411478E</a></p>
+<section id="id2">
+<h2>二维卷积层<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>互相关运算<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>严格来说，卷积层是个错误的叫法，因为它所表达的运算其实是<em>互相关运算</em>（cross-correlation），而不是卷积运算。
+根据在卷积层中，输入张量和核张量通过<strong>互相关运算</strong>产生输出张量。</p>
+<p>首先，我们暂时忽略通道（第三维）这一情况，看看如何处理二维图像数据和隐藏表示。在下图中，输入是高度为<span class="math notranslate nohighlight">\(3\)</span>、宽度为<span class="math notranslate nohighlight">\(3\)</span>的二维张量（即形状为<span class="math notranslate nohighlight">\(3 \times 3\)</span>）。卷积核的高度和宽度都是<span class="math notranslate nohighlight">\(2\)</span>，而卷积核窗口（或卷积窗口）的形状由内核的高度和宽度决定（即<span class="math notranslate nohighlight">\(2 \times 2\)</span>）。</p>
+<img src="../image/ConvolutionalNeuralNetwork/correlation.svg" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>在二维互相关运算中，卷积窗口从输入张量的左上角开始，从左到右、从上到下滑动。
+当卷积窗口滑动到新一个位置时，包含在该窗口中的部分张量与卷积核张量进行按元素相乘，得到的张量再求和得到一个单一的标量值，由此我们得出了这一位置的输出张量值。
+在如上例子中，输出张量的四个元素由二维互相关运算得到，这个输出高度为<span class="math notranslate nohighlight">\(2\)</span>、宽度为<span class="math notranslate nohighlight">\(2\)</span>，如下所示：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+0\times0+1\times1+3\times2+4\times3=19,\\
+1\times0+2\times1+4\times2+5\times3=25,\\
+3\times0+4\times1+6\times2+7\times3=37,\\
+4\times0+5\times1+7\times2+8\times3=43.
+\end{align}\end{split}\]</div>
+<p>可以通过下面动图来比较详细的理解它（<a class="reference external" href="https://github.com/vdumoulin/conv_arithmetic?tab=readme-ov-file%EF%BC%89">https://github.com/vdumoulin/conv_arithmetic?tab=readme-ov-file）</a></p>
+<img src="../image/ConvolutionalNeuralNetwork/no_padding_no_strides.gif" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>注意，输出大小略小于输入大小。这是因为卷积核的宽度和高度大于1，
+而卷积核只与图像中每个大小完全适合的位置进行互相关运算。
+所以，输出大小等于输入大小<span class="math notranslate nohighlight">\(n_h \times n_w\)</span>减去卷积核大小<span class="math notranslate nohighlight">\(k_h \times k_w\)</span>，即：</p>
+<div class="math notranslate nohighlight">
+\[(n_h-k_h+1) \times (n_w-k_w+1)\]</div>
+<p>这是因为我们需要足够的空间在图像上“移动”卷积核。稍后，我们将看到如何通过在图像边界周围填充零来保证有足够的空间移动卷积核，从而保持输出大小不变。</p>
+</section>
+<section id="id4">
+<h3>公式总结<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>所以上面相关运算就可以总结为下面内容</p>
+<ul class="simple">
+<li><p>输入<span class="math notranslate nohighlight">\(\mathbf{X}: n_{h} \times n_{w}\)</span></p></li>
+<li><p>核<span class="math notranslate nohighlight">\(\mathbf{W}: k_{h} \times k_{w}\)</span></p></li>
+<li><p>偏差<span class="math notranslate nohighlight">\(b \in \mathbb{R}\)</span></p></li>
+<li><p>输出<span class="math notranslate nohighlight">\(\mathbf{Y}:\left(n_{h}-k_{h}+1\right) \times\left(n_{w}-k_{w}+1\right)\)</span></p></li>
+</ul>
+<p>所以就可以等到相关公式，其中<span class="math notranslate nohighlight">\(\mathbf{W}\)</span>和<span class="math notranslate nohighlight">\(b\)</span>是可学习的参数：</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{Y}=\mathbf{X} \star \mathbf{W}+b\]</div>
+<p>是可学习的参数</p>
+</section>
+<section id="id5">
+<h3>卷积核的作用<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>在图像和计算机视觉领域，卷积其实已经有几十年的发展历史。在传统的计算机视觉和模式识别中，卷积又被称为滤波器（Filter）。对一张图片，进行卷积操作，可以得到很多种神奇的效果。下面内容来自维基百科，<strong>第一个是卷积核是一个单位矩阵，使用单位矩阵对原图进行卷积操作，得到的输出与原图一样</strong>；接下来的几个卷积核可以检测到物体边缘，或者进行锐化和模糊。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Operation</p></th>
+<th class="head text-center"><p>核函数</p></th>
+<th class="head text-center"><p>图片结果</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>恒等运算（原图不变）</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}\ \ 0&amp;\ \ 0&amp;\ \ 0\\\ \ 0&amp;\ \ 1&amp;\ \ 0\\\ \ 0&amp;\ \ 0&amp;\ \ 0\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Orig.png" /></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>脊检测</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}0&amp;-1&amp;0\\-1&amp;\ \ 4&amp;-1\\0&amp;-1&amp;0\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Rige1.png" /></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>边缘检测</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}-1&amp;-1&amp;-1\\-1&amp;\ \ 8&amp;-1\\-1&amp;-1&amp;-1\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Rige2.png" /></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>锐化</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\begin{bmatrix}\ \ 0&amp;-1&amp;\ \ 0\\-1&amp;\ \ 5&amp;-1\\\ \ 0&amp;-1&amp;\ \ 0\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Sharp.png" /></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>框模糊</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {1}{9}}{\begin{bmatrix}\ \ 1&amp;\ \ 1&amp;\ \ 1\\\ \ 1&amp;\ \ 1&amp;\ \ 1\\\ \ 1&amp;\ \ 1&amp;\ \ 1\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Blur2.png" /></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>高斯模糊 3 × 3</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {1}{16}}{\begin{bmatrix}\ \ 1&amp;\ \ 2&amp;\ \ 1\\\ \ 2&amp;\ \ 4&amp;\ \ 2\\\ \ 1&amp;\ \ 2&amp;\ \ 1\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Blur1.png" /></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>高斯模糊 5 × 5</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {1}{256}}{\begin{bmatrix}1&amp;4&amp;6&amp;4&amp;1\\4&amp;16&amp;24&amp;16&amp;4\\6&amp;24&amp;36&amp;24&amp;6\\4&amp;16&amp;24&amp;16&amp;4\\1&amp;4&amp;6&amp;4&amp;1\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Blur_Gaussian_5x5.png" /></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>模糊遮蔽 5 × 5</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\({\displaystyle {\frac {-1}{256}}{\begin{bmatrix}1&amp;4&amp;\ \ 6&amp;4&amp;1\\4&amp;16&amp;\ \ 24&amp;16&amp;4\\6&amp;24&amp;-476&amp;24&amp;6\\4&amp;16&amp;\ \ 24&amp;16&amp;4\\1&amp;4&amp;\ \ 6&amp;4&amp;1\end{bmatrix}}}\)</span></p></td>
+<td class="text-center"><p><img alt="img" src="../_images/Vd-Unsharp_5x5.png" /></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>图像卷积代码实现<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h3>想互关运算<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>接下来，我们在<code class="docutils literal notranslate"><span class="pre">corr2d</span></code>函数中实现如上过程，该函数接受输入张量<code class="docutils literal notranslate"><span class="pre">X</span></code>和卷积核张量<code class="docutils literal notranslate"><span class="pre">K</span></code>，并返回输出张量<code class="docutils literal notranslate"><span class="pre">Y</span></code>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="k">def</span> <span class="nf">corr2d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>   <span class="c1">#X是输入，K是核矩阵</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;计算二维互相关运算&quot;&quot;&quot;</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span>  <span class="c1">#获取输入的行数和列数</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">h</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1">#对应上面的公式</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span><span class="n">j</span> <span class="o">+</span> <span class="n">w</span><span class="p">]</span> <span class="o">*</span> <span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: &#39;dlopen(/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so, 0x0006): Symbol not found: __ZN3c1017RegisterOperatorsD1Ev
+  Referenced from: &lt;6A7076EE-85BD-37A7-BC35-1D4867F2B3D3&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so
+  Expected in:     &lt;A84DFEFF-287E-3B94-A7DB-731FA5F9CBBC&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torch/lib/libtorch_cpu.dylib&#39;If you don&#39;t plan on using image functionality from `torchvision.io`, you can ignore this warning. Otherwise, there might be something wrong with your environment. Did you have `libjpeg` or `libpng` installed before building `torchvision` from source?
+  warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>通过输入张量<code class="docutils literal notranslate"><span class="pre">X</span></code>和卷积核张量<code class="docutils literal notranslate"><span class="pre">K</span></code>，我们来验证上述二维互相关运算的输出。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">]])</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]])</span>
+<span class="n">corr2d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[19., 25.],
+        [37., 43.]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h3>卷积层<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>卷积层对输入和卷积核权重进行互相关运算，并在添加标量偏置之后产生输出。
+所以，卷积层中的两个被训练的参数是卷积核权重和标量偏置。
+就像我们之前随机初始化全连接层一样，在训练基于卷积层的模型时，我们也随机初始化卷积核权重。</p>
+<p>基于上面定义的<code class="docutils literal notranslate"><span class="pre">corr2d</span></code>函数<strong>实现二维卷积层</strong>。在<code class="docutils literal notranslate"><span class="pre">__init__</span></code>构造函数中，将<code class="docutils literal notranslate"><span class="pre">weight</span></code>和<code class="docutils literal notranslate"><span class="pre">bias</span></code>声明为两个模型参数。前向传播函数调用<code class="docutils literal notranslate"><span class="pre">corr2d</span></code>函数并添加偏置。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Conv2D</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">))</span>  <span class="c1">#设置随机的核，kernel_size为超参数比如说3x3的大小</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1">#设置偏差，初始化为0</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">corr2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>高度和宽度分别为<span class="math notranslate nohighlight">\(h\)</span>和<span class="math notranslate nohighlight">\(w\)</span>的卷积核可以被称为<span class="math notranslate nohighlight">\(h \times w\)</span>卷积或<span class="math notranslate nohighlight">\(h \times w\)</span>卷积核。
+我们也将带有<span class="math notranslate nohighlight">\(h \times w\)</span>卷积核的卷积层称为<span class="math notranslate nohighlight">\(h \times w\)</span>卷积层。</p>
+</section>
+<section id="id9">
+<h3>图像中目标的边缘检测（简单应用）<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>通过找到像素变化的位置，来<strong>检测图像中不同颜色的边缘</strong>。</p>
+<p>首先，我们构造一个<span class="math notranslate nohighlight">\(6\times 8\)</span>像素的黑白图像。<strong>中间四列为黑色（<span class="math notranslate nohighlight">\(0\)</span>），其余像素为白色（<span class="math notranslate nohighlight">\(1\)</span>）。</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.],
+        [1., 1., 0., 0., 0., 0., 1., 1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>接下来，我们构造一个高度为<span class="math notranslate nohighlight">\(1\)</span>、宽度为<span class="math notranslate nohighlight">\(2\)</span>的卷积核<code class="docutils literal notranslate"><span class="pre">K</span></code>。当进行互相关运算时，如果水平相邻的两元素相同，则输出为零，否则输出为非零。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>现在，我们对参数<code class="docutils literal notranslate"><span class="pre">X</span></code>（输入）和<code class="docutils literal notranslate"><span class="pre">K</span></code>（卷积核）执行互相关运算。
+如下所示，<strong>输出<code class="docutils literal notranslate"><span class="pre">Y</span></code>中的1代表从白色到黑色的边缘，-1代表从黑色到白色的边缘</strong>，其他情况的输出为<span class="math notranslate nohighlight">\(0\)</span>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">corr2d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+<span class="n">Y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+        [ 0.,  1.,  0.,  0.,  0., -1.,  0.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>现在我们将输入的二维图像转置，再进行如上的互相关运算。
+其输出如下，之前检测到的垂直边缘消失了。
+不出所料，这个<strong>卷积核<code class="docutils literal notranslate"><span class="pre">K</span></code>只可以检测垂直边缘</strong>，无法检测水平边缘。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr2d</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">K</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>如果需要进行检测只需要把卷积核转置一下即可</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr2d</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">K</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.,  0.,  0.,  0.,  0.,  0.],
+        [ 1.,  1.,  1.,  1.,  1.,  1.],
+        [ 0.,  0.,  0.,  0.,  0.,  0.],
+        [ 0.,  0.,  0.,  0.,  0.,  0.],
+        [ 0.,  0.,  0.,  0.,  0.,  0.],
+        [-1., -1., -1., -1., -1., -1.],
+        [ 0.,  0.,  0.,  0.,  0.,  0.]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id10">
+<h3>学习卷积核<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>如果我们只需寻找黑白边缘，那么以上<code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">-1]</span></code>的边缘检测器足以。然而，当有了更复杂数值的卷积核，或者连续的卷积层时，我们不可能手动设计滤波器。那么我们是否可以<strong>学习由<code class="docutils literal notranslate"><span class="pre">X</span></code>生成<code class="docutils literal notranslate"><span class="pre">Y</span></code>的卷积核</strong>呢？</p>
+<p>现在让我们看看是否可以通过仅查看“输入-输出”对来学习由<code class="docutils literal notranslate"><span class="pre">X</span></code>生成<code class="docutils literal notranslate"><span class="pre">Y</span></code>的卷积核。
+我们先构造一个卷积层，并将其卷积核初始化为随机张量。接下来，在每次迭代中，我们比较<code class="docutils literal notranslate"><span class="pre">Y</span></code>与卷积层输出的平方误差，然后计算梯度来更新卷积核。为了简单起见，我们在此使用内置的二维卷积层，并忽略偏置。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 构造一个二维卷积层，它具有1个输出通道、1个输入通道和形状为（1，2）的卷积核</span>
+<span class="n">conv2d</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># 这个二维卷积层使用四维输入和输出格式（批量大小、通道、高度、宽度），</span>
+<span class="c1"># 其中批量大小和通道数都为1</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span> <span class="c1">#加两个维度</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">3e-2</span>  <span class="c1"># 学习率</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">Y_hat</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="p">(</span><span class="n">Y_hat</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1">#使用均方误差</span>
+    <span class="n">conv2d</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>  <span class="c1">#把梯度设置为0</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1">#计算梯度</span>
+    <span class="c1"># 迭代卷积核</span>
+    <span class="n">conv2d</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">conv2d</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">grad</span> <span class="c1">#裸写梯度下降</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, loss </span><span class="si">{</span><span class="n">l</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[1., 1., 0., 0., 0., 0., 1., 1.],
+          [1., 1., 0., 0., 0., 0., 1., 1.],
+          [1., 1., 0., 0., 0., 0., 1., 1.],
+          [1., 1., 0., 0., 0., 0., 1., 1.],
+          [1., 1., 0., 0., 0., 0., 1., 1.],
+          [1., 1., 0., 0., 0., 0., 1., 1.]]]])
+tensor([[[[ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+          [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+          [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+          [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+          [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
+          [ 0.,  1.,  0.,  0.,  0., -1.,  0.]]]])
+epoch 2, loss 2.306
+epoch 4, loss 0.464
+epoch 6, loss 0.109
+epoch 8, loss 0.031
+epoch 10, loss 0.011
+</pre></div>
+</div>
+</div>
+</div>
+<p>在<span class="math notranslate nohighlight">\(10\)</span>次迭代之后，误差已经降到足够低。现在我们来看看我们<strong>所学的卷积核的权重张量</strong>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conv2d</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.0025, -0.9829]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id11">
+<h2>一维卷积、二维卷积、三维卷积<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h3>一维卷积<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<img src="../image/ConvolutionalNeuralNetwork/1223117-20180212193102531-761358003.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<div class="math notranslate nohighlight">
+\[y_{i}=\sum_{a=1}^{h} w_{a} x_{i+a}\]</div>
+<ul class="simple">
+<li><p>图中的输入的数据维度为8，过滤器的维度为5。与二维卷积类似，卷积后输出的数据维度为<span class="math notranslate nohighlight">\(8−5+1=4\)</span>。</p></li>
+<li><p>如果过滤器数量仍为1，输入数据的channel数量变为16，即输入数据维度为<span class="math notranslate nohighlight">\(8×16\)</span>。这里channel的概念相当于自然语言处理中的embedding，而该输入数据代表8个单词，其中每个单词的词向量维度大小为16。在这种情况下，过滤器的维度由55变为<span class="math notranslate nohighlight">\(5×16\)</span>，最终输出的数据维度仍为4。</p></li>
+<li><p>如果过滤器数量为<span class="math notranslate nohighlight">\(n\)</span>，那么输出的数据维度就变为<span class="math notranslate nohighlight">\(4×n\)</span>。</p></li>
+<li><p>一于维卷积常用：文本、语言、时序序列</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>二维卷积<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>可以参考上面相关内容</p>
+<div class="math notranslate nohighlight">
+\[y_{i, j}=\sum_{a=1}^{h} \sum_{b=1}^{w}  w_{a, b} x_{i+a, j+b}\]</div>
+<ul class="simple">
+<li><p>二维卷积常用于：计算机视觉、图像处理领域</p></li>
+</ul>
+</section>
+<section id="id14">
+<h3>三维卷积<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<img src="../image/ConvolutionalNeuralNetwork/1223117-20180212194618921-376193862.png" alt="" style="zoom: 40%; display: block; margin: 0px auto;" />
+<div class="math notranslate nohighlight">
+\[y_{i, j, k}=\sum_{a=1}^{h} \sum_{b=1}^{w} \sum_{c=1}^{d} w_{a, b, c} x_{i+a, j+b, k+c}\]</div>
+<p>这里采用代数的方式对三维卷积进行介绍，具体思想与一维卷积、二维卷积相同。</p>
+<ul class="simple">
+<li><p>假设输入数据的大小为<span class="math notranslate nohighlight">\(a_1×a_2×a_3\)</span>，channel数为<span class="math notranslate nohighlight">\(c\)</span>，过滤器大小为<span class="math notranslate nohighlight">\(f\)</span>，即过滤器维度为<span class="math notranslate nohighlight">\(f×f×f×c\)</span>（一般不写channel的维度），过滤器数量为<span class="math notranslate nohighlight">\(n\)</span>。</p></li>
+<li><p>基于上述情况，三维卷积最终的输出为<span class="math notranslate nohighlight">\((a_1−f+1)×(a_2−f+1)×(a_3−f+1)×n\)</span>。该公式对于一维卷积、二维卷积仍然有效，只有去掉不相干的输入数据维度就行。</p></li>
+<li><p>三维卷：积常用于医学领CT影响），视频处理领域（检测动作及人行为），气象地图。</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ConvolutionalNeuralNetwork"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../DeepLearning/GPU.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">GPU</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="padding-and-strides.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">填充和步幅</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">二维卷积层</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">互相关运算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">公式总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">卷积核的作用</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">图像卷积代码实现</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">想互关运算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">卷积层</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">图像中目标的边缘检测（简单应用）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">学习卷积核</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">一维卷积、二维卷积、三维卷积</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">一维卷积</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">二维卷积</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">三维卷积</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

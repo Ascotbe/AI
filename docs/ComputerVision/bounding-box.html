@@ -1,0 +1,752 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>目标检测和边界框 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ComputerVision/bounding-box';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="目标检测数据集" href="object-detection-dataset.html" />
+    <link rel="prev" title="微调" href="fine-tuning.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    📚 AI 学习笔记 🧠
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fine-tuning.html">微调</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neural-style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ComputerVision/bounding-box.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>目标检测和边界框</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">边界框</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>目标检测和边界框<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>目标检测在多个领域中被广泛使用。
+例如，在无人驾驶里，我们需要通过识别拍摄到的视频图像里的车辆、行人、道路和障碍物的位置来规划行进线路。
+机器人也常通过该任务来检测感兴趣的目标。安防领域则需要检测异常目标，如歹徒或者炸弹。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">torchvision.io</span> <span class="kn">import</span> <span class="n">read_image</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="c1">#mpl.rcParams[&#39;font.sans-serif&#39;] = [&#39;SimHei&#39;]  # 中文字体支持</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Songti SC&#39;</span><span class="p">]</span>  <span class="c1"># macOS中文字体支持</span>
+<span class="k">def</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">img_lst</span><span class="p">,</span> <span class="o">**</span><span class="n">imshow_kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    img_lst: 保存图像和标题的list，形如：[(image1, title1),(image2, title2)]。image可以使Pillow.Image对象，也可以是torch.Tensor。</span>
+<span class="sd">    imshow_kwargs: 需要传递给plt.imshow的参数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">img_lst</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">img_lst</span><span class="p">),</span><span class="mi">3</span><span class="p">),</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">img_lst</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>  <span class="c1"># 如果是torch.Tensor类型，就必须转换成Pillow.Image类型，才能进行展示</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">img</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="o">**</span><span class="n">imshow_kwargs</span><span class="p">)</span>
+        <span class="c1"># axs[0, i].set(xticklabels=[], yticklabels=[], xticks=[], yticks=[])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>下面加载本节将使用的示例图像。可以看到图像左边是一只狗，右边是一只猫。
+它们是这张图像里的两个主要目标。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/ComputerVision/catdog.jpg&#39;</span><span class="p">),</span> <span class="s1">&#39;原始图片&#39;</span><span class="p">)</span>
+<span class="n">show_image</span><span class="p">([</span><span class="n">raw_img</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4cb5ebb658c930fd3dda3406a566590351d6ec60aa3616bc5973ae8b33564330.png" src="../_images/4cb5ebb658c930fd3dda3406a566590351d6ec60aa3616bc5973ae8b33564330.png" />
+</div>
+</div>
+<section id="id2">
+<h2>边界框<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>在目标检测中，我们通常使用<em>边界框</em>（bounding box）来描述对象的空间位置。
+边界框是矩形的，由矩形左上角的以及右下角的<span class="math notranslate nohighlight">\(x\)</span>和<span class="math notranslate nohighlight">\(y\)</span>坐标决定。
+另一种常用的边界框表示方法是边界框中心的<span class="math notranslate nohighlight">\((x, y)\)</span>轴坐标以及框的宽度和高度。</p>
+<p>在这里，我们<strong>定义在这两种表示法之间进行转换的函数</strong>：<code class="docutils literal notranslate"><span class="pre">box_corner_to_center</span></code>从两角表示法转换为中心宽度表示法，而<code class="docutils literal notranslate"><span class="pre">box_center_to_corner</span></code>反之亦然。
+输入参数<code class="docutils literal notranslate"><span class="pre">boxes</span></code>可以是长度为4的张量，也可以是形状为（<span class="math notranslate nohighlight">\(n\)</span>，4）的二维张量，其中<span class="math notranslate nohighlight">\(n\)</span>是边界框的数量。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">box_corner_to_center</span><span class="p">(</span><span class="n">boxes</span><span class="p">):</span>  <span class="c1">#该函数将边界框的表示从 (x1, y1, x2, y2) 转换为 (cx, cy, w, h)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;从（左上，右下）转换到（中间，宽度，高度）&quot;&quot;&quot;</span>
+    <span class="c1"># x1, y1 是左上角的坐标，x2, y2 是右下角的坐标。</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="c1"># cx和cy是中心坐标</span>
+    <span class="n">cx</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">cy</span> <span class="o">=</span> <span class="p">(</span><span class="n">y1</span> <span class="o">+</span> <span class="n">y2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+    <span class="n">boxes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 将这些值组合成形状为 (n, 4) 的张量并返回。</span>
+    <span class="k">return</span> <span class="n">boxes</span>
+
+
+<span class="k">def</span> <span class="nf">box_center_to_corner</span><span class="p">(</span><span class="n">boxes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;从（中间，宽度，高度）转换到（左上，右下）&quot;&quot;&quot;</span>
+    <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">w</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">cy</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">w</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">cy</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span>
+    <span class="n">boxes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">boxes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>我们将根据坐标信息<strong>定义图像中狗和猫的边界框</strong>。
+图像中坐标的原点是图像的左上角，向右的方向为<span class="math notranslate nohighlight">\(x\)</span>轴的正方向，向下的方向为<span class="math notranslate nohighlight">\(y\)</span>轴的正方向。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bbox是边界框的英文缩写</span>
+<span class="n">dog_bbox</span><span class="p">,</span> <span class="n">cat_bbox</span> <span class="o">=</span> <span class="p">[</span><span class="mf">60.0</span><span class="p">,</span> <span class="mf">45.0</span><span class="p">,</span> <span class="mf">378.0</span><span class="p">,</span> <span class="mf">516.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">400.0</span><span class="p">,</span> <span class="mf">112.0</span><span class="p">,</span> <span class="mf">655.0</span><span class="p">,</span> <span class="mf">493.0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>我们可以通过转换两次来验证边界框转换函数的正确性。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boxes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">((</span><span class="n">dog_bbox</span><span class="p">,</span> <span class="n">cat_bbox</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">boxes</span><span class="p">)</span>
+<span class="n">box_center_to_corner</span><span class="p">(</span><span class="n">box_corner_to_center</span><span class="p">(</span><span class="n">boxes</span><span class="p">))</span> <span class="o">==</span> <span class="n">boxes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 60.,  45., 378., 516.],
+        [400., 112., 655., 493.]])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[True, True, True, True],
+        [True, True, True, True]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>我们可以<strong>将边界框在图中画出</strong>，以检查其是否准确。
+画之前，我们定义一个辅助函数<code class="docutils literal notranslate"><span class="pre">bbox_to_rect</span></code>。
+它将边界框表示成<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>的边界框格式。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bbox_to_rect</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+    <span class="c1"># 将边界框(左上x,左上y,右下x,右下y)格式转换成matplotlib格式：</span>
+    <span class="c1"># ((左上x,左上y),宽,高)</span>
+    <span class="k">return</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
+        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">width</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">height</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>在图像上添加边界框之后，我们可以看到两个物体的主要轮廓基本上在两个框内。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fig = d2l.plt.imshow()</span>
+<span class="c1"># fig.axes.add_patch(bbox_to_rect(dog_bbox, &#39;blue&#39;))</span>
+<span class="c1"># fig.axes.add_patch(bbox_to_rect(cat_bbox, &#39;red&#39;))</span>
+
+<span class="c1"># 显示图像</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../image/ComputerVision/catdog.jpg&#39;</span><span class="p">))</span>
+<span class="c1"># 添加边界框</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">bbox_to_rect</span><span class="p">(</span><span class="n">dog_bbox</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">))</span>  <span class="c1"># 蓝色的狗边界框</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">bbox_to_rect</span><span class="p">(</span><span class="n">cat_bbox</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>   <span class="c1"># 红色的猫边界框</span>
+<span class="c1"># 显示</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5532dff8b7cb96793f99d29e451461f0434b3224bc37e69c2729cebcf7358ec6.png" src="../_images/5532dff8b7cb96793f99d29e451461f0434b3224bc37e69c2729cebcf7358ec6.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ComputerVision"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="fine-tuning.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">微调</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="object-detection-dataset.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">目标检测数据集</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">边界框</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

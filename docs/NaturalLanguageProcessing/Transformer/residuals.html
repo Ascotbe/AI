@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The Residuals 残差 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'NaturalLanguageProcessing/Transformer/residuals';</script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Mask机制" href="mask.html" />
+    <link rel="prev" title="Positional Encoding 位置编码" href="positional_encoding.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    📚 AI 学习笔记 🧠
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/GPU.html">GPU</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/fine-tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural-style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="end.html">堆叠多层</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/NaturalLanguageProcessing/Transformer/residuals.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Residuals  残差</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">残差模块解决了什么问题？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">残差模块的结构</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">残差模块如何解决上述问题</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-residuals">
+<h1>The Residuals  残差<a class="headerlink" href="#the-residuals" title="Link to this heading">#</a></h1>
+<p>每个编码器中的每个子层（自注意力机制）周围都有一个残差连接，并且后面是层归一化步骤</p>
+<img src="../../image/NaturalLanguageProcessing/transformer_resideual_layer_norm.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>如果我们要可视化与自注意力相关的向量和层范数操作，它看起来像这样：</p>
+<img src="../../image/NaturalLanguageProcessing/transformer_resideual_layer_norm_2.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>可以看到到上图<span class="math notranslate nohighlight">\(X_1\)</span>到Add &amp; Normalizez，有一条路是经过自注意机制运算的，而另一条路是直接到Add &amp; Normalizez中的，<strong>这样做的理由是进过变换可能损失会更大，所以让模型自己选着一条损失小的路线</strong>。</p>
+<section id="id1">
+<h2>残差模块解决了什么问题？<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>一定程度上可以缓解梯度弥散问题</p>
+</div></blockquote>
+<p>现代神经网络一般是通过基于梯度的BP算法来优化，对前馈神经网络而言，一般需要前向传播输入信号，然后反向传播误差并使用梯度方法更新参数。</p>
+<p>根据链式法则，当导数&lt;1时，会导致反向传播中梯度逐渐消失，底层的参数不能有效更新，这也就是<strong>梯度弥散(或梯度消失)</strong>；当 导数&gt;1 时，则会使得梯度以指数级速度增大，造成系统不稳定，也就是<strong>梯度爆炸</strong>问题。此问题可以被<strong>标准初始化和中间层正规化方法有效控制</strong>，这些方法使得深度神经网络可以收敛。</p>
+<blockquote>
+<div><p>一定程度上解决网络退化问题</p>
+</div></blockquote>
+<p>在神经网络可以收敛的前提下，<strong>随着网络深度增加，网络的表现先是逐渐增加至饱和，然后迅速下降</strong>。</p>
+<p>网络退化问题不是过拟合导致的，即便在模型训练过程中，同样的训练轮次下，退化的网络也比稍浅层的网络的训练错误更高，如下图所示。</p>
+<img src="../../image/NaturalLanguageProcessing/v2-3e1e36d4953cbcfa790fda15d79efe35_2048w.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<blockquote>
+<div><p>一定程度上缓解梯度破碎问题</p>
+</div></blockquote>
+<p><strong>在标准前馈神经网络中，随着深度增加，梯度逐渐呈现为白噪声</strong>(white noise)。许多优化方法假设梯度在相邻点上是相似的，破碎的梯度会大大减小这类优化方法的有效性。另外，如果梯度表现得像白噪声，那么某个神经元对网络输出的影响将会很不稳定。</p>
+</section>
+<section id="id2">
+<h2>残差模块的结构<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>一个残差块（shortcut connections/skip connections）分为直接映射部分<span class="math notranslate nohighlight">\(\left(x_{l}\right)\)</span>和残差部分<span class="math notranslate nohighlight">\(F\left(x_{l}, W_{l}\right)\)</span>，可以表示为：</p>
+<div class="math notranslate nohighlight">
+\[x_{l+1}=x_{l}+F\left(x_{l}, W_{l}\right)\]</div>
+<p>示意图如下图所示:</p>
+<img src="../../image/NaturalLanguageProcessing/v2-a75e6636ebb983125086d9f63f7b27b3_99999w.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+</section>
+<section id="id3">
+<h2>残差模块如何解决上述问题<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>根据后向传播的链式法则可以看到，上述残差块中，因为增加了<span class="math notranslate nohighlight">\(x\)</span>项(恒等映射)，那么该网络求<span class="math notranslate nohighlight">\(x\)</span>的偏导的时候，<strong>多了一项常数1，所以反向传播过程，梯度连乘，也不会造成梯度消失。</strong></p>
+<img src="../../image/NaturalLanguageProcessing/残差模块求导.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
+<p>在前向传播时，<strong>输入信号可以从任意低层直接传播到高层</strong>。由于<strong>包含了一个天然的恒等映射，一定程度上可以解决网络退化问题</strong>。</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1702.08591">The Shattered Gradients Problem: If resnets are the answer, then what is the question?</a> 一文中提到在标准前馈神经网络中，随着深度增加，<strong>神经元梯度的相关性(corelation)按指数级减少</strong> (<span class="math notranslate nohighlight">\(\frac{1}{2^L}\)</span>）；同时，<strong>梯度的空间结构也随着深度增加被逐渐消除</strong>。这也就是梯度破碎现象。
+<img src="../../image/NaturalLanguageProcessing/v2-208275f71855e68b2fadaeac6b263d0a_99990w.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" /></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./NaturalLanguageProcessing/Transformer"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="positional_encoding.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Positional Encoding  位置编码</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mask.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Mask机制</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">残差模块解决了什么问题？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">残差模块的结构</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">残差模块如何解决上述问题</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
