@@ -504,14 +504,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: &#39;dlopen(/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so, 0x0006): Symbol not found: __ZN3c1017RegisterOperatorsD1Ev
-  Referenced from: &lt;6A7076EE-85BD-37A7-BC35-1D4867F2B3D3&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torchvision/image.so
-  Expected in:     &lt;A84DFEFF-287E-3B94-A7DB-731FA5F9CBBC&gt; /Users/ascotbe/anaconda3/lib/python3.10/site-packages/torch/lib/libtorch_cpu.dylib&#39;If you don&#39;t plan on using image functionality from `torchvision.io`, you can ignore this warning. Otherwise, there might be something wrong with your environment. Did you have `libjpeg` or `libpng` installed before building `torchvision` from source?
-  warn(
-</pre></div>
-</div>
-</div>
 </div>
 <section id="id1">
 <h2>基于位置的前馈网络<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
@@ -549,23 +541,19 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/ascotbe/anaconda3/lib/python3.10/site-packages/torch/nn/modules/lazy.py:181: UserWarning: Lazy modules are a new feature under heavy development so changes to the API or functionality can happen at any moment.
-  warnings.warn(&#39;Lazy modules are a new feature under heavy development &#39;
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
-          -0.1733],
-         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
-          -0.1733],
-         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
-          -0.1733]],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813]],
 
-        [[ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
-          -0.1733],
-         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
-          -0.1733],
-         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
-          -0.1733]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -682,13 +670,13 @@ tensor([[[0., 0., 0., 0.],
         [[0., 0., 0., 0.],
          [0., 0., 0., 0.],
          [0., 0., 0., 0.]]], grad_fn=&lt;NativeLayerNormBackward0&gt;)
-tensor([[[-1.0012, -0.9104,  1.3691,  0.5424],
-         [ 0.9754,  0.2793, -1.6722,  0.4175],
-         [-0.7689, -1.1939,  1.1502,  0.8126]],
+tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
+         [ 1.5680,  0.1495, -0.7098, -1.0076],
+         [-0.2261, -1.2255, -0.1090,  1.5605]],
 
-        [[ 0.5301, -0.9485, -0.9595,  1.3779],
-         [ 0.8681,  0.8589, -1.5767, -0.1504],
-         [-1.5903,  0.9440, -0.1076,  0.7539]]],
+        [[-0.5173, -0.7151, -0.4931,  1.7256],
+         [ 1.3754, -0.2801,  0.2980, -1.3932],
+         [ 0.0335,  0.0546, -1.4568,  1.3688]]],
        grad_fn=&lt;NativeLayerNormBackward0&gt;)
 </pre></div>
 </div>
@@ -875,23 +863,6 @@ tensor([[[-1.0012, -0.9104,  1.3691,  0.5424],
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;多头注意力机制。</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span><span class="sd">     </span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span><span class="sd">     参数：</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span><span class="sd">     - bias: 是否在线性层中使用偏置。</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
-<span class="ne">AttributeError</span>: module &#39;d2l.torch&#39; has no attribute &#39;Module&#39;
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="id5">
@@ -956,23 +927,7 @@ tensor([[[-1.0012, -0.9104,  1.3691,  0.5424],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">24</span><span class="p">))</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">valid_lens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">encoder_blk</span> <span class="o">=</span> <span class="n">EncoderBlock</span><span class="p">(</span> <span class="mi">24</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">encoder_blk</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">output</span> <span class="o">=</span> <span class="n">encoder_blk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">)</span>
-
-<span class="nn">Cell In[9], line 16,</span> in <span class="ni">EncoderBlock.__init__</span><span class="nt">(self, num_hiddens, ffn_num_hiddens, num_heads, dropout, use_bias)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># 定义多头注意力机制</span>
-<span class="ne">---&gt; </span><span class="mi">16</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="c1"># 第一次加法归一化层，通常在多头注意力后进行残差连接和归一化</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm1</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;MultiHeadAttention&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([2, 100, 24])
 </pre></div>
 </div>
 </div>
@@ -1059,28 +1014,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">encoder</span> <span class="o">=</span> <span class="n">TransformerEncoder</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="mi">200</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">encoder</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">encoder</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span> <span class="n">valid_lens</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
-
-<span class="nn">Cell In[11], line 48,</span> in <span class="ni">TransformerEncoder.__init__</span><span class="nt">(self, vocab_size, num_hiddens, ffn_num_hiddens, num_heads, num_blks, dropout, use_bias)</span>
-<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="bp">self</span><span class="o">.</span><span class="n">blks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_blks</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s2">&quot;block&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
-<span class="ne">---&gt; </span><span class="mi">48</span>         <span class="n">EncoderBlock</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="p">))</span>
-
-<span class="nn">Cell In[9], line 16,</span> in <span class="ni">EncoderBlock.__init__</span><span class="nt">(self, num_hiddens, ffn_num_hiddens, num_heads, dropout, use_bias)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># 定义多头注意力机制</span>
-<span class="ne">---&gt; </span><span class="mi">16</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="c1"># 第一次加法归一化层，通常在多头注意力后进行残差连接和归一化</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm1</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;MultiHeadAttention&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([2, 100, 24])
 </pre></div>
 </div>
 </div>
@@ -1156,21 +1090,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">decoder_blk</span> <span class="o">=</span> <span class="n">TransformerDecoderBlock</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">24</span><span class="p">))</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="n">encoder_blk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">),</span> <span class="n">valid_lens</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]]</span>
-
-<span class="nn">Cell In[13], line 9,</span> in <span class="ni">TransformerDecoderBlock.__init__</span><span class="nt">(self, num_hiddens, ffn_num_hiddens, num_heads, dropout, i)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">i</span>  <span class="c1"># 记录该块的索引 i</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="c1"># 定义第一个多头注意力机制 (自注意力)</span>
-<span class="ne">----&gt; </span><span class="mi">9</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention1</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm1</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>  <span class="c1"># Add &amp; Norm 操作</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1"># 定义第二个多头注意力机制 (编码器-解码器注意力)</span>
-
-<span class="ne">NameError</span>: name &#39;MultiHeadAttention&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([2, 100, 24])
 </pre></div>
 </div>
 </div>
@@ -1284,18 +1204,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 从 d2l 库中获取数据集，数据集为英法翻译，使用批量大小 128</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">data</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">MTFraEng</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># 定义模型参数</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.2</span>  <span class="c1"># 隐藏层大小、编码器块数、dropout 概率</span>
-
-<span class="ne">AttributeError</span>: module &#39;d2l.torch&#39; has no attribute &#39;MTFraEng&#39;
-</pre></div>
-</div>
-</div>
+<img alt="../../_images/93c5870a24444130dd9d0ea4b1897db6c448843a2c46a5e70d8c34781c7debe7.svg" src="../../_images/93c5870a24444130dd9d0ea4b1897db6c448843a2c46a5e70d8c34781c7debe7.svg" /></div>
 </div>
 <p>训练结束后，使用Transformer模型将一些英语句子翻译成法，并且计算它们的BLEU分数。</p>
 <div class="cell docutils container">
@@ -1324,18 +1233,10 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">fras</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;va !&#39;</span><span class="p">,</span> <span class="s1">&#39;j</span><span class="se">\&#39;</span><span class="s1">ai perdu .&#39;</span><span class="p">,</span> <span class="s1">&#39;il est calme .&#39;</span><span class="p">,</span> <span class="s1">&#39;je suis chez moi .&#39;</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># 使用模型进行预测</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">preds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_step</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">data</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">engs</span><span class="p">,</span> <span class="n">fras</span><span class="p">),</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># 遍历每个输入句子、参考句子和模型预测结果</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="k">for</span> <span class="n">en</span><span class="p">,</span> <span class="n">fr</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">engs</span><span class="p">,</span> <span class="n">fras</span><span class="p">,</span> <span class="n">preds</span><span class="p">):</span>
-
-<span class="ne">NameError</span>: name &#39;model&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>go . =&gt; [&#39;va&#39;, &#39;!&#39;], bleu,1.000
+i lost . =&gt; [&quot;j&#39;ai&quot;, &#39;perdu&#39;, &#39;.&#39;], bleu,1.000
+he&#39;s calm . =&gt; [&#39;il&#39;, &#39;est&#39;, &#39;mouillé&#39;, &#39;.&#39;], bleu,0.658
+i&#39;m home . =&gt; [&#39;je&#39;, &#39;suis&#39;, &#39;chez&#39;, &#39;moi&#39;, &#39;.&#39;], bleu,1.000
 </pre></div>
 </div>
 </div>
@@ -1361,21 +1262,6 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 使用模型的 predict_step 方法预测最后一对英语句子和法语句子，并获取解码器注意力权重</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">_</span><span class="p">,</span> <span class="n">dec_attention_weights</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_step</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">data</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="n">engs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">fras</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]),</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">,</span> <span class="kc">True</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># 连接编码器的所有注意力权重</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">enc_attention_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">attention_weights</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;model&#39; is not defined
-</pre></div>
-</div>
-</div>
 </div>
 <p>在编码器的自注意力中，查询和键都来自相同的输入序列。因为填充词元是不携带信息的，因此通过指定输入序列的有效长度可以避免查询与使用填充词元的位置计算注意力。接下来，将逐行呈现两层多头注意力的权重。每个注意力头都根据查询、键和值的不同的表示子空间来表示不同的注意力。</p>
 <div class="cell docutils container">
@@ -1392,22 +1278,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 使用 d2l 库中的 show_heatmaps 函数来可视化编码器的注意力权重</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">d2l</span><span class="o">.</span><span class="n">show_heatmaps</span><span class="p">(</span>
-<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">enc_attention_weights</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span>  <span class="c1"># 将注意力权重移到 CPU 以进行可视化</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Key positions&#39;</span><span class="p">,</span>  <span class="c1"># X 轴标签，表示键的位置</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Query positions&#39;</span><span class="p">,</span>  <span class="c1"># Y 轴标签，表示查询的位置</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Head </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>  <span class="c1"># 热图标题，表示不同的注意力头</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>  <span class="c1"># 设置图形的大小</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;enc_attention_weights&#39; is not defined
-</pre></div>
-</div>
-</div>
+<img alt="../../_images/70fdf7295713c2d3e89da8f473a4f93eee5c4368f637131af481e1d87b38e46a.svg" src="../../_images/70fdf7295713c2d3e89da8f473a4f93eee5c4368f637131af481e1d87b38e46a.svg" /></div>
 </div>
 <p>为了可视化解码器的自注意力权重和“编码器－解码器”的注意力权重，我们需要完成更多的数据操作工作。例如用零填充被掩蔽住的注意力权重。值得注意的是，解码器的自注意力权重和“编码器－解码器”的注意力权重都有相同的查询：即以<em>序列开始词元</em>（beginning-of-sequence,BOS）打头，再与后续输出的词元共同组成序列。</p>
 <div class="cell docutils container">
@@ -1441,24 +1312,6 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 将解码器的注意力权重转换为二维列表，填充为 0</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">dec_attention_weights_2d</span> <span class="o">=</span> <span class="p">[</span><span class="n">head</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># 提取第一个头的注意力权重，并转换为列表</span>
-<span class="ne">----&gt; </span><span class="mi">3</span>                             <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">dec_attention_weights</span>  <span class="c1"># 遍历每个时间步</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>                             <span class="k">for</span> <span class="n">attn</span> <span class="ow">in</span> <span class="n">step</span>  <span class="c1"># 遍历每个块的注意力</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>                             <span class="k">for</span> <span class="n">blk</span> <span class="ow">in</span> <span class="n">attn</span>  <span class="c1"># 遍历每个块</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>                             <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="n">blk</span><span class="p">]</span>  <span class="c1"># 遍历每个头</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="c1"># 使用 pandas DataFrame 来填充 NaN 值，填充为 0.0</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">dec_attention_weights_filled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dec_attention_weights_2d</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>  <span class="c1"># 将填充后的数据转换为 PyTorch 张量</span>
-
-<span class="ne">NameError</span>: name &#39;dec_attention_weights&#39; is not defined
-</pre></div>
-</div>
-</div>
 </div>
 <p>由于解码器自注意力的自回归属性，查询不会对当前位置之后的“键－值”对进行注意力计算。</p>
 <div class="cell docutils container">
@@ -1475,22 +1328,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">21</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 使用 d2l.show_heatmaps 函数可视化解码器自注意力权重</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">d2l</span><span class="o">.</span><span class="n">show_heatmaps</span><span class="p">(</span>
-<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">dec_self_attention_weights</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:],</span>  <span class="c1"># 提取所有块和头的自注意力权重</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Key positions&#39;</span><span class="p">,</span>  <span class="c1"># X 轴标签表示 Key 位置</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Query positions&#39;</span><span class="p">,</span>  <span class="c1"># Y 轴标签表示 Query 位置</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Head </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>  <span class="c1"># 为每个注意力头设置标题</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>  <span class="c1"># 设置图形大小</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;dec_self_attention_weights&#39; is not defined
-</pre></div>
-</div>
-</div>
+<img alt="../../_images/120ec0719567d4212cb0f3ab71a959cdc781e78af0119de4de0420ba122f75a7.svg" src="../../_images/120ec0719567d4212cb0f3ab71a959cdc781e78af0119de4de0420ba122f75a7.svg" /></div>
 </div>
 <p>与编码器的自注意力的情况类似，通过指定输入序列的有效长度，输出序列的查询不会与输入序列中填充位置的词元进行注意力计算。</p>
 <div class="cell docutils container">
@@ -1507,22 +1345,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">22</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 使用 d2l.show_heatmaps 函数可视化解码器中编码器-解码器注意力权重</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">d2l</span><span class="o">.</span><span class="n">show_heatmaps</span><span class="p">(</span>
-<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">dec_inter_attention_weights</span><span class="p">,</span>  <span class="c1"># 解码器中编码器-解码器注意力权重</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Key positions&#39;</span><span class="p">,</span>  <span class="c1"># X 轴标签表示 Key 位置</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Query positions&#39;</span><span class="p">,</span>  <span class="c1"># Y 轴标签表示 Query 位置</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Head </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>  <span class="c1"># 为每个注意力头设置标题</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>  <span class="c1"># 设置图形大小</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;dec_inter_attention_weights&#39; is not defined
-</pre></div>
-</div>
-</div>
+<img alt="../../_images/20feff643fca332950c749c769908bbda7f548a064daf86bc43fdd8ada26d183.svg" src="../../_images/20feff643fca332950c749c769908bbda7f548a064daf86bc43fdd8ada26d183.svg" /></div>
 </div>
 </section>
 </section>
