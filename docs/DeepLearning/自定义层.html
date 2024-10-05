@@ -207,6 +207,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/variance_and_standard_deviation.html">方差和标准差计算</a></li>
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -531,7 +534,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(2.3283e-09, grad_fn=&lt;MeanBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(7.4506e-09, grad_fn=&lt;MeanBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -572,11 +575,11 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
-tensor([[ 0.0474,  0.3903, -1.1373],
-        [ 0.2136, -0.9078, -0.2175],
-        [-3.4425,  0.1502, -1.0239],
-        [-1.2889,  0.8693,  0.9930],
-        [ 0.7524,  0.4122, -1.1199]], requires_grad=True)
+tensor([[-1.2395,  0.7012, -2.3732],
+        [ 0.5922,  1.4626, -0.2895],
+        [ 0.8988, -1.3955,  0.0406],
+        [-1.5129,  0.3515, -0.1131],
+        [ 1.0231,  2.1919,  0.5584]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -589,8 +592,8 @@ tensor([[ 0.0474,  0.3903, -1.1373],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.0000, 0.0295, 1.2558],
-        [0.0000, 0.2996, 0.0000]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.6002, 3.6849, 0.0000],
+        [1.2703, 1.7515, 0.0000]])
 </pre></div>
 </div>
 </div>
@@ -604,8 +607,8 @@ tensor([[ 0.0474,  0.3903, -1.1373],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[8.7328],
-        [0.8283]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.],
+        [0.]])
 </pre></div>
 </div>
 </div>

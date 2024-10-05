@@ -209,6 +209,9 @@
 <li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.arange.html">torch.arange</a></li>
 <li class="toctree-l1"><a class="reference internal" href="torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variance_and_standard_deviation.html">方差和标准差计算</a></li>
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -491,10 +494,10 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([ 0.6323,  0.7436, -2.4585,  0.4224, -1.0208,  0.1219,  0.1807,  0.1060,
-        -0.7903, -1.0733])
+tensor([ 0.2012, -0.9547,  1.3056,  0.2987,  0.2081,  0.1731, -1.9355, -0.7813,
+         2.2415, -1.2332])
 经过relu之后
-tensor([0.6323, 0.7436, 0.0000, 0.4224, 0.0000, 0.1219, 0.1807, 0.1060, 0.0000,
+tensor([0.2012, 0.0000, 1.3056, 0.2987, 0.2081, 0.1731, 0.0000, 0.0000, 2.2415,
         0.0000])
 </pre></div>
 </div>
@@ -516,14 +519,14 @@ tensor([0.6323, 0.7436, 0.0000, 0.4224, 0.0000, 0.1219, 0.1807, 0.1060, 0.0000,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([-0.4145, -0.7254,  3.1652, -0.7182, -0.1293,  0.8270,  0.4358,  0.4776,
-        -0.4520, -0.5939])
+tensor([-0.4600,  0.1764, -0.2246, -0.5162, -0.0265, -0.8215,  0.2615,  1.3505,
+        -1.7925,  0.1858])
 经过relu之后c的值
-tensor([0.0000, 0.0000, 3.1652, 0.0000, 0.0000, 0.8270, 0.4358, 0.4776, 0.0000,
-        0.0000])
+tensor([0.0000, 0.1764, 0.0000, 0.0000, 0.0000, 0.0000, 0.2615, 1.3505, 0.0000,
+        0.1858])
 经过relu之后d的值
-tensor([0.0000, 0.0000, 3.1652, 0.0000, 0.0000, 0.8270, 0.4358, 0.4776, 0.0000,
-        0.0000])
+tensor([0.0000, 0.1764, 0.0000, 0.0000, 0.0000, 0.0000, 0.2615, 1.3505, 0.0000,
+        0.1858])
 </pre></div>
 </div>
 </div>

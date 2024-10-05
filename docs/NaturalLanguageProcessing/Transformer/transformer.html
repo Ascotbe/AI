@@ -209,6 +209,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.arange.html">torch.arange</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/variance_and_standard_deviation.html">方差和标准差计算</a></li>
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -550,19 +553,19 @@ document.write(`
   warnings.warn(&#39;Lazy modules are a new feature under heavy development &#39;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
-          -0.6661],
-         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
-          -0.6661],
-         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
-          -0.6661]],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
+          -0.1733],
+         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
+          -0.1733],
+         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
+          -0.1733]],
 
-        [[-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
-          -0.6661],
-         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
-          -0.6661],
-         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
-          -0.6661]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
+          -0.1733],
+         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
+          -0.1733],
+         [ 0.6910,  0.0150,  0.2471,  0.1052, -0.1858, -0.2081, -0.4638,
+          -0.1733]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -679,13 +682,13 @@ tensor([[[0., 0., 0., 0.],
         [[0., 0., 0., 0.],
          [0., 0., 0., 0.],
          [0., 0., 0., 0.]]], grad_fn=&lt;NativeLayerNormBackward0&gt;)
-tensor([[[-0.9249, -0.3340, -0.4290,  1.6879],
-         [ 1.2797, -0.7323, -1.1891,  0.6417],
-         [ 1.6785, -0.6343, -0.8650, -0.1792]],
+tensor([[[-1.0012, -0.9104,  1.3691,  0.5424],
+         [ 0.9754,  0.2793, -1.6722,  0.4175],
+         [-0.7689, -1.1939,  1.1502,  0.8126]],
 
-        [[-1.3093, -0.0657, -0.1298,  1.5048],
-         [ 0.5765, -1.2710,  1.2989, -0.6043],
-         [ 0.9875, -0.1489,  0.7320, -1.5706]]],
+        [[ 0.5301, -0.9485, -0.9595,  1.3779],
+         [ 0.8681,  0.8589, -1.5767, -0.1504],
+         [-1.5903,  0.9440, -0.1076,  0.7539]]],
        grad_fn=&lt;NativeLayerNormBackward0&gt;)
 </pre></div>
 </div>
