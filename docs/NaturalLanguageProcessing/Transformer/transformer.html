@@ -63,6 +63,8 @@
     <link rel="icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="什么是微调" href="../../FineTuning/Introduction.html" />
+    <link rel="prev" title="堆叠多层" href="end.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +126,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -287,7 +287,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../LLMs.html">什么是LLMs</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="transformer_introduction.html">Transformer介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="embedding.html">Embedding 词嵌入</a></li>
@@ -296,6 +296,7 @@
 <li class="toctree-l1"><a class="reference internal" href="residuals.html">The Residuals  残差</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mask.html">Mask机制</a></li>
 <li class="toctree-l1"><a class="reference internal" href="end.html">堆叠多层</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transformer代码实现</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
@@ -549,19 +550,19 @@ document.write(`
   warnings.warn(&#39;Lazy modules are a new feature under heavy development &#39;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.8280, -0.4793,  0.2375, -0.3381, -0.1776, -0.3126, -0.6779,
-           0.2235],
-         [-0.8280, -0.4793,  0.2375, -0.3381, -0.1776, -0.3126, -0.6779,
-           0.2235],
-         [-0.8280, -0.4793,  0.2375, -0.3381, -0.1776, -0.3126, -0.6779,
-           0.2235]],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
+          -0.6661],
+         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
+          -0.6661],
+         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
+          -0.6661]],
 
-        [[-0.8280, -0.4793,  0.2375, -0.3381, -0.1776, -0.3126, -0.6779,
-           0.2235],
-         [-0.8280, -0.4793,  0.2375, -0.3381, -0.1776, -0.3126, -0.6779,
-           0.2235],
-         [-0.8280, -0.4793,  0.2375, -0.3381, -0.1776, -0.3126, -0.6779,
-           0.2235]]], grad_fn=&lt;ViewBackward0&gt;)
+        [[-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
+          -0.6661],
+         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
+          -0.6661],
+         [-0.0613,  0.4742, -0.8223,  0.5711, -0.0121, -0.3116, -0.6938,
+          -0.6661]]], grad_fn=&lt;ViewBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -678,13 +679,13 @@ tensor([[[0., 0., 0., 0.],
         [[0., 0., 0., 0.],
          [0., 0., 0., 0.],
          [0., 0., 0., 0.]]], grad_fn=&lt;NativeLayerNormBackward0&gt;)
-tensor([[[ 0.2750,  0.8124,  0.6124, -1.6998],
-         [-0.6895,  1.5083,  0.2668, -1.0856],
-         [-0.2272,  1.6242, -1.1074, -0.2896]],
+tensor([[[-0.9249, -0.3340, -0.4290,  1.6879],
+         [ 1.2797, -0.7323, -1.1891,  0.6417],
+         [ 1.6785, -0.6343, -0.8650, -0.1792]],
 
-        [[-0.2008, -1.4920,  1.2341,  0.4588],
-         [ 1.5880, -0.3749, -0.0581, -1.1551],
-         [-0.0405, -1.4530,  1.3680,  0.1255]]],
+        [[-1.3093, -0.0657, -0.1298,  1.5048],
+         [ 0.5765, -1.2710,  1.2989, -0.6043],
+         [ 0.9875, -0.1489,  0.7320, -1.5706]]],
        grad_fn=&lt;NativeLayerNormBackward0&gt;)
 </pre></div>
 </div>
@@ -1553,6 +1554,24 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="end.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">堆叠多层</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../FineTuning/Introduction.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">什么是微调</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
