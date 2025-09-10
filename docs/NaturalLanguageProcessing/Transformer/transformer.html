@@ -1,0 +1,1484 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Transformer代码实现 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'NaturalLanguageProcessing/Transformer/transformer';</script>
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="什么是微调" href="../../FineTuning/Introduction.html" />
+    <link rel="prev" title="堆叠多层" href="end.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    📚 AI 学习笔记 🧠
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FunctionDetails/variance_and_standard_deviation.html">方差和标准差计算</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/GPU.html">GPU</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/async-computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/fine-tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural-style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="end.html">堆叠多层</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transformer代码实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/NaturalLanguageProcessing/Transformer/transformer.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Transformer代码实现</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基于位置的前馈网络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">残差连接和层规范化</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layernorm"><strong>LayerNorm 计算</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batchnorm1d">BatchNorm1d 计算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">编码器</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">多头注意力</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">编码器块</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">解码器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="transformer">
+<h1>Transformer代码实现<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
+<h2>基于位置的前馈网络<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>基于位置的前馈网络对序列中的所有位置的表示进行变换时使用的是同一个多层感知机（MLP），这就是称前馈网络是<em>基于位置的</em>（positionwise）的原因。在下面的实现中，输入<code class="docutils literal notranslate"><span class="pre">X</span></code>的形状（批量大小，时间步数或序列长度，隐单元数或特征维度）将被一个两层的感知机转换成形状为（批量大小，时间步数，<code class="docutils literal notranslate"><span class="pre">ffn_num_outputs</span></code>）的输出张量。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PositionWiseFFN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># 基于位置的前馈网络</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ffn_num_input: 输入特征的维度，即每个 token 的特征数。</span>
+<span class="sd">    ffn_num_hiddens: 隐藏层的神经元数量，控制中间层的复杂度。</span>
+<span class="sd">    ffn_num_outputs: 输出特征的维度。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_outputs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># # 这是第一个全连接层（线性变换），它将输入从 ffn_num_input 维度映射到 ffn_num_hiddens 维度。这一步的作用是进行维度变换和线性组合，帮助模型捕捉更多复杂的特征</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">ffn_num_hiddens</span><span class="p">)</span>
+        <span class="c1"># ReLU 的作用是将输入中小于 0 的部分置为 0，保留大于 0 的部分不变，从而为网络引入非线性特征，使得模型可以更好地拟合复杂的非线性关系</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="c1"># 这是第二个全连接层，将隐藏层的输出转换回 ffn_num_outputs 维度</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span> <span class="n">ffn_num_outputs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>下面的例子显示，改变张量的最里层维度的尺寸，会改变成基于位置的前馈网络的输出尺寸。因为用同一个多层感知机对所有位置上的输入进行变换，所以当所有这些位置的输入相同时，它们的输出也是相同的。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ffn</span> <span class="o">=</span> <span class="n">PositionWiseFFN</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>  <span class="c1"># 设置好维度</span>
+<span class="n">ffn</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span> <span class="c1"># 用来将模型切换到评估模式。在评估模式下，像 Dropout 和 BatchNorm 等训练时特有的操作会被关闭，从而确保模型行为一致</span>
+<span class="n">ffn</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span> <span class="c1"># 2 个样本，每个样本有 3 个 token（或位置），每个 token 有 4 个特征</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813]],
+
+        [[-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813],
+         [-0.4082, -0.9014,  0.3697, -0.3377,  0.0818,  0.4002, -0.5420,
+          -0.3813]]], grad_fn=&lt;ViewBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>残差连接和层规范化<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>以下代码对比不同维度的层规范化和批量规范化的效果。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 层归一化（Layer Normalization）</span>
+<span class="n">bn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyBatchNorm1d</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># 批归一化（Batch Normalization）</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="c1"># 在训练模式下计算X的均值和方差</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;layer norm:&#39;</span><span class="p">,</span> <span class="n">ln</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">batch norm:&#39;</span><span class="p">,</span> <span class="n">bn</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>layer norm: tensor([[-1.0000,  1.0000],
+        [-1.0000,  1.0000]], grad_fn=&lt;NativeLayerNormBackward0&gt;) 
+batch norm: tensor([[-0.3333, -0.3333],
+        [ 0.3333,  0.3333]], grad_fn=&lt;NativeBatchNormBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="layernorm">
+<h3><strong>LayerNorm 计算</strong><a class="headerlink" href="#layernorm" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">LayerNorm</span></code> 是对每个样本的特征进行归一化，因此它对每一行独立计算均值和标准差。</p>
+<p>公式：</p>
+<p>对于每个样本<span class="math notranslate nohighlight">\(X_{i}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\text { normalized }=\frac{X_{i}-\mu_{i}}{\sigma_{i}}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu_{i}\)</span>是样本<span class="math notranslate nohighlight">\(i\)</span>的均值。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_{i}\)</span>是样本<span class="math notranslate nohighlight">\(i\)</span>的标准差。</p></li>
+</ul>
+<p>具体到<span class="math notranslate nohighlight">\(x\)</span>中的每一行:</p>
+<ul class="simple">
+<li><p>第一行<code class="docutils literal notranslate"><span class="pre">X[0]</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2]</span></code>的均值为<span class="math notranslate nohighlight">\(\mu=1.5\)</span>，标准差为<span class="math notranslate nohighlight">\(\sigma=0.5\)</span>。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text { normalized } \_X[0]=\left[\frac{1-1.5}{0.5}, \frac{2-1.5}{0.5}\right]=[-1.0,1.0]\]</div>
+<ul class="simple">
+<li><p>第二行<code class="docutils literal notranslate"><span class="pre">X[1]</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">3]</span></code>的均值为<span class="math notranslate nohighlight">\(\mu=2.5\)</span>，标准差为<span class="math notranslate nohighlight">\(\sigma=0.5\)</span>。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text { normalized } \_\mathrm{X}[1]=\left[\frac{2-2.5}{0.5}, \frac{3-2.5}{0.5}\right]=[-1.0,1.0]\]</div>
+</section>
+<section id="batchnorm1d">
+<h3>BatchNorm1d 计算<a class="headerlink" href="#batchnorm1d" title="Link to this heading">#</a></h3>
+<p>公式：</p>
+<p>对于每个特征（列）<span class="math notranslate nohighlight">\(X_{j}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\text { normalized }=\frac{X_{j}-\mu_{j}}{\sigma_{j}}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu_{j}\)</span>是样本<span class="math notranslate nohighlight">\(j\)</span>的均值。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_{j}\)</span>是样本<span class="math notranslate nohighlight">\(j\)</span>的标准差。</p></li>
+</ul>
+<p>具体到<span class="math notranslate nohighlight">\(x\)</span>中的每一行:</p>
+<ul class="simple">
+<li><p>第一行<code class="docutils literal notranslate"><span class="pre">X[:,0]</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2]</span></code>的均值为<span class="math notranslate nohighlight">\(\mu=1.5\)</span>，标准差为<span class="math notranslate nohighlight">\(\sigma=0.5\)</span>。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text { normalized } \_X[:,0]=\left[\frac{1-1.5}{0.5}, \frac{2-1.5}{0.5}\right]=[-1.0,1.0]\]</div>
+<ul class="simple">
+<li><p>第二行<code class="docutils literal notranslate"><span class="pre">X[:,1]</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">3]</span></code>的均值为<span class="math notranslate nohighlight">\(\mu=2.5\)</span>，标准差为<span class="math notranslate nohighlight">\(\sigma=0.5\)</span>。</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text { normalized } \_\mathrm{X}[:,1]=\left[\frac{2-2.5}{0.5}, \frac{3-2.5}{0.5}\right]=[-1.0,1.0]\]</div>
+<p>现在可使用残差连接和层规范化来实现<code class="docutils literal notranslate"><span class="pre">AddNorm</span></code>类。暂退法也被作为正则化方法使用。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AddNorm</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># 残差连接后进行层规范化</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    normalized_shape（层规范化的输入形状）</span>
+<span class="sd">    dropout（丢弃率）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalized_shape</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 用于在训练过程中随机丢弃一定比例的神经元，Dropout 在模型评估时会自动关闭</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ln</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">normalized_shape</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+        <span class="c1"># 在 Dropout 之后，将 Y 与输入张量 X 进行逐元素相加。这个过程就是残差连接（Residual Connection）</span>
+        <span class="n">_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">X</span>
+        <span class="c1"># print(_)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ln</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>残差连接要求两个输入的形状相同，以便加法操作后输出张量的形状相同。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">add_norm</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">add_norm</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span><span class="n">add_norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="c1"># 因此，如果输入是常数张量（如全为 2 的张量），则经过 LayerNorm 标准化后，结果可能是全 0，因为标准化后的均值为 0</span>
+<span class="c1"># 使用随机张量代替全 1 的张量</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">add_norm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([2, 3, 4])
+tensor([[[0., 0., 0., 0.],
+         [0., 0., 0., 0.],
+         [0., 0., 0., 0.]],
+
+        [[0., 0., 0., 0.],
+         [0., 0., 0., 0.],
+         [0., 0., 0., 0.]]], grad_fn=&lt;NativeLayerNormBackward0&gt;)
+tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
+         [ 1.5680,  0.1495, -0.7098, -1.0076],
+         [-0.2261, -1.2255, -0.1090,  1.5605]],
+
+        [[-0.5173, -0.7151, -0.4931,  1.7256],
+         [ 1.3754, -0.2801,  0.2980, -1.3932],
+         [ 0.0335,  0.0546, -1.4568,  1.3688]]],
+       grad_fn=&lt;NativeLayerNormBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>编码器<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>有了组成Transformer编码器的基础组件，现在可以先实现编码器中的一个层。下面的<code class="docutils literal notranslate"><span class="pre">EncoderBlock</span></code>类包含两个子层：多头自注意力和基于位置的前馈网络，这两个子层都使用了残差连接和紧随的层规范化。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">masked_softmax</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;在最后一个轴上执行 softmax 操作，并对指定元素进行遮掩（mask）。</span>
+
+<span class="sd">    参数：</span>
+<span class="sd">    - X: 3D 张量 (batch_size, sequence_length, embedding_dimension)。</span>
+<span class="sd">    - valid_lens: 1D 或 2D 张量，表示每个序列的有效长度，用于遮掩无效部分。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># 内部函数，生成遮掩掩码并应用到输入张量 X 上</span>
+    <span class="k">def</span> <span class="nf">_sequence_mask</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_len</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">maxlen</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 获取序列的最大长度（第二个维度大小）</span>
+        
+        <span class="c1"># 创建掩码，mask: shape 是 (batch_size, maxlen)</span>
+        <span class="c1"># torch.arange(maxlen): 生成 [0, 1, ..., maxlen-1] 序列</span>
+        <span class="c1"># 比较生成的序列与有效长度 valid_len，生成 True/False 掩码</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">maxlen</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">device</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&lt;</span> <span class="n">valid_len</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+        
+        <span class="c1"># 将 X 中无效位置的值设置为指定值 (value, 默认为 0)</span>
+        <span class="n">X</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">X</span>
+
+    <span class="c1"># 如果没有提供 valid_lens，直接在最后一个维度上执行 softmax</span>
+    <span class="k">if</span> <span class="n">valid_lens</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># 获取输入张量的形状 (batch_size, seq_len, embedding_dim)</span>
+
+        <span class="c1"># 如果 valid_lens 是 1D 张量（代表每个 batch 的有效长度相同）</span>
+        <span class="k">if</span> <span class="n">valid_lens</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># 将 valid_lens 扩展为与 X 的形状匹配的张量</span>
+            <span class="n">valid_lens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span><span class="n">valid_lens</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># 如果 valid_lens 是 2D 张量（可能每个序列和 query 对应的有效长度不同）</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 将 valid_lens 展平为 1D 张量</span>
+            <span class="n">valid_lens</span> <span class="o">=</span> <span class="n">valid_lens</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># 对张量 X 的最后一个轴（即每个时间步的嵌入）进行遮掩处理</span>
+        <span class="c1"># 将无效元素的值设置为 -1e6（在 softmax 中接近 -∞，其指数值会变为 0）</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">_sequence_mask</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">valid_lens</span><span class="p">,</span> <span class="n">value</span><span class="o">=-</span><span class="mf">1e6</span><span class="p">)</span>
+
+        <span class="c1"># 将遮掩后的 X 重新调整为原始形状，并在最后一个轴上执行 softmax</span>
+        <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">DotProductAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;缩放点积注意力机制。</span>
+
+<span class="sd">    参数：</span>
+<span class="sd">    - dropout: 在注意力权重上应用的 dropout 概率。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 初始化 dropout 层</span>
+
+    <span class="c1"># 前向传播函数</span>
+    <span class="c1"># 参数：</span>
+    <span class="c1"># - queries: (batch_size, no. of queries, d)，查询向量</span>
+    <span class="c1"># - keys: (batch_size, no. of key-value pairs, d)，键向量</span>
+    <span class="c1"># - values: (batch_size, no. of key-value pairs, value dimension)，值向量</span>
+    <span class="c1"># - valid_lens: (batch_size,) 或 (batch_size, no. of queries)，表示每个序列的有效长度</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">valid_lens</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">queries</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 获取查询向量的最后一个维度（嵌入维度）</span>
+        
+        <span class="c1"># 计算点积得分：queries @ keys.T / sqrt(d)，缩放以防止梯度爆炸</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        
+        <span class="c1"># 通过 masked_softmax 进行 softmax 并遮掩无效位置</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention_weights</span> <span class="o">=</span> <span class="n">masked_softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">)</span>
+        
+        <span class="c1"># 将注意力权重应用到值向量上，并返回加权结果</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attention_weights</span><span class="p">),</span> <span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id4">
+<h3>多头注意力<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>实现如下</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;多头注意力机制。</span>
+<span class="sd">    </span>
+<span class="sd">    参数：</span>
+<span class="sd">    - num_hiddens: 隐藏层的大小，即输入/输出的嵌入维度。</span>
+<span class="sd">    - num_heads: 注意力头的数量。</span>
+<span class="sd">    - dropout: 在注意力权重上的 dropout 比率。</span>
+<span class="sd">    - bias: 是否在线性层中使用偏置。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>  <span class="c1"># 多头的数量</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">DotProductAttention</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 点积注意力机制</span>
+        
+        <span class="c1"># 定义四个线性变换，分别用于 queries、keys、values 和最终的输出</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W_q</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>  <span class="c1"># 查询的线性变换</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W_k</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>  <span class="c1"># 键的线性变换</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W_v</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>  <span class="c1"># 值的线性变换</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W_o</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>  <span class="c1"># 输出的线性变换</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        参数：</span>
+<span class="sd">        - queries: 查询向量，形状为 (batch_size, num_queries, num_hiddens)</span>
+<span class="sd">        - keys: 键向量，形状为 (batch_size, num_kv_pairs, num_hiddens)</span>
+<span class="sd">        - values: 值向量，形状为 (batch_size, num_kv_pairs, num_hiddens)</span>
+<span class="sd">        - valid_lens: 有效长度，形状为 (batch_size,) 或 (batch_size, num_queries)</span>
+<span class="sd">        </span>
+<span class="sd">        返回：</span>
+<span class="sd">        - 输出张量，形状为 (batch_size, num_queries, num_hiddens)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># 将 queries, keys, values 通过各自的线性层，并转换形状以适应多头注意力</span>
+        <span class="c1"># 形状变为 (batch_size * num_heads, num_queries or num_kv_pairs, num_hiddens / num_heads)</span>
+        <span class="n">queries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose_qkv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W_q</span><span class="p">(</span><span class="n">queries</span><span class="p">))</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose_qkv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W_k</span><span class="p">(</span><span class="n">keys</span><span class="p">))</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose_qkv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W_v</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">valid_lens</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># 将 valid_lens 扩展为与每个注意力头相对应的形状</span>
+            <span class="c1"># 重复 valid_lens num_heads 次，以适应多个头的并行计算</span>
+            <span class="n">valid_lens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span>
+                <span class="n">valid_lens</span><span class="p">,</span> <span class="n">repeats</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># 通过点积注意力计算结果，形状为 (batch_size * num_heads, num_queries, num_hiddens / num_heads)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span><span class="p">(</span><span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">)</span>
+        
+        <span class="c1"># 将结果从多个头合并，形状变为 (batch_size, num_queries, num_hiddens)</span>
+        <span class="n">output_concat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose_output</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        
+        <span class="c1"># 返回经过线性变换后的输出结果</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_o</span><span class="p">(</span><span class="n">output_concat</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">transpose_qkv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;用于并行计算多个注意力头，转换 queries, keys 或 values 的形状。</span>
+<span class="sd">        </span>
+<span class="sd">        参数：</span>
+<span class="sd">        - X: 输入张量，形状为 (batch_size, num_queries or num_kv_pairs, num_hiddens)</span>
+<span class="sd">        </span>
+<span class="sd">        返回：</span>
+<span class="sd">        - 转置后的张量，形状为 (batch_size * num_heads, num_queries or num_kv_pairs, num_hiddens / num_heads)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># 首先将 X 的最后一个维度分成 num_heads 份，即 (batch_size, num_queries or num_kv_pairs, num_heads, num_hiddens / num_heads)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># 交换维度，使 num_heads 在第二个维度，即 (batch_size, num_heads, num_queries or num_kv_pairs, num_hiddens / num_heads)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+        <span class="c1"># 将前两个维度合并，形状变为 (batch_size * num_heads, num_queries or num_kv_pairs, num_hiddens / num_heads)</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">transpose_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;逆转 transpose_qkv 操作，将多个头的输出结果重新组合。</span>
+<span class="sd">        </span>
+<span class="sd">        参数：</span>
+<span class="sd">        - X: 输入张量，形状为 (batch_size * num_heads, num_queries, num_hiddens / num_heads)</span>
+<span class="sd">        </span>
+<span class="sd">        返回：</span>
+<span class="sd">        - 合并后的张量，形状为 (batch_size, num_queries, num_hiddens)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># 将 X 转换回 (batch_size, num_heads, num_queries, num_hiddens / num_heads)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        
+        <span class="c1"># 交换维度回到 (batch_size, num_queries, num_heads, num_hiddens / num_heads)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+        <span class="c1"># 合并最后两个维度，返回 (batch_size, num_queries, num_hiddens)</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h3>编码器块<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer 编码器块。</span>
+<span class="sd">    </span>
+<span class="sd">    参数：</span>
+<span class="sd">    - num_hiddens: 隐藏层的维度大小。</span>
+<span class="sd">    - ffn_num_hiddens: 前馈神经网络（FFN）隐藏层的维度大小。</span>
+<span class="sd">    - num_heads: 多头注意力中的头的数量。</span>
+<span class="sd">    - dropout: Dropout 概率，用于防止过拟合。</span>
+<span class="sd">    - use_bias: 是否在线性层中使用偏置。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span>
+                 <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># 定义多头注意力机制</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="p">)</span>
+        
+        <span class="c1"># 第一次加法归一化层，通常在多头注意力后进行残差连接和归一化</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addnorm1</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+        
+        <span class="c1"># 定义位置前馈神经网络（Position-Wise FFN）</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span> <span class="o">=</span> <span class="n">PositionWiseFFN</span><span class="p">(</span><span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">)</span>
+        
+        <span class="c1"># 第二次加法归一化层，通常在前馈网络后进行残差连接和归一化</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addnorm2</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        参数：</span>
+<span class="sd">        - X: 输入张量，形状为 (batch_size, num_tokens, num_hiddens)。</span>
+<span class="sd">        - valid_lens: 有效长度，形状为 (batch_size,) 或 (batch_size, num_queries)。</span>
+<span class="sd">        </span>
+<span class="sd">        返回：</span>
+<span class="sd">        - 输出张量，形状为 (batch_size, num_tokens, num_hiddens)。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># 进行多头注意力计算，并通过第一个 AddNorm 执行残差连接和归一化</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">))</span>
+        
+        <span class="c1"># 通过前馈神经网络计算结果，再经过第二个 AddNorm 执行残差连接和归一化</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm2</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>正如从代码中所看到的，Transformer编码器中的任何层都不会改变其输入的形状。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">24</span><span class="p">))</span>
+<span class="n">valid_lens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">encoder_blk</span> <span class="o">=</span> <span class="n">EncoderBlock</span><span class="p">(</span> <span class="mi">24</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">encoder_blk</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">encoder_blk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([2, 100, 24])
+</pre></div>
+</div>
+</div>
+</div>
+<p>下面实现的Transformer编码器的代码中，堆叠了<code class="docutils literal notranslate"><span class="pre">num_layers</span></code>个<code class="docutils literal notranslate"><span class="pre">EncoderBlock</span></code>类的实例。由于这里使用的是值范围在<span class="math notranslate nohighlight">\(-1\)</span>和<span class="math notranslate nohighlight">\(1\)</span>之间的固定位置编码，因此通过学习得到的输入的嵌入表示的值需要先乘以嵌入维度的平方根进行重新缩放，然后再与位置编码相加。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;编码器--解码器架构的基础编码器接口&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="c1"># 可以添加额外的参数 (例如排除填充的长度)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>  <span class="c1"># 这是一个抽象方法，子类需要实现它</span>
+
+<span class="k">class</span> <span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;位置编码，帮助模型捕捉序列中每个元素的位置&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 定义 Dropout 层</span>
+        <span class="c1"># 创建足够长的 P 矩阵来存储位置编码</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">))</span>  <span class="c1"># 初始化位置编码矩阵 P</span>
+        
+        <span class="c1"># 计算位置编码值</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span>
+            <span class="mi">10000</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_hiddens</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># 偶数维度使用 sin 函数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># 奇数维度使用 cos 函数</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="c1"># 将输入 X 与位置编码 P 相加，然后应用 Dropout</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[:,</span> <span class="p">:</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># 返回加上位置编码后的结果</span>
+
+
+<span class="k">class</span> <span class="nc">TransformerEncoder</span><span class="p">(</span><span class="n">Encoder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer 编码器，包含多层 EncoderBlock&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span>
+                 <span class="n">num_heads</span><span class="p">,</span> <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span> <span class="o">=</span> <span class="n">num_hiddens</span>
+        <span class="c1"># 嵌入层：将词汇表中的索引映射到 embedding（嵌入）向量</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">)</span>
+        <span class="c1"># 位置编码层：加上位置编码信息</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos_encoding</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+        
+        <span class="c1"># 使用 nn.Sequential 堆叠多个 EncoderBlock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_blks</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s2">&quot;block&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+                <span class="n">EncoderBlock</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+        <span class="c1"># 词嵌入 + 位置编码</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_encoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span><span class="p">))</span>
+        
+        <span class="c1"># 初始化 attention_weights 用于存储每一层的注意力权重</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention_weights</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="p">)</span>
+        
+        <span class="c1"># 依次通过每一个 EncoderBlock</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">blk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">blk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">)</span>
+            <span class="c1"># 保存每个块中的注意力权重</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attention_weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">blk</span><span class="o">.</span><span class="n">attention</span><span class="o">.</span><span class="n">attention</span><span class="o">.</span><span class="n">attention_weights</span>
+        
+        <span class="k">return</span> <span class="n">X</span>  <span class="c1"># 输出最终的编码器结果</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>下面我们指定了超参数来创建一个两层的Transformer编码器。
+Transformer编码器输出的形状是（批量大小，时间步数目，<code class="docutils literal notranslate"><span class="pre">num_hiddens</span></code>）。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder</span> <span class="o">=</span> <span class="n">TransformerEncoder</span><span class="p">(</span>
+    <span class="mi">200</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">encoder</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">encoder</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">),</span> <span class="n">valid_lens</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([2, 100, 24])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>解码器<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>Transformer解码器也是由多个相同的层组成。在<code class="docutils literal notranslate"><span class="pre">DecoderBlock</span></code>类中实现的每个层包含了三个子层：解码器自注意力、“编码器-解码器”注意力和基于位置的前馈网络。这些子层也都被残差连接和紧随的层规范化围绕。</p>
+<p>正如在本节前面所述，在掩蔽多头解码器自注意力层（第一个子层）中，查询、键和值都来自上一个解码器层的输出。关于<em>序列到序列模型</em>（sequence-to-sequence model），在训练阶段，其输出序列的所有位置（时间步）的词元都是已知的；然而，在预测阶段，其输出序列的词元是逐个生成的。因此，在任何解码器时间步中，只有生成的词元才能用于解码器的自注意力计算中。为了在解码器中保留自回归的属性，其掩蔽自注意力设定了参数<code class="docutils literal notranslate"><span class="pre">dec_valid_lens</span></code>，以便任何查询都只会与解码器中所有已经生成词元的位置（即直到该查询位置为止）进行注意力计算。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransformerDecoderBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer 解码器的第 i 个块&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">i</span>  <span class="c1"># 记录该块的索引 i</span>
+        
+        <span class="c1"># 定义第一个多头注意力机制 (自注意力)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention1</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addnorm1</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>  <span class="c1"># Add &amp; Norm 操作</span>
+        
+        <span class="c1"># 定义第二个多头注意力机制 (编码器-解码器注意力)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention2</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addnorm2</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>  <span class="c1"># Add &amp; Norm 操作</span>
+        
+        <span class="c1"># 定义前馈神经网络 (FFN)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span> <span class="o">=</span> <span class="n">PositionWiseFFN</span><span class="p">(</span><span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addnorm3</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>  <span class="c1"># Add &amp; Norm 操作</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 提取编码器的输出和有效长度</span>
+        <span class="c1"># state[2][self.i] 存储的是到当前时间步为止，第 i 个块的解码输出</span>
+
+        <span class="c1"># 在预测阶段，需要将先前的解码结果连接到当前输入上</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">key_values</span> <span class="o">=</span> <span class="n">X</span>  <span class="c1"># 如果这是第一次解码，直接使用 X</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key_values</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">],</span> <span class="n">X</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 将之前的结果与当前输入拼接</span>
+        <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">key_values</span>  <span class="c1"># 更新状态</span>
+        
+        <span class="c1"># 如果是在训练阶段，生成解码器的有效长度</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+            <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+            <span class="c1"># 生成形如 [1, 2, ..., num_steps] 的有效长度矩阵</span>
+            <span class="n">dec_valid_lens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dec_valid_lens</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 在预测阶段，无需提供解码器的有效长度</span>
+        
+        <span class="c1"># **自注意力**：对输入 X 进行自注意力计算，使用 key_values 作为注意力键和值</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">key_values</span><span class="p">,</span> <span class="n">key_values</span><span class="p">,</span> <span class="n">dec_valid_lens</span><span class="p">)</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">X2</span><span class="p">)</span>  <span class="c1"># 将自注意力的输出与输入 X 相加并规范化</span>
+        
+        <span class="c1"># **编码器-解码器注意力**：对编码器的输出 (enc_outputs) 进行注意力计算</span>
+        <span class="n">Y2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention2</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm2</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">Y2</span><span class="p">)</span>  <span class="c1"># 将编码器-解码器注意力的输出与 Y 相加并规范化</span>
+        
+        <span class="c1"># **前馈神经网络**：对 Z 进行前馈神经网络处理</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">addnorm3</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span><span class="p">(</span><span class="n">Z</span><span class="p">)),</span> <span class="n">state</span>  <span class="c1"># 输出规范化后的结果和更新后的状态</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>为了便于在“编码器－解码器”注意力中进行缩放点积计算和残差连接中进行加法计算，编码器和解码器的特征维度都是<code class="docutils literal notranslate"><span class="pre">num_hiddens</span></code>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decoder_blk</span> <span class="o">=</span> <span class="n">TransformerDecoderBlock</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">24</span><span class="p">))</span>
+<span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="n">encoder_blk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">),</span> <span class="n">valid_lens</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]]</span>
+<span class="n">decoder_blk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([2, 100, 24])
+</pre></div>
+</div>
+</div>
+</div>
+<p>现在我们构建了由<code class="docutils literal notranslate"><span class="pre">num_layers</span></code>个<code class="docutils literal notranslate"><span class="pre">DecoderBlock</span></code>实例组成的完整的Transformer解码器。最后，通过一个全连接层计算所有<code class="docutils literal notranslate"><span class="pre">vocab_size</span></code>个可能的输出词元的预测值。解码器的自注意力权重和编码器解码器注意力权重都被存储下来，方便日后可视化的需要。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;编码器-解码器架构的基本解码器接口&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enc_all_outputs</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="c1"># 初始化状态</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="c1"># 解码器的前向传播</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<span class="k">class</span> <span class="nc">AttentionDecoder</span><span class="p">(</span><span class="n">Decoder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;基于注意力机制的解码器接口&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attention_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 注意力权重的获取</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<span class="k">class</span> <span class="nc">TransformerDecoder</span><span class="p">(</span><span class="n">AttentionDecoder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer解码器&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span>
+                 <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span> <span class="o">=</span> <span class="n">num_hiddens</span>  <span class="c1"># 隐藏层大小</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_blks</span> <span class="o">=</span> <span class="n">num_blks</span>  <span class="c1"># 解码器块的数量</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">)</span>  <span class="c1"># 词嵌入层</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos_encoding</span> <span class="o">=</span> <span class="n">PositionalEncoding</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 位置编码</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>  <span class="c1"># 使用Sequential容器堆叠解码块</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_blks</span><span class="p">):</span>
+            <span class="c1"># 添加多个解码器块，每个块都是一个TransformerDecoderBlock</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s2">&quot;block&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">TransformerDecoderBlock</span><span class="p">(</span>
+                <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">)</span>  <span class="c1"># 全连接层，用于生成预测结果</span>
+
+    <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span><span class="p">):</span>
+        <span class="c1"># 初始化解码器的状态，包含编码器的输出、有效长度和每个解码块的历史状态</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blks</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="c1"># 前向传播</span>
+        <span class="c1"># 对输入X进行词嵌入，然后加上位置编码</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_encoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span><span class="p">))</span>
+        <span class="c1"># 初始化注意力权重，用于保存自注意力和编码器-解码器注意力的权重</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attention_weights</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">blk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="p">):</span>
+            <span class="c1"># 通过每个解码块进行前向传播</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">blk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+            <span class="c1"># 记录自注意力权重</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_attention_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">blk</span><span class="o">.</span><span class="n">attention1</span><span class="o">.</span><span class="n">attention</span><span class="o">.</span><span class="n">attention_weights</span>
+            <span class="c1"># 记录编码器-解码器注意力权重</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_attention_weights</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">blk</span><span class="o">.</span><span class="n">attention2</span><span class="o">.</span><span class="n">attention</span><span class="o">.</span><span class="n">attention_weights</span>
+        <span class="c1"># 将最后的输出通过全连接层生成最终的预测结果</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">state</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attention_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 返回保存的注意力权重</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attention_weights</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2><a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>训练
+依照Transformer架构来实例化编码器－解码器模型。在这里，指定Transformer的编码器和解码器都是2层，都使用4头注意力。为了进行序列到序列的学习，下面在“英语－法语”机器翻译数据集上训练Transformer模型。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 从 d2l 库中获取数据集，数据集为英法翻译，使用批量大小 128</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">MTFraEng</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+
+<span class="c1"># 定义模型参数</span>
+<span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.2</span>  <span class="c1"># 隐藏层大小、编码器块数、dropout 概率</span>
+<span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">4</span>  <span class="c1"># 前馈神经网络隐藏层大小和多头注意力头数</span>
+
+<span class="c1"># 创建编码器</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">TransformerEncoder</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">src_vocab</span><span class="p">),</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span>
+    <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span>
+<span class="p">)</span>
+
+<span class="c1"># 创建解码器</span>
+<span class="n">decoder</span> <span class="o">=</span> <span class="n">TransformerDecoder</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">tgt_vocab</span><span class="p">),</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span>
+    <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span>
+<span class="p">)</span>
+
+<span class="c1"># 创建 Seq2Seq 模型，指定解码器的填充符号和学习率</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Seq2Seq</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">tgt_pad</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">tgt_vocab</span><span class="p">[</span><span class="s1">&#39;&lt;pad&gt;&#39;</span><span class="p">],</span>
+                    <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="c1"># 创建训练器，设置最大训练轮数、梯度裁剪值和 GPU 数量</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_gpus</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 训练模型</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/93c5870a24444130dd9d0ea4b1897db6c448843a2c46a5e70d8c34781c7debe7.svg" src="../../_images/93c5870a24444130dd9d0ea4b1897db6c448843a2c46a5e70d8c34781c7debe7.svg" /></div>
+</div>
+<p>训练结束后，使用Transformer模型将一些英语句子翻译成法，并且计算它们的BLEU分数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义一组英语句子和对应的法语句子</span>
+<span class="n">engs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;go .&#39;</span><span class="p">,</span> <span class="s1">&#39;i lost .&#39;</span><span class="p">,</span> <span class="s1">&#39;he</span><span class="se">\&#39;</span><span class="s1">s calm .&#39;</span><span class="p">,</span> <span class="s1">&#39;i</span><span class="se">\&#39;</span><span class="s1">m home .&#39;</span><span class="p">]</span>
+<span class="n">fras</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;va !&#39;</span><span class="p">,</span> <span class="s1">&#39;j</span><span class="se">\&#39;</span><span class="s1">ai perdu .&#39;</span><span class="p">,</span> <span class="s1">&#39;il est calme .&#39;</span><span class="p">,</span> <span class="s1">&#39;je suis chez moi .&#39;</span><span class="p">]</span>
+
+<span class="c1"># 使用模型进行预测</span>
+<span class="n">preds</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_step</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">engs</span><span class="p">,</span> <span class="n">fras</span><span class="p">),</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span>
+<span class="p">)</span>
+
+<span class="c1"># 遍历每个输入句子、参考句子和模型预测结果</span>
+<span class="k">for</span> <span class="n">en</span><span class="p">,</span> <span class="n">fr</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">engs</span><span class="p">,</span> <span class="n">fras</span><span class="p">,</span> <span class="n">preds</span><span class="p">):</span>
+    <span class="n">translation</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># 将预测结果转换为目标语言的 tokens</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">tgt_vocab</span><span class="o">.</span><span class="n">to_tokens</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;&lt;eos&gt;&#39;</span><span class="p">:</span>  <span class="c1"># 遇到结束符时停止</span>
+            <span class="k">break</span>
+        <span class="n">translation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>  <span class="c1"># 添加到翻译列表中</span>
+    <span class="c1"># 输出源句子、翻译结果及其 BLEU 分数</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">en</span><span class="si">}</span><span class="s1"> =&gt; </span><span class="si">{</span><span class="n">translation</span><span class="si">}</span><span class="s1">, bleu,&#39;</span>
+          <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d2l</span><span class="o">.</span><span class="n">bleu</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">translation</span><span class="p">),</span><span class="w"> </span><span class="n">fr</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>go . =&gt; [&#39;va&#39;, &#39;!&#39;], bleu,1.000
+i lost . =&gt; [&quot;j&#39;ai&quot;, &#39;perdu&#39;, &#39;.&#39;], bleu,1.000
+he&#39;s calm . =&gt; [&#39;il&#39;, &#39;est&#39;, &#39;mouillé&#39;, &#39;.&#39;], bleu,0.658
+i&#39;m home . =&gt; [&#39;je&#39;, &#39;suis&#39;, &#39;chez&#39;, &#39;moi&#39;, &#39;.&#39;], bleu,1.000
+</pre></div>
+</div>
+</div>
+</div>
+<p>当进行最后一个英语到法语的句子翻译工作时，让我们可视化Transformer的注意力权重。编码器自注意力权重的形状为（编码器层数，注意力头数，<code class="docutils literal notranslate"><span class="pre">num_steps</span></code>或查询的数目，<code class="docutils literal notranslate"><span class="pre">num_steps</span></code>或“键－值”对的数目）。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用模型的 predict_step 方法预测最后一对英语句子和法语句子，并获取解码器注意力权重</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">dec_attention_weights</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_step</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="n">engs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">fras</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]),</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">,</span> <span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># 连接编码器的所有注意力权重</span>
+<span class="n">enc_attention_weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">attention_weights</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 重新调整编码器注意力权重的形状</span>
+<span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">num_blks</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">)</span>
+<span class="n">enc_attention_weights</span> <span class="o">=</span> <span class="n">enc_attention_weights</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 检查编码器注意力权重的形状是否符合预期</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">check_shape</span><span class="p">(</span><span class="n">enc_attention_weights</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">num_blks</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>在编码器的自注意力中，查询和键都来自相同的输入序列。因为填充词元是不携带信息的，因此通过指定输入序列的有效长度可以避免查询与使用填充词元的位置计算注意力。接下来，将逐行呈现两层多头注意力的权重。每个注意力头都根据查询、键和值的不同的表示子空间来表示不同的注意力。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 d2l 库中的 show_heatmaps 函数来可视化编码器的注意力权重</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_heatmaps</span><span class="p">(</span>
+    <span class="n">enc_attention_weights</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span>  <span class="c1"># 将注意力权重移到 CPU 以进行可视化</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Key positions&#39;</span><span class="p">,</span>  <span class="c1"># X 轴标签，表示键的位置</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Query positions&#39;</span><span class="p">,</span>  <span class="c1"># Y 轴标签，表示查询的位置</span>
+    <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Head </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>  <span class="c1"># 热图标题，表示不同的注意力头</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>  <span class="c1"># 设置图形的大小</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/70fdf7295713c2d3e89da8f473a4f93eee5c4368f637131af481e1d87b38e46a.svg" src="../../_images/70fdf7295713c2d3e89da8f473a4f93eee5c4368f637131af481e1d87b38e46a.svg" /></div>
+</div>
+<p>为了可视化解码器的自注意力权重和“编码器－解码器”的注意力权重，我们需要完成更多的数据操作工作。例如用零填充被掩蔽住的注意力权重。值得注意的是，解码器的自注意力权重和“编码器－解码器”的注意力权重都有相同的查询：即以<em>序列开始词元</em>（beginning-of-sequence,BOS）打头，再与后续输出的词元共同组成序列。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 将解码器的注意力权重转换为二维列表，填充为 0</span>
+<span class="n">dec_attention_weights_2d</span> <span class="o">=</span> <span class="p">[</span><span class="n">head</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># 提取第一个头的注意力权重，并转换为列表</span>
+                            <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">dec_attention_weights</span>  <span class="c1"># 遍历每个时间步</span>
+                            <span class="k">for</span> <span class="n">attn</span> <span class="ow">in</span> <span class="n">step</span>  <span class="c1"># 遍历每个块的注意力</span>
+                            <span class="k">for</span> <span class="n">blk</span> <span class="ow">in</span> <span class="n">attn</span>  <span class="c1"># 遍历每个块</span>
+                            <span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="n">blk</span><span class="p">]</span>  <span class="c1"># 遍历每个头</span>
+
+<span class="c1"># 使用 pandas DataFrame 来填充 NaN 值，填充为 0.0</span>
+<span class="n">dec_attention_weights_filled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dec_attention_weights_2d</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>  <span class="c1"># 将填充后的数据转换为 PyTorch 张量</span>
+
+<span class="c1"># 调整形状以分离解码器自注意力和交叉注意力</span>
+<span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">num_blks</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">)</span>  <span class="c1"># 目标形状</span>
+<span class="n">dec_attention_weights</span> <span class="o">=</span> <span class="n">dec_attention_weights_filled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># 重塑为目标形状</span>
+
+<span class="c1"># 通过 permute 来分离解码器的自注意力权重和交叉注意力权重</span>
+<span class="n">dec_self_attention_weights</span><span class="p">,</span> <span class="n">dec_inter_attention_weights</span> <span class="o">=</span> \
+    <span class="n">dec_attention_weights</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># 检查解码器自注意力权重的形状</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">check_shape</span><span class="p">(</span><span class="n">dec_self_attention_weights</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">num_blks</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">))</span>  <span class="c1"># 应为 (num_blks, num_heads, data.num_steps, data.num_steps)</span>
+
+<span class="c1"># 检查解码器交叉注意力权重的形状</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">check_shape</span><span class="p">(</span><span class="n">dec_inter_attention_weights</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">num_blks</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">num_steps</span><span class="p">))</span>  <span class="c1"># 应为 (num_blks, num_heads, data.num_steps, data.num_steps)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>由于解码器自注意力的自回归属性，查询不会对当前位置之后的“键－值”对进行注意力计算。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 d2l.show_heatmaps 函数可视化解码器自注意力权重</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_heatmaps</span><span class="p">(</span>
+    <span class="n">dec_self_attention_weights</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:],</span>  <span class="c1"># 提取所有块和头的自注意力权重</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Key positions&#39;</span><span class="p">,</span>  <span class="c1"># X 轴标签表示 Key 位置</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Query positions&#39;</span><span class="p">,</span>  <span class="c1"># Y 轴标签表示 Query 位置</span>
+    <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Head </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>  <span class="c1"># 为每个注意力头设置标题</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>  <span class="c1"># 设置图形大小</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/120ec0719567d4212cb0f3ab71a959cdc781e78af0119de4de0420ba122f75a7.svg" src="../../_images/120ec0719567d4212cb0f3ab71a959cdc781e78af0119de4de0420ba122f75a7.svg" /></div>
+</div>
+<p>与编码器的自注意力的情况类似，通过指定输入序列的有效长度，输出序列的查询不会与输入序列中填充位置的词元进行注意力计算。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 d2l.show_heatmaps 函数可视化解码器中编码器-解码器注意力权重</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_heatmaps</span><span class="p">(</span>
+    <span class="n">dec_inter_attention_weights</span><span class="p">,</span>  <span class="c1"># 解码器中编码器-解码器注意力权重</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Key positions&#39;</span><span class="p">,</span>  <span class="c1"># X 轴标签表示 Key 位置</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Query positions&#39;</span><span class="p">,</span>  <span class="c1"># Y 轴标签表示 Query 位置</span>
+    <span class="n">titles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Head </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>  <span class="c1"># 为每个注意力头设置标题</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>  <span class="c1"># 设置图形大小</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/20feff643fca332950c749c769908bbda7f548a064daf86bc43fdd8ada26d183.svg" src="../../_images/20feff643fca332950c749c769908bbda7f548a064daf86bc43fdd8ada26d183.svg" /></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./NaturalLanguageProcessing/Transformer"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="end.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">堆叠多层</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../FineTuning/Introduction.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">什么是微调</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">基于位置的前馈网络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">残差连接和层规范化</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layernorm"><strong>LayerNorm 计算</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batchnorm1d">BatchNorm1d 计算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">编码器</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">多头注意力</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">编码器块</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">解码器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
