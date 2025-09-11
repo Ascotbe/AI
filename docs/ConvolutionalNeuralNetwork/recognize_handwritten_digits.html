@@ -1,0 +1,1079 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>重0开始使用 CNN 进行手写数字识别 &#8212; AI学习笔记</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ConvolutionalNeuralNetwork/recognize_handwritten_digits';</script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="深度卷积神经网络（AlexNet）" href="../ConvolutionalModern/alexnet.html" />
+    <link rel="prev" title="卷积神经网络（LeNet）" href="lenet.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="AI学习笔记 - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="AI学习笔记 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    📚 AI 学习笔记 🧠
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/variance_and_standard_deviation.html">方差和标准差计算</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E5%8E%9F%E7%90%86.html">Softmax 回归原理</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html">交叉熵损失函数原理详解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/Softmax%E5%9B%9E%E5%BD%92%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0.html">Softmax回归代码实现</a></li>
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="conv_layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="padding_and_strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="channels.html">多输入多输出通道</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lenet.html">卷积神经网络（LeNet）</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">重0开始使用 CNN 进行手写数字识别</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/alexnet.html">深度卷积神经网络（AlexNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/vgg.html">使用块的网络（VGG）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch_norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async_computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine_tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural_style.html">风格迁移</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/attention.html">Attention 注意力机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/positional_encoding.html">Positional Encoding  位置编码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/residuals.html">The Residuals  残差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/mask.html">Mask机制</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer.html">Transformer代码实现</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ascotbe/AI" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ConvolutionalNeuralNetwork/recognize_handwritten_digits.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>重0开始使用 CNN 进行手写数字识别</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 导入必要的库</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码详解 &amp; 为什么这么写？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. 定义超参数和设备</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">3. 加载和预处理 MNIST 数据集</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>那么问题来了，为什么我们需要将像素值从 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">255]</span></code> 缩放到 <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">1.0]</span></code></strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6. 定义损失函数和优化器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7. 训练模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8. 评估模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9. 可视化预测结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">总结</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="cnn">
+<h1>重0开始使用 CNN 进行手写数字识别<a class="headerlink" href="#cnn" title="Permalink to this heading">#</a></h1>
+<p>这个 Jupyter Notebook 将引导你使用 PyTorch 框架完成 CNN 模型训练手写数字识别的整个过程。我们同样使用 MNIST 数据集。</p>
+<p><strong>目标：</strong></p>
+<ol class="arabic simple">
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 加载并预处理 MNIST 数据集。</p></li>
+<li><p>构建一个继承自 <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 的卷积神经网络（CNN）模型。</p></li>
+<li><p>定义损失函数和优化器。</p></li>
+<li><p>编写训练循环来训练模型。</p></li>
+<li><p>在测试集上评估模型的性能。</p></li>
+<li><p>可视化预测结果。</p></li>
+</ol>
+<section id="id1">
+<h2>1. 导入必要的库<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id2">
+<h3>代码详解 &amp; 为什么这么写？<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>import torch: 导入 PyTorch 核心库，所有张量（Tensor）操作和基本功能都来源于此。</p></li>
+<li><p>import torch.nn as nn: nn 是 neural network 的缩写。这个模块包含了构建神经网络所需的所有基本组件，比如卷积层 (nn.Conv2d)、线性层 (nn.Linear)、激活函数 (nn.ReLU) 以及所有模型的基类 (nn.Module)。我们用 as nn 是一个约定俗成的简写，方便调用。</p></li>
+<li><p>import torch.optim as optim: 包含了各种优化算法，比如我们后面用到的 Adam (optim.Adam) 和 SGD。优化器的作用是根据模型计算出的误差来更新模型的权重。</p></li>
+<li><p>from torch.utils.data import DataLoader: 这是一个非常重要且方便的工具。它能帮我们把庞大的数据集自动打包成一小批一小批（batch）的数据，并且可以实现自动洗牌（shuffle），让模型训练更有效率。</p></li>
+<li><p>from torchvision import datasets, transforms: torchvision 是 PyTorch 官方的计算机视觉工具库。datasets 里包含了许多常用的数据集（比如 MNIST），可以直接下载使用。transforms 包含了各种对图像进行预处理的操作（比如转换成张量、归一化等）。</p></li>
+<li><p>import matplotlib.pyplot as plt 和 import numpy as np: 这两个是数据科学的常用工具。Matplotlib 用于数据可视化（画图），NumPy 用于处理数组，这里我们主要用它来辅助 Matplotlib 显示图像。</p></li>
+</ul>
+</section>
+</section>
+<section id="id3">
+<h2>2. 定义超参数和设备<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>我们首先定义一些训练过程中会用到的超参数，并设置计算设备（优先使用 GPU）。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义超参数</span>
+<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Epoch 指的是“轮次”，一个 Epoch 代表模型完整地学习了一遍所有的训练数据。10 个 Epoch 就是让模型把整个数据集重复学习 10 遍。</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">64</span>  <span class="c1"># “批大小”指的是模型每次更新权重时看多少张图片。我们不能一次把所有 60000 张训练图片都塞进内存，所以我们把它们分成一小批一小批地喂给模型。这里每批 64 张。</span>
+<span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.001</span>  <span class="c1"># “学习率”控制了模型权重更新的幅度。太大了模型可能不稳定，太小了模型学习得太慢。这是一个需要调试的关键超参数。</span>
+
+<span class="c1"># 设置设备 (GPU or CPU)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using device: </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using device: cpu
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mnist">
+<h2>3. 加载和预处理 MNIST 数据集<a class="headerlink" href="#mnist" title="Permalink to this heading">#</a></h2>
+<p>我们将使用 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 来加载数据。在加载过程中，我们会定义一个 <code class="docutils literal notranslate"><span class="pre">transform</span></code> 流水线来进行数据预处理：</p>
+<p><code class="docutils literal notranslate"><span class="pre">transforms.ToTensor()</span></code>: 将 PIL 图像或 NumPy 数组转换为 PyTorch 张量，并将像素值从 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">255]</span></code> 缩放到 <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">1.0]</span></code>。</p>
+<section id="id4">
+<h3><strong>那么问题来了，为什么我们需要将像素值从 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">255]</span></code> 缩放到 <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">1.0]</span></code></strong><a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>加快模型收敛速度（最重要的原因）</p>
+</div></blockquote>
+<p>想象一下神经网络中的一个简单计算：</p>
+<p>output = weight * input + bias</p>
+<p>在训练过程中，模型的目标是调整 weight 和 bias 来让 output 接近我们期望的值。这个调整是通过<strong>梯度下降</strong>来完成的，调整的幅度（步长）由<strong>学习率 (Learning Rate)</strong> 和<strong>梯度 (Gradient)</strong> 共同决定。</p>
+<ul class="simple">
+<li><p><strong>如果不缩放 (input 在 0-255 之间)</strong>:</p>
+<ul>
+<li><p>input 的值很大（比如 150, 220）。</p></li>
+<li><p>为了让 output 发生一点点变化，weight 只需要改变一个非常非常小的值。</p></li>
+<li><p>这会导致损失函数对于权重的梯度非常大。想象一个非常陡峭的山坡，你稍微动一下就可能“滚”出很远。</p></li>
+<li><p>大的梯度意味着优化器在更新权重时会进行非常大的跳跃，这使得训练过程非常不稳定，容易在最优解附近来回震荡，难以收敛。为了稳定训练，你不得不设置一个非常小的学习率，但这又会大大减慢训练速度。</p></li>
+</ul>
+</li>
+<li><p><strong>如果缩放 (input 在 0.0-1.0 之间)</strong>:</p>
+<ul>
+<li><p>input 的值很小（比如 0.5, 0.8）。</p></li>
+<li><p>现在，输入值和权重值的大小在同一个数量级上。</p></li>
+<li><p>这使得损失函数的梯度变得更小、更稳定。就像一个平缓的山坡，你可以稳健地、一步一步地走向谷底（最优解）。</p></li>
+<li><p>因为梯度稳定，我们可以使用一个相对较大的学习率，从而<strong>大大加快模型的收敛速度</strong>。</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>一个简单的比喻：</strong></p>
+<p>假设你要调整房间的温度（目标）和你身上穿的衣服（权重）。</p>
+<ul class="simple">
+<li><p><strong>不缩放的情况</strong>：温度计用的是开尔文（比如 293 K），而你的衣服只有“穿”或“不穿”两个选项。这两个单位的尺度差别巨大，你很难做出精细的调整。</p></li>
+<li><p><strong>缩放的情况</strong>：温度计用的是一个“舒适度”指标，从 0 到 1。你的衣服也可以分为多个等级，比如“短袖”（0.2）、“毛衣”（0.6）、“羽绒服”（1.0）。现在，输入和权重的尺度匹配了，你可以更容易地学习到“当舒适度为 0.1 时，我应该穿羽绒服”这样的关系。</p></li>
+</ul>
+<blockquote>
+<div><p>避免激活函数饱和，防止梯度消失</p>
+</div></blockquote>
+<p>在 CNN 中，我们常用 ReLU 作为激活函数。但在早期的神经网络中，Sigmoid 和 Tanh 函数非常流行。它们都有一个共同的问题：<strong>饱和区</strong>。</p>
+<ul class="simple">
+<li><p><strong>Sigmoid 函数</strong>：将任何输入映射到 (0, 1) 之间。当输入值的绝对值很大时（比如 &gt; 5 或 &lt; -5），函数的曲线变得非常平坦，其导数（梯度）几乎为 0。</p></li>
+<li><p><strong>Tanh 函数</strong>：将任何输入映射到 (-1, 1) 之间，同样在两端有饱和区。</p></li>
+</ul>
+<p>如果输入像素值是 [0, 255]，那么经过权重和偏置的计算后（weight * input + bias），得到的结果很容易就落入激活函数的饱和区。</p>
+<p><strong>后果是什么？</strong></p>
+<p>在反向传播时，权重的更新量正比于这个梯度。如果梯度为 0，那么无论链式法则前面部分的梯度有多大，传到这里的梯度也变成了 0。这意味着<strong>这个神经元的权重将不会得到任何更新</strong>。这个现象被称为“<strong>梯度消失</strong>”(Vanishing Gradients)，它会导致网络学习极其缓慢甚至完全停止。</p>
+<p>通过将输入缩放到 [0, 1]，我们可以让大部分计算结果落在激活函数的“敏感区”（梯度较大的区域），从而保证梯度能够有效地回传，让网络持续学习。</p>
+<blockquote>
+<div><p>数值稳定性和一致性</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>一致性</strong>：在更复杂的模型中，你可能会有多种不同来源的输入数据。比如，除了图片像素值（0-255），你可能还有另一个特征是“图片的平均亮度”（0-1）。如果不对它们进行缩放，那么像素值这个特征在数值上会完全主导模型的初始学习过程，因为它比另一个特征大得多。将所有特征都缩放到相似的范围（如 [0, 1]）可以确保它们在模型学习中处于一个“公平的起跑线”。</p></li>
+<li><p><strong>数值稳定性</strong>：在计算机进行浮点数运算时，处理绝对值较小的数字通常比处理大数更稳定，可以减少出现数值溢出（overflow）或下溢（underflow）的风险。
+定的均值和标准差对张量进行归一化。这里我们将数据归一化到 <code class="docutils literal notranslate"><span class="pre">[-1.0,</span> <span class="pre">1.0]</span></code> 的范围，这有助于模型训练。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义数据预处理</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>  <span class="c1"># 将图片的像素值从 [0, 255] 的整数范围，自动缩放到 [0.0, 1.0] 的浮点数范围。</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,))</span>   <span class="c1"># 用给定的均值和标准差对张量进行归一化。这里我们将数据归一化到 `[-1.0, 1.0]` 的范围，这有助于模型训练。</span>
+    <span class="c1"># 计算公式为：output = (input - mean) / std</span>
+
+<span class="p">])</span>
+
+<span class="c1"># 下载并加载训练数据集</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../raw/data/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 下载并加载测试数据集</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;../raw/data/&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># train=True 表示加载训练集。</span>
+<span class="c1"># shuffle=True 它会在每个 epoch 开始前，把所有数据的顺序打乱。这可以防止模型学习到数据的排列顺序，从而帮助模型更好地泛化。测试集则不需要打乱</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>4. 可视化部分数据<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取一个批次的数据</span>
+<span class="n">data_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+<span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">data_iter</span><span class="p">)</span>
+
+<span class="c1"># 可视化</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># 反归一化以便正确显示</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span> <span class="c1"># squeeze() 去掉通道维度</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label: </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f4060861c553741895a44c852221cfabe6ef1b6c7d8b5d1697f7f9402a33713c.png" src="../_images/f4060861c553741895a44c852221cfabe6ef1b6c7d8b5d1697f7f9402a33713c.png" />
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>5. 构建 CNN 模型<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>在 PyTorch 中，我们通常通过创建一个继承自 <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 的类来定义模型结构。我们在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中定义网络层，在 <code class="docutils literal notranslate"><span class="pre">forward</span></code> 方法中定义数据的前向传播路径。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># 输入图像: 1x28x28 (channel, height, width)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="c1"># -&gt; 16x28x28</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># -&gt; 16x14x14</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="c1"># -&gt; 32x14x14</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># -&gt; 32x7x7</span>
+        <span class="p">)</span>
+        <span class="c1"># 全连接层</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># 展平操作</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># batch_size, 32*7*7</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+<span class="c1"># 实例化模型并移动到设备</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CNN(
+  (conv1): Sequential(
+    (0): Conv2d(1, 16, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (conv2): Sequential(
+    (0): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (out): Linear(in_features=1568, out_features=10, bias=True)
+)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>6. 定义损失函数和优化器<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 损失函数: 交叉熵损失，它内部已经包含了 Softmax</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># 优化器</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h2>7. 训练模型<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<p>这是 PyTorch 中最核心的训练循环。对于每个批次的数据：</p>
+<ol class="arabic simple">
+<li><p>将数据移动到指定设备。</p></li>
+<li><p>通过模型进行前向传播得到预测输出。</p></li>
+<li><p>计算损失。</p></li>
+<li><p>将梯度清零 (<code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code>)。</p></li>
+<li><p>反向传播计算梯度 (<code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code>)。</p></li>
+<li><p>更新模型权重 (<code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>)。</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting Training...&quot;</span><span class="p">)</span>
+<span class="n">total_step</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="c1"># 将数据移动到设备</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="c1"># 前向传播</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+
+        <span class="c1"># 反向传播和优化</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Epoch [</span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s1">], Step [</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">total_step</span><span class="si">}</span><span class="s1">], Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Finished!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting Training...
+Epoch [1/10], Step [100/938], Loss: 0.3346
+Epoch [1/10], Step [200/938], Loss: 0.1026
+Epoch [1/10], Step [300/938], Loss: 0.1289
+Epoch [1/10], Step [400/938], Loss: 0.1737
+Epoch [1/10], Step [500/938], Loss: 0.0475
+Epoch [1/10], Step [600/938], Loss: 0.0556
+Epoch [1/10], Step [700/938], Loss: 0.0440
+Epoch [1/10], Step [800/938], Loss: 0.0572
+Epoch [1/10], Step [900/938], Loss: 0.0749
+Epoch [2/10], Step [100/938], Loss: 0.0164
+Epoch [2/10], Step [200/938], Loss: 0.0191
+Epoch [2/10], Step [300/938], Loss: 0.0391
+Epoch [2/10], Step [400/938], Loss: 0.1859
+Epoch [2/10], Step [500/938], Loss: 0.0769
+Epoch [2/10], Step [600/938], Loss: 0.0077
+Epoch [2/10], Step [700/938], Loss: 0.0302
+Epoch [2/10], Step [800/938], Loss: 0.0603
+Epoch [2/10], Step [900/938], Loss: 0.1187
+Epoch [3/10], Step [100/938], Loss: 0.0200
+Epoch [3/10], Step [200/938], Loss: 0.0223
+Epoch [3/10], Step [300/938], Loss: 0.0096
+Epoch [3/10], Step [400/938], Loss: 0.0014
+Epoch [3/10], Step [500/938], Loss: 0.0099
+Epoch [3/10], Step [600/938], Loss: 0.0054
+Epoch [3/10], Step [700/938], Loss: 0.0630
+Epoch [3/10], Step [800/938], Loss: 0.0145
+Epoch [3/10], Step [900/938], Loss: 0.0204
+Epoch [4/10], Step [100/938], Loss: 0.0067
+Epoch [4/10], Step [200/938], Loss: 0.0032
+Epoch [4/10], Step [300/938], Loss: 0.0229
+Epoch [4/10], Step [400/938], Loss: 0.0768
+Epoch [4/10], Step [500/938], Loss: 0.0402
+Epoch [4/10], Step [600/938], Loss: 0.0097
+Epoch [4/10], Step [700/938], Loss: 0.0091
+Epoch [4/10], Step [800/938], Loss: 0.0096
+Epoch [4/10], Step [900/938], Loss: 0.0044
+Epoch [5/10], Step [100/938], Loss: 0.0085
+Epoch [5/10], Step [200/938], Loss: 0.0462
+Epoch [5/10], Step [300/938], Loss: 0.0185
+Epoch [5/10], Step [400/938], Loss: 0.0135
+Epoch [5/10], Step [500/938], Loss: 0.0020
+Epoch [5/10], Step [600/938], Loss: 0.0041
+Epoch [5/10], Step [700/938], Loss: 0.0678
+Epoch [5/10], Step [800/938], Loss: 0.0012
+Epoch [5/10], Step [900/938], Loss: 0.2107
+Epoch [6/10], Step [100/938], Loss: 0.0051
+Epoch [6/10], Step [200/938], Loss: 0.0025
+Epoch [6/10], Step [300/938], Loss: 0.0006
+Epoch [6/10], Step [400/938], Loss: 0.0111
+Epoch [6/10], Step [500/938], Loss: 0.0096
+Epoch [6/10], Step [600/938], Loss: 0.0012
+Epoch [6/10], Step [700/938], Loss: 0.0066
+Epoch [6/10], Step [800/938], Loss: 0.0522
+Epoch [6/10], Step [900/938], Loss: 0.0022
+Epoch [7/10], Step [100/938], Loss: 0.0057
+Epoch [7/10], Step [200/938], Loss: 0.0022
+Epoch [7/10], Step [300/938], Loss: 0.0024
+Epoch [7/10], Step [400/938], Loss: 0.0220
+Epoch [7/10], Step [500/938], Loss: 0.0006
+Epoch [7/10], Step [600/938], Loss: 0.0044
+Epoch [7/10], Step [700/938], Loss: 0.0246
+Epoch [7/10], Step [800/938], Loss: 0.0362
+Epoch [7/10], Step [900/938], Loss: 0.0238
+Epoch [8/10], Step [100/938], Loss: 0.0080
+Epoch [8/10], Step [200/938], Loss: 0.0013
+Epoch [8/10], Step [300/938], Loss: 0.0073
+Epoch [8/10], Step [400/938], Loss: 0.0026
+Epoch [8/10], Step [500/938], Loss: 0.0007
+Epoch [8/10], Step [600/938], Loss: 0.0003
+Epoch [8/10], Step [700/938], Loss: 0.0061
+Epoch [8/10], Step [800/938], Loss: 0.0003
+Epoch [8/10], Step [900/938], Loss: 0.0001
+Epoch [9/10], Step [100/938], Loss: 0.0014
+Epoch [9/10], Step [200/938], Loss: 0.0001
+Epoch [9/10], Step [300/938], Loss: 0.0063
+Epoch [9/10], Step [400/938], Loss: 0.0018
+Epoch [9/10], Step [500/938], Loss: 0.0256
+Epoch [9/10], Step [600/938], Loss: 0.0138
+Epoch [9/10], Step [700/938], Loss: 0.0011
+Epoch [9/10], Step [800/938], Loss: 0.0007
+Epoch [9/10], Step [900/938], Loss: 0.0046
+Epoch [10/10], Step [100/938], Loss: 0.0038
+Epoch [10/10], Step [200/938], Loss: 0.0056
+Epoch [10/10], Step [300/938], Loss: 0.0166
+Epoch [10/10], Step [400/938], Loss: 0.0003
+Epoch [10/10], Step [500/938], Loss: 0.0017
+Epoch [10/10], Step [600/938], Loss: 0.0213
+Epoch [10/10], Step [700/938], Loss: 0.0002
+Epoch [10/10], Step [800/938], Loss: 0.0016
+Epoch [10/10], Step [900/938], Loss: 0.0005
+Training Finished!
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id9">
+<h2>8. 评估模型<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<p>在评估阶段，我们不需要计算梯度，所以使用 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">torch.no_grad():</span></code> 来节省计算资源。我们将模型设置为评估模式 <code class="docutils literal notranslate"><span class="pre">model.eval()</span></code>，这会关闭像 Dropout 和 BatchNorm 这样的层（尽管我们这个简单模型没有使用它们）。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># 设置模型为评估模式</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy of the model on the 10000 test images: </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">correct</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">total</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> %&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of the model on the 10000 test images: 99.10 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id10">
+<h2>9. 可视化预测结果<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取一个批次的测试数据</span>
+<span class="n">data_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span>
+<span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">data_iter</span><span class="p">)</span>
+<span class="n">images_on_device</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># 预测</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images_on_device</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 可视化</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">):</span> <span class="k">break</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="c1"># 反归一化</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    
+    <span class="n">pred_label</span> <span class="o">=</span> <span class="n">predicted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">true_label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span> <span class="k">if</span> <span class="n">pred_label</span> <span class="o">==</span> <span class="n">true_label</span> <span class="k">else</span> <span class="s1">&#39;red&#39;</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pred: </span><span class="si">{</span><span class="n">pred_label</span><span class="si">}</span><span class="s2"> (True: </span><span class="si">{</span><span class="n">true_label</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/419fc3175fd8392217d9b1aa303ccd7b971be39dd93402d8cb955091e340586e.png" src="../_images/419fc3175fd8392217d9b1aa303ccd7b971be39dd93402d8cb955091e340586e.png" />
+</div>
+</div>
+</section>
+<section id="id11">
+<h2>总结<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
+<p>你已经成功地使用 PyTorch 从头开始构建、训练和评估了一个用于手写数字识别的卷积神经网络模型！</p>
+<p><strong>学到的知识点：</strong></p>
+<ul class="simple">
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 和 <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> 高效地加载和预处理数据。</p></li>
+<li><p>通过继承 <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> 来定义一个清晰的模型结构。</p></li>
+<li><p>掌握了 PyTorch 中标准的训练和评估循环。</p></li>
+<li><p>理解了 <code class="docutils literal notranslate"><span class="pre">.to(device)</span></code>、<code class="docutils literal notranslate"><span class="pre">model.eval()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">torch.no_grad()</span></code> 的作用。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">poloclub</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">cnn</span><span class="o">-</span><span class="n">explainer</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ConvolutionalNeuralNetwork"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lenet.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">卷积神经网络（LeNet）</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../ConvolutionalModern/alexnet.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">深度卷积神经网络（AlexNet）</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 导入必要的库</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">代码详解 &amp; 为什么这么写？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. 定义超参数和设备</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">3. 加载和预处理 MNIST 数据集</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>那么问题来了，为什么我们需要将像素值从 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">255]</span></code> 缩放到 <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">1.0]</span></code></strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6. 定义损失函数和优化器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7. 训练模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8. 评估模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9. 可视化预测结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">总结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ascotbe
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

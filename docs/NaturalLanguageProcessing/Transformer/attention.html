@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Attention 注意力机制 &#8212; AI学习笔记</title>
   
@@ -14,53 +15,57 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'NaturalLanguageProcessing/Transformer/attention';</script>
-    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Positional Encoding 位置编码" href="positional_encoding.html" />
@@ -74,23 +79,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -112,20 +122,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -141,8 +143,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -161,18 +161,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -250,13 +239,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/GPU.html">GPU</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/conv_layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/padding_and_strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/recognize_handwritten_digits.html">重0开始使用 CNN 进行手写数字识别</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -265,25 +255,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/batch_norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/async-computation.html">异步计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/async_computation.html">异步计算</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/fine-tuning.html">微调</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/fine_tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/anchor.html">锚框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural-style.html">风格迁移</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural_style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
@@ -319,7 +309,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -328,14 +318,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -428,10 +418,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -439,14 +429,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -490,13 +480,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="attention">
-<h1>Attention 注意力机制<a class="headerlink" href="#attention" title="Link to this heading">#</a></h1>
+<h1>Attention 注意力机制<a class="headerlink" href="#attention" title="Permalink to this heading">#</a></h1>
 <p>本文主要涉及Self-attention和Multi-head attention</p>
 <section id="self-attention">
-<h2>Self-attention 自注意力机制<a class="headerlink" href="#self-attention" title="Link to this heading">#</a></h2>
+<h2>Self-attention 自注意力机制<a class="headerlink" href="#self-attention" title="Permalink to this heading">#</a></h2>
 <p>Transformer模型的一个关键特点是使用了称为注意力层的特殊层。这一层会告诉模型，在处理每个单词的表示时，要对你传递给它的句子中某些单词特别关注（并且忽略其他单词）。</p>
 <p>输出的向量就是根据query和key计算得到的权重作用于value上的权重和。</p>
 <img src="../../image/NaturalLanguageProcessing/1_hGZQukkk_7V642_l65rQFg.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" />
@@ -504,7 +494,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[\text{Attention}(Q,K,V)=\text{softmax}(\frac{QK^T}{\sqrt{d_k}})V\]</div>
 <section id="id1">
-<h3>公式解读<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<h3>公式解读<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(Q\)</span> (Query)：查询矩阵，表示查询某个信息的向量或矩阵。</p></li>
 <li><p><span class="math notranslate nohighlight">\(K\)</span> (Key)：键矩阵，表示存储的信息的向量或矩阵，用来匹配查询。</p></li>
@@ -541,7 +531,7 @@ document.write(`
 </ul>
 </section>
 <section id="id2">
-<h3>公式实例（单头）<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h3>公式实例（单头）<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>我们来通过一个具体的例子，详细解释注意力机制的计算过程。假设我们有以下输入：</p>
 <ul class="simple">
 <li><p>查询矩阵<span class="math notranslate nohighlight">\(Q\)</span>、键矩阵<span class="math notranslate nohighlight">\(K\)</span> 和值矩阵<span class="math notranslate nohighlight">\(V\)</span> 分别是<span class="math notranslate nohighlight">\(2 \times 3\)</span> 矩阵，表示有 2 个查询、2 个键和值，向量维度为 3。</p></li>
@@ -553,7 +543,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[d_{k}=\frac{d_{\mathrm{model}}}{h}=\frac{3}{1}\]</div>
 <section id="step-1">
-<h4>Step 1: 给定的矩阵<a class="headerlink" href="#step-1" title="Link to this heading">#</a></h4>
+<h4>Step 1: 给定的矩阵<a class="headerlink" href="#step-1" title="Permalink to this heading">#</a></h4>
 <p>假设有以下数据：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}Q = \begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}, \quad K = \begin{bmatrix} 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}, \quad V = \begin{bmatrix} 0 &amp; 2 \\ 1 &amp; 3 \end{bmatrix}\end{split}\]</div>
@@ -566,20 +556,20 @@ document.write(`
 <img src="../../image/NaturalLanguageProcessing/self-attention-matrix-calculation.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" />
 </section>
 <section id="step-2-qk-t">
-<h4>Step 2: 计算点积<span class="math notranslate nohighlight">\(QK^T\)</span><a class="headerlink" href="#step-2-qk-t" title="Link to this heading">#</a></h4>
+<h4>Step 2: 计算点积<span class="math notranslate nohighlight">\(QK^T\)</span><a class="headerlink" href="#step-2-qk-t" title="Permalink to this heading">#</a></h4>
 <p>点积<span class="math notranslate nohighlight">\(QK^T\)</span>：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}QK^T = \begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix} \times \begin{bmatrix} 1 &amp; 0 \\ 1 &amp; 1 \\ 0 &amp; 1 \end{bmatrix} = \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 2 \end{bmatrix}\end{split}\]</div>
 <p>这一步通过查询矩阵<span class="math notranslate nohighlight">\(Q\)</span> 与键矩阵<span class="math notranslate nohighlight">\(K\)</span> 的转置相乘，得到每个查询与所有键的相似性分数。</p>
 </section>
 <section id="step-3">
-<h4>Step 3: 缩放点积<a class="headerlink" href="#step-3" title="Link to this heading">#</a></h4>
+<h4>Step 3: 缩放点积<a class="headerlink" href="#step-3" title="Permalink to this heading">#</a></h4>
 <p>为了避免较大的点积值影响 softmax 的效果，我们将点积除以<span class="math notranslate nohighlight">\(\sqrt{d_k}\)</span>，这里<span class="math notranslate nohighlight">\(d_k = 3\)</span>，所以缩放因子为<span class="math notranslate nohighlight">\(\sqrt{3} \approx 1.732\)</span>。因此，缩放后的点积为：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\frac{QK^T}{\sqrt{d_k}} = \frac{1}{1.732} \times \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 2 \end{bmatrix} = \begin{bmatrix} 0.577 &amp; 0.577 \\ 0.577 &amp; 1.154 \end{bmatrix}\end{split}\]</div>
 </section>
 <section id="step-4-softmax">
-<h4>Step 4: 应用 softmax<a class="headerlink" href="#step-4-softmax" title="Link to this heading">#</a></h4>
+<h4>Step 4: 应用 softmax<a class="headerlink" href="#step-4-softmax" title="Permalink to this heading">#</a></h4>
 <p>接下来，对缩放后的点积应用 softmax 函数。softmax 函数将每一行转化为概率分布。假设第<span class="math notranslate nohighlight">\(i\)</span> 行的点积值为<span class="math notranslate nohighlight">\(a_i\)</span>，那么 softmax 是：</p>
 <div class="math notranslate nohighlight">
 \[\text{softmax}(a_i) = \frac{e^{a_i}}{\sum_j e^{a_j}}\]</div>
@@ -599,7 +589,7 @@ document.write(`
 \[\begin{split}\text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right) = \begin{bmatrix} 0.5 &amp; 0.5 \\ 0.4 &amp; 0.6 \end{bmatrix}\end{split}\]</div>
 </section>
 <section id="step-5-v">
-<h4>Step 5: 加权值矩阵<span class="math notranslate nohighlight">\(V\)</span><a class="headerlink" href="#step-5-v" title="Link to this heading">#</a></h4>
+<h4>Step 5: 加权值矩阵<span class="math notranslate nohighlight">\(V\)</span><a class="headerlink" href="#step-5-v" title="Permalink to this heading">#</a></h4>
 <p>将 softmax 权重与值矩阵<span class="math notranslate nohighlight">\(V\)</span> 相乘，得到注意力的最终输出：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\text{Attention}(Q, K, V) = \begin{bmatrix} 0.5 &amp; 0.5 \\ 0.4 &amp; 0.6 \end{bmatrix} \times \begin{bmatrix} 0 &amp; 2 \\ 1 &amp; 3 \end{bmatrix}\end{split}\]</div>
@@ -620,7 +610,7 @@ document.write(`
 </section>
 </section>
 <section id="id3">
-<h3>自注意力机制流程<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h3>自注意力机制流程<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>假如我们要翻译一个词组”Thinking Machines“，其中Thinking这个词的embedding vector用<span class="math notranslate nohighlight">\(x_1\)</span>表示，Machines这个词的embedding vector用<span class="math notranslate nohighlight">\(x_2\)</span>表示。</p>
 <p>第一步：每个编码器的输入向量（在本例中为每个单词的嵌入）创建三个向量。因此，对于每个单词，我们创建一个查询向量、一个键向量和一个值向量。（将<span class="math notranslate nohighlight">\(x_1\)</span>乘以<span class="math notranslate nohighlight">\(W^Q\)</span>会得到<span class="math notranslate nohighlight">\(q_1\)</span>，我们最终为输入句子中的每个单词创建一个“查询”、一个“键”和一个“值”投影。）
 <img src="../../image/NaturalLanguageProcessing/transformer_self_attention_vectors.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" /></p>
@@ -635,7 +625,7 @@ document.write(`
 </section>
 </section>
 <section id="multi-head-attention">
-<h2>Multi-head attention 多头注意力机制<a class="headerlink" href="#multi-head-attention" title="Link to this heading">#</a></h2>
+<h2>Multi-head attention 多头注意力机制<a class="headerlink" href="#multi-head-attention" title="Permalink to this heading">#</a></h2>
 <p>由上面自注意力机制中可以得知，<span class="math notranslate nohighlight">\(Q,K,V\)</span>的矩阵是<span class="math notranslate nohighlight">\(X\)</span>分别乘以<span class="math notranslate nohighlight">\(W^Q,W^K,W^V\)</span>（权重矩阵）得到的。通过多头注意力，我们为每个头维护单独的<span class="math notranslate nohighlight">\(W^Q,W^K,W^V\)</span>（权重矩阵），从而产生不同的<span class="math notranslate nohighlight">\(Q,K,V\)</span>矩阵。</p>
 <img src="../../image/NaturalLanguageProcessing/transformer_attention_heads_qkv.png" alt="" style="zoom: 60%; display: block; margin: 0px auto;" />
 <p>接下来我们会得到8个不同的矩阵<span class="math notranslate nohighlight">\(Z\)</span>
@@ -675,7 +665,7 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -704,7 +694,6 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -774,8 +763,8 @@ By ascotbe
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Transformer代码实现 &#8212; AI学习笔记</title>
   
@@ -14,53 +15,57 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'NaturalLanguageProcessing/Transformer/transformer';</script>
-    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="什么是微调" href="../../FineTuning/Introduction.html" />
@@ -74,23 +79,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -112,20 +122,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -141,8 +143,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -161,18 +161,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -250,13 +239,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DeepLearning/GPU.html">GPU</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/conv_layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/padding_and_strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalNeuralNetwork/recognize_handwritten_digits.html">重0开始使用 CNN 进行手写数字识别</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -265,25 +255,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/batch_norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/async-computation.html">异步计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/async_computation.html">异步计算</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="../../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/fine-tuning.html">微调</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/fine_tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/anchor.html">锚框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural-style.html">风格迁移</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ComputerVision/neural_style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
@@ -319,7 +309,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -328,14 +318,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -428,10 +418,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -439,14 +429,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -489,34 +479,34 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transformer">
-<h1>Transformer代码实现<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h1>
+<h1>Transformer代码实现<a class="headerlink" href="#transformer" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
 </pre></div>
 </div>
 </div>
 </div>
 <section id="id1">
-<h2>基于位置的前馈网络<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>基于位置的前馈网络<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>基于位置的前馈网络对序列中的所有位置的表示进行变换时使用的是同一个多层感知机（MLP），这就是称前馈网络是<em>基于位置的</em>（positionwise）的原因。在下面的实现中，输入<code class="docutils literal notranslate"><span class="pre">X</span></code>的形状（批量大小，时间步数或序列长度，隐单元数或特征维度）将被一个两层的感知机转换成形状为（批量大小，时间步数，<code class="docutils literal notranslate"><span class="pre">ffn_num_outputs</span></code>）的输出张量。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PositionWiseFFN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># 基于位置的前馈网络</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PositionWiseFFN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># 基于位置的前馈网络</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ffn_num_input: 输入特征的维度，即每个 token 的特征数。</span>
 <span class="sd">    ffn_num_hiddens: 隐藏层的神经元数量，控制中间层的复杂度。</span>
 <span class="sd">    ffn_num_outputs: 输出特征的维度。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_outputs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_outputs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="c1"># # 这是第一个全连接层（线性变换），它将输入从 ffn_num_input 维度映射到 ffn_num_hiddens 维度。这一步的作用是进行维度变换和线性组合，帮助模型捕捉更多复杂的特征</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">ffn_num_hiddens</span><span class="p">)</span>
@@ -525,7 +515,7 @@ document.write(`
         <span class="c1"># 这是第二个全连接层，将隐藏层的输出转换回 ffn_num_outputs 维度</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span> <span class="n">ffn_num_outputs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -560,7 +550,7 @@ document.write(`
 </div>
 </section>
 <section id="id2">
-<h2>残差连接和层规范化<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>残差连接和层规范化<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p>以下代码对比不同维度的层规范化和批量规范化的效果。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -582,7 +572,7 @@ batch norm: tensor([[-0.3333, -0.3333],
 </div>
 </div>
 <section id="layernorm">
-<h3><strong>LayerNorm 计算</strong><a class="headerlink" href="#layernorm" title="Link to this heading">#</a></h3>
+<h3><strong>LayerNorm 计算</strong><a class="headerlink" href="#layernorm" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">LayerNorm</span></code> 是对每个样本的特征进行归一化，因此它对每一行独立计算均值和标准差。</p>
 <p>公式：</p>
 <p>对于每个样本<span class="math notranslate nohighlight">\(X_{i}\)</span>:</p>
@@ -605,7 +595,7 @@ batch norm: tensor([[-0.3333, -0.3333],
 \[\text { normalized } \_\mathrm{X}[1]=\left[\frac{2-2.5}{0.5}, \frac{3-2.5}{0.5}\right]=[-1.0,1.0]\]</div>
 </section>
 <section id="batchnorm1d">
-<h3>BatchNorm1d 计算<a class="headerlink" href="#batchnorm1d" title="Link to this heading">#</a></h3>
+<h3>BatchNorm1d 计算<a class="headerlink" href="#batchnorm1d" title="Permalink to this heading">#</a></h3>
 <p>公式：</p>
 <p>对于每个特征（列）<span class="math notranslate nohighlight">\(X_{j}\)</span>:</p>
 <div class="math notranslate nohighlight">
@@ -628,17 +618,17 @@ batch norm: tensor([[-0.3333, -0.3333],
 <p>现在可使用残差连接和层规范化来实现<code class="docutils literal notranslate"><span class="pre">AddNorm</span></code>类。暂退法也被作为正则化方法使用。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AddNorm</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># 残差连接后进行层规范化</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">AddNorm</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span> <span class="c1"># 残差连接后进行层规范化</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    normalized_shape（层规范化的输入形状）</span>
 <span class="sd">    dropout（丢弃率）</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalized_shape</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalized_shape</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 用于在训练过程中随机丢弃一定比例的神经元，Dropout 在模型评估时会自动关闭</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ln</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">normalized_shape</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
         <span class="c1"># 在 Dropout 之后，将 Y 与输入张量 X 进行逐元素相加。这个过程就是残差连接（Residual Connection）</span>
         <span class="n">_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">X</span>
         <span class="c1"># print(_)</span>
@@ -685,11 +675,11 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
 </section>
 </section>
 <section id="id3">
-<h2>编码器<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>编码器<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>有了组成Transformer编码器的基础组件，现在可以先实现编码器中的一个层。下面的<code class="docutils literal notranslate"><span class="pre">EncoderBlock</span></code>类包含两个子层：多头自注意力和基于位置的前馈网络，这两个子层都使用了残差连接和紧随的层规范化。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">masked_softmax</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">masked_softmax</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;在最后一个轴上执行 softmax 操作，并对指定元素进行遮掩（mask）。</span>
 
 <span class="sd">    参数：</span>
@@ -698,7 +688,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># 内部函数，生成遮掩掩码并应用到输入张量 X 上</span>
-    <span class="k">def</span> <span class="nf">_sequence_mask</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_len</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sequence_mask</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">valid_len</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">maxlen</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 获取序列的最大长度（第二个维度大小）</span>
         
         <span class="c1"># 创建掩码，mask: shape 是 (batch_size, maxlen)</span>
@@ -734,13 +724,13 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
         <span class="c1"># 将遮掩后的 X 重新调整为原始形状，并在最后一个轴上执行 softmax</span>
         <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">DotProductAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DotProductAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;缩放点积注意力机制。</span>
 
 <span class="sd">    参数：</span>
 <span class="sd">    - dropout: 在注意力权重上应用的 dropout 概率。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 初始化 dropout 层</span>
 
@@ -750,7 +740,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
     <span class="c1"># - keys: (batch_size, no. of key-value pairs, d)，键向量</span>
     <span class="c1"># - values: (batch_size, no. of key-value pairs, value dimension)，值向量</span>
     <span class="c1"># - valid_lens: (batch_size,) 或 (batch_size, no. of queries)，表示每个序列的有效长度</span>
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">valid_lens</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">valid_lens</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">queries</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 获取查询向量的最后一个维度（嵌入维度）</span>
         
         <span class="c1"># 计算点积得分：queries @ keys.T / sqrt(d)，缩放以防止梯度爆炸</span>
@@ -766,11 +756,11 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
 </div>
 </div>
 <section id="id4">
-<h3>多头注意力<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<h3>多头注意力<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>实现如下</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;多头注意力机制。</span>
 <span class="sd">    </span>
 <span class="sd">    参数：</span>
@@ -779,7 +769,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
 <span class="sd">    - dropout: 在注意力权重上的 dropout 比率。</span>
 <span class="sd">    - bias: 是否在线性层中使用偏置。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>  <span class="c1"># 多头的数量</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">DotProductAttention</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 点积注意力机制</span>
@@ -790,7 +780,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
         <span class="bp">self</span><span class="o">.</span><span class="n">W_v</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>  <span class="c1"># 值的线性变换</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">W_o</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>  <span class="c1"># 输出的线性变换</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queries</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        参数：</span>
 <span class="sd">        - queries: 查询向量，形状为 (batch_size, num_queries, num_hiddens)</span>
@@ -823,7 +813,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
         <span class="c1"># 返回经过线性变换后的输出结果</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_o</span><span class="p">(</span><span class="n">output_concat</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">transpose_qkv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transpose_qkv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;用于并行计算多个注意力头，转换 queries, keys 或 values 的形状。</span>
 <span class="sd">        </span>
 <span class="sd">        参数：</span>
@@ -842,7 +832,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
         <span class="c1"># 将前两个维度合并，形状变为 (batch_size * num_heads, num_queries or num_kv_pairs, num_hiddens / num_heads)</span>
         <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">transpose_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transpose_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;逆转 transpose_qkv 操作，将多个头的输出结果重新组合。</span>
 <span class="sd">        </span>
 <span class="sd">        参数：</span>
@@ -866,10 +856,10 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
 </div>
 </section>
 <section id="id5">
-<h3>编码器块<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3>编码器块<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EncoderBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">EncoderBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer 编码器块。</span>
 <span class="sd">    </span>
 <span class="sd">    参数：</span>
@@ -879,7 +869,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
 <span class="sd">    - dropout: Dropout 概率，用于防止过拟合。</span>
 <span class="sd">    - use_bias: 是否在线性层中使用偏置。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span>
                  <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         
@@ -895,7 +885,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
         <span class="c1"># 第二次加法归一化层，通常在前馈网络后进行残差连接和归一化</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addnorm2</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        参数：</span>
 <span class="sd">        - X: 输入张量，形状为 (batch_size, num_tokens, num_hiddens)。</span>
@@ -935,20 +925,20 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
 <p>下面实现的Transformer编码器的代码中，堆叠了<code class="docutils literal notranslate"><span class="pre">num_layers</span></code>个<code class="docutils literal notranslate"><span class="pre">EncoderBlock</span></code>类的实例。由于这里使用的是值范围在<span class="math notranslate nohighlight">\(-1\)</span>和<span class="math notranslate nohighlight">\(1\)</span>之间的固定位置编码，因此通过学习得到的输入的嵌入表示的值需要先乘以嵌入维度的平方根进行重新缩放，然后再与位置编码相加。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Encoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;编码器--解码器架构的基础编码器接口&quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
     <span class="c1"># 可以添加额外的参数 (例如排除填充的长度)</span>
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>  <span class="c1"># 这是一个抽象方法，子类需要实现它</span>
 
-<span class="k">class</span> <span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;位置编码，帮助模型捕捉序列中每个元素的位置&quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>  <span class="c1"># 定义 Dropout 层</span>
         <span class="c1"># 创建足够长的 P 矩阵来存储位置编码</span>
@@ -960,16 +950,16 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
         <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># 偶数维度使用 sin 函数</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># 奇数维度使用 cos 函数</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="c1"># 将输入 X 与位置编码 P 相加，然后应用 Dropout</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">[:,</span> <span class="p">:</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># 返回加上位置编码后的结果</span>
 
 
-<span class="k">class</span> <span class="nc">TransformerEncoder</span><span class="p">(</span><span class="n">Encoder</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TransformerEncoder</span><span class="p">(</span><span class="n">Encoder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer 编码器，包含多层 EncoderBlock&quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span>
                  <span class="n">num_heads</span><span class="p">,</span> <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span> <span class="o">=</span> <span class="n">num_hiddens</span>
@@ -984,7 +974,7 @@ tensor([[[-0.4455,  1.7027, -0.3918, -0.8654],
             <span class="bp">self</span><span class="o">.</span><span class="n">blks</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s2">&quot;block&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
                 <span class="n">EncoderBlock</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">use_bias</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">valid_lens</span><span class="p">):</span>
         <span class="c1"># 词嵌入 + 位置编码</span>
         <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_encoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span><span class="p">))</span>
         
@@ -1022,15 +1012,15 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </section>
 </section>
 <section id="id6">
-<h2>解码器<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<h2>解码器<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <p>Transformer解码器也是由多个相同的层组成。在<code class="docutils literal notranslate"><span class="pre">DecoderBlock</span></code>类中实现的每个层包含了三个子层：解码器自注意力、“编码器-解码器”注意力和基于位置的前馈网络。这些子层也都被残差连接和紧随的层规范化围绕。</p>
 <p>正如在本节前面所述，在掩蔽多头解码器自注意力层（第一个子层）中，查询、键和值都来自上一个解码器层的输出。关于<em>序列到序列模型</em>（sequence-to-sequence model），在训练阶段，其输出序列的所有位置（时间步）的词元都是已知的；然而，在预测阶段，其输出序列的词元是逐个生成的。因此，在任何解码器时间步中，只有生成的词元才能用于解码器的自注意力计算中。为了在解码器中保留自回归的属性，其掩蔽自注意力设定了参数<code class="docutils literal notranslate"><span class="pre">dec_valid_lens</span></code>，以便任何查询都只会与解码器中所有已经生成词元的位置（即直到该查询位置为止）进行注意力计算。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransformerDecoderBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TransformerDecoderBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer 解码器的第 i 个块&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">i</span>  <span class="c1"># 记录该块的索引 i</span>
         
@@ -1046,7 +1036,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
         <span class="bp">self</span><span class="o">.</span><span class="n">ffn</span> <span class="o">=</span> <span class="n">PositionWiseFFN</span><span class="p">(</span><span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addnorm3</span> <span class="o">=</span> <span class="n">AddNorm</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>  <span class="c1"># Add &amp; Norm 操作</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 提取编码器的输出和有效长度</span>
         <span class="c1"># state[2][self.i] 存储的是到当前时间步为止，第 i 个块的解码输出</span>
 
@@ -1098,32 +1088,32 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 <p>现在我们构建了由<code class="docutils literal notranslate"><span class="pre">num_layers</span></code>个<code class="docutils literal notranslate"><span class="pre">DecoderBlock</span></code>实例组成的完整的Transformer解码器。最后，通过一个全连接层计算所有<code class="docutils literal notranslate"><span class="pre">vocab_size</span></code>个可能的输出词元的预测值。解码器的自注意力权重和编码器解码器注意力权重都被存储下来，方便日后可视化的需要。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;编码器-解码器架构的基本解码器接口&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enc_all_outputs</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enc_all_outputs</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="c1"># 初始化状态</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="c1"># 解码器的前向传播</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-<span class="k">class</span> <span class="nc">AttentionDecoder</span><span class="p">(</span><span class="n">Decoder</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AttentionDecoder</span><span class="p">(</span><span class="n">Decoder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;基于注意力机制的解码器接口&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">attention_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">attention_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># 注意力权重的获取</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-<span class="k">class</span> <span class="nc">TransformerDecoder</span><span class="p">(</span><span class="n">AttentionDecoder</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TransformerDecoder</span><span class="p">(</span><span class="n">AttentionDecoder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Transformer解码器&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span>
                  <span class="n">num_blks</span><span class="p">,</span> <span class="n">dropout</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span> <span class="o">=</span> <span class="n">num_hiddens</span>  <span class="c1"># 隐藏层大小</span>
@@ -1137,11 +1127,11 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
                 <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">ffn_num_hiddens</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyLinear</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">)</span>  <span class="c1"># 全连接层，用于生成预测结果</span>
 
-    <span class="k">def</span> <span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span><span class="p">):</span>
         <span class="c1"># 初始化解码器的状态，包含编码器的输出、有效长度和每个解码块的历史状态</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">enc_outputs</span><span class="p">,</span> <span class="n">enc_valid_lens</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blks</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="c1"># 前向传播</span>
         <span class="c1"># 对输入X进行词嵌入，然后加上位置编码</span>
         <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_encoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_hiddens</span><span class="p">))</span>
@@ -1158,7 +1148,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">state</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">attention_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">attention_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># 返回保存的注意力权重</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attention_weights</span>
 </pre></div>
@@ -1167,7 +1157,7 @@ Transformer编码器输出的形状是（批量大小，时间步数目，<code 
 </div>
 </section>
 <section id="id7">
-<h2><a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<h2><a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <p>训练
 依照Transformer架构来实例化编码器－解码器模型。在这里，指定Transformer的编码器和解码器都是2层，都使用4头注意力。为了进行序列到序列的学习，下面在“英语－法语”机器翻译数据集上训练Transformer模型。</p>
 <div class="cell docutils container">
@@ -1377,7 +1367,7 @@ i&#39;m home . =&gt; [&#39;je&#39;, &#39;suis&#39;, &#39;chez&#39;, &#39;moi&#39
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1406,7 +1396,6 @@ i&#39;m home . =&gt; [&#39;je&#39;, &#39;suis&#39;, &#39;chez&#39;, &#39;moi&#39
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1475,8 +1464,8 @@ By ascotbe
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

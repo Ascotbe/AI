@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>PyTorch图像处理 &#8212; AI学习笔记</title>
   
@@ -14,51 +15,55 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'PrerequisiteKnowledge/PyTorch图像处理';</script>
-    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="激活函数" href="%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html" />
@@ -72,23 +77,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -110,20 +120,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -139,8 +141,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -159,18 +159,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -248,13 +237,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv_layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding_and_strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/recognize_handwritten_digits.html">重0开始使用 CNN 进行手写数字识别</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -263,25 +253,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch_norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async_computation.html">异步计算</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine_tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural_style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
@@ -317,7 +307,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -326,14 +316,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -426,10 +416,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -437,14 +427,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -526,24 +516,24 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="pytorch">
-<h1>PyTorch图像处理<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h1>
+<h1>PyTorch图像处理<a class="headerlink" href="#pytorch" title="Permalink to this heading">#</a></h1>
 <p>计算机视觉任务中，对图像的变换（Image Transform）往往是必不可少的操作，例如在迁移学习中，需要对图像尺寸进行变换以使用预训练网络的输入层，又如对数据进行增强以丰富训练数据。</p>
 <p>作为深度学习领域的主流框架，pytorch中提供了丰富的图像变换API。本文将对pytorch中torchvision.transforms提供的丰富多样的图像变换API进行整理介绍。</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>导入所需的库<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1>导入所需的库<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <p>为方便下文展示各种图像变换API的效果，我们借助matplotlib定义一个名为<code class="docutils literal notranslate"><span class="pre">show_image</span></code>函数来展示图片，如下所示：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
-<span class="kn">from</span> <span class="nn">torchvision.io</span> <span class="kn">import</span> <span class="n">read_image</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="c1">#mpl.rcParams[&#39;font.sans-serif&#39;] = [&#39;SimHei&#39;]  # Windows中文字体支持</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Songti SC&#39;</span><span class="p">]</span>  <span class="c1"># macOS中文字体支持</span>
 </pre></div>
@@ -552,7 +542,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">img_lst</span><span class="p">,</span> <span class="o">**</span><span class="n">imshow_kwargs</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">show_image</span><span class="p">(</span><span class="n">img_lst</span><span class="p">,</span> <span class="o">**</span><span class="n">imshow_kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    img_lst: 保存图像和标题的list，形如：[(image1, title1),(image2, title2)]。image可以使Pillow.Image对象，也可以是torch.Tensor。</span>
 <span class="sd">    imshow_kwargs: 需要传递给plt.imshow的参数</span>
@@ -571,16 +561,16 @@ document.write(`
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id2">
-<h1>加载图片<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<h1>加载图片<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
 <section id="pil">
-<h2>PIL库<a class="headerlink" href="#pil" title="Link to this heading">#</a></h2>
+<h2>PIL库<a class="headerlink" href="#pil" title="Permalink to this heading">#</a></h2>
 <p>对于存储在磁盘中的图片文件，使用Pillow库提供的Image类对象进行打开是一种十分常用的方法，如果你还没有安装，你可以通过以下命令方便下文进行：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>Pillow
 </pre></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 </pre></div>
 </div>
 </div>
@@ -599,11 +589,11 @@ document.write(`
 </div>
 </section>
 <section id="id3">
-<h2>pytorch中提供的图像加载方法<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>pytorch中提供的图像加载方法<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>pytorch的torchvision.io模块本身也提供有加载图像数据的方法：read_image。该方法直接将图片加载为Tensor类型数据。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchvision.io</span> <span class="kn">import</span> <span class="n">read_image</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_image</span>
 </pre></div>
 </div>
 </div>
@@ -653,18 +643,18 @@ document.write(`
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="transforms">
-<h1>transforms<a class="headerlink" href="#transforms" title="Link to this heading">#</a></h1>
+<h1>transforms<a class="headerlink" href="#transforms" title="Permalink to this heading">#</a></h1>
 <section id="compose">
-<h2>Compose<a class="headerlink" href="#compose" title="Link to this heading">#</a></h2>
+<h2>Compose<a class="headerlink" href="#compose" title="Permalink to this heading">#</a></h2>
 <p>在介绍transforms前，有必要先说说Compose。</p>
 <p>我们做图像变换时，一般都不会单独使用一个图像变换API，而是顺序使用多个API。对于多个API，transforms模块中提供Compose类，对多个API进行打包。Compose关键代码如下所示：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Compose</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transforms</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Compose</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transforms</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">:</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">img</span>
@@ -719,7 +709,7 @@ document.write(`
 </div>
 </section>
 <section id="id4">
-<h2>自定义图像变换<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2>自定义图像变换<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <p>transforms是pytorch中torchvision包提供的图像变换模块，提供了各式各样的图像变换API，这些API都是通过可调用对象，可以是函数、也可以是类，如果是类，就必须实现<code class="docutils literal notranslate"><span class="pre">__call__()</span></code>方法，至于返回的数据类型，并没有严格限制，只要后续的图像变换API能够接收就好，但就一般而言，最后一个API的都是Tensor类型数据。所以，如果自定义图像变换API，遵循这些规则去定义可调用对象就好。</p>
 <p>最简单的，我们使用lambda定义可调用对象：</p>
 <div class="cell docutils container">
@@ -747,10 +737,10 @@ document.write(`
 <p>当然，这并没有什么意义，只是实现将一个数字进行平方再加1的变换，这里只是演示函数方式实现变换器。接下来，我们试试类方式对图像进行变换，例如图像旋转：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RandomRotation</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RandomRotation</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">angle</span>
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -784,14 +774,14 @@ document.write(`
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="pytorchapi">
-<h1>pytorch中开箱即用的图像变换API<a class="headerlink" href="#pytorchapi" title="Link to this heading">#</a></h1>
+<h1>pytorch中开箱即用的图像变换API<a class="headerlink" href="#pytorchapi" title="Permalink to this heading">#</a></h1>
 <p>内存中的图像数据一般分为两种，一种是PIL的Image对象，一种是torch.Tensor(更严谨的说，应该是torch.*Tensor，因为也可以是Tensor的子类)，不要杠，我这里说的是建模过程中的图片形式，Python当然也可以用其他库来打开图片。相对应的，pytorch中的图像变换API也分为针对PIL.Image对象的API和针对Tensor数据的API以及能同时用于两种图像形式的API（姑且将这类API称为通用型图像变换API）。</p>
 <p><strong>注意，即使是通用型API，也可能存在API内某些参数或参数值只适用于Tensor或PIL.Image</strong></p>
 <p>我们先整理通用型的API。</p>
 <section id="api">
-<h2>通用型图像变换API<a class="headerlink" href="#api" title="Link to this heading">#</a></h2>
+<h2>通用型图像变换API<a class="headerlink" href="#api" title="Permalink to this heading">#</a></h2>
 <section id="centercrop-size">
-<h3>CenterCrop(size)<a class="headerlink" href="#centercrop-size" title="Link to this heading">#</a></h3>
+<h3>CenterCrop(size)<a class="headerlink" href="#centercrop-size" title="Permalink to this heading">#</a></h3>
 <p>CenterCrop的作用是从图像的中心位置裁剪指定大小的图像。例如一些神经网络的输入图像大小为300×300，而我们上述展示的原始图像的大小为448×596，此时就需要对训练图像进行裁剪。</p>
 <p>CenterCrop只有一个参数：</p>
 <ul class="simple">
@@ -839,7 +829,7 @@ torch.Tensor类型数据裁切后输出类型为：&lt;class &#39;torch.Tensor&#
 <p>上述示例中，对PIL.Image类型和torch.Tensor类型数据进行了裁切，证明了CenterCrop这类通用型API并不会改变数据类型，输入什么类型的图像，输出还是什么类型的图像，另外从图像展示结果上看，对两种类型的图像变换的效果是一样的。</p>
 </section>
 <section id="resize-size">
-<h3>Resize(size)<a class="headerlink" href="#resize-size" title="Link to this heading">#</a></h3>
+<h3>Resize(size)<a class="headerlink" href="#resize-size" title="Permalink to this heading">#</a></h3>
 <p>按给定尺寸对图像进行缩放，Resize主要参数size可以为int型，此时，原始图像短边将缩放至size像素，长边将缩放至：size×长边÷短边 。以上述原始图片为例，假设输入size=300，原始图像短边高是448像素，长边宽是596像素，所以缩放后，长边宽为：300×596÷448=399像素；当size为序列时，size=(h, w)，原始图像将高和宽分别缩放至h和w。除了size参数外，Resize还有其他参数，可以参考<a class="reference external" href="https://pytorch.org/vision/stable/generated/torchvision.transforms.functional.resize.html#torchvision.transforms.functional.resize">官方文档</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -873,7 +863,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </section>
 <section id="pad-padding-fill-0-padding-mode-constant">
-<h3>Pad(padding, fill=0, padding_mode=’constant’)<a class="headerlink" href="#pad-padding-fill-0-padding-mode-constant" title="Link to this heading">#</a></h3>
+<h3>Pad(padding, fill=0, padding_mode=’constant’)<a class="headerlink" href="#pad-padding-fill-0-padding-mode-constant" title="Permalink to this heading">#</a></h3>
 <p>对图像边框进行填充，主要参数如下：</p>
 <ul class="simple">
 <li><p><strong>padding：指定填充像素</strong></p>
@@ -933,7 +923,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </section>
 <section id="colorjitter-brightness-0-contrast-0-saturation-0-hue-0">
-<h3>ColorJitter(brightness=0, contrast=0, saturation=0, hue=0)<a class="headerlink" href="#colorjitter-brightness-0-contrast-0-saturation-0-hue-0" title="Link to this heading">#</a></h3>
+<h3>ColorJitter(brightness=0, contrast=0, saturation=0, hue=0)<a class="headerlink" href="#colorjitter-brightness-0-contrast-0-saturation-0-hue-0" title="Permalink to this heading">#</a></h3>
 <p>ColorJitter的作用是随机修改图片的亮度、对比度、饱和度、色调，常用来进行数据增强，尤其是训练图像类别不均衡或图像数量较少时。**注意，如果输入图像为PIL.Image对象，那么，如果打开模式为“1”, “I”, “F”或者图像透明，将会产生异常。**常用参数如下：</p>
 <ul class="simple">
 <li><p>brightness：亮度变换范围，默认值为0，即不变换亮度</p>
@@ -999,7 +989,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </section>
 <section id="randomrotation-degrees-interpolation">
-<h3>RandomRotation(degrees[, interpolation, …])<a class="headerlink" href="#randomrotation-degrees-interpolation" title="Link to this heading">#</a></h3>
+<h3>RandomRotation(degrees[, interpolation, …])<a class="headerlink" href="#randomrotation-degrees-interpolation" title="Permalink to this heading">#</a></h3>
 <p>指定角度范围随机旋转图像。</p>
 <ul class="simple">
 <li><p>degrees：旋转角度范围</p>
@@ -1047,7 +1037,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </section>
 <section id="gaussianblur-kernel-size-sigma">
-<h3>GaussianBlur(kernel_size[, sigma])<a class="headerlink" href="#gaussianblur-kernel-size-sigma" title="Link to this heading">#</a></h3>
+<h3>GaussianBlur(kernel_size[, sigma])<a class="headerlink" href="#gaussianblur-kernel-size-sigma" title="Permalink to this heading">#</a></h3>
 <p>高斯模糊。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1079,7 +1069,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 </div>
 </section>
 <section id="fivecrop-size-tencrop-size-vertical-flip-false">
-<h3>FiveCrop(size)与 TenCrop(size, vertical_flip=False)<a class="headerlink" href="#fivecrop-size-tencrop-size-vertical-flip-false" title="Link to this heading">#</a></h3>
+<h3>FiveCrop(size)与 TenCrop(size, vertical_flip=False)<a class="headerlink" href="#fivecrop-size-tencrop-size-vertical-flip-false" title="Permalink to this heading">#</a></h3>
 <p>分别从图像的四个角以及中心进行五次裁剪，最终将返回一个包含5张裁切后图片的tuple。</p>
 <ul class="simple">
 <li><p>size：裁切尺寸</p>
@@ -1117,7 +1107,7 @@ size=(300, 300)，缩放后图像宽高为：torch.Size([3, 300, 300])
 <p>TenCrop(size, vertical_flip=False)就是在FiveCrop(size)的基础上，对原始图像进行水平或者垂直翻转，然后在从翻转后图像的四个角以及中心进行五次裁剪，所以一共获取了10张图像返回。参数vertical_flip默认值为False，表示进行水平翻转，值为True时，表示进行垂直翻转在裁剪。</p>
 </section>
 <section id="grayscale-num-output-channels-1-randomgrayscale-p-0-1">
-<h3>Grayscale(num_output_channels=1) RandomGrayscale(p=0.1)<a class="headerlink" href="#grayscale-num-output-channels-1-randomgrayscale-p-0-1" title="Link to this heading">#</a></h3>
+<h3>Grayscale(num_output_channels=1) RandomGrayscale(p=0.1)<a class="headerlink" href="#grayscale-num-output-channels-1-randomgrayscale-p-0-1" title="Permalink to this heading">#</a></h3>
 <p>将图像转换为灰度图像，默认通道数为1，通道数为3时，RGB三个通道的值相等。</p>
 <ul class="simple">
 <li><p>num_output_channels ：指定最终输出图像的通道数，值为1时，最终输出只有一个通道的灰度图像，值为3时，输出三个通到值相等的灰度图像。默认值为1。</p></li>
@@ -1149,7 +1139,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 <p>RandomGrayscale以一定的概率将图像变为灰度图像。实际上就是以一定的概率执行torchvision.transforms.Grayscale。参数只有一个概率值p，默认值为0.1。这里不再演示。</p>
 </section>
 <section id="randomsolarize-threshold-p-0-5">
-<h3>RandomSolarize(threshold, p=0.5)<a class="headerlink" href="#randomsolarize-threshold-p-0-5" title="Link to this heading">#</a></h3>
+<h3>RandomSolarize(threshold, p=0.5)<a class="headerlink" href="#randomsolarize-threshold-p-0-5" title="Permalink to this heading">#</a></h3>
 <p>以一定概率将超过给定阈值的像素值进行反转。</p>
 <ul class="simple">
 <li><p>threshold：反转像素阈值</p></li>
@@ -1184,7 +1174,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="randomaffine-degrees-translate-none-scale-none-shear-none-resample-false-fillcolor-0">
-<h3>RandomAffine(degrees, translate=None, scale=None, shear=None, resample=False, fillcolor=0)<a class="headerlink" href="#randomaffine-degrees-translate-none-scale-none-shear-none-resample-false-fillcolor-0" title="Link to this heading">#</a></h3>
+<h3>RandomAffine(degrees, translate=None, scale=None, shear=None, resample=False, fillcolor=0)<a class="headerlink" href="#randomaffine-degrees-translate-none-scale-none-shear-none-resample-false-fillcolor-0" title="Permalink to this heading">#</a></h3>
 <p>RandomAffine的作用是保持图像中心不变的情况下对图像进行随机的仿射变换。</p>
 <ul class="simple">
 <li><p>degrees：度数范围。</p>
@@ -1240,7 +1230,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="randomcrop-size-padding-none-pad-if-needed-false-fill-0-padding-mode-constant">
-<h3>RandomCrop(size, padding=None, pad_if_needed=False, fill=0, padding_mode=’constant’)<a class="headerlink" href="#randomcrop-size-padding-none-pad-if-needed-false-fill-0-padding-mode-constant" title="Link to this heading">#</a></h3>
+<h3>RandomCrop(size, padding=None, pad_if_needed=False, fill=0, padding_mode=’constant’)<a class="headerlink" href="#randomcrop-size-padding-none-pad-if-needed-false-fill-0-padding-mode-constant" title="Permalink to this heading">#</a></h3>
 <p>在一个随机位置上对图像进行裁剪。</p>
 <ul class="simple">
 <li><p>size：裁切保留多少个像素</p>
@@ -1292,7 +1282,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="randomhorizontalflip-p-0-5-randomverticalflip-p-0-5">
-<h3>RandomHorizontalFlip(p=0.5)与RandomVerticalFlip(p=0.5)<a class="headerlink" href="#randomhorizontalflip-p-0-5-randomverticalflip-p-0-5" title="Link to this heading">#</a></h3>
+<h3>RandomHorizontalFlip(p=0.5)与RandomVerticalFlip(p=0.5)<a class="headerlink" href="#randomhorizontalflip-p-0-5-randomverticalflip-p-0-5" title="Permalink to this heading">#</a></h3>
 <p>以一定的概率将图像水平翻转。参数只有一个概率值p，默认值为0.5。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1316,7 +1306,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 <p>有水平翻转，就有垂直翻转，即RandomVerticalFlip(p=0.5)，用法与RandomHorizontalFlip(p=0.5)完全一致，这里不再介绍。</p>
 </section>
 <section id="randomperspective-distortion-scale-0-5-p-0-5-interpolation-3-fill-0">
-<h3>RandomPerspective(distortion_scale=0.5, p=0.5, interpolation=3, fill=0)<a class="headerlink" href="#randomperspective-distortion-scale-0-5-p-0-5-interpolation-3-fill-0" title="Link to this heading">#</a></h3>
+<h3>RandomPerspective(distortion_scale=0.5, p=0.5, interpolation=3, fill=0)<a class="headerlink" href="#randomperspective-distortion-scale-0-5-p-0-5-interpolation-3-fill-0" title="Permalink to this heading">#</a></h3>
 <p>以一定的概率对图像进行随机的透视变换。</p>
 <ul class="simple">
 <li><p>distortion_scale：扭曲的角度，取值在[0, 1]之间，默认值为0.5.</p></li>
@@ -1345,7 +1335,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="randomequalize-p-0-5">
-<h3>RandomEqualize(p=0.5)<a class="headerlink" href="#randomequalize-p-0-5" title="Link to this heading">#</a></h3>
+<h3>RandomEqualize(p=0.5)<a class="headerlink" href="#randomequalize-p-0-5" title="Permalink to this heading">#</a></h3>
 <p>以一定的概率均衡图像色调直方图。</p>
 <ul class="simple">
 <li><p>p：执行变换的概率。</p></li>
@@ -1371,7 +1361,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="randomapply-p-0-5">
-<h3>RandomApply(p=0.5)<a class="headerlink" href="#randomapply-p-0-5" title="Link to this heading">#</a></h3>
+<h3>RandomApply(p=0.5)<a class="headerlink" href="#randomapply-p-0-5" title="Permalink to this heading">#</a></h3>
 <p>以一定的概率执行一组图像变换API，要么全部执行，要么全不执行。</p>
 <ul class="simple">
 <li><p>p：执行变换的概率。</p></li>
@@ -1379,10 +1369,10 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </section>
 </section>
 <section id="pil-imageapi">
-<h2>专用于PIL.Image的图像变换API<a class="headerlink" href="#pil-imageapi" title="Link to this heading">#</a></h2>
+<h2>专用于PIL.Image的图像变换API<a class="headerlink" href="#pil-imageapi" title="Permalink to this heading">#</a></h2>
 <p>这种类型的API只有两个：RandomChoice和RandomOrder，官方文档指出，此类API只适用于PIL.Image类型图像。</p>
 <section id="randomchoice-transforms-p">
-<h3>RandomChoice(transforms[, p])<a class="headerlink" href="#randomchoice-transforms-p" title="Link to this heading">#</a></h3>
+<h3>RandomChoice(transforms[, p])<a class="headerlink" href="#randomchoice-transforms-p" title="Permalink to this heading">#</a></h3>
 <p>以一定的概率从多个图像变换API中选取一个对图像进行变换，注意：可能一个都不选取，即不执行变换。</p>
 <ul class="simple">
 <li><p>transforms：多个图像变换API组成的序列</p></li>
@@ -1417,7 +1407,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="randomorder-transforms-p">
-<h3>RandomOrder(transforms[, p])<a class="headerlink" href="#randomorder-transforms-p" title="Link to this heading">#</a></h3>
+<h3>RandomOrder(transforms[, p])<a class="headerlink" href="#randomorder-transforms-p" title="Permalink to this heading">#</a></h3>
 <p>以随机顺序执行给定的多个图像变换API。</p>
 <ul class="simple">
 <li><p>transforms：多个图像变换API组成的序列</p></li>
@@ -1426,17 +1416,17 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </section>
 </section>
 <section id="torch-tensorapi">
-<h2>专用于torch.Tensor的图像变换API<a class="headerlink" href="#torch-tensorapi" title="Link to this heading">#</a></h2>
+<h2>专用于torch.Tensor的图像变换API<a class="headerlink" href="#torch-tensorapi" title="Permalink to this heading">#</a></h2>
 <section id="lineartransformation-transformation-matrix">
-<h3>LinearTransformation(transformation_matrix, …)<a class="headerlink" href="#lineartransformation-transformation-matrix" title="Link to this heading">#</a></h3>
+<h3>LinearTransformation(transformation_matrix, …)<a class="headerlink" href="#lineartransformation-transformation-matrix" title="Permalink to this heading">#</a></h3>
 <p>使用变换矩阵和离线计算的均值向量对图像张量进行变换，可以用在白化变换中，白化变换用来去除输入数据的冗余信息。常用在数据预处理中。</p>
 </section>
 <section id="normalize-mean-std-inplace-false">
-<h3>Normalize(mean, std, inplace=False)<a class="headerlink" href="#normalize-mean-std-inplace-false" title="Link to this heading">#</a></h3>
+<h3>Normalize(mean, std, inplace=False)<a class="headerlink" href="#normalize-mean-std-inplace-false" title="Permalink to this heading">#</a></h3>
 <p>逐channel的对图像进行标准化（均值变为0，标准差变为1），可以加快模型的收敛</p>
 </section>
 <section id="randomerasing-p-0-5-scale-0-02-0-33-ratio-0-3-3-3">
-<h3>RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3)<a class="headerlink" href="#randomerasing-p-0-5-scale-0-02-0-33-ratio-0-3-3-3" title="Link to this heading">#</a></h3>
+<h3>RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3)<a class="headerlink" href="#randomerasing-p-0-5-scale-0-02-0-33-ratio-0-3-3-3" title="Permalink to this heading">#</a></h3>
 <p>随机选择图像中的一块区域，擦除其像素，主要用来进行数据增强。</p>
 <ul class="simple">
 <li><p>p: 执行擦除的概率。</p></li>
@@ -1466,7 +1456,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="id5">
-<h3>RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3)<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3>RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3)<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>对图像中各像素数据类型进行转换。</p>
 <ul class="simple">
 <li><p>dtype : 输出图像中各个像素的数据类型</p></li>
@@ -1512,9 +1502,9 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </section>
 </section>
 <section id="id6">
-<h2>转换类型的图像变换API<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<h2>转换类型的图像变换API<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <section id="topilimage-mode">
-<h3>ToPILImage([mode])<a class="headerlink" href="#topilimage-mode" title="Link to this heading">#</a></h3>
+<h3>ToPILImage([mode])<a class="headerlink" href="#topilimage-mode" title="Permalink to this heading">#</a></h3>
 <p>将torch.Tensor或numpy.ndarray类型图像转为PIL.Image类型图像。</p>
 <ul class="simple">
 <li><p>mode: PIL.Image模式</p></li>
@@ -1537,7 +1527,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="totensor">
-<h3>ToTensor()<a class="headerlink" href="#totensor" title="Link to this heading">#</a></h3>
+<h3>ToTensor()<a class="headerlink" href="#totensor" title="Permalink to this heading">#</a></h3>
 <p>将PIL.Image或numpy.ndarray类型图像转为torch.Tensor类型图像。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1557,7 +1547,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
 </div>
 </section>
 <section id="piltotensor">
-<h3>PILToTensor()<a class="headerlink" href="#piltotensor" title="Link to this heading">#</a></h3>
+<h3>PILToTensor()<a class="headerlink" href="#piltotensor" title="Permalink to this heading">#</a></h3>
 <p>将PIL.Image(shape为：(H x W x C))类型图像转为torch.Tensor(shape为： (C x H x W))。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1608,7 +1598,7 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1637,7 +1627,6 @@ num_output_channels=3时，输出为：torch.Size([3, 338, 328])
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1745,8 +1734,8 @@ By ascotbe
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

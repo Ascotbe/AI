@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>多输入多输出通道 &#8212; AI学习笔记</title>
   
@@ -14,57 +15,61 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ConvolutionalNeuralNetwork/channels';</script>
-    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="汇聚层" href="pooling.html" />
-    <link rel="prev" title="填充和步幅" href="padding-and-strides.html" />
+    <link rel="prev" title="填充和步幅" href="padding_and_strides.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -74,23 +79,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -112,20 +122,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -141,8 +143,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -161,18 +161,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -250,13 +239,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="conv-layer.html">图像卷积</a></li>
-<li class="toctree-l1"><a class="reference internal" href="padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conv_layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="padding_and_strides.html">填充和步幅</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">多输入多输出通道</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenet.html">卷积神经网络（LeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recognize_handwritten_digits.html">重0开始使用 CNN 进行手写数字识别</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -265,25 +255,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch_norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async_computation.html">异步计算</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine_tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural_style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
@@ -319,7 +309,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -328,14 +318,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -428,10 +418,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -439,14 +429,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -488,97 +478,27 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>多输入多输出通道<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1>多输入多输出通道<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <p>虽然我们在《全连接层到卷积》中描述了构成每个图像的多个通道和多层卷积层。例如彩色图像具有标准的RGB通道来代表红、绿和蓝。
 但是到目前为止，我们仅展示了单个输入和单个输出通道的简化例子。
 这使得我们可以将输入、卷积核和输出看作二维张量。</p>
 <p>当我们添加通道时，我们的输入和隐藏的表示都变成了三维张量。例如，每个RGB输入图像具有<span class="math notranslate nohighlight">\(3\times h\times w\)</span>的形状。我们将这个大小为<span class="math notranslate nohighlight">\(3\)</span>的轴称为<strong>通道</strong>（channel）维度。</p>
 <section id="id2">
-<h2>多输入通道<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>多输入通道<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p>在下图中，我们演示了一个具有两个输入通道的二维互相关运算的示例。每个通道都有一个卷积核，结果是所有通道卷积结果的和：<span class="math notranslate nohighlight">\((1\times1+2\times2+4\times3+5\times4)+(0\times0+1\times1+3\times2+4\times3)=56\)</span>。</p>
 <img src="../image/ConvolutionalNeuralNetwork/conv-multi-in.svg" alt="" style="zoom: 90%; display: block; margin: 0px auto;" />
 <p>为了加深理解，我们<strong>实现一下多输入通道互相关运算</strong>。
 简而言之，我们所做的就是对每个通道执行互相关操作，然后将结果相加。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
-<span class="k">def</span> <span class="nf">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="c1"># 先遍历“X”和“K”的第0个维度（通道维度），再把它们加在一起</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">corr2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">torch</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">def</span> <span class="nf">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="c1"># 先遍历“X”和“K”的第0个维度（通道维度），再把它们加在一起</span>
-<span class="nn">      5     return sum(d2l.corr2d(x, k) for x, k</span> in <span class="ni">zip</span><span class="nt">(X, K))</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">d2l</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">torch</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">torchvision</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">torchvision</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">modulefinder</span> <span class="kn">import</span> <span class="n">Module</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">torch</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">_meta_registrations</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">io</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">utils</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">.extension</span> <span class="kn">import</span> <span class="n">_HAS_OPS</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="k">try</span><span class="p">:</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">torchvision</span><span class="o">/</span><span class="n">_meta_registrations</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">164</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="n">torch</span><span class="o">.</span><span class="n">_check</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">154</span>         <span class="n">grad</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">rois</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">155</span>         <span class="k">lambda</span><span class="p">:</span> <span class="p">(</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">158</span>         <span class="p">),</span>
-<span class="g g-Whitespace">    </span><span class="mi">159</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">160</span>     <span class="k">return</span> <span class="n">grad</span><span class="o">.</span><span class="n">new_empty</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">163</span> <span class="nd">@torch</span><span class="o">.</span><span class="n">_custom_ops</span><span class="o">.</span><span class="n">impl_abstract</span><span class="p">(</span><span class="s2">&quot;torchvision::nms&quot;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">164</span> <span class="k">def</span> <span class="nf">meta_nms</span><span class="p">(</span><span class="n">dets</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">165</span>     <span class="n">torch</span><span class="o">.</span><span class="n">_check</span><span class="p">(</span><span class="n">dets</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;boxes should be a 2d tensor, got </span><span class="si">{</span><span class="n">dets</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span><span class="si">}</span><span class="s2">D&quot;</span><span class="p">)</span>
-<span class="nn">    166     torch._check(dets.size(1) == 4, lambda: f&quot;boxes should have 4 elements</span> in <span class="ni">dimension 1, got {dets.size</span><span class="nt">(1)}&quot;)</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.10/site-packages/torch/_custom_ops.py:253,</span> in <span class="ni">impl_abstract.&lt;locals&gt;.inner</span><span class="nt">(func)</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">253</span>     <span class="n">custom_op</span> <span class="o">=</span> <span class="n">_find_custom_op</span><span class="p">(</span><span class="n">qualname</span><span class="p">,</span> <span class="n">also_check_torch_library</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">254</span>     <span class="n">custom_op</span><span class="o">.</span><span class="n">impl_abstract</span><span class="p">(</span><span class="n">_stacklevel</span><span class="o">=</span><span class="mi">3</span><span class="p">)(</span><span class="n">func</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">255</span>     <span class="k">return</span> <span class="n">func</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.10/site-packages/torch/_custom_op/impl.py:1076,</span> in <span class="ni">_find_custom_op</span><span class="nt">(qualname, also_check_torch_library)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1072</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">also_check_torch_library</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1073</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1074</span>         <span class="sa">f</span><span class="s2">&quot;Could not find custom op </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">qualname</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">. Did you register it via &quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1075</span>         <span class="sa">f</span><span class="s2">&quot;the torch._custom_ops API?&quot;</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1076</span> <span class="n">overload</span> <span class="o">=</span> <span class="n">get_op</span><span class="p">(</span><span class="n">qualname</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1077</span> <span class="n">result</span> <span class="o">=</span> <span class="n">custom_op_from_existing</span><span class="p">(</span><span class="n">overload</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1078</span> <span class="k">return</span> <span class="n">result</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.10/site-packages/torch/_custom_op/impl.py:1062,</span> in <span class="ni">get_op</span><span class="nt">(qualname)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1060</span> <span class="n">opnamespace</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ops</span><span class="p">,</span> <span class="n">ns</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1061</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">opnamespace</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">1062</span>     <span class="n">error_not_found</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1063</span> <span class="n">packet</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">opnamespace</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1064</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">packet</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">):</span>
-
-<span class="nn">File ~/anaconda3/lib/python3.10/site-packages/torch/_custom_op/impl.py:1052,</span> in <span class="ni">get_op.&lt;locals&gt;.error_not_found</span><span class="nt">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1051</span> <span class="k">def</span> <span class="nf">error_not_found</span><span class="p">():</span>
-<span class="ne">-&gt; </span><span class="mi">1052</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1053</span>         <span class="sa">f</span><span class="s2">&quot;Could not find the operator </span><span class="si">{</span><span class="n">qualname</span><span class="si">}</span><span class="s2">. Please make sure you have &quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1054</span>         <span class="sa">f</span><span class="s2">&quot;already registered the operator and (if registered from C++) &quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1055</span>         <span class="sa">f</span><span class="s2">&quot;loaded it via torch.ops.load_library.&quot;</span><span class="p">)</span>
-
-<span class="ne">ValueError</span>: Could not find the operator torchvision::nms. Please make sure you have already registered the operator and (if registered from C++) loaded it via torch.ops.load_library.
 </pre></div>
 </div>
 </div>
@@ -595,21 +515,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">]],</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>                <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">]]])</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">K</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]],</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]]])</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;corr2d_multi_in&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 56.,  72.],
+        [104., 120.]])
 </pre></div>
 </div>
 </div>
 </div>
 <section id="id3">
-<h3>相关公式<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h3>相关公式<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>输入<span class="math notranslate nohighlight">\(\mathbf{X}: c_{i} \times n_{h} \times n_{w}\)</span></p></li>
 <li><p>核<span class="math notranslate nohighlight">\(\mathbf{W}: c_{i} \times k_{h} \times k_{w}\)</span></p></li>
@@ -620,13 +533,13 @@ document.write(`
 </section>
 </section>
 <section id="id4">
-<h2>多输出通道<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2>多输出通道<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <p>不论有多少输入通道，到目前为止我们只用到单输出通道。我们可以有多个三维卷积核，每个核生成一个输出通道</p>
 <p>用<span class="math notranslate nohighlight">\(c_i\)</span>和<span class="math notranslate nohighlight">\(c_o\)</span>分别表示输入和输出通道的数目，并让<span class="math notranslate nohighlight">\(k_h\)</span>和<span class="math notranslate nohighlight">\(k_w\)</span>为卷积核的高度和宽度。为了获得多个通道的输出，我们可以为每个输出通道创建一个形状为<span class="math notranslate nohighlight">\(c_i\times k_h\times k_w\)</span>的卷积核张量，这样卷积核的形状是<span class="math notranslate nohighlight">\(c_o\times c_i\times k_h\times k_w\)</span>。在互相关运算中，每个输出通道先获取所有输入通道，再以对应该输出通道的卷积核计算出结果。</p>
 <p>如下所示，我们实现一个<strong>计算多个通道的输出的互相关函数</strong>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="c1"># 迭代“K”的第0个维度，每次都对输入“X”执行互相关运算。</span>
     <span class="c1"># 最后将所有结果都叠加在一起</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
@@ -656,30 +569,20 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 56.,  72.],
+         [104., 120.]],
 
-<span class="nn">Cell In[3], line 4,</span> in <span class="ni">corr2d_multi_in_out</span><span class="nt">(X, K)</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="c1"># 迭代“K”的第0个维度，每次都对输入“X”执行互相关运算。</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="c1"># 最后将所有结果都叠加在一起</span>
-<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+        [[ 76., 100.],
+         [148., 172.]],
 
-<span class="nn">Cell In[3], line 4,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="c1"># 迭代“K”的第0个维度，每次都对输入“X”执行互相关运算。</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="c1"># 最后将所有结果都叠加在一起</span>
-<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;corr2d_multi_in&#39; is not defined
+        [[ 96., 128.],
+         [192., 224.]]])
 </pre></div>
 </div>
 </div>
 </div>
 <section id="id5">
-<h3>相关公式<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3>相关公式<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>输入<span class="math notranslate nohighlight">\(\mathbf{X}: c_{i} \times n_{h} \times n_{w}\)</span></p></li>
 <li><p>核<span class="math notranslate nohighlight">\(\mathbf{W}: c_{o} \times c_{i} \times k_{h} \times k_{w}\)</span></p></li>
@@ -690,7 +593,7 @@ document.write(`
 </section>
 </section>
 <section id="times-1">
-<h2><span class="math notranslate nohighlight">\(1\times 1\)</span> 卷积层<a class="headerlink" href="#times-1" title="Link to this heading">#</a></h2>
+<h2><span class="math notranslate nohighlight">\(1\times 1\)</span> 卷积层<a class="headerlink" href="#times-1" title="Permalink to this heading">#</a></h2>
 <p><span class="math notranslate nohighlight">\(1 \times 1\)</span>卷积，即<span class="math notranslate nohighlight">\(k_h = k_w = 1\)</span>，看起来似乎没有多大意义。
 毕竟，卷积的本质是有效提取相邻像素间的相关特征，而<span class="math notranslate nohighlight">\(1 \times 1\)</span>卷积显然没有此作用。
 尽管如此，<span class="math notranslate nohighlight">\(1 \times 1\)</span>仍然十分流行，经常包含在复杂深层网络的设计中。下面，让我们详细地解读一下它的实际作用。</p>
@@ -706,7 +609,7 @@ document.write(`
 请注意，我们需要对输入和输出的数据形状进行调整。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corr2d_multi_in_out_1x1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">corr2d_multi_in_out_1x1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="n">c_i</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">c_o</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">c_i</span><span class="p">,</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span><span class="p">))</span>
@@ -735,33 +638,9 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">Y1</span> <span class="o">=</span> <span class="n">corr2d_multi_in_out_1x1</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">Y2</span> <span class="o">=</span> <span class="n">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y1</span> <span class="o">-</span> <span class="n">Y2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mf">1e-6</span>
-
-<span class="nn">Cell In[3], line 4,</span> in <span class="ni">corr2d_multi_in_out</span><span class="nt">(X, K)</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="c1"># 迭代“K”的第0个维度，每次都对输入“X”执行互相关运算。</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="c1"># 最后将所有结果都叠加在一起</span>
-<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="nn">Cell In[3], line 4,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">corr2d_multi_in_out</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="c1"># 迭代“K”的第0个维度，每次都对输入“X”执行互相关运算。</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="c1"># 最后将所有结果都叠加在一起</span>
-<span class="ne">----&gt; </span><span class="mi">4</span>     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">corr2d_multi_in</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;corr2d_multi_in&#39; is not defined
-</pre></div>
-</div>
-</div>
 </div>
 <section id="id6">
-<h3>二维卷积层<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<h3>二维卷积层<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>输入<span class="math notranslate nohighlight">\(\mathbf{X}: c_{i} \times n_{h} \times n_{w}\)</span></p></li>
 <li><p>核<span class="math notranslate nohighlight">\(\mathbf{W}: c_{o} \times c_{i} \times k_{h} \times k_{w}\)</span></p></li>
@@ -812,11 +691,11 @@ m_{h} &amp; =m_{w}=64
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="padding-and-strides.html"
+       href="padding_and_strides.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
@@ -841,7 +720,6 @@ m_{h} &amp; =m_{w}=64
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -909,8 +787,8 @@ By ascotbe
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

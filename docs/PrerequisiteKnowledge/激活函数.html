@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>激活函数 &#8212; AI学习笔记</title>
   
@@ -14,53 +15,57 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'PrerequisiteKnowledge/激活函数';</script>
-    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="torch.argmax" href="../FunctionDetails/torch.argmax.html" />
@@ -74,23 +79,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -112,20 +122,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -141,8 +143,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -161,18 +161,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -250,13 +239,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv-layer.html">图像卷积</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding-and-strides.html">填充和步幅</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv_layer.html">图像卷积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding_and_strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/recognize_handwritten_digits.html">重0开始使用 CNN 进行手写数字识别</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -265,25 +255,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/nin.html">网络中的网络（NiN）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/googlenet.html">含并行连结的网络（GoogLeNet）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/resnet.html">残差网络（ResNet）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch-norm.html">批量规范化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch_norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async-computation.html">异步计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async_computation.html">异步计算</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine-tuning.html">微调</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding-box.html">目标检测和边界框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object-detection-dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine_tuning.html">微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale-object-detection.html">多尺度目标检测</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic-segmentation-and-dataset.html">语义分割和数据集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural-style.html">风格迁移</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural_style.html">风格迁移</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
 <ul class="nav bd-sidenav">
@@ -319,7 +309,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -328,14 +318,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -428,10 +418,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -439,14 +429,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -487,10 +477,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>激活函数<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1>激活函数<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <p>激活函数（Activation Function）的主要作用是提供网络的非线性建模能力。如果没有激活函数，那么该网络仅能够表达线性映射，此时即便有再多的隐藏层，其整个网络跟单层神经网络也是等价的。因此也可以认为，只有加入了激活函数之后，深度神经网络才具备了分层的非线性映射学习能力。</p>
 <img src="../image/PrerequisiteKnowledge/FE3D6FB9CE5AE2C21D71F5EEE74_20CF2F45_937B.png" alt="" style="zoom: 70%; display: block; margin: 0px auto;" />
 <p>动画效果如下</p>
@@ -498,7 +488,7 @@ document.write(`
 <p>激活函数有什么用？</p>
 <p><font color=red>引入非线性因素。</font></p>
 <section id="id2">
-<h2>人工神经元的工作原理<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>人工神经元的工作原理<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p>在人工神经网络中，一个节点的激活函数定义了该节点在给定的输入或输入集合下的输出。标准的计算机芯片电路可以看作是根据输入得到开（1）或关（0）输出的数字电路激活函数。因此，激活函数是确定神经网络输出的数学方程式，本文概述了深度学习中常见的十种激活函数及其优缺点。</p>
 <p>首先我们来了解一下人工神经元的工作原理，大致如下：</p>
 <img src="../image/PrerequisiteKnowledge/89E6D4DD44E9DD33A562520A306_0DAEC87A_9F8E.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
@@ -506,14 +496,14 @@ document.write(`
 <img src="../image/PrerequisiteKnowledge/8EEBFE5901525DC67F2EAF81110_378D40D9_16FDE.png" alt="" style="zoom: 70%; display: block; margin: 0px auto;" />
 </section>
 <section id="sigmoid">
-<h2>Sigmoid<a class="headerlink" href="#sigmoid" title="Link to this heading">#</a></h2>
+<h2>Sigmoid<a class="headerlink" href="#sigmoid" title="Permalink to this heading">#</a></h2>
 <p>逐元素应用Sigmoid函数对数据进行激活，将元素归一化到区间<span class="math notranslate nohighlight">\((0,1)\)</span>内</p>
 <div class="math notranslate nohighlight">
 \[\operatorname{Sigmoid}(x)=\sigma(x)=\frac{1}{1+\exp (-x)}\]</div>
 <img src="../image/PrerequisiteKnowledge/Sigmoid.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -523,15 +513,15 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.8019, -1.0133])
-tensor([0.8584, 0.2663])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([-1.2699, -2.0721])
+tensor([0.2193, 0.1118])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="tanh">
-<h2>Tanh<a class="headerlink" href="#tanh" title="Link to this heading">#</a></h2>
+<h2>Tanh<a class="headerlink" href="#tanh" title="Permalink to this heading">#</a></h2>
 <p>逐元素应用双曲正切激活函数对数据进行激活，将元素归一化到区间<span class="math notranslate nohighlight">\((-1,1)\)</span>内</p>
 <div class="math notranslate nohighlight">
 \[\operatorname{Tanh}(x)=\tanh (x)=\frac{\exp (x)-\exp (-x)}{\exp (x)+\exp (-x)}\]</div>
@@ -543,7 +533,7 @@ tensor([0.8584, 0.2663])
 <p>注意：在一般的二元分类问题中，tanh 函数用于隐藏层，而 sigmoid 函数用于输出层，但这并不是固定的，需要根据特定问题进行调整。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -553,15 +543,15 @@ tensor([0.8584, 0.2663])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.3953, -2.4744])
-tensor([ 0.3759, -0.9859])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.2533, -1.4336])
+tensor([ 0.8492, -0.8924])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="relu">
-<h2>ReLU<a class="headerlink" href="#relu" title="Link to this heading">#</a></h2>
+<h2>ReLU<a class="headerlink" href="#relu" title="Permalink to this heading">#</a></h2>
 <p>逐元素应用ReLU函数对数据进行激活，将元素归一化到区间<span class="math notranslate nohighlight">\((0,x)\)</span>内</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -584,8 +574,8 @@ tensor([ 0.3759, -0.9859])
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
@@ -599,11 +589,11 @@ tensor([ 0.3759, -0.9859])
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-0.4088, -0.4907,  0.6972, -1.8248, -0.1451,  0.5844, -0.8866,  1.2568,
-         0.3457,  1.0511])
+tensor([-0.1262, -0.4131, -0.7598, -0.1470,  0.5245,  0.7215, -1.4056, -0.5787,
+        -0.4180, -0.2522])
 经过relu之后
-tensor([0.0000, 0.0000, 0.6972, 0.0000, 0.0000, 0.5844, 0.0000, 1.2568, 0.3457,
-        1.0511])
+tensor([0.0000, 0.0000, 0.0000, 0.0000, 0.5245, 0.7215, 0.0000, 0.0000, 0.0000,
+        0.0000])
 </pre></div>
 </div>
 </div>
@@ -624,21 +614,21 @@ tensor([0.0000, 0.0000, 0.6972, 0.0000, 0.0000, 0.5844, 0.0000, 1.2568, 0.3457,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 0.6348,  0.7911, -0.1981, -0.1793, -0.3498,  0.1879,  1.3010, -0.6098,
-         0.8181,  0.4498])
+tensor([ 1.2587, -0.8635, -1.2951,  1.2036,  2.0869,  0.4378, -1.0584,  0.2430,
+         1.9269,  1.3270])
 经过relu之后c的值
-tensor([0.6348, 0.7911, 0.0000, 0.0000, 0.0000, 0.1879, 1.3010, 0.0000, 0.8181,
-        0.4498])
+tensor([1.2587, 0.0000, 0.0000, 1.2036, 2.0869, 0.4378, 0.0000, 0.2430, 1.9269,
+        1.3270])
 经过relu之后d的值
-tensor([0.6348, 0.7911, 0.0000, 0.0000, 0.0000, 0.1879, 1.3010, 0.0000, 0.8181,
-        0.4498])
+tensor([1.2587, 0.0000, 0.0000, 1.2036, 2.0869, 0.4378, 0.0000, 0.2430, 1.9269,
+        1.3270])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="leaky-relu">
-<h2>Leaky ReLU<a class="headerlink" href="#leaky-relu" title="Link to this heading">#</a></h2>
+<h2>Leaky ReLU<a class="headerlink" href="#leaky-relu" title="Permalink to this heading">#</a></h2>
 <p>区间范围：</p>
 <ul class="simple">
 <li><p>如果是正数或者0那么为：<span class="math notranslate nohighlight">\(x\)</span></p></li>
@@ -660,7 +650,7 @@ tensor([0.6348, 0.7911, 0.0000, 0.0000, 0.0000, 0.1879, 1.3010, 0.0000, 0.8181,
 <p>注意：从理论上讲，Leaky ReLU 具有 ReLU 的所有优点，而且 Dead ReLU 不会有任何问题，但在实际操作中，尚未完全证明 Leaky ReLU 总是比 ReLU 更好。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="n">output</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -669,15 +659,15 @@ tensor([0.6348, 0.7911, 0.0000, 0.0000, 0.0000, 0.1879, 1.3010, 0.0000, 0.8181,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.3953, -2.4744])
-tensor([ 0.3953, -0.2474])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.2533, -1.4336])
+tensor([ 1.2533, -0.1434])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="elu">
-<h2>ELU<a class="headerlink" href="#elu" title="Link to this heading">#</a></h2>
+<h2>ELU<a class="headerlink" href="#elu" title="Permalink to this heading">#</a></h2>
 <p>区间范围：</p>
 <ul class="simple">
 <li><p>如果是正数那么为：<span class="math notranslate nohighlight">\(x\)</span></p></li>
@@ -694,7 +684,7 @@ tensor([ 0.3953, -0.2474])
 <img src="../image/PrerequisiteKnowledge/ELU.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="n">output</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -703,8 +693,8 @@ tensor([ 0.3953, -0.2474])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.3953, -2.4744])
-tensor([ 0.3953, -0.9158])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.2533, -1.4336])
+tensor([ 1.2533, -0.7616])
 </pre></div>
 </div>
 </div>
@@ -714,7 +704,7 @@ tensor([ 0.3953, -0.9158])
 <p>ELU 的提出也解决了 ReLU 的问题。与 ReLU 相比，ELU 有负值，这会使激活的平均值接近零。均值激活接近于零可以使学习更快，因为它们使梯度更接近自然梯度。</p>
 </section>
 <section id="prelu-parametric-relu">
-<h2>PReLU（Parametric ReLU）<a class="headerlink" href="#prelu-parametric-relu" title="Link to this heading">#</a></h2>
+<h2>PReLU（Parametric ReLU）<a class="headerlink" href="#prelu-parametric-relu" title="Permalink to this heading">#</a></h2>
 <p>区间范围：</p>
 <ul class="simple">
 <li><p>如果是正数或者0那么为：<span class="math notranslate nohighlight">\(x\)</span></p></li>
@@ -733,7 +723,7 @@ tensor([ 0.3953, -0.9158])
 \[\begin{split}\operatorname{PReLU}(x)=\left\{\begin{array}{ll}x, &amp; \text { if } x \geq 0 \\a x, &amp; \text { otherwise }\end{array}\right.\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">PReLU</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="n">output</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -742,15 +732,15 @@ tensor([ 0.3953, -0.9158])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 0.3953, -2.4744])
-tensor([ 0.3953, -0.6186], grad_fn=&lt;PreluKernelBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([ 1.2533, -1.4336])
+tensor([ 1.2533, -0.3584], grad_fn=&lt;PreluKernelBackward0&gt;)
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="softmax">
-<h2>Softmax<a class="headerlink" href="#softmax" title="Link to this heading">#</a></h2>
+<h2>Softmax<a class="headerlink" href="#softmax" title="Permalink to this heading">#</a></h2>
 <img src="../image/PrerequisiteKnowledge/444D7A6E04F4B15492F7C19C9A1_5162184A_91B7.png" alt="" style="zoom: 140%; display: block; margin: 0px auto;" />
 <p>Softmax 是用于多类分类问题的激活函数，在多类分类问题中，超过两个类标签则需要类成员关系。对于长度为 K 的任意实向量，Softmax 可以将其压缩为长度为 K，值在（0，1）范围内，并且向量中元素的总和为 1 的实向量。</p>
 <div class="math notranslate nohighlight">
@@ -758,7 +748,7 @@ tensor([ 0.3953, -0.6186], grad_fn=&lt;PreluKernelBackward0&gt;)
 <img src="../image/PrerequisiteKnowledge/001AC5AEC3AEF69030E04871D39_48A56E3D_14EA1.png" alt="" style="zoom: 90%; display: block; margin: 0px auto;" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -768,17 +758,17 @@ tensor([ 0.3953, -0.6186], grad_fn=&lt;PreluKernelBackward0&gt;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.2045, -0.5884, -1.8488],
-        [ 0.4236, -1.6647,  0.2604]])
-tensor([[0.5335, 0.3634, 0.1031],
-        [0.5068, 0.0628, 0.4304]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 2.2430, -2.0996, -1.7931],
+        [-0.0233,  0.3644, -0.8079]])
+tensor([[0.9702, 0.0126, 0.0171],
+        [0.3413, 0.5029, 0.1557]])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="swish">
-<h2>Swish<a class="headerlink" href="#swish" title="Link to this heading">#</a></h2>
+<h2>Swish<a class="headerlink" href="#swish" title="Permalink to this heading">#</a></h2>
 <p>实则就是用Sigmoid激活函数再乘上输入</p>
 <blockquote>
 <div><p>SiLU 函数也称为 Swish 函数。</p>
@@ -789,7 +779,7 @@ tensor([[0.5335, 0.3634, 0.1031],
 <img src="../image/PrerequisiteKnowledge/SiLU.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">SiLU</span><span class="p">()</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -799,17 +789,17 @@ tensor([[0.5335, 0.3634, 0.1031],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.2045, -1.2652,  0.7927],
-        [-1.0793, -1.2471, -1.2848]])
-tensor([[-0.0918, -0.2784,  0.5457],
-        [-0.2738, -0.2784, -0.2785]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.7403, -1.6936, -0.2618],
+        [ 0.6146, -0.2792, -0.0066]])
+tensor([[-0.2391, -0.2630, -0.1139],
+        [ 0.3989, -0.1202, -0.0033]])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="softplus">
-<h2>Softplus<a class="headerlink" href="#softplus" title="Link to this heading">#</a></h2>
+<h2>Softplus<a class="headerlink" href="#softplus" title="Permalink to this heading">#</a></h2>
 <p>torch.nn.Softplus(beta=1.0, threshold=20.0)</p>
 <p>参数：</p>
 <ul class="simple">
@@ -821,7 +811,7 @@ tensor([[-0.0918, -0.2784,  0.5457],
 <img src="../image/PrerequisiteKnowledge/Softplus.png" alt="" style="zoom: 100%; display: block; margin: 0px auto;" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softplus</span><span class="p">()</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -831,10 +821,10 @@ tensor([[-0.0918, -0.2784,  0.5457],
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0529, -0.2777, -2.1333],
-        [ 0.3885,  0.6650, -1.9707]])
-tensor([[0.6671, 0.5639, 0.1119],
-        [0.9062, 1.0799, 0.1305]])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-1.7309, -0.7422,  1.1412],
+        [ 0.6506, -0.1828, -1.0904]])
+tensor([[0.1631, 0.3894, 1.4184],
+        [1.0705, 0.6059, 0.2897]])
 </pre></div>
 </div>
 </div>
@@ -843,7 +833,7 @@ tensor([[0.6671, 0.5639, 0.1119],
 <img src="../image/PrerequisiteKnowledge/B291ED96DE39743D9A766673AAC_4EAB0224_A6C2.png" alt="" style="zoom: 85%; display: block; margin: 0px auto;" />
 </section>
 <section id="maxout">
-<h2>Maxout<a class="headerlink" href="#maxout" title="Link to this heading">#</a></h2>
+<h2>Maxout<a class="headerlink" href="#maxout" title="Permalink to this heading">#</a></h2>
 <p>Maxout可以看做是在深度学习网络中加入一层激活函数层，包含一个参数<span class="math notranslate nohighlight">\(k\)</span>。这一层相比ReLU、sigmoid等，其特殊之处在于增加了<span class="math notranslate nohighlight">\(k\)</span>个神经元，然后输出激活值最大的值</p>
 <p>我们常见的隐含层节点输出:</p>
 <div class="math notranslate nohighlight">
@@ -887,7 +877,7 @@ tensor([[0.6671, 0.5639, 0.1119],
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -916,7 +906,6 @@ tensor([[0.6671, 0.5639, 0.1119],
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -983,8 +972,8 @@ By ascotbe
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
