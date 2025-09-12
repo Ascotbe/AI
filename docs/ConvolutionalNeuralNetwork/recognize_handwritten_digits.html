@@ -465,12 +465,26 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6. 定义损失函数和优化器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7. 训练模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8. 评估模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9. 可视化预测结果</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">总结</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch">追踪一批数据 (Batch) 的变形记</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">总结表格</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6. 定义损失函数和优化器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7. 训练模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">8. 评估模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9. 可视化预测结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">总结</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">CNN 数据流的图形化分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#input">第 0 步: 输入 (Input)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv1">第 1 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv1</span></code> 流水线 (提取基础特征)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv2">第 2 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv2</span></code> 流水线 (提取复杂特征)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#flatten-view">第 3 步: 展平 (Flatten / View)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-out-classification">第 4 步: <code class="docutils literal notranslate"><span class="pre">self.out</span></code> 分类决策 (Classification)</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -627,6 +641,7 @@ document.write(`
 </section>
 <section id="id5">
 <h2>4. 可视化部分数据<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>主要是用来看加载的数据的，这段代码也可以不用</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取一个批次的数据</span>
@@ -674,8 +689,8 @@ document.write(`
         <span class="c1"># 全连接层</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span> <span class="c1"># 根据上面的配置，传入进来的X的形状: (64, 1, 28, 28)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="c1"># 展平操作</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># batch_size, 32*7*7</span>
@@ -706,13 +721,124 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="batch">
+<h3>追踪一批数据 (Batch) 的变形记<a class="headerlink" href="#batch" title="Permalink to this heading">#</a></h3>
+<p>假设我们的 BATCH_SIZE 是 64。那么，输入到 forward 方法的 x 是一个形状 (Shape) 为 (64, 1, 28, 28) 的张量。</p>
+<ul class="simple">
+<li><p>64: 批次里有 64 张图片。</p></li>
+<li><p>1: 每张图片是灰度的，只有 1 个颜色通道。</p></li>
+<li><p>28, 28: 每张图片的高度和宽度是 28 像素。</p></li>
+</ul>
+<p>现在，我们来追踪这批数据在 forward 函数中的每一步变化：</p>
+<p><strong>初始状态:</strong>
+x 的形状: (64, 1, 28, 28)</p>
+<hr class="docutils" />
+<p><strong>第 1 步: x = self.conv1(x)</strong>
+这套流水线包含三道工序：</p>
+<ol class="arabic simple">
+<li><p>nn.Conv2d(1, 16, 5, padding=2):</p>
+<ul class="simple">
+<li><p>16 个 5x5 的卷积核在 28x28 的图像上滑动。</p></li>
+<li><p>因为 padding=2，输出的图像尺寸不变，还是 28x28。</p></li>
+<li><p>因为有 16 个卷积核，所以输出通道数从 1 变为 16。</p></li>
+<li><p><strong>形状变为</strong>: (64, 16, 28, 28)</p></li>
+</ul>
+</li>
+<li><p>nn.ReLU(): 激活函数，对每个元素进行计算，<strong>不改变形状</strong>。</p></li>
+<li><p>nn.MaxPool2d(2):</p>
+<ul class="simple">
+<li><p>在 2x2 的窗口内取最大值，这会将图像的<strong>高度和宽度都减半</strong>。</p></li>
+<li><p>28 / 2 = 14。</p></li>
+<li><p><strong>形状变为</strong>: (64, 16, 14, 14)</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong>第 2 步: x = self.conv2(x)</strong>
+这套流水线也包含三道工序：</p>
+<ol class="arabic simple">
+<li><p>nn.Conv2d(16, 32, 5, padding=2):</p>
+<ul class="simple">
+<li><p>输入通道数是 16，输出通道数是 32。</p></li>
+<li><p>尺寸 14x14 同样因为 padding 而保持不变。</p></li>
+<li><p><strong>形状变为</strong>: (64, 32, 14, 14)</p></li>
+</ul>
+</li>
+<li><p>nn.ReLU(): <strong>不改变形状</strong>。</p></li>
+<li><p>nn.MaxPool2d(2):</p>
+<ul class="simple">
+<li><p>高度和宽度再次减半。14 / 2 = 7。</p></li>
+<li><p><strong>形状变为</strong>: (64, 32, 7, 7)</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>到这里，“特征提取”阶段结束。我们得到了 64 张图片，每张图片都被浓缩成了一个 32x7x7 的特征图谱。</strong></p>
+<hr class="docutils" />
+<p><strong>第 3 步: x = x.view(x.size(0), -1) (展平)</strong></p>
+<ul class="simple">
+<li><p>这个操作会保持第一个维度（批次大小 64）不变，然后将后面的所有维度 (32, 7, 7) 拉成一个一维向量。</p></li>
+<li><p>向量的长度 = 32 * 7 * 7 = <strong>1568</strong>。</p></li>
+<li><p><strong>形状变为</strong>: (64, 1568)</p></li>
+<li><p>现在我们有 64 个样本，每个样本都由一个包含 1568 个浓缩特征值的长向量表示。</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>第 4 步: output = self.out(x) (全连接层)</strong></p>
+<ul class="simple">
+<li><p>self.out 是 nn.Linear(32 * 7 * 7, 10)，也就是 nn.Linear(1568, 10)。</p></li>
+<li><p>它接收一个长度为 1568 的向量，输出一个长度为 10 的向量。</p></li>
+<li><p>它对批次中的每一张图片都执行这个操作。</p></li>
+<li><p><strong>最终输出形状</strong>: (64, 10)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>最终结果:</strong>
+我们输入了一批 (64, 1, 28, 28) 的图像，最终得到了一个 (64, 10) 的张量。这个张量的每一行都代表一张输入图片，该行包含 10 个分数（logits），分别对应模型预测这张图片是数字 0, 1, 2, …, 9 的可能性。接下来的损失函数（CrossEntropyLoss）就会使用这个输出来计算误差。</p>
 </section>
 <section id="id7">
-<h2>6. 定义损失函数和优化器<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<h3>总结表格<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>操作</p></th>
+<th class="head"><p>输入形状</p></th>
+<th class="head"><p>输出形状</p></th>
+<th class="head"><p>逻辑说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>初始输入</strong></p></td>
+<td><p>(64, 1, 28, 28)</p></td>
+<td><p></p></td>
+<td><p>一批 64 张 28x28 的灰度图</p></td>
+</tr>
+<tr class="row-odd"><td><p>self.conv1</p></td>
+<td><p>(64, 1, 28, 28)</p></td>
+<td><p>(64, 16, 14, 14)</p></td>
+<td><p>提取初步特征，尺寸减半，深度增加</p></td>
+</tr>
+<tr class="row-even"><td><p>self.conv2</p></td>
+<td><p>(64, 16, 14, 14)</p></td>
+<td><p>(64, 32, 7, 7)</p></td>
+<td><p>提取更复杂特征，尺寸再次减半，深度再增加</p></td>
+</tr>
+<tr class="row-odd"><td><p>x.view()</p></td>
+<td><p>(64, 32, 7, 7)</p></td>
+<td><p>(64, 1568)</p></td>
+<td><p>将三维特征图谱展平成一维特征向量</p></td>
+</tr>
+<tr class="row-even"><td><p>self.out</p></td>
+<td><p>(64, 1568)</p></td>
+<td><p>(64, 10)</p></td>
+<td><p>根据特征向量，为 10 个类别打分</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id8">
+<h2>6. 定义损失函数和优化器<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 损失函数: 交叉熵损失，它内部已经包含了 Softmax</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 损失函数: 交叉熵损失，它内部已经包含了 Softmax。是用于多分类问题的标准损失函数。它衡量的是模型输出的概率分布与真实的标签之间的差距。</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>  
 
 <span class="c1"># 优化器</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">)</span>
@@ -721,8 +847,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="id8">
-<h2>7. 训练模型<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<section id="id9">
+<h2>7. 训练模型<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <p>这是 PyTorch 中最核心的训练循环。对于每个批次的数据：</p>
 <ol class="arabic simple">
 <li><p>将数据移动到指定设备。</p></li>
@@ -857,8 +983,8 @@ Training Finished!
 </div>
 </div>
 </section>
-<section id="id9">
-<h2>8. 评估模型<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<section id="id10">
+<h2>8. 评估模型<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
 <p>在评估阶段，我们不需要计算梯度，所以使用 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">torch.no_grad():</span></code> 来节省计算资源。我们将模型设置为评估模式 <code class="docutils literal notranslate"><span class="pre">model.eval()</span></code>，这会关闭像 Dropout 和 BatchNorm 这样的层（尽管我们这个简单模型没有使用它们）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -887,8 +1013,8 @@ Training Finished!
 </div>
 </div>
 </section>
-<section id="id10">
-<h2>9. 可视化预测结果<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<section id="id11">
+<h2>9. 可视化预测结果<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取一个批次的测试数据</span>
@@ -923,16 +1049,98 @@ Training Finished!
 </div>
 </div>
 </section>
-<section id="id11">
-<h2>总结<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
-<p>你已经成功地使用 PyTorch 从头开始构建、训练和评估了一个用于手写数字识别的卷积神经网络模型！</p>
-<p><strong>学到的知识点：</strong></p>
-<ul class="simple">
-<li><p>使用 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 和 <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> 高效地加载和预处理数据。</p></li>
-<li><p>通过继承 <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> 来定义一个清晰的模型结构。</p></li>
-<li><p>掌握了 PyTorch 中标准的训练和评估循环。</p></li>
-<li><p>理解了 <code class="docutils literal notranslate"><span class="pre">.to(device)</span></code>、<code class="docutils literal notranslate"><span class="pre">model.eval()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">torch.no_grad()</span></code> 的作用。</p></li>
-</ul>
+<section id="id12">
+<h2>总结<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
+<section id="id13">
+<h3>CNN 数据流的图形化分解<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<p>我们再次追踪一张手写数字“8”的图片，看它如何在网络中一步步变形。</p>
+<section id="input">
+<h4>第 0 步: 输入 (Input)<a class="headerlink" href="#input" title="Permalink to this heading">#</a></h4>
+<p>一切的开始：一张标准的、经过预处理的28x28像素灰度图。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>+--------------------------+
+|       Input Image        |
+|      (Number &#39;8&#39;)        |
+|                          |
+|        ██████            |
+|      ██      ██          |
+|        ██████            |
+|      ██      ██          |
+|        ██████            |
+|                          |
++--------------------------+
+  Shape: [1, 28, 28]
+(通道=1, 高=28, 宽=28)
+</pre></div>
+</div>
+</section>
+<section id="self-conv1">
+<h4>第 1 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv1</span></code> 流水线 (提取基础特征)<a class="headerlink" href="#self-conv1" title="Permalink to this heading">#</a></h4>
+<p>图像变厚、变小。网络通过16个不同的“滤镜”扫描图像，提取出边缘、角点等基础特征，然后将信息进行浓缩。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>     Input Image                      Feature Maps (after Conv2d)             Feature Maps (after Pool)
+  Shape: [1, 28, 28]                   Shape: [16, 28, 28]                   Shape: [16, 14, 14]
++--------------------+                                                        
+|                    |                                                        
+|      (Image)       | --- Conv2d (1 -&gt; 16) ---&gt;  +-------+  --- MaxPool2d ---&gt;  +-----+
+|                    |                            | ▒▒▒▒▒ |      (Size / 2)      | ▒▒▒ |
++--------------------+                            | ▒▒▒▒▒ |                      | ▒▒▒ |
+                                                  |  ...  | (16 maps)            | ... | (16 maps)
+                                                  +-------+                      +-----+
+</pre></div>
+</div>
+</section>
+<section id="self-conv2">
+<h4>第 2 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv2</span></code> 流水线 (提取复杂特征)<a class="headerlink" href="#self-conv2" title="Permalink to this heading">#</a></h4>
+<p>特征图变得更厚、更小。网络在基础特征之上，组合出更复杂的形状，比如构成数字“8”的小圆圈和弧线。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  Input Feature Maps                 Feature Maps (after Conv2d)             Feature Maps (after Pool)
+ Shape: [16, 14, 14]                  Shape: [32, 14, 14]                   Shape: [32, 7, 7]
+                                                                          
+  +----------------+                                                        
+  |                |                                                        
+  | (16 map stack) | --- Conv2d (16 -&gt; 32) --&gt;  +-------+  --- MaxPool2d ---&gt;  +-----+
+  |                |                            | ▓▓▓▓▓ |      (Size / 2)      | ▓▓▓ |
+  +----------------+                            | ▓▓▓▓▓ |                      | ▓▓▓ |
+                                                |  ...  | (32 maps)            | ... | (32 maps)
+                                                +-------+                      +-----+
+</pre></div>
+</div>
+</section>
+<section id="flatten-view">
+<h4>第 3 步: 展平 (Flatten / View)<a class="headerlink" href="#flatten-view" title="Permalink to this heading">#</a></h4>
+<p>从三维空间到一维空间。为了让分类器能够理解，我们将这个浓缩后的三维“特征立方体”强行拉平成一个一维的“特征长条”。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      Input &quot;Feature Cube&quot;                             Output &quot;Feature Vector&quot;
+       Shape: [32, 7, 7]                                  Shape: [1568]
+
+      +---------+
+     /         /|
+    /         / | ----&gt; (32 layers deep)
+   +---------+  |
+   |         |  |
+   | (7x7)   |  +
+   |         | /
+   +---------+          ------ Flatten ------&gt;        [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓]
+  (32 * 7 * 7 = 1568)                                   (A vector with 1568 values)
+
+</pre></div>
+</div>
+</section>
+<section id="self-out-classification">
+<h4>第 4 步: <code class="docutils literal notranslate"><span class="pre">self.out</span></code> 分类决策 (Classification)<a class="headerlink" href="#self-out-classification" title="Permalink to this heading">#</a></h4>
+<p>根据“特征指纹”进行投票，得出最终结论。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       Input &quot;Feature Vector&quot;                               Output &quot;Scores&quot;
+          Shape: [1568]                                       Shape: [10]
+
+                                                              +-----------+
+                                                              | Score for 0 |
+                                                              | Score for 1 |
+[▓▓▓▓▓...▓▓▓▓▓]  --- Fully Connected Layer ---&gt;                |    ...    |
+                                                              | Score for 8 | &lt;-- 🏆 Highest Score
+                                                              |    ...    |
+                                                              | Score for 9 |
+                                                              +-----------+
+</pre></div>
+</div>
+<p><strong>最终结论</strong>: 模型看到数字“8”对应的分数最高，因此预测这张图片就是 <strong>“8”</strong>。</p>
+<p>希望这次精修对齐后的版本，能让您看得更清晰、更舒服。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">poloclub</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">cnn</span><span class="o">-</span><span class="n">explainer</span><span class="o">/</span>
@@ -940,6 +1148,8 @@ Training Finished!
 </div>
 </div>
 </div>
+</section>
+</section>
 </section>
 </section>
 
@@ -1016,12 +1226,26 @@ Training Finished!
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6. 定义损失函数和优化器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7. 训练模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8. 评估模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9. 可视化预测结果</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">总结</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch">追踪一批数据 (Batch) 的变形记</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">总结表格</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6. 定义损失函数和优化器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7. 训练模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">8. 评估模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9. 可视化预测结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">总结</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">CNN 数据流的图形化分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#input">第 0 步: 输入 (Input)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv1">第 1 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv1</span></code> 流水线 (提取基础特征)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv2">第 2 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv2</span></code> 流水线 (提取复杂特征)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#flatten-view">第 3 步: 展平 (Flatten / View)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-out-classification">第 4 步: <code class="docutils literal notranslate"><span class="pre">self.out</span></code> 分类决策 (Classification)</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
