@@ -464,18 +464,23 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>那么问题来了，为什么我们需要将像素值从 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">255]</span></code> 缩放到 <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">1.0]</span></code></strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch">追踪一批数据 (Batch) 的变形记</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">总结表格</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#images"><strong><code class="docutils literal notranslate"><span class="pre">images</span></code> 是什么？</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels"><strong><code class="docutils literal notranslate"><span class="pre">labels</span></code> 是什么？</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>总结表格</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6. 定义损失函数和优化器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7. 训练模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">8. 评估模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9. 可视化预测结果</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">总结</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">CNN 数据流的图形化分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5. 构建 CNN 模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch">追踪一批数据 (Batch) 的变形记</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">总结表格</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">6. 定义损失函数和优化器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7. 训练模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">8. 评估模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9. 可视化预测结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">总结</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">CNN 数据流的图形化分解</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#input">第 0 步: 输入 (Input)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv1">第 1 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv1</span></code> 流水线 (提取基础特征)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv2">第 2 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv2</span></code> 流水线 (提取复杂特征)</a></li>
@@ -653,8 +658,12 @@ document.write(`
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1"># 反归一化以便正确显示</span>
-    <span class="n">img</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span> <span class="c1"># squeeze() 去掉通道维度</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span>  <span class="c1"># 因为我们之前用 transforms.Normalize((0.5,), (0.5,)) 处理过它</span>
+                               <span class="c1"># 所以我们需要反归一化来进行处理</span>
+                               <span class="c1"># 归一化公式: output = (input - 0.5) / 0.5</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>  <span class="c1"># squeeze() 它的作用是移除张量中所有尺寸为 1 的维度。</span>
+                                            <span class="c1"># img 的原始形状是 (1, 28, 28)</span>
+                                            <span class="c1"># imshow 函数在处理二维数据（灰度图）时，期望的输入形状是 (Height, Width)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label: </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -665,9 +674,105 @@ document.write(`
 <img alt="../_images/f4060861c553741895a44c852221cfabe6ef1b6c7d8b5d1697f7f9402a33713c.png" src="../_images/f4060861c553741895a44c852221cfabe6ef1b6c7d8b5d1697f7f9402a33713c.png" />
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">images,</span> <span class="pre">labels</span> <span class="pre">=</span> <span class="pre">next(data_iter)</span></code>  这段代码怎么理解</p>
+<section id="images">
+<h3><strong><code class="docutils literal notranslate"><span class="pre">images</span></code> 是什么？</strong><a class="headerlink" href="#images" title="Permalink to this heading">#</a></h3>
+<p><strong>一句话概括：它是一个包含了</strong><code class="docutils literal notranslate"><span class="pre">BATCH_SIZE</span></code><strong>张图片数据的集合，已经经过了预处理，随时可以送入模型。</strong></p>
+<ul class="simple">
+<li><p><strong>数据类型</strong>: 它是一个 <strong>PyTorch 张量 (Tensor)</strong>。这是 PyTorch 中用于所有计算的基本数据结构，你可以把它看作是能利用 GPU 加速的、功能更强大的 NumPy 数组。</p></li>
+<li><p><strong>数据形状 (Shape)</strong>: 它的形状是 <code class="docutils literal notranslate"><span class="pre">(BATCH_SIZE,</span> <span class="pre">Channels,</span> <span class="pre">Height,</span> <span class="pre">Width)</span></code>。根据我们代码中的设置，具体形状就是 <strong><code class="docutils literal notranslate"><span class="pre">(64,</span> <span class="pre">1,</span> <span class="pre">28,</span> <span class="pre">28)</span></code></strong>。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">64</span></code>: 这是<strong>批次大小 (Batch Size)</strong>。代表这个 <code class="docutils literal notranslate"><span class="pre">images</span></code> 张量里包含了 64 张不同的图片。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: 这是<strong>颜色通道数 (Channels)</strong>。因为 MNIST 是灰度图，所以只有 1 个通道。如果是彩色图片（RGB），这里会是 3。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">28</span></code>: 这是每张图片的<strong>高度 (Height)</strong>，单位是像素。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">28</span></code>: 这是每张图片的<strong>宽度 (Width)</strong>，单位是像素。</p></li>
+</ul>
+</li>
+<li><p><strong>数据内容</strong>: 里面的值是<strong>浮点数 (float)</strong>。因为我们定义了 <code class="docutils literal notranslate"><span class="pre">transforms</span></code>，原始的 <code class="docutils literal notranslate"><span class="pre">0-255</span></code> 的整数像素值已经被转换成了 <code class="docutils literal notranslate"><span class="pre">[-1.0,</span> <span class="pre">1.0]</span></code> 范围内的浮点数。</p></li>
+<li><p><strong>它的用途</strong>: 这是我们模型的<strong>输入数据</strong>。在训练循环中，我们会把它喂给模型，像这样：<code class="docutils literal notranslate"><span class="pre">outputs</span> <span class="pre">=</span> <span class="pre">model(images)</span></code>。</p></li>
+</ul>
+<p><strong>图形化理解 <code class="docutils literal notranslate"><span class="pre">images</span></code> (形状: <code class="docutils literal notranslate"><span class="pre">(64,</span> <span class="pre">1,</span> <span class="pre">28,</span> <span class="pre">28)</span></code>)</strong></p>
+<p>你可以把它想象成一个<strong>叠了 64 层的“三明治”</strong>，每一层就是一张 28x28 的单通道图片。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="o">+---------------+</span>  <span class="o">&lt;--</span> <span class="n">Image</span> <span class="mi">1</span> <span class="p">(</span><span class="mi">1</span><span class="n">x28x28</span><span class="p">)</span>
+     <span class="o">/</span>               <span class="o">/|</span>
+    <span class="o">/</span>               <span class="o">/</span> <span class="o">|</span>
+   <span class="o">+---------------+</span>  <span class="o">|</span>
+  <span class="o">/</span>               <span class="o">/|</span>  <span class="o">+</span>
+ <span class="o">/</span>               <span class="o">/</span> <span class="o">|</span> <span class="o">/|</span>
+<span class="o">+---------------+</span>  <span class="o">|/</span> <span class="o">|</span>
+<span class="o">|</span>               <span class="o">|</span>  <span class="o">+</span>  <span class="o">|</span>
+<span class="o">|</span> <span class="p">(</span><span class="mi">64</span> <span class="n">images</span><span class="p">)</span>   <span class="o">|</span> <span class="o">/|</span>  <span class="o">/</span>  <span class="o">&lt;--</span> <span class="n">这是一个包含64个元素的批次</span> <span class="p">(</span><span class="n">Batch</span><span class="p">)</span>
+<span class="o">|</span>               <span class="o">|/</span> <span class="o">|</span> <span class="o">/</span>
+<span class="o">+---------------+</span>  <span class="o">|/</span>
+<span class="o">|</span>               <span class="o">|</span>  <span class="o">+</span>
+<span class="o">|</span>               <span class="o">|</span> <span class="o">/</span>
+<span class="o">+---------------+</span>
+</pre></div>
+</div>
 </section>
+<hr class="docutils" />
+<section id="labels">
+<h3><strong><code class="docutils literal notranslate"><span class="pre">labels</span></code> 是什么？</strong><a class="headerlink" href="#labels" title="Permalink to this heading">#</a></h3>
+<p><strong>一句话概括：它是一个包含了与 <code class="docutils literal notranslate"><span class="pre">images</span></code> 中 64 张图片一一对应的正确答案（标签）的列表。</strong></p>
+<ul class="simple">
+<li><p><strong>数据类型</strong>: 它也是一个 <strong>PyTorch 张量 (Tensor)</strong>。</p></li>
+<li><p><strong>数据形状 (Shape)</strong>: 它的形状是 <code class="docutils literal notranslate"><span class="pre">(BATCH_SIZE,)</span></code>。根据我们的设置，具体形状就是 <strong><code class="docutils literal notranslate"><span class="pre">(64,)</span></code></strong>。</p>
+<ul>
+<li><p>这代表它是一个包含 64 个元素的一维向量（或者说列表）。</p></li>
+</ul>
+</li>
+<li><p><strong>数据内容</strong>: 里面的值是<strong>整数 (integer)</strong>，范围从 <code class="docutils literal notranslate"><span class="pre">0</span></code> 到 <code class="docutils literal notranslate"><span class="pre">9</span></code>。<code class="docutils literal notranslate"><span class="pre">labels</span></code> 张量中的第 <code class="docutils literal notranslate"><span class="pre">i</span></code> 个数字，就是 <code class="docutils literal notranslate"><span class="pre">images</span></code> 张量中第 <code class="docutils literal notranslate"><span class="pre">i</span></code> 张图片所代表的真实数字。</p>
+<ul>
+<li><p>例如，<code class="docutils literal notranslate"><span class="pre">labels</span></code> 可能是这样的：<code class="docutils literal notranslate"><span class="pre">tensor([5,</span> <span class="pre">0,</span> <span class="pre">4,</span> <span class="pre">1,</span> <span class="pre">9,</span> <span class="pre">2,</span> <span class="pre">...,</span> <span class="pre">8])</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels[0]</span></code> 的值是 <code class="docutils literal notranslate"><span class="pre">5</span></code>，意味着 <code class="docutils literal notranslate"><span class="pre">images[0]</span></code> 这张图片上画的是数字“5”。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels[1]</span></code> 的值是 <code class="docutils literal notranslate"><span class="pre">0</span></code>，意味着 <code class="docutils literal notranslate"><span class="pre">images[1]</span></code> 这张图片上画的是数字“0”。</p></li>
+<li><p>以此类推…</p></li>
+</ul>
+</li>
+<li><p><strong>它的用途</strong>: 这是<strong>理想答案或“标准答案” (Ground Truth)</strong>。我们会用它和模型的预测结果 <code class="docutils literal notranslate"><span class="pre">outputs</span></code> 一起，来计算损失值，像这样：<code class="docutils literal notranslate"><span class="pre">loss</span> <span class="pre">=</span> <span class="pre">criterion(outputs,</span> <span class="pre">labels)</span></code>。</p></li>
+</ul>
+</section>
+<hr class="docutils" />
 <section id="id6">
-<h2>5. 构建 CNN 模型<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<h3><strong>总结表格</strong><a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>特性</p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">images</span></code></p></th>
+<th class="head text-left"><p><code class="docutils literal notranslate"><span class="pre">labels</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>用途</strong></p></td>
+<td class="text-left"><p>模型的<strong>输入 (Input)</strong></p></td>
+<td class="text-left"><p>正确的<strong>答案 (Ground Truth)</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>数据类型</strong></p></td>
+<td class="text-left"><p>PyTorch 张量 (Tensor)</p></td>
+<td class="text-left"><p>PyTorch 张量 (Tensor)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>形状</strong></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">(64,</span> <span class="pre">1,</span> <span class="pre">28,</span> <span class="pre">28)</span></code> (四维)</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">(64,)</span></code> (一维)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>数值类型</strong></p></td>
+<td class="text-left"><p>浮点数 (float)</p></td>
+<td class="text-left"><p>整数 (integer)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>数值范围</strong></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[-1.0,</span> <span class="pre">1.0]</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">0</span></code> 到 <code class="docutils literal notranslate"><span class="pre">9</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>对应关系</strong></p></td>
+<td class="text-left"><p>包含 64 张图片的数据</p></td>
+<td class="text-left"><p>包含与 64 张图片<strong>一一对应</strong>的数字标签</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id7">
+<h2>5. 构建 CNN 模型<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <p>在 PyTorch 中，我们通常通过创建一个继承自 <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> 的类来定义模型结构。我们在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中定义网络层，在 <code class="docutils literal notranslate"><span class="pre">forward</span></code> 方法中定义数据的前向传播路径。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -793,8 +898,8 @@ x 的形状: (64, 1, 28, 28)</p>
 <p><strong>最终结果:</strong>
 我们输入了一批 (64, 1, 28, 28) 的图像，最终得到了一个 (64, 10) 的张量。这个张量的每一行都代表一张输入图片，该行包含 10 个分数（logits），分别对应模型预测这张图片是数字 0, 1, 2, …, 9 的可能性。接下来的损失函数（CrossEntropyLoss）就会使用这个输出来计算误差。</p>
 </section>
-<section id="id7">
-<h3>总结表格<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<section id="id8">
+<h3>总结表格<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>操作</p></th>
@@ -833,8 +938,8 @@ x 的形状: (64, 1, 28, 28)</p>
 </table>
 </section>
 </section>
-<section id="id8">
-<h2>6. 定义损失函数和优化器<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<section id="id9">
+<h2>6. 定义损失函数和优化器<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 损失函数: 交叉熵损失，它内部已经包含了 Softmax。是用于多分类问题的标准损失函数。它衡量的是模型输出的概率分布与真实的标签之间的差距。</span>
@@ -847,8 +952,8 @@ x 的形状: (64, 1, 28, 28)</p>
 </div>
 </div>
 </section>
-<section id="id9">
-<h2>7. 训练模型<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<section id="id10">
+<h2>7. 训练模型<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
 <p>这是 PyTorch 中最核心的训练循环。对于每个批次的数据：</p>
 <ol class="arabic simple">
 <li><p>将数据移动到指定设备。</p></li>
@@ -983,8 +1088,8 @@ Training Finished!
 </div>
 </div>
 </section>
-<section id="id10">
-<h2>8. 评估模型<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<section id="id11">
+<h2>8. 评估模型<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
 <p>在评估阶段，我们不需要计算梯度，所以使用 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">torch.no_grad():</span></code> 来节省计算资源。我们将模型设置为评估模式 <code class="docutils literal notranslate"><span class="pre">model.eval()</span></code>，这会关闭像 Dropout 和 BatchNorm 这样的层（尽管我们这个简单模型没有使用它们）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1013,8 +1118,8 @@ Training Finished!
 </div>
 </div>
 </section>
-<section id="id11">
-<h2>9. 可视化预测结果<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
+<section id="id12">
+<h2>9. 可视化预测结果<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取一个批次的测试数据</span>
@@ -1049,10 +1154,10 @@ Training Finished!
 </div>
 </div>
 </section>
-<section id="id12">
-<h2>总结<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
 <section id="id13">
-<h3>CNN 数据流的图形化分解<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<h2>总结<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
+<section id="id14">
+<h3>CNN 数据流的图形化分解<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
 <p>我们再次追踪一张手写数字“8”的图片，看它如何在网络中一步步变形。</p>
 <section id="input">
 <h4>第 0 步: 输入 (Input)<a class="headerlink" href="#input" title="Permalink to this heading">#</a></h4>
@@ -1224,18 +1329,23 @@ Training Finished!
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><strong>那么问题来了，为什么我们需要将像素值从 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">255]</span></code> 缩放到 <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">1.0]</span></code></strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. 构建 CNN 模型</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch">追踪一批数据 (Batch) 的变形记</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">总结表格</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. 可视化部分数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#images"><strong><code class="docutils literal notranslate"><span class="pre">images</span></code> 是什么？</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels"><strong><code class="docutils literal notranslate"><span class="pre">labels</span></code> 是什么？</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>总结表格</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6. 定义损失函数和优化器</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7. 训练模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">8. 评估模型</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9. 可视化预测结果</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">总结</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">CNN 数据流的图形化分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5. 构建 CNN 模型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch">追踪一批数据 (Batch) 的变形记</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">总结表格</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">6. 定义损失函数和优化器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7. 训练模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">8. 评估模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9. 可视化预测结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">总结</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">CNN 数据流的图形化分解</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#input">第 0 步: 输入 (Input)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv1">第 1 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv1</span></code> 流水线 (提取基础特征)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#self-conv2">第 2 步: 进入 <code class="docutils literal notranslate"><span class="pre">self.conv2</span></code> 流水线 (提取复杂特征)</a></li>
