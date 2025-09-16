@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>关于tensor中的is_leaf &#8212; AI学习笔记</title>
+    <title>学习率的重要性 &#8212; AI学习笔记</title>
   
   
   
@@ -62,11 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'PrerequisiteKnowledge/关于tensor中的is_leaf';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PrerequisiteKnowledge/学习率';</script>
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="PyTorch图像处理" href="PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html" />
+    <link rel="next" title="梯度下降" href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html" />
     <link rel="prev" title="自动求导" href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -169,38 +171,28 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">前置知识</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习基础与理论</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="%E5%BC%A0%E9%87%8F.html">张量</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
-<li class="toctree-l1"><a class="reference internal" href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">关于tensor中的is_leaf</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">学习率的重要性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">梯度下降</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">函数详解</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">PyTorch核心与模型构建</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/variance_and_standard_deviation.html">方差和标准差计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
 
-
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">线性神经网络</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">经典神经网络模型</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html">线性回归</a></li>
 
@@ -224,27 +216,16 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../LinearNeuralNetwork/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">多层感知机</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../MultilayerPerceptrons/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA.html">多层感知机的简洁实现</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习计算</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../DeepLearning/GPU.html">GPU</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">卷积神经网络（CNN）基础</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/conv_layer.html">图像卷积</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/padding_and_strides.html">填充和步幅</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/channels.html">多输入多输出通道</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/pooling.html">汇聚层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/lenet.html">卷积神经网络（LeNet）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/recognize_handwritten_digits.html">重0开始使用 CNN 进行手写数字识别</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ConvolutionalNeuralNetwork/recognize_handwritten_digits.html">重零开始进行手写数字识别</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">现代卷积神经网络</span></p>
 <ul class="nav bd-sidenav">
@@ -256,29 +237,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/batch_norm.html">批量规范化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ConvolutionalModern/densenet.html">稠密连接网络（DenseNet）</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async_computation.html">异步计算</a></li>
-
-
-<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine_tuning.html">微调</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural_style.html">风格迁移</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">自然语言处理</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Transformer</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/LLMs.html">什么是LLMs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer_introduction.html">Transformer介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/seq2seq.html"><strong>Seq2Seq 模型</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/embedding.html">Embedding 词嵌入</a></li>
@@ -289,9 +250,46 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/end.html">堆叠多层</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../NaturalLanguageProcessing/Transformer/transformer.html">Transformer代码实现</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机视觉应用</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/fine_tuning.html">视觉微调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/bounding_box.html">目标检测和边界框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/object_detection_dataset.html">目标检测数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/anchor.html">锚框</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/multiscale_object_detection.html">多尺度目标检测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/semantic_segmentation_and_dataset.html">语义分割和数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ComputerVision/neural_style.html">风格迁移</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">大模型微调</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../FineTuning/Introduction.html">什么是微调</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">计算机性能</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/async_computation.html">异步计算</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">附录：常用函数与工具</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/variance_and_standard_deviation.html">方差和标准差计算</a></li>
+
+
 </ul>
 
     </div>
@@ -361,7 +359,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/PrerequisiteKnowledge/关于tensor中的is_leaf.ipynb" target="_blank"
+      <li><a href="../_sources/PrerequisiteKnowledge/学习率.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -445,7 +443,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>关于tensor中的is_leaf</h1>
+    <h1>学习率的重要性</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -455,10 +453,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">关于tensor中的is_leaf</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#leaf-leaf">leaf的作用是什么?为什么要加 leaf?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1">情况一：没有学习率（或 <span class="math notranslate nohighlight">\(\eta = 1\)</span>）—— 永不收敛的震荡</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1-2">情况二：学习率过大（<span class="math notranslate nohighlight">\(\eta = 1.2\)</span>）—— 灾难性的发散</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-0-1">情况三：学习率合适（<span class="math notranslate nohighlight">\(\eta = 0.1\)</span>）—— 稳步的收敛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">最终总结</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -469,19 +468,132 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="tensoris-leaf">
-<h1>关于tensor中的is_leaf<a class="headerlink" href="#tensoris-leaf" title="Permalink to this heading">#</a></h1>
-<p>在pytorch的tensor类中,有个is_leaf的属性,姑且把它作为叶子节点. is_leaf 为False的时候,则不是叶子节点, is_leaf为True的时候为叶子节点(或者叶张量)</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="leaf-leaf">
-<h1>leaf的作用是什么?为什么要加 leaf?<a class="headerlink" href="#leaf-leaf" title="Permalink to this heading">#</a></h1>
-<p>我们都知道tensor中的requires_grad()属性，当requires_grad()为True时我们将会记录tensor的运算过程并为自动求导做准备，但是并不是每个requires_grad()设为True的值都会在backward的时候得到相应的grad。它还必须为leaf。这就说明。<strong>leaf成为了在 requires_grad()下判断是否需要保留 grad的前提条件</strong></p>
-<p>is_leaf()</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>学习率的重要性<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>我们继续以一个简单的数学函数作为我们的“山”，来上演一场直观的“下山寻宝”记。</p>
 <ul class="simple">
-<li><p>按照惯例,所有requires_grad为False的张量(Tensor) 都为叶张量( leaf Tensor)</p></li>
-<li><p>requires_grad为True的张量(Tensor),如果他们是由用户创建的,则它们是叶张量(leaf Tensor).这意味着它们不是运算的结果,因此gra_fn为None</p></li>
-<li><p>只有是叶张量的tensor在反向传播时才会将本身的grad传入的backward的运算中. 如果想得到当前tensor在反向传播时的grad, 可以用retain_grad()这个属性</p></li>
+<li><p><strong>山（损失函数）</strong>: <span class="math notranslate nohighlight">\(f(x) = x^2 - 6x + 9\)</span></p></li>
+<li><p><strong>宝藏（最小值点）</strong>: <span class="math notranslate nohighlight">\(x=3\)</span></p></li>
+<li><p><strong>寻路工具（梯度/导数）</strong>: <span class="math notranslate nohighlight">\(\frac{d}{dx}=f'(x) = 2x - 6\)</span></p></li>
+<li><p><strong>下山规则（梯度下降）</strong>: <span class="math notranslate nohighlight">\(x := x - \eta \cdot \frac{d}{dx}\)</span></p></li>
 </ul>
+<p>这里的 <span class="math notranslate nohighlight">\(\eta\)</span> (eta) 就是至关重要的<strong>学习率</strong>。现在，我们从起点 <span class="math notranslate nohighlight">\(x=4\)</span> 出发，看看不同的 <span class="math notranslate nohighlight">\(\eta\)</span> 会带来怎样截然不同的命运。</p>
+<hr class="docutils" />
+<section id="eta-1">
+<h2>情况一：没有学习率（或 <span class="math notranslate nohighlight">\(\eta = 1\)</span>）—— 永不收敛的震荡<a class="headerlink" href="#eta-1" title="Permalink to this heading">#</a></h2>
+<p>在第一张图中，更新规则写作 <span class="math notranslate nohighlight">\(x := x - \frac{d}{dx}\)</span>，这在数学上等价于将学习率 <span class="math notranslate nohighlight">\(\eta\)</span> 设置为 <strong>1</strong>。这意味着我们完全相信梯度的“建议”，它让我们走多远，我们就走多远。</p>
+<p><strong>下山过程：</strong></p>
+<ol class="arabic simple">
+<li><p><strong>起始点</strong>: <span class="math notranslate nohighlight">\(x = 4\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4) - 6 = 2\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4 - (2) = 2\)</span></p></li>
+<li><p>我们从 <span class="math notranslate nohighlight">\(x=4\)</span> 跳到了 <span class="math notranslate nohighlight">\(x=2\)</span>，完美地越过了最低点 <span class="math notranslate nohighlight">\(x=3\)</span>。</p></li>
+</ul>
+</li>
+<li><p><strong>第二步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 2\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(2) - 6 = -2\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 2 - (-2) = 4\)</span></p></li>
+<li><p>我们又从 <span class="math notranslate nohighlight">\(x=2\)</span> 跳回了起点 <span class="math notranslate nohighlight">\(x=4\)</span>。</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>结论（如下图所示）：</strong>
+参数在 <code class="docutils literal notranslate"><span class="pre">2</span></code> 和 <code class="docutils literal notranslate"><span class="pre">4</span></code> 之间来回“跳跃”，就像一个乒乓球在山谷两侧来回弹跳，陷入了无限循环的震荡，<strong>永远无法稳定在谷底 <span class="math notranslate nohighlight">\(x=3\)</span></strong>。这是因为步子迈得“恰好”能让我们跳到对称的另一边。</p>
+<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_14-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /><hr class="docutils" />
+</section>
+<section id="eta-1-2">
+<h2>情况二：学习率过大（<span class="math notranslate nohighlight">\(\eta = 1.2\)</span>）—— 灾难性的发散<a class="headerlink" href="#eta-1-2" title="Permalink to this heading">#</a></h2>
+<p>在第二张图中，我们选择了一个更大的学习率 <span class="math notranslate nohighlight">\(\eta = 1.2\)</span>。我们以为步子迈得更大，下山会更快，但结果却适得其反。</p>
+<p><strong>下山过程：</strong></p>
+<ol class="arabic simple">
+<li><p><strong>起始点</strong>: <span class="math notranslate nohighlight">\(x = 4\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4) - 6 = 2\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4 - 1.2 \times (2) = 4 - 2.4 = 1.6\)</span></p></li>
+<li><p>我们不仅越过了最低点，而且跳得更远了。</p></li>
+</ul>
+</li>
+<li><p><strong>第二步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 1.6\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(1.6) - 6 = 3.2 - 6 = -2.8\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 1.6 - 1.2 \times (-2.8) = 1.6 + 3.36 = 4.96\)</span></p></li>
+<li><p>这次更新让我们跳回了右侧，但落点 <span class="math notranslate nohighlight">\(4.96\)</span> 比我们的起始点 <span class="math notranslate nohighlight">\(4\)</span> 离谷底更远了！</p></li>
+</ul>
+</li>
+<li><p><strong>第三步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 4.96\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4.96) - 6 = 3.92\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4.96 - 1.2 \times (3.92) = 4.96 - 4.704 = 0.256\)</span></p></li>
+<li><p>我们被抛到了一个离谷底更更远的地方。</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>结论（如下图所示）：</strong>
+参数不仅越过了最低点，而且每一次跳跃都把它带到离最低点<strong>越来越远</strong>的位置。损失值（山的高度）也随之越来越大。这种情况称为<strong>发散 (Divergence)</strong>。这就像下山时步子迈得太大，结果一脚踩空，直接滚到了对面的山坡上，而且越滚越高。</p>
+<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_17-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /><hr class="docutils" />
+</section>
+<section id="eta-0-1">
+<h2>情况三：学习率合适（<span class="math notranslate nohighlight">\(\eta = 0.1\)</span>）—— 稳步的收敛<a class="headerlink" href="#eta-0-1" title="Permalink to this heading">#</a></h2>
+<p>在第三张图中，我们选择了一个保守但有效的学习率 <span class="math notranslate nohighlight">\(\eta = 0.1\)</span>。我们让每一步都迈得小心翼翼。</p>
+<p><strong>下山过程：</strong></p>
+<ol class="arabic simple">
+<li><p><strong>起始点</strong>: <span class="math notranslate nohighlight">\(x = 4\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4) - 6 = 2\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4 - 0.1 \times (2) = 4 - 0.2 = 3.8\)</span></p></li>
+<li><p>我们朝着正确的方向迈出了一小步，离谷底更近了。</p></li>
+</ul>
+</li>
+<li><p><strong>第二步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 3.8\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(3.8) - 6 = 1.6\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 3.8 - 0.1 \times (1.6) = 3.8 - 0.16 = 3.64\)</span></p></li>
+<li><p>又向谷底迈进了一步。</p></li>
+</ul>
+</li>
+<li><p><strong>第三步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 3.64\)</span></p>
+<ul class="simple">
+<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(3.64) - 6 = 1.28\)</span></p></li>
+<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 3.64 - 0.1 \times (1.28) = 3.64 - 0.128 = 3.512\)</span></p></li>
+<li><p>我们稳步前进，无限逼近宝藏所在地 <span class="math notranslate nohighlight">\(x=3\)</span>。</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>结论（如下图所示）：</strong>
+参数在每一次迭代后，都稳定地向着最低点 <span class="math notranslate nohighlight">\(x=3\)</span> 靠近。步伐不大不小，既保证了方向的正确，又避免了越过最低点。这种情况就是我们最希望看到的<strong>收敛 (Convergence)</strong>。这就像一位谨慎的登山者，每一步都迈得很稳，确保自己始终在下山，最终安全到达谷底。</p>
+<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_17-58-41.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /></section>
+<section id="id2">
+<h2>最终总结<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>学习率 (<span class="math notranslate nohighlight">\(\eta\)</span>)</p></th>
+<th class="head text-left"><p>行为 (Behavior)</p></th>
+<th class="head text-left"><p>结果 (Outcome)</p></th>
+<th class="head text-left"><p>图像</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>1.0</strong></p></td>
+<td class="text-left"><p><strong>震荡 (Oscillation)</strong></p></td>
+<td class="text-left"><p>无法到达最低点</p></td>
+<td class="text-left"><p>图一</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>1.2</strong></p></td>
+<td class="text-left"><p><strong>发散 (Divergence)</strong></p></td>
+<td class="text-left"><p>离最低点越来越远</p></td>
+<td class="text-left"><p>图二</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>0.1</strong></p></td>
+<td class="text-left"><p><strong>收敛 (Convergence)</strong></p></td>
+<td class="text-left"><p>稳定地逼近最低点</p></td>
+<td class="text-left"><p>图三</p></td>
+</tr>
+</tbody>
+</table>
+<p>这三张图完美地诠释了学习率的真谛：在梯度下降中，梯度告诉我们<strong>往哪走（方向）</strong>，而学习率决定了我们<strong>走多远（步长）</strong>。选择一个合适的学习率，是在“下山太慢”和“滚下山坡”之间找到最佳平衡的艺术，也是成功训练模型的关键。</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -524,11 +636,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html"
+       href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">PyTorch图像处理</p>
+        <p class="prev-next-title">梯度下降</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -547,10 +659,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">关于tensor中的is_leaf</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#leaf-leaf">leaf的作用是什么?为什么要加 leaf?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1">情况一：没有学习率（或 <span class="math notranslate nohighlight">\(\eta = 1\)</span>）—— 永不收敛的震荡</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1-2">情况二：学习率过大（<span class="math notranslate nohighlight">\(\eta = 1.2\)</span>）—— 灾难性的发散</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-0-1">情况三：学习率合适（<span class="math notranslate nohighlight">\(\eta = 0.1\)</span>）—— 稳步的收敛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">最终总结</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>读写文件 &#8212; AI学习笔记</title>
+    <title>关于tensor中的is_leaf &#8212; AI学习笔记</title>
   
   
   
@@ -62,12 +62,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'DeepLearning/读写文件';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'DeepLearning/关于tensor中的is_leaf';</script>
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GPU" href="GPU.html" />
-    <link rel="prev" title="关于tensor中的is_leaf" href="%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html" />
+    <link rel="next" title="读写文件" href="%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html" />
+    <link rel="prev" title="自定义层" href="%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -185,9 +185,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="%E5%B1%82%E5%92%8C%E5%9D%97.html">层和块</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html">参数管理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html">自定义层</a></li>
-<li class="toctree-l1"><a class="reference internal" href="%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html">关于tensor中的is_leaf</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">关于tensor中的is_leaf</a></li>
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">读写文件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html">读写文件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GPU.html">GPU</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">经典神经网络模型</span></p>
@@ -357,7 +357,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/DeepLearning/读写文件.ipynb" target="_blank"
+      <li><a href="../_sources/DeepLearning/关于tensor中的is_leaf.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -441,7 +441,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>读写文件</h1>
+    <h1>关于tensor中的is_leaf</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -451,9 +451,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">加载和保存张量</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">加载和保存模型参数</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">关于tensor中的is_leaf</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#leaf-leaf">leaf的作用是什么?为什么要加 leaf?</a></li>
 </ul>
+
             </nav>
         </div>
     </div>
@@ -464,149 +465,19 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>读写文件<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
-<p>以确保在服务器电源被不小心断掉时，我们不会损失几天的计算结果。</p>
-<section id="id2">
-<h2>加载和保存张量<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
-<p>对于单个张量，我们可以直接调用<code class="docutils literal notranslate"><span class="pre">load</span></code>和<code class="docutils literal notranslate"><span class="pre">save</span></code>函数分别读写它们。
-这两个函数都要求我们提供一个名称，<code class="docutils literal notranslate"><span class="pre">save</span></code>要求将要保存的变量作为输入。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;../raw/data/x-file&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>我们现在可以将存储在文件中的数据读回内存。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../raw/data/x-file&#39;</span><span class="p">)</span>
-<span class="n">x2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0, 1, 2, 3])
-</pre></div>
-</div>
-</div>
-</div>
-<p>我们可以存储一个张量列表，然后把它们读回内存。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span><span class="s1">&#39;../raw/data/x-files&#39;</span><span class="p">)</span>
-<span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../raw/data/x-files&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor([0, 1, 2, 3]), tensor([0., 0., 0., 0.]))
-</pre></div>
-</div>
-</div>
-</div>
-<p>我们甚至可以写入或读取从字符串映射到张量的字典。
-当我们要读取或写入模型中的所有权重时，这很方便。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mydict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">}</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">mydict</span><span class="p">,</span> <span class="s1">&#39;../raw/data/mydict&#39;</span><span class="p">)</span>
-<span class="n">mydict2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../raw/data/mydict&#39;</span><span class="p">)</span>
-<span class="n">mydict2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;x&#39;: tensor([0, 1, 2, 3]), &#39;y&#39;: tensor([0., 0., 0., 0.])}
-</pre></div>
-</div>
-</div>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="tensoris-leaf">
+<h1>关于tensor中的is_leaf<a class="headerlink" href="#tensoris-leaf" title="Permalink to this heading">#</a></h1>
+<p>在pytorch的tensor类中,有个is_leaf的属性,姑且把它作为叶子节点. is_leaf 为False的时候,则不是叶子节点, is_leaf为True的时候为叶子节点(或者叶张量)</p>
 </section>
-<section id="id3">
-<h2>加载和保存模型参数<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
-<p>保存单个权重向量（或其他张量）确实有用，
-但是如果我们想保存整个模型，并在以后加载它们，
-单独保存每个向量则会变得很麻烦。
-毕竟，我们可能有数百个参数散布在各处。
-因此，深度学习框架提供了内置函数来保存和加载整个网络。
-需要注意的一个重要细节是，这将保存模型的参数而不是保存整个模型。
-例如，如果我们有一个3层多层感知机，我们需要单独指定架构。
-因为模型本身可以包含任意代码，所以模型本身难以序列化。
-因此，为了恢复模型，我们需要用代码生成架构，
-然后从磁盘加载参数。
-让我们从熟悉的多层感知机开始尝试一下。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-
-<span class="n">net</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
-<span class="n">Y</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>接下来，我们将模型的参数存储在一个叫做“mlp.params”的文件中。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;../raw/data/mlp.params&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>为了恢复模型，我们实例化了原始多层感知机模型的一个备份。
-这里我们不需要随机初始化模型参数，而是直接读取文件中存储的参数。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clone</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
-<span class="n">clone</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../raw/data/mlp.params&#39;</span><span class="p">))</span>
-<span class="n">clone</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MLP(
-  (hidden): Linear(in_features=20, out_features=256, bias=True)
-  (output): Linear(in_features=256, out_features=10, bias=True)
-)
-</pre></div>
-</div>
-</div>
-</div>
-<p>由于两个实例具有相同的模型参数，在输入相同的<code class="docutils literal notranslate"><span class="pre">X</span></code>时，
-两个实例的计算结果应该相同。
-让我们来验证一下。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y_clone</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">Y_clone</span> <span class="o">==</span> <span class="n">Y</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[True, True, True, True, True, True, True, True, True, True],
-        [True, True, True, True, True, True, True, True, True, True]])
-</pre></div>
-</div>
-</div>
-</div>
-</section>
+<section class="tex2jax_ignore mathjax_ignore" id="leaf-leaf">
+<h1>leaf的作用是什么?为什么要加 leaf?<a class="headerlink" href="#leaf-leaf" title="Permalink to this heading">#</a></h1>
+<p>我们都知道tensor中的requires_grad()属性，当requires_grad()为True时我们将会记录tensor的运算过程并为自动求导做准备，但是并不是每个requires_grad()设为True的值都会在backward的时候得到相应的grad。它还必须为leaf。这就说明。<strong>leaf成为了在 requires_grad()下判断是否需要保留 grad的前提条件</strong></p>
+<p>is_leaf()</p>
+<ul class="simple">
+<li><p>按照惯例,所有requires_grad为False的张量(Tensor) 都为叶张量( leaf Tensor)</p></li>
+<li><p>requires_grad为True的张量(Tensor),如果他们是由用户创建的,则它们是叶张量(leaf Tensor).这意味着它们不是运算的结果,因此gra_fn为None</p></li>
+<li><p>只有是叶张量的tensor在反向传播时才会将本身的grad传入的backward的运算中. 如果想得到当前tensor在反向传播时的grad, 可以用retain_grad()这个属性</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -640,20 +511,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="%E5%85%B3%E4%BA%8Etensor%E4%B8%AD%E7%9A%84is_leaf.html"
+       href="%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">关于tensor中的is_leaf</p>
+        <p class="prev-next-title">自定义层</p>
       </div>
     </a>
     <a class="right-next"
-       href="GPU.html"
+       href="%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">GPU</p>
+        <p class="prev-next-title">读写文件</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -672,9 +543,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">加载和保存张量</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">加载和保存模型参数</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">关于tensor中的is_leaf</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#leaf-leaf">leaf的作用是什么?为什么要加 leaf?</a></li>
 </ul>
+
   </nav></div>
 
 </div></div>
