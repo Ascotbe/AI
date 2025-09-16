@@ -501,8 +501,8 @@ document.write(`
 </ol>
 <p><strong>结论（如下图所示）：</strong>
 参数在 <code class="docutils literal notranslate"><span class="pre">2</span></code> 和 <code class="docutils literal notranslate"><span class="pre">4</span></code> 之间来回“跳跃”，就像一个乒乓球在山谷两侧来回弹跳，陷入了无限循环的震荡，<strong>永远无法稳定在谷底 <span class="math notranslate nohighlight">\(x=3\)</span></strong>。这是因为步子迈得“恰好”能让我们跳到对称的另一边。</p>
-<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_14-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /><hr class="docutils" />
-</section>
+<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_14-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /></section>
+<hr class="docutils" />
 <section id="eta-1-2">
 <h2>情况二：学习率过大（<span class="math notranslate nohighlight">\(\eta = 1.2\)</span>）—— 灾难性的发散<a class="headerlink" href="#eta-1-2" title="Permalink to this heading">#</a></h2>
 <p>在第二张图中，我们选择了一个更大的学习率 <span class="math notranslate nohighlight">\(\eta = 1.2\)</span>。我们以为步子迈得更大，下山会更快，但结果却适得其反。</p>
@@ -532,8 +532,8 @@ document.write(`
 </ol>
 <p><strong>结论（如下图所示）：</strong>
 参数不仅越过了最低点，而且每一次跳跃都把它带到离最低点<strong>越来越远</strong>的位置。损失值（山的高度）也随之越来越大。这种情况称为<strong>发散 (Divergence)</strong>。这就像下山时步子迈得太大，结果一脚踩空，直接滚到了对面的山坡上，而且越滚越高。</p>
-<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_17-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /><hr class="docutils" />
-</section>
+<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_17-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /></section>
+<hr class="docutils" />
 <section id="eta-0-1">
 <h2>情况三：学习率合适（<span class="math notranslate nohighlight">\(\eta = 0.1\)</span>）—— 稳步的收敛<a class="headerlink" href="#eta-0-1" title="Permalink to this heading">#</a></h2>
 <p>在第三张图中，我们选择了一个保守但有效的学习率 <span class="math notranslate nohighlight">\(\eta = 0.1\)</span>。我们让每一步都迈得小心翼翼。</p>

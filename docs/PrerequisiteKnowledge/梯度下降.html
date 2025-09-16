@@ -451,11 +451,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">梯度下降的流程总结</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">用 PyTorch 来一场真实的“下山寻宝”</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第一幕：手动实现梯度下降（帮你理解原理）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">第二幕：使用 PyTorch 的优化器（更简洁的标准方式）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第一幕：手动实现梯度下降（帮你理解原理）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第二幕：使用 PyTorch 的优化器（更简洁的标准方式）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">总结</a></li>
 </ul>
 </li>
 </ul>
@@ -490,8 +489,7 @@ document.write(`
 <li><p><strong>寻找最陡的下坡方向</strong>：这个“方向”就是 <strong>梯度 (Gradient)</strong>。梯度会指向山上坡度最陡峭的<strong>上坡</strong>方向，那么它的<strong>反方向</strong>（负梯度）自然就是最陡的<strong>下坡</strong>方向。</p></li>
 <li><p><strong>你迈出的那一步的大小</strong>：这就是 <strong>学习率 (Learning Rate)</strong>。步子迈得太大，可能会直接跨过最低点，跑到对面山坡上去了。步子太小，下山会非常非常慢。所以这是一个需要小心调整的超参数。</p></li>
 </ul>
-<img src="../image/PrerequisiteKnowledge/image-18.gif" alt="" style="zoom: 70%; display: block; margin: 0px auto;" /><section id="id2">
-<h2>梯度下降的流程总结<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<img src="../image/PrerequisiteKnowledge/image-18.gif" alt="" style="zoom: 70%; display: block; margin: 0px auto;" /><p><strong>梯度下降的流程总结</strong></p>
 <blockquote>
 <div><p>目标：找到一组参数 (<code class="docutils literal notranslate"><span class="pre">w</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>)，让损失函数 (Loss) 最小。</p>
 <p>步骤：</p>
@@ -503,12 +501,11 @@ document.write(`
 <li><p>重复 2-4 步，直到损失不再明显下降，我们就找到了“宝藏”！</p></li>
 </ol>
 </div></blockquote>
-</section>
 <section id="pytorch">
 <h2>用 PyTorch 来一场真实的“下山寻宝”<a class="headerlink" href="#pytorch" title="Permalink to this heading">#</a></h2>
 <p>现在我们用代码来实现这个过程。假设我们要解决一个超级简单的问题：我们有一堆数据 <code class="docutils literal notranslate"><span class="pre">X</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y</span></code>，并且我们知道它们的关系大致是 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">1</span></code>。我们假装不知道 <code class="docutils literal notranslate"><span class="pre">2</span></code> 和 <code class="docutils literal notranslate"><span class="pre">1</span></code> 这两个数字，让模型自己去学。</p>
-<section id="id3">
-<h3>第一幕：手动实现梯度下降（帮你理解原理）<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<section id="id2">
+<h3>第一幕：手动实现梯度下降（帮你理解原理）<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>这部分代码会帮你理解底层发生了什么。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -590,8 +587,8 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">w.grad.zero_()</span></code>：<strong>每次更新完参数后，必须清空梯度。</strong> 因为PyTorch默认会把梯度累加起来，如果不清零，下一次计算的梯度就会被加到上一次的结果上，导致更新方向错误。</p></li>
 </ul>
 </section>
-<section id="id4">
-<h3>第二幕：使用 PyTorch 的优化器（更简洁的标准方式）<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<section id="id3">
+<h3>第二幕：使用 PyTorch 的优化器（更简洁的标准方式）<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>手动更新参数虽然能帮我们理解原理，但在真实项目中，模型可能有成千上万个参数，手动一个个更新太麻烦了。PyTorch 提供了一个专业的“登山向导”——<strong>优化器 (Optimizer)</strong>。</p>
 <p>优化器会帮我们自动完成“更新参数”和“清空梯度”这两件杂事。</p>
 <div class="cell docutils container">
@@ -652,18 +649,18 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>开始寻宝（专业向导版）！
-第 10 步: 损失 = 1.5688, w = 1.814, b = 0.437
-第 20 步: 损失 = 0.0715, w = 2.093, b = 0.547
-第 30 步: 损失 = 0.0309, w = 2.135, b = 0.575
-第 40 步: 损失 = 0.0282, w = 2.138, b = 0.590
-第 50 步: 损失 = 0.0265, w = 2.135, b = 0.603
-第 60 步: 损失 = 0.0250, w = 2.131, b = 0.615
-第 70 步: 损失 = 0.0235, w = 2.127, b = 0.626
-第 80 步: 损失 = 0.0221, w = 2.123, b = 0.637
-第 90 步: 损失 = 0.0209, w = 2.120, b = 0.648
-第 100 步: 损失 = 0.0196, w = 2.116, b = 0.658
+第 10 步: 损失 = 1.9634, w = 1.818, b = 0.299
+第 20 步: 损失 = 0.1014, w = 2.129, b = 0.423
+第 30 步: 损失 = 0.0502, w = 2.174, b = 0.457
+第 40 步: 损失 = 0.0462, w = 2.177, b = 0.476
+第 50 步: 损失 = 0.0434, w = 2.173, b = 0.491
+第 60 步: 损失 = 0.0409, w = 2.168, b = 0.507
+第 70 步: 损失 = 0.0385, w = 2.163, b = 0.521
+第 80 步: 损失 = 0.0363, w = 2.158, b = 0.535
+第 90 步: 损失 = 0.0342, w = 2.153, b = 0.549
+第 100 步: 损失 = 0.0322, w = 2.149, b = 0.562
 
-寻宝结束！找到的 w ≈ 2.116, b ≈ 0.658
+寻宝结束！找到的 w ≈ 2.149, b ≈ 0.562
 </pre></div>
 </div>
 </div>
@@ -677,8 +674,8 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code>：这一步会根据之前 <code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code> 计算出的梯度，自动更新所有它管理的参数。它内部执行的逻辑就是 <code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">-=</span> <span class="pre">lr</span> <span class="pre">*</span> <span class="pre">w.grad</span></code>。</p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>总结<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<section id="id4">
+<h3>总结<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>梯度下降就像一个在大雾中凭感觉下山的过程：</p>
 <ol class="arabic simple">
 <li><p><strong>目标</strong>：找到山谷最低点（损失函数的最小值）。</p></li>
@@ -754,11 +751,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">梯度下降的流程总结</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">用 PyTorch 来一场真实的“下山寻宝”</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第一幕：手动实现梯度下降（帮你理解原理）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">第二幕：使用 PyTorch 的优化器（更简洁的标准方式）</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第一幕：手动实现梯度下降（帮你理解原理）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第二幕：使用 PyTorch 的优化器（更简洁的标准方式）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">总结</a></li>
 </ul>
 </li>
 </ul>
