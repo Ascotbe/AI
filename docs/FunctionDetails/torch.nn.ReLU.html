@@ -181,6 +181,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%AD%A6%E4%B9%A0%E7%8E%87.html">学习率的重要性</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">梯度下降</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html">链式法则</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html">反向传播</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">PyTorch核心与模型构建</span></p>
 <ul class="nav bd-sidenav">
@@ -480,10 +482,10 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前
-tensor([-1.7646,  0.5966, -0.7443,  1.0229,  0.5244, -0.2382, -0.3259, -1.5371,
-        -1.1896, -0.1687])
+tensor([ 0.3234, -1.5483, -0.4038, -0.8110, -1.2569, -0.5949,  0.4634, -0.6270,
+         0.1595, -0.6730])
 经过relu之后
-tensor([0.0000, 0.5966, 0.0000, 1.0229, 0.5244, 0.0000, 0.0000, 0.0000, 0.0000,
+tensor([0.3234, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.4634, 0.0000, 0.1595,
         0.0000])
 </pre></div>
 </div>
@@ -505,14 +507,14 @@ tensor([0.0000, 0.5966, 0.0000, 1.0229, 0.5244, 0.0000, 0.0000, 0.0000, 0.0000,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>经过relu之前c的值
-tensor([ 0.3624, -1.4167, -0.4940,  0.5420,  0.9399, -0.6477, -1.5834, -1.9705,
-        -0.1460, -1.6284])
+tensor([-1.1407, -0.9181,  0.8865,  1.4770,  0.6142,  0.5241,  0.3791,  1.0948,
+         0.0484,  0.2351])
 经过relu之后c的值
-tensor([0.3624, 0.0000, 0.0000, 0.5420, 0.9399, 0.0000, 0.0000, 0.0000, 0.0000,
-        0.0000])
+tensor([0.0000, 0.0000, 0.8865, 1.4770, 0.6142, 0.5241, 0.3791, 1.0948, 0.0484,
+        0.2351])
 经过relu之后d的值
-tensor([0.3624, 0.0000, 0.0000, 0.5420, 0.9399, 0.0000, 0.0000, 0.0000, 0.0000,
-        0.0000])
+tensor([0.0000, 0.0000, 0.8865, 1.4770, 0.6142, 0.5241, 0.3791, 1.0948, 0.0484,
+        0.2351])
 </pre></div>
 </div>
 </div>

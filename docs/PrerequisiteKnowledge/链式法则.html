@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>torch.argmax &#8212; AI学习笔记</title>
+    <title>链式法则 &#8212; AI学习笔记</title>
   
   
   
@@ -62,12 +62,14 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'FunctionDetails/torch.argmax';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PrerequisiteKnowledge/链式法则';</script>
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="torch.matmul" href="torch.matmul.html" />
-    <link rel="prev" title="PyTorch图像处理" href="PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html" />
+    <link rel="next" title="反向传播" href="%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" />
+    <link rel="prev" title="梯度下降" href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -170,17 +172,17 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">深度学习基础与理论</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%BC%A0%E9%87%8F.html">张量</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="%E5%BC%A0%E9%87%8F.html">张量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6.html">广播机制</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%AD%A6%E4%B9%A0%E7%8E%87.html">学习率的重要性</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">梯度下降</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html">链式法则</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html">反向传播</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E5%AD%A6%E4%B9%A0%E7%8E%87.html">学习率的重要性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">梯度下降</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">链式法则</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html">反向传播</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">PyTorch核心与模型构建</span></p>
 <ul class="nav bd-sidenav">
@@ -272,22 +274,22 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../ComputationalPerformance/parameterserver.html">参数服务器</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">附录：常用函数与工具</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html">PyTorch图像处理</a></li>
 
 
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">torch.argmax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.matmul.html">torch.matmul</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.normal.html">torch.normal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.zeros.html">torch.zeros</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.Linear.html">torch.nn.Linear</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.ReLU.html">torch.nn.ReLU</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.nn.init.html">torch.nn.init</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.arange.html">torch.arange</a></li>
-<li class="toctree-l1"><a class="reference internal" href="torch.meshgrid.html">torch.meshgrid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="variance_and_standard_deviation.html">方差和标准差计算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.argmax.html">torch.argmax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.matmul.html">torch.matmul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.normal.html">torch.normal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.zeros.html">torch.zeros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.Linear.html">torch.nn.Linear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.ReLU.html">torch.nn.ReLU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.nn.init.html">torch.nn.init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.arange.html">torch.arange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/torch.meshgrid.html">torch.meshgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FunctionDetails/variance_and_standard_deviation.html">方差和标准差计算</a></li>
 
 
 </ul>
@@ -359,7 +361,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/FunctionDetails/torch.argmax.ipynb" target="_blank"
+      <li><a href="../_sources/PrerequisiteKnowledge/链式法则.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -430,7 +432,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -441,11 +445,20 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>torch.argmax</h1>
+    <h1>链式法则</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第一站：开一家全自动汉堡工厂</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第二站：从生产到数学——链式法则的诞生</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -455,71 +468,41 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="torch-argmax">
-<h1>torch.argmax<a class="headerlink" href="#torch-argmax" title="Permalink to this heading">#</a></h1>
-<p><strong>torch.argmax(input, dim=None, keepdim=False)</strong></p>
-<p>参数说明：</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>链式法则<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>你可能听说过“反向传播”（Backpropagation）是神经网络学习的魔法。而这个魔法的核心咒语，就是我们今天要讲的<strong>链式法则（Chain Rule）</strong>。</p>
+<p>别怕，这东西听起来数学，但它的思想非常直观。我们将通过开办一家“汉堡工厂”来彻底征服它。</p>
+<section id="id2">
+<h2>第一站：开一家全自动汉堡工厂<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>想象一下，你开了一家汉堡工厂，生产流程环环相扣：</p>
 <ul class="simple">
-<li><p>input：输入的张量。</p></li>
-<li><p>dim：指定在哪个维度上寻找最大值，默认为None，表示在整个张量中寻找最大值。</p></li>
-<li><p>keepdim：是否保持输出张量的维度和输入张量一致，默认为False。</p></li>
+<li><p><strong>机器A</strong>：接收原材料“牛肉”(<span class="math notranslate nohighlight">\(x\)</span>)，通过调节<strong>旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code></strong>，生产出中间产品“肉饼”(<span class="math notranslate nohighlight">\(u\)</span>)。</p></li>
+<li><p><strong>机器B</strong>：接收“肉饼”(<span class="math notranslate nohighlight">\(u\)</span>)，通过调节<strong>旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code></strong>，生产出最终产品“汉堡”(<span class="math notranslate nohighlight">\(y\)</span>)。</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-1.3968, -0.2883, -0.2675,  0.1621,  0.6717],
-        [ 0.5376,  0.2472, -2.5848,  0.2838,  1.5652],
-        [-0.5282, -0.4530, -1.8416, -2.0838, -0.7528],
-        [-1.6256,  0.1564, -0.5387,  0.4248, -0.3831]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">b</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([4, 4, 1, 3])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="n">c</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(9)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">d</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([1, 1, 0, 3, 1])
-</pre></div>
-</div>
-</div>
-</div>
+<p>整个流程可以表示为：
+牛肉(<span class="math notranslate nohighlight">\(x\)</span>) <span class="math notranslate nohighlight">\(\xrightarrow[\text{旋钮 w}]{\text{机器 A}}\)</span> 肉饼(<span class="math notranslate nohighlight">\(u\)</span>) <span class="math notranslate nohighlight">\(\xrightarrow[\text{旋钮 v}]{\text{机器 B}}\)</span> 汉堡(<span class="math notranslate nohighlight">\(y\)</span>)</p>
+</section>
+<section id="id3">
+<h2>第二站：从生产到数学——链式法则的诞生<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>我们用数学来描述这个工厂。</p>
+<ul class="simple">
+<li><p>机器A的功能：<span class="math notranslate nohighlight">\(u = w \cdot x\)</span></p></li>
+<li><p>机器B的功能：<span class="math notranslate nohighlight">\(y = v \cdot u\)</span></p></li>
+</ul>
+<p>整个流程合起来，就是一个复合函数：<span class="math notranslate nohighlight">\(y = v \cdot (w \cdot x)\)</span>。</p>
+<p>现在，老板（你）最关心的问题是：<strong>如果我稍微拧一下最开始的旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code>，最终的汉堡产量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 会受到多大的影响？</strong></p>
+<p>直接看 <code class="docutils literal notranslate"><span class="pre">w</span></code> 对 <code class="docutils literal notranslate"><span class="pre">y</span></code> 的影响有点绕。但我们可以用链式思维把它拆解：</p>
+<ol class="arabic simple">
+<li><p>拧一下旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code>，会先影响肉饼 <code class="docutils literal notranslate"><span class="pre">u</span></code> 的产量。这个影响程度是 <span class="math notranslate nohighlight">\(\frac{\partial u}{\partial w}\)</span>。</p></li>
+<li><p>肉饼 <code class="docutils literal notranslate"><span class="pre">u</span></code> 产量的变化，接着会影响最终汉堡 <code class="docutils literal notranslate"><span class="pre">y</span></code> 的产量。这个影响程度是 <span class="math notranslate nohighlight">\(\frac{\partial y}{\partial u}\)</span>。</p></li>
+</ol>
+<p>那么，<code class="docutils literal notranslate"><span class="pre">w</span></code> 对 <code class="docutils literal notranslate"><span class="pre">y</span></code> 的总体影响，就是这两步影响的<strong>乘积</strong>。这就像多米诺骨牌，一环扣一环。</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial y}{\partial w} = \frac{\partial y}{\partial u} \cdot \frac{\partial u}{\partial w}
+\]</div>
+<p><strong>恭喜你，这就是链式法则！</strong> 它把一个复杂、间接的影响，拆解成了若干个简单、直接的影响的乘积。</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -535,7 +518,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./FunctionDetails"
+            path: "./PrerequisiteKnowledge"
         },
         predefinedOutput: true
     }
@@ -553,20 +536,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="PyTorch%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86.html"
+       href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">PyTorch图像处理</p>
+        <p class="prev-next-title">梯度下降</p>
       </div>
     </a>
     <a class="right-next"
-       href="torch.matmul.html"
+       href="%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">torch.matmul</p>
+        <p class="prev-next-title">反向传播</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -576,6 +559,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第一站：开一家全自动汉堡工厂</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第二站：从生产到数学——链式法则的诞生</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

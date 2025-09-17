@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="层和块" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html" />
+    <link rel="next" title="链式法则" href="%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html" />
     <link rel="prev" title="学习率的重要性" href="%E5%AD%A6%E4%B9%A0%E7%8E%87.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -179,6 +179,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E5%AD%A6%E4%B9%A0%E7%8E%87.html">学习率的重要性</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">梯度下降</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html">链式法则</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html">反向传播</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">PyTorch核心与模型构建</span></p>
 <ul class="nav bd-sidenav">
@@ -649,18 +651,18 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>开始寻宝（专业向导版）！
-第 10 步: 损失 = 1.9634, w = 1.818, b = 0.299
-第 20 步: 损失 = 0.1014, w = 2.129, b = 0.423
-第 30 步: 损失 = 0.0502, w = 2.174, b = 0.457
-第 40 步: 损失 = 0.0462, w = 2.177, b = 0.476
-第 50 步: 损失 = 0.0434, w = 2.173, b = 0.491
-第 60 步: 损失 = 0.0409, w = 2.168, b = 0.507
-第 70 步: 损失 = 0.0385, w = 2.163, b = 0.521
-第 80 步: 损失 = 0.0363, w = 2.158, b = 0.535
-第 90 步: 损失 = 0.0342, w = 2.153, b = 0.549
-第 100 步: 损失 = 0.0322, w = 2.149, b = 0.562
+第 10 步: 损失 = 3.2858, w = 1.591, b = 0.582
+第 20 步: 损失 = 0.0946, w = 2.003, b = 0.731
+第 30 步: 损失 = 0.0115, w = 2.067, b = 0.761
+第 40 步: 损失 = 0.0088, w = 2.076, b = 0.771
+第 50 步: 损失 = 0.0082, w = 2.075, b = 0.779
+第 60 步: 损失 = 0.0078, w = 2.073, b = 0.785
+第 70 步: 损失 = 0.0073, w = 2.071, b = 0.791
+第 80 步: 损失 = 0.0069, w = 2.069, b = 0.798
+第 90 步: 损失 = 0.0065, w = 2.067, b = 0.804
+第 100 步: 损失 = 0.0061, w = 2.065, b = 0.809
 
-寻宝结束！找到的 w ≈ 2.149, b ≈ 0.562
+寻宝结束！找到的 w ≈ 2.065, b ≈ 0.809
 </pre></div>
 </div>
 </div>
@@ -728,11 +730,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html"
+       href="%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">层和块</p>
+        <p class="prev-next-title">链式法则</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

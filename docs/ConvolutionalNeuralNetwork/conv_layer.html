@@ -181,6 +181,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%AD%A6%E4%B9%A0%E7%8E%87.html">学习率的重要性</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">梯度下降</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html">链式法则</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html">反向传播</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">PyTorch核心与模型构建</span></p>
 <ul class="nav bd-sidenav">
@@ -772,11 +774,11 @@ tensor([[[[ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.],
           [ 0.,  1.,  0.,  0.,  0., -1.,  0.]]]])
-epoch 2, loss 9.722
-epoch 4, loss 2.586
-epoch 6, loss 0.825
-epoch 8, loss 0.299
-epoch 10, loss 0.116
+epoch 2, loss 6.396
+epoch 4, loss 1.801
+epoch 6, loss 0.600
+epoch 8, loss 0.223
+epoch 10, loss 0.087
 </pre></div>
 </div>
 </div>
@@ -789,7 +791,7 @@ epoch 10, loss 0.116
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.9531, -1.0219]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.0205, -0.9604]])
 </pre></div>
 </div>
 </div>

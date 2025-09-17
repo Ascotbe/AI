@@ -69,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="参数管理" href="%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86.html" />
-    <link rel="prev" title="梯度下降" href="../PrerequisiteKnowledge/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html" />
+    <link rel="prev" title="反向传播" href="../PrerequisiteKnowledge/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -181,6 +181,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%AD%A6%E4%B9%A0%E7%8E%87.html">学习率的重要性</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">梯度下降</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html">链式法则</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PrerequisiteKnowledge/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html">反向传播</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">PyTorch核心与模型构建</span></p>
 <ul class="current nav bd-sidenav">
@@ -486,10 +488,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.1150,  0.1475, -0.0721, -0.2618,  0.0700,  0.3671,  0.1137, -0.0960,
-         -0.0373,  0.2709],
-        [-0.0682,  0.0896, -0.0420, -0.1704,  0.1667,  0.3672,  0.0327, -0.0489,
-          0.0297,  0.0957]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.1119, -0.1422, -0.0020, -0.3754,  0.1383, -0.0881, -0.2828, -0.0403,
+         -0.0898, -0.2180],
+        [-0.1152,  0.0369,  0.1260, -0.2701,  0.1975,  0.0024, -0.2883, -0.0690,
+         -0.1130, -0.2635]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -532,10 +534,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3927, -0.0704,  0.1501, -0.0704,  0.2750, -0.1192, -0.0230, -0.1549,
-          0.1129,  0.1877],
-        [ 0.1957, -0.0448,  0.2123, -0.0616,  0.3055, -0.0286, -0.0894, -0.1030,
-          0.1005,  0.2292]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0738, -0.2235, -0.2789, -0.0113,  0.0375,  0.0750,  0.0284, -0.0505,
+          0.3061, -0.0812],
+        [ 0.0781, -0.1592, -0.1163,  0.0409, -0.0591,  0.0528, -0.0966, -0.0723,
+          0.3990, -0.0317]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -578,10 +580,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.1474, -0.1783,  0.1519,  0.1263, -0.4627,  0.0343, -0.0409, -0.0878,
-          0.0683,  0.0094],
-        [-0.0131, -0.2270,  0.1683,  0.0060, -0.3403,  0.0175,  0.1470,  0.0099,
-          0.1285, -0.0302]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.2354,  0.0145,  0.0147,  0.0482,  0.1377, -0.3800,  0.1905,  0.0111,
+          0.0607,  0.0264],
+        [-0.3232,  0.0131,  0.0579,  0.1129,  0.2099, -0.3040,  0.2228, -0.1000,
+          0.1519, -0.0359]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -623,7 +625,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-0.0768, grad_fn=&lt;SumBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-0.1045, grad_fn=&lt;SumBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -647,7 +649,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(-0.0416, grad_fn=&lt;SumBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.2715, grad_fn=&lt;SumBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -686,12 +688,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../PrerequisiteKnowledge/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html"
+       href="../PrerequisiteKnowledge/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">梯度下降</p>
+        <p class="prev-next-title">反向传播</p>
       </div>
     </a>
     <a class="right-next"

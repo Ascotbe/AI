@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>学习率的重要性 &#8212; AI学习笔记</title>
+    <title>反向传播 &#8212; AI学习笔记</title>
   
   
   
@@ -64,12 +64,12 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'PrerequisiteKnowledge/学习率';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PrerequisiteKnowledge/反向传播';</script>
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="梯度下降" href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html" />
-    <link rel="prev" title="自动求导" href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html" />
+    <link rel="next" title="层和块" href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html" />
+    <link rel="prev" title="链式法则" href="%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -179,10 +179,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%BD%B4axis%E5%92%8Cdim.html">深度学习中的轴/axis/dim全解</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html">激活函数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html">自动求导</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">学习率的重要性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E5%AD%A6%E4%B9%A0%E7%8E%87.html">学习率的重要性</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html">梯度下降</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html">链式法则</a></li>
-<li class="toctree-l1"><a class="reference internal" href="%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD.html">反向传播</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">反向传播</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">PyTorch核心与模型构建</span></p>
 <ul class="nav bd-sidenav">
@@ -361,7 +361,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/PrerequisiteKnowledge/学习率.ipynb" target="_blank"
+      <li><a href="../_sources/PrerequisiteKnowledge/反向传播.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -445,7 +445,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>学习率的重要性</h1>
+    <h1>反向传播</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -455,10 +455,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1">情况一：没有学习率（或 <span class="math notranslate nohighlight">\(\eta = 1\)</span>）—— 永不收敛的震荡</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1-2">情况二：学习率过大（<span class="math notranslate nohighlight">\(\eta = 1.2\)</span>）—— 灾难性的发散</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-0-1">情况三：学习率合适（<span class="math notranslate nohighlight">\(\eta = 0.1\)</span>）—— 稳步的收敛</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">最终总结</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第三站：工厂升级——引入“误差”与“反向传播”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第四站：上代码！模拟工厂的智能调优</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-backward">第五站：揭秘魔法——手动推导<code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-loss-v-frac-partial-text-loss-partial-v">A. 计算 Loss 对旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code> 的梯度 (<span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial v}\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loss-w-frac-partial-text-loss-partial-w">B. 计算 Loss 对旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 的梯度 (<span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial w}\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">最终总结</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -471,130 +475,192 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>学习率的重要性<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
-<p>我们继续以一个简单的数学函数作为我们的“山”，来上演一场直观的“下山寻宝”记。</p>
-<ul class="simple">
-<li><p><strong>山（损失函数）</strong>: <span class="math notranslate nohighlight">\(f(x) = x^2 - 6x + 9\)</span></p></li>
-<li><p><strong>宝藏（最小值点）</strong>: <span class="math notranslate nohighlight">\(x=3\)</span></p></li>
-<li><p><strong>寻路工具（梯度/导数）</strong>: <span class="math notranslate nohighlight">\(\frac{dy}{dx}=f'(x) = 2x - 6\)</span></p></li>
-<li><p><strong>下山规则（梯度下降）</strong>: <span class="math notranslate nohighlight">\(x := x - \eta \cdot \frac{dy}{dx}\)</span></p></li>
-</ul>
-<p>这里的 <span class="math notranslate nohighlight">\(\eta\)</span> (eta) 就是至关重要的<strong>学习率</strong>。现在，我们从起点 <span class="math notranslate nohighlight">\(x=4\)</span> 出发，看看不同的 <span class="math notranslate nohighlight">\(\eta\)</span> 会带来怎样截然不同的命运。</p>
-<hr class="docutils" />
-<section id="eta-1">
-<h2>情况一：没有学习率（或 <span class="math notranslate nohighlight">\(\eta = 1\)</span>）—— 永不收敛的震荡<a class="headerlink" href="#eta-1" title="Permalink to this heading">#</a></h2>
-<p>在第一张图中，更新规则写作 <span class="math notranslate nohighlight">\(x := x - \frac{d}{dx}\)</span>，这在数学上等价于将学习率 <span class="math notranslate nohighlight">\(\eta\)</span> 设置为 <strong>1</strong>。这意味着我们完全相信梯度的“建议”，它让我们走多远，我们就走多远。</p>
-<p><strong>下山过程：</strong></p>
-<ol class="arabic simple">
-<li><p><strong>起始点</strong>: <span class="math notranslate nohighlight">\(x = 4\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4) - 6 = 2\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4 - (2) = 2\)</span></p></li>
-<li><p>我们从 <span class="math notranslate nohighlight">\(x=4\)</span> 跳到了 <span class="math notranslate nohighlight">\(x=2\)</span>，完美地越过了最低点 <span class="math notranslate nohighlight">\(x=3\)</span>。</p></li>
-</ul>
-</li>
-<li><p><strong>第二步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 2\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(2) - 6 = -2\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 2 - (-2) = 4\)</span></p></li>
-<li><p>我们又从 <span class="math notranslate nohighlight">\(x=2\)</span> 跳回了起点 <span class="math notranslate nohighlight">\(x=4\)</span>。</p></li>
-</ul>
-</li>
-</ol>
-<p><strong>结论（如下图所示）：</strong>
-参数在 <code class="docutils literal notranslate"><span class="pre">2</span></code> 和 <code class="docutils literal notranslate"><span class="pre">4</span></code> 之间来回“跳跃”，就像一个乒乓球在山谷两侧来回弹跳，陷入了无限循环的震荡，<strong>永远无法稳定在谷底 <span class="math notranslate nohighlight">\(x=3\)</span></strong>。这是因为步子迈得“恰好”能让我们跳到对称的另一边。</p>
-<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_14-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /></section>
-<hr class="docutils" />
-<section id="eta-1-2">
-<h2>情况二：学习率过大（<span class="math notranslate nohighlight">\(\eta = 1.2\)</span>）—— 灾难性的发散<a class="headerlink" href="#eta-1-2" title="Permalink to this heading">#</a></h2>
-<p>在第二张图中，我们选择了一个更大的学习率 <span class="math notranslate nohighlight">\(\eta = 1.2\)</span>。我们以为步子迈得更大，下山会更快，但结果却适得其反。</p>
-<p><strong>下山过程：</strong></p>
-<ol class="arabic simple">
-<li><p><strong>起始点</strong>: <span class="math notranslate nohighlight">\(x = 4\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4) - 6 = 2\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4 - 1.2 \times (2) = 4 - 2.4 = 1.6\)</span></p></li>
-<li><p>我们不仅越过了最低点，而且跳得更远了。</p></li>
-</ul>
-</li>
-<li><p><strong>第二步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 1.6\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(1.6) - 6 = 3.2 - 6 = -2.8\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 1.6 - 1.2 \times (-2.8) = 1.6 + 3.36 = 4.96\)</span></p></li>
-<li><p>这次更新让我们跳回了右侧，但落点 <span class="math notranslate nohighlight">\(4.96\)</span> 比我们的起始点 <span class="math notranslate nohighlight">\(4\)</span> 离谷底更远了！</p></li>
-</ul>
-</li>
-<li><p><strong>第三步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 4.96\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4.96) - 6 = 3.92\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4.96 - 1.2 \times (3.92) = 4.96 - 4.704 = 0.256\)</span></p></li>
-<li><p>我们被抛到了一个离谷底更更远的地方。</p></li>
-</ul>
-</li>
-</ol>
-<p><strong>结论（如下图所示）：</strong>
-参数不仅越过了最低点，而且每一次跳跃都把它带到离最低点<strong>越来越远</strong>的位置。损失值（山的高度）也随之越来越大。这种情况称为<strong>发散 (Divergence)</strong>。这就像下山时步子迈得太大，结果一脚踩空，直接滚到了对面的山坡上，而且越滚越高。</p>
-<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_17-57-51.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /></section>
-<hr class="docutils" />
-<section id="eta-0-1">
-<h2>情况三：学习率合适（<span class="math notranslate nohighlight">\(\eta = 0.1\)</span>）—— 稳步的收敛<a class="headerlink" href="#eta-0-1" title="Permalink to this heading">#</a></h2>
-<p>在第三张图中，我们选择了一个保守但有效的学习率 <span class="math notranslate nohighlight">\(\eta = 0.1\)</span>。我们让每一步都迈得小心翼翼。</p>
-<p><strong>下山过程：</strong></p>
-<ol class="arabic simple">
-<li><p><strong>起始点</strong>: <span class="math notranslate nohighlight">\(x = 4\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(4) - 6 = 2\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 4 - 0.1 \times (2) = 4 - 0.2 = 3.8\)</span></p></li>
-<li><p>我们朝着正确的方向迈出了一小步，离谷底更近了。</p></li>
-</ul>
-</li>
-<li><p><strong>第二步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 3.8\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(3.8) - 6 = 1.6\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 3.8 - 0.1 \times (1.6) = 3.8 - 0.16 = 3.64\)</span></p></li>
-<li><p>又向谷底迈进了一步。</p></li>
-</ul>
-</li>
-<li><p><strong>第三步</strong>: 当前位置 <span class="math notranslate nohighlight">\(x = 3.64\)</span></p>
-<ul class="simple">
-<li><p>计算梯度: <span class="math notranslate nohighlight">\(2x - 6 = 2(3.64) - 6 = 1.28\)</span></p></li>
-<li><p>更新位置: <span class="math notranslate nohighlight">\(x := 3.64 - 0.1 \times (1.28) = 3.64 - 0.128 = 3.512\)</span></p></li>
-<li><p>我们稳步前进，无限逼近宝藏所在地 <span class="math notranslate nohighlight">\(x=3\)</span>。</p></li>
-</ul>
-</li>
-</ol>
-<p><strong>结论（如下图所示）：</strong>
-参数在每一次迭代后，都稳定地向着最低点 <span class="math notranslate nohighlight">\(x=3\)</span> 靠近。步伐不大不小，既保证了方向的正确，又避免了越过最低点。这种情况就是我们最希望看到的<strong>收敛 (Convergence)</strong>。这就像一位谨慎的登山者，每一步都迈得很稳，确保自己始终在下山，最终安全到达谷底。</p>
-<img src="../image/PrerequisiteKnowledge/Snipaste_2025-09-16_17-58-41.png" alt="" style="zoom: 50%; display: block; margin: 0px auto;" /></section>
+<h1>反向传播<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>我们书接上回，链式法则的内容</p>
 <section id="id2">
-<h2>最终总结<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head text-left"><p>学习率 (<span class="math notranslate nohighlight">\(\eta\)</span>)</p></th>
-<th class="head text-left"><p>行为 (Behavior)</p></th>
-<th class="head text-left"><p>结果 (Outcome)</p></th>
-<th class="head text-left"><p>图像</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-left"><p><strong>1.0</strong></p></td>
-<td class="text-left"><p><strong>震荡 (Oscillation)</strong></p></td>
-<td class="text-left"><p>无法到达最低点</p></td>
-<td class="text-left"><p>图一</p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><strong>1.2</strong></p></td>
-<td class="text-left"><p><strong>发散 (Divergence)</strong></p></td>
-<td class="text-left"><p>离最低点越来越远</p></td>
-<td class="text-left"><p>图二</p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><strong>0.1</strong></p></td>
-<td class="text-left"><p><strong>收敛 (Convergence)</strong></p></td>
-<td class="text-left"><p>稳定地逼近最低点</p></td>
-<td class="text-left"><p>图三</p></td>
-</tr>
-</tbody>
-</table>
-<p>这三张图完美地诠释了学习率的真谛：在梯度下降中，梯度告诉我们<strong>往哪走（方向）</strong>，而学习率决定了我们<strong>走多远（步长）</strong>。选择一个合适的学习率，是在“下山太慢”和“滚下山坡”之间找到最佳平衡的艺术，也是成功训练模型的关键。</p>
+<h2>第三站：工厂升级——引入“误差”与“反向传播”<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>一个好的工厂不仅要能生产，还要能<strong>按订单生产</strong>。</p>
+<ul class="simple">
+<li><p><strong>目标：</strong> 顾客订单是 <strong>10个</strong> 汉堡。</p></li>
+<li><p><strong>现状：</strong> 我们现在的机器设置生产出了 <strong>12个</strong> 汉堡。</p></li>
+<li><p><strong>误差(Loss)：</strong> 我们生产多了，有了误差。我们用<strong>损失函数</strong> <span class="math notranslate nohighlight">\(\text{Loss} = (y - y_{\text{target}})^2\)</span> 来量化这个误差。</p></li>
+</ul>
+<p>我们的新任务是：<strong>调整旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 和 <code class="docutils literal notranslate"><span class="pre">v</span></code>，来减小这个误差 <code class="docutils literal notranslate"><span class="pre">Loss</span></code>。</strong></p>
+<p>为了智能地调整，我们需要知道：</p>
+<ul class="simple">
+<li><p>误差 <code class="docutils literal notranslate"><span class="pre">Loss</span></code> 对旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code> 有多敏感？（即 <span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial v}\)</span>）</p></li>
+<li><p>误差 <code class="docutils literal notranslate"><span class="pre">Loss</span></code> 对旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 有多敏感？（即 <span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial w}\)</span>）</p></li>
+</ul>
+<p>这个寻找“责任人”的过程，必须<strong>从后往前</strong>：</p>
+<ol class="arabic simple">
+<li><p><strong>最终误差</strong>：我们知道 <code class="docutils literal notranslate"><span class="pre">Loss</span></code> 的大小。</p></li>
+<li><p><strong>追溯到机器B</strong>：<code class="docutils literal notranslate"><span class="pre">Loss</span></code> 的产生和最终产量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 直接相关。而 <code class="docutils literal notranslate"><span class="pre">y</span></code> 是由机器B的旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code> 决定的。所以我们可以计算出 <code class="docutils literal notranslate"><span class="pre">Loss</span></code> 对 <code class="docutils literal notranslate"><span class="pre">v</span></code> 的“责任”。</p></li>
+<li><p><strong>继续追溯到机器A</strong>：<code class="docutils literal notranslate"><span class="pre">y</span></code> 的变化也受到肉饼 <code class="docutils literal notranslate"><span class="pre">u</span></code> 的影响，而 <code class="docutils literal notranslate"><span class="pre">u</span></code> 是由机器A的旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 决定的。我们可以沿着链条，把“责任”一直传递给 <code class="docutils literal notranslate"><span class="pre">w</span></code>。</p></li>
+</ol>
+<p>这个从最终误差出发，利用链式法则，反向追溯并计算每个参数“责任”（梯度）的过程，就是<strong>反向传播（Backpropagation）</strong>。</p>
+</section>
+<section id="id3">
+<h2>第四站：上代码！模拟工厂的智能调优<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>现在，我们用代码来精确模拟上面那个“调整旋钮”的过程。</p>
+<p><strong>场景设定：</strong></p>
+<ul class="simple">
+<li><p><strong>机器A</strong> 的功能是：肉饼数量 u = 旋钮w * 牛肉量x。</p></li>
+<li><p><strong>机器B</strong> 的功能是：汉堡数量 y = 旋钮v * 肉饼数量u。这完美对应了“1个肉饼产出v个汉堡”的比喻。</p></li>
+</ul>
+<p>我们来看看PyTorch如何帮我们自动“甩锅”。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+<span class="c1"># --- 1. 初始化我们的“工厂” ---</span>
+<span class="c1"># 旋钮 w 和 v 是我们需要学习和调整的参数</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 机器A的旋钮，初始值为3</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 机器B的旋钮，初始值为2</span>
+
+<span class="c1"># 输入的原材料</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span> <span class="c1"># 固定的2公斤牛肉</span>
+
+<span class="c1"># 顾客的订单 (我们的目标)</span>
+<span class="n">target_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span> 
+
+<span class="c1"># --- 2. 正向传播：生产一次汉堡 ---</span>
+<span class="c1"># 就像工厂运作一样，从头到尾计算一次</span>
+<span class="c1"># 机器A: u = w * x</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x</span> 
+<span class="c1"># 机器B: y = v * u</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="n">u</span> 
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;原材料 x: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, 旋钮 w: </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">, 旋钮 v: </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;中间产品 u (肉饼): </span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;最终产品 y (汉堡): </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;顾客订单 target_y: </span><span class="si">{</span><span class="n">target_y</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- 3. 计算误差 (Loss) ---</span>
+<span class="c1"># 我们生产了多少，和订单差了多少？</span>
+<span class="c1"># 这里用最简单的差的平方作为误差函数</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">target_y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;当前的误差 Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- 4. 反向传播：开始自动“甩锅”！---</span>
+<span class="c1"># 这是魔法发生的地方。从 loss 开始，反向计算梯度</span>
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+<span class="c1"># --- 5. 查看结果：每个旋钮分到了多少“责任”？ ---</span>
+<span class="c1"># PyTorch已经帮我们算好了 loss 对每个旋钮的梯度</span>
+<span class="c1"># 也就是 d(loss)/dw 和 d(loss)/dv</span>
+
+<span class="c1"># 我们来手动验证一下，用链式法则：</span>
+<span class="c1"># loss = (y - target_y)^2 = (v*u - target_y)^2 = (v*w*x - target_y)^2</span>
+
+<span class="c1"># d(loss)/dv 是多少?</span>
+<span class="c1"># d(loss)/dv = d(loss)/dy * dy/dv</span>
+<span class="c1"># d(loss)/dy = 2 * (y - target_y) = 2 * (12 - 10) = 4</span>
+<span class="c1"># dy/dv = u = 6</span>
+<span class="c1"># 所以 d(loss)/dv = 4 * 6 = 24</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loss对旋钮v的梯度 (dLoss/dv): </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2"> (手动计算结果: 24.0)&quot;</span><span class="p">)</span>
+
+<span class="c1"># d(loss)/dw 是多少?</span>
+<span class="c1"># d(loss)/dw = d(loss)/dy * dy/du * du/dw</span>
+<span class="c1"># d(loss)/dy = 4 (上面算过了)</span>
+<span class="c1"># dy/du = v = 2</span>
+<span class="c1"># du/dw = x = 2</span>
+<span class="c1"># 所以 d(loss)/dw = 4 * 2 * 2 = 16</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loss对旋钮w的梯度 (dLoss/dw): </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2"> (手动计算结果: 16.0)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>原材料 x: 2.0, 旋钮 w: 3.0, 旋钮 v: 2.0
+中间产品 u (肉饼): 6.0
+最终产品 y (汉堡): 12.0
+顾客订单 target_y: 10.0
+当前的误差 Loss: 4.0
+Loss对旋钮v的梯度 (dLoss/dv): 24.0 (手动计算结果: 24.0)
+Loss对旋钮w的梯度 (dLoss/dw): 16.0 (手动计算结果: 16.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loss-backward">
+<h2>第五站：揭秘魔法——手动推导<code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code><a class="headerlink" href="#loss-backward" title="Permalink to this heading">#</a></h2>
+<p>PyTorch的一行代码背后到底发生了什么？让我们手动用链式法则来验证一下结果。</p>
+<section id="a-loss-v-frac-partial-text-loss-partial-v">
+<h3>A. 计算 Loss 对旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code> 的梯度 (<span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial v}\)</span>)<a class="headerlink" href="#a-loss-v-frac-partial-text-loss-partial-v" title="Permalink to this heading">#</a></h3>
+<p><strong>目标：</strong> 弄清楚旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code> 对最终误差 <code class="docutils literal notranslate"><span class="pre">Loss</span></code> 的影响。
+<strong>路径：</strong> <span class="math notranslate nohighlight">\(v \rightarrow y \rightarrow \text{Loss}\)</span>
+<strong>链式法则公式：</strong>
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \text{Loss}}{\partial v} = \frac{\partial \text{Loss}}{\partial y} \cdot \frac{\partial y}{\partial v}
+\)</span>$</p>
+<ol class="arabic simple">
+<li><p><strong>计算第一环 <span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial y}\)</span></strong>:</p>
+<ul class="simple">
+<li><p><strong>含义：</strong> 最终汉堡数 <code class="docutils literal notranslate"><span class="pre">y</span></code> 每增加1，误差 <code class="docutils literal notranslate"><span class="pre">Loss</span></code> 会增加多少。</p></li>
+<li><p><strong>计算：</strong> <span class="math notranslate nohighlight">\(\text{Loss} = (y - y_{\text{target}})^2 \implies \frac{\partial \text{Loss}}{\partial y} = 2(y - y_{\text{target}})\)</span></p></li>
+<li><p><strong>代入数值：</strong> <span class="math notranslate nohighlight">\(2 \cdot (12.0 - 10.0) = 4.0\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>计算第二环 <span class="math notranslate nohighlight">\(\frac{\partial y}{\partial v}\)</span></strong>:</p>
+<ul class="simple">
+<li><p><strong>含义：</strong> 旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code> 每增加1，汉堡产量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 会增加多少。</p></li>
+<li><p><strong>计算：</strong> <span class="math notranslate nohighlight">\(y = v \cdot u \implies \frac{\partial y}{\partial v} = u\)</span></p></li>
+<li><p><strong>代入数值：</strong> <span class="math notranslate nohighlight">\(u = 6.0\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>合并结果</strong>:
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \text{Loss}}{\partial v} = 4.0 \cdot 6.0 = 24.0
+\)</span>$
+这与PyTorch计算的 <code class="docutils literal notranslate"><span class="pre">v.grad</span></code> (24.0) 完全一致！</p></li>
+</ol>
+</section>
+<section id="b-loss-w-frac-partial-text-loss-partial-w">
+<h3>B. 计算 Loss 对旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 的梯度 (<span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial w}\)</span>)<a class="headerlink" href="#b-loss-w-frac-partial-text-loss-partial-w" title="Permalink to this heading">#</a></h3>
+<p><strong>目标：</strong> 弄清楚旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 对最终误差 <code class="docutils literal notranslate"><span class="pre">Loss</span></code> 的影响。
+<strong>路径：</strong> <span class="math notranslate nohighlight">\(w \rightarrow u \rightarrow y \rightarrow \text{Loss}\)</span>
+<strong>链式法则公式：</strong>
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \text{Loss}}{\partial w} = \frac{\partial \text{Loss}}{\partial y} \cdot \frac{\partial y}{\partial u} \cdot \frac{\partial u}{\partial w}
+\)</span>$</p>
+<ol class="arabic simple">
+<li><p><strong>计算第一环 <span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial y}\)</span></strong>:</p>
+<ul class="simple">
+<li><p><strong>含义：</strong> 同上，这个结果可以<strong>复用</strong>！</p></li>
+<li><p><strong>数值：</strong> <span class="math notranslate nohighlight">\(4.0\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>计算第二环 <span class="math notranslate nohighlight">\(\frac{\partial y}{\partial u}\)</span></strong>:</p>
+<ul class="simple">
+<li><p><strong>含义：</strong> 肉饼 <code class="docutils literal notranslate"><span class="pre">u</span></code> 每增加1，汉堡产量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 会增加多少。</p></li>
+<li><p><strong>计算：</strong> <span class="math notranslate nohighlight">\(y = v \cdot u \implies \frac{\partial y}{\partial u} = v\)</span></p></li>
+<li><p><strong>代入数值：</strong> <span class="math notranslate nohighlight">\(v = 2.0\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>计算第三环 <span class="math notranslate nohighlight">\(\frac{\partial u}{\partial w}\)</span></strong>:</p>
+<ul class="simple">
+<li><p><strong>含义：</strong> 旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 每增加1，肉饼产量 <code class="docutils literal notranslate"><span class="pre">u</span></code> 会增加多少。</p></li>
+<li><p><strong>计算：</strong> <span class="math notranslate nohighlight">\(u = w \cdot x \implies \frac{\partial u}{\partial w} = x\)</span></p></li>
+<li><p><strong>代入数值：</strong> <span class="math notranslate nohighlight">\(x = 2.0\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>合并结果</strong>:
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \text{Loss}}{\partial w} = 4.0 \cdot 2.0 \cdot 2.0 = 16.0
+\)</span>$
+这也与PyTorch计算的 <code class="docutils literal notranslate"><span class="pre">w.grad</span></code> (16.0) 完全一致！</p></li>
+</ol>
+</section>
+<section id="id4">
+<h3>最终总结<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>现在，你应该对链式法则有了透彻的理解：</p>
+<ol class="arabic simple">
+<li><p><strong>它是什么？</strong> 一种计算“函数套函数”（复合函数）导数的方法。核心思想是**“将一长串间接影响，拆解为一环扣一环的直接影响的乘积”**。</p></li>
+<li><p><strong>它在神经网络中的作用？</strong> 它就是<strong>反向传播</strong>的数学引擎。从最终的误差出发，利用链式法则，一步步反向计算出误差对网络中每一个参数（权重）的梯度（“责任”或“敏感度”）。</p></li>
+<li><p><strong>PyTorch为我们做了什么？</strong> 你只需定义好正向的计算流程（工厂如何生产）。当你调用 <code class="docutils literal notranslate"><span class="pre">.backward()</span></code> 时，PyTorch会自动构建计算图，并完美地执行上述所有链式法则的运算，将梯度结果存放在 <code class="docutils literal notranslate"><span class="pre">.grad</span></code> 属性中，让你能轻松地更新参数、优化网络。</p></li>
+</ol>
+<p>理解了链式法则，你就掌握了驱动深度学习模型自动学习的核心秘密。</p>
+</section>
 </section>
 </section>
 
@@ -629,20 +695,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC.html"
+       href="%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">自动求导</p>
+        <p class="prev-next-title">链式法则</p>
       </div>
     </a>
     <a class="right-next"
-       href="%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D.html"
+       href="../DeepLearning/%E5%B1%82%E5%92%8C%E5%9D%97.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">梯度下降</p>
+        <p class="prev-next-title">层和块</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -661,10 +727,14 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1">情况一：没有学习率（或 <span class="math notranslate nohighlight">\(\eta = 1\)</span>）—— 永不收敛的震荡</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-1-2">情况二：学习率过大（<span class="math notranslate nohighlight">\(\eta = 1.2\)</span>）—— 灾难性的发散</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eta-0-1">情况三：学习率合适（<span class="math notranslate nohighlight">\(\eta = 0.1\)</span>）—— 稳步的收敛</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">最终总结</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第三站：工厂升级——引入“误差”与“反向传播”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第四站：上代码！模拟工厂的智能调优</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-backward">第五站：揭秘魔法——手动推导<code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-loss-v-frac-partial-text-loss-partial-v">A. 计算 Loss 对旋钮 <code class="docutils literal notranslate"><span class="pre">v</span></code> 的梯度 (<span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial v}\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loss-w-frac-partial-text-loss-partial-w">B. 计算 Loss 对旋钮 <code class="docutils literal notranslate"><span class="pre">w</span></code> 的梯度 (<span class="math notranslate nohighlight">\(\frac{\partial \text{Loss}}{\partial w}\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">最终总结</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
